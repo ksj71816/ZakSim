@@ -18,7 +18,7 @@ import zaksim.admin.service.CStatisticsService;
 import zaksim.util.ExcelWriter;
 
 @Controller
-@RequestMapping(value="/zaksim/admin/cstatistics")
+@RequestMapping(value="/zaksim/admin")
 public class CStatisticsController {
 	
 private static final Logger logger = LoggerFactory.getLogger(CStatisticsController.class);
@@ -27,21 +27,20 @@ private static final Logger logger = LoggerFactory.getLogger(CStatisticsControll
 	
 	ExcelWriter excelWriter;
 	
-	//
 	
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String cstatisticsForm(Model model) {
+	
+	@RequestMapping(value = "/cStatistics", method = RequestMethod.GET)
+	public void cStatisticsForm(Model model) {
 		// 화면 연결
 		// memberService.당일 가입 수 가져오기();
 		// memberService.최근 일주일간? 회원수 추이 가져오기();
 		// memberService.최근 일주일간 방문수 추이 가져오기();
 		// memberService.상세 통계자료 가져오기();
 		// 모델에 값 넣기
-		return "/zaksim/admin/cstatistics";
 	}
 	
-	@RequestMapping(value="/changePeriod", method = RequestMethod.POST, produces="application/json; charset=utf-8")
+	@RequestMapping(value="/cStatistics/changePeriod", method = RequestMethod.POST, produces="application/json; charset=utf-8")
 	@ResponseBody
 	public Map<String, String> changePeriod(int period) {
 		
@@ -56,7 +55,7 @@ private static final Logger logger = LoggerFactory.getLogger(CStatisticsControll
 		return map;
 	}
 	
-	@RequestMapping(value="/downloadExcel", method = RequestMethod.POST)
+	@RequestMapping(value="/cStatistics/downloadExcel", method = RequestMethod.POST)
 	@ResponseBody
 	public void downloadExcel(HttpServletResponse response) {
 		

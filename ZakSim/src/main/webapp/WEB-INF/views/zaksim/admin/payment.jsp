@@ -56,7 +56,14 @@ body {
 /* On mouse-over */
 .sidenav a:hover, .dropdown-btn:hover {
 	color: #a81919;
-	text-decoration: underline;
+}
+
+.sidenav-a:hover {
+	text-decoration: none;
+}
+
+.dropdown-container a:hover {
+	text-decoration: none;
 }
 
 /* Main content */
@@ -105,7 +112,17 @@ body {
 .data-title {
 	font-family: Dohyeon !important;
 	font-size: 30px;
+	padding-left: 40px;
+	padding-right: 40px;
 	border-bottom: 4px solid #a81919;
+}
+
+.data-subTitle {
+	font-family: Dohyeon !important;
+	font-size: 20px;
+	padding-left: 40px;
+	padding-right: 40px;
+	border-bottom: 3.5px solid #a81919;
 }
 
 .btn-zaksim {
@@ -115,6 +132,14 @@ body {
 
 .dropdown-item {
    font-size: 0.8571em;
+}
+
+.badge {
+	padding: 0.5em 0.8em !important;
+}
+
+.badge-secondary {
+	background-color: #c7c7c7 !important;
 }
 
 .page-item {
@@ -169,7 +194,7 @@ body {
 	<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #8A0303;">
 		<a href="" class="btn" style="font-size: xx-large; font-weight: bold; color: white;">ZakSim</a>
 		<div class="collapse navbar-collapse justify-content-end">
-			<a href="/zaksim/login" style="font-weight: bold; color: white;">LOGOUT</a>
+			<a href="/zaksim/admin/logout" style="font-weight: bold; color: white;">LOGOUT</a>
 		</div>
 	</nav>
 <!-- navbar -->
@@ -211,10 +236,10 @@ body {
 		<div class="main">
 		
  			<div class="row justify-content-center">
-				<p class="data-title">&nbsp;&nbsp;&nbsp;결제 관리&nbsp;&nbsp;&nbsp;</p>
+				<p class="data-title mb-5 mt-3">결제 관리</p>
  			</div>
 		
-			<div class="row">
+			<div class="row mt-3">
 				<div class="col-1"></div>
 				<div class="col-5">
 					<div class="row justify-content-start">

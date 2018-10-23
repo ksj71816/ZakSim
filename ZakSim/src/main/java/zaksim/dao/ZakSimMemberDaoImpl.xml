@@ -6,6 +6,16 @@
   
   <mapper namespace="zaksim.dao.ZakSimMemberDao">
   
-  <select id="selectAdminMember"></select>
+  <resultMap type="zaksim.dto.ZakSimMember" id="ZakSimMember">
+  	<result property="memberType" column="member_type"/>
+  	<result property="joinDate" column="join_date"/>
+  	<result property="suspensionDate" column="suspension_date"/>
+  </resultMap>
+  
+  <select id="selectAdminMember" parameterType="zaksim.dto.ZakSimMember" resultType="int">
+  	SELECT COUNT(*)
+  	FROM ZakSimMember
+  	WHERE id=#{id} AND password=#{password}
+  </select>
   
   </mapper>

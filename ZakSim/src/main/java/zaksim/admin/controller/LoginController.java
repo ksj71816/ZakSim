@@ -28,19 +28,25 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public void loginProcess(ZakSimMember member, HttpSession session) {
+	public String loginProcess(ZakSimMember member, HttpSession session) {
 		logger.info(member.toString());
 		
 		 if(loginService.login(member)) {
-			 // 세션에 정보 입력			 
+			 // 세션에 정보 입력		
+			 logger.info("로그인 성공");
+			 session.setAttribute("adminLogin", true);
+			 return "redirect:/zaksim/admin/member";
 		 } else {
 //			 로그인 실패
+			 logger.info("로그인 실패");
+			 return "";
 		 }
 	}
 	
 	@RequestMapping(value="/logout")
 	public String logout(HttpSession session) {
-		session.invalidate();
+		logger.info("로그아웃");
+		session.setAttribute("adminLogin", false);
 		return "redirect:/zaksim/login";
 	}
 	

@@ -18,7 +18,7 @@ import zaksim.admin.service.PStatisticsService;
 import zaksim.util.ExcelWriter;
 
 @Controller
-@RequestMapping(value="/zaksim/admin/pstatistics")
+@RequestMapping(value="/zaksim/admin")
 public class PStatisticsController {
 	
 private static final Logger logger = LoggerFactory.getLogger(PStatisticsController.class);
@@ -32,18 +32,17 @@ private static final Logger logger = LoggerFactory.getLogger(PStatisticsControll
 	// 엑셀 다운
 	
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String pstatisticsForm(Model model) {
+	@RequestMapping(value = "/pStatistics", method = RequestMethod.GET)
+	public void pStatisticsForm(Model model) {
 		// 화면 연결
 		// memberService.당일 가입 수 가져오기();
 		// memberService.최근 일주일간? 회원수 추이 가져오기();
 		// memberService.최근 일주일간 방문수 추이 가져오기();
 		// memberService.상세 통계자료 가져오기();
 		// 모델에 값 넣기
-		return "/zaksim/admin/pstatistics";
 	}
 	
-	@RequestMapping(value="/changePeriod", method = RequestMethod.POST, produces="application/json; charset=utf-8")
+	@RequestMapping(value="/pStatistics/changePeriod", method = RequestMethod.POST, produces="application/json; charset=utf-8")
 	@ResponseBody
 	public Map<String, String> changePeriod(int period) {
 		
@@ -58,7 +57,7 @@ private static final Logger logger = LoggerFactory.getLogger(PStatisticsControll
 		return map;
 	}
 	
-	@RequestMapping(value="/downloadExcel", method = RequestMethod.POST)
+	@RequestMapping(value="/pStatistics/downloadExcel", method = RequestMethod.POST)
 	@ResponseBody
 	public void downloadExcel(HttpServletResponse response) {
 		

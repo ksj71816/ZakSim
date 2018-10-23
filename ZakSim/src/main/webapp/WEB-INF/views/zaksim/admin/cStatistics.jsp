@@ -242,17 +242,17 @@ body {
  			<div class="row mt-3">
  				<div class="col-4">
  					<div class="row justify-content-end">
- 						<p class="data-subTitle">회원</p>
+ 						<p class="data-subTitle"  style="border-color: #ccc !important;">회원</p>
  					</div>
  				</div>
  				<div class="col-4">
  					<div class="row justify-content-center">
-		 				<p class="data-subTitle" style="border-color: #ccc !important;">도전</p>
+		 				<p class="data-subTitle">도전</p>
  					</div>
  				</div>
  				<div class="col-4">
  					<div class="row justify-content-start">
- 						<p class="data-subTitle" style="border-color: #ccc !important;">수익</p>
+ 						<p class="data-subTitle"  style="border-color: #ccc !important;">수익</p>
  					</div>
  				</div>
  			</div>

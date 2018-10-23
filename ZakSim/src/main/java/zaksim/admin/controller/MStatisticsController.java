@@ -32,7 +32,7 @@ public class MStatisticsController {
 	
 	
 	@RequestMapping(value = "/mStatistics", method = RequestMethod.GET)
-	public void mstatisticsForm() {
+	public void mStatisticsForm() {
 		// 화면 연결
 		// memberService.당일 가입 수 가져오기();
 		// memberService.최근 일주일간? 회원수 추이 가져오기();
