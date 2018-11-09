@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
 
 <!-- header include -->
 <%@include file="/WEB-INF/views/zaksim/main/header.jsp" %>
@@ -59,17 +59,43 @@
             
 <!--바디 끝-->
 
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script type="text/javascript">
+
+// var J = $.noConflict('true');
+
+$(document).ready(function() {
+	$("[name='title']").attr("required", true);
+	$("[name='startDate']").attr("required", true);
+	$("[name='endDate']").attr("required", true);
+});
+
+// J(document).ready(function() {
+// 	J("[name='title']").attr("required", true);
+// 	J("[name='startDate']").attr("required", true);
+// 	J("[name='endDate']").attr("required", true);
+// });
+
+</script>
+
+
 
 
 <!-- 도전정보 입력 -->
-	<script type="text/javascript">
+<script type="text/javascript">
 
-	// null 입력 금지 - 동작 안됨!
-		$("[name='title']").attr("required", true);
-		$("[name='startDate']").attr("required", true);
-		$("[name='endDate']").attr("required", true);
-
+	
+	
+	
+		
+		
 	function toPriceChallenge(){
+		
+		if( $("#doChal [name='title']").val() == '' || $("#doChal [name='title']").val() == null ) {
+			alert("!!");
+			return false;
+		}
 		
 		
 		var params= $('#doChal').serialize();
@@ -99,7 +125,7 @@
 	
 	
     
-    </script>
+</script>
    
  
 <!-- iamport.payment.js 결제 모듈-->
@@ -192,6 +218,7 @@ $("[name='money']").attr("required", true);
                    // 결제 시각
                    paidAt : new Date(rsp.paid_at),  
                    
+                   
                    // 결제 상태
                    status : rsp.status,
                    
@@ -199,8 +226,8 @@ $("[name='money']").attr("required", true);
                    
                    // 결제 금액 - 도전금
                    price : rsp.paid_amount,
-                   paymentOption : 'card'
-                  
+                   paymentOption : 'card' 
+                	  
                 }
                 , success: function( data ) {
                    console.log(data);
