@@ -41,6 +41,8 @@ public class ChallengeInfo {
 		
 		//유저 정보 가져오기 (프로필)
 		
+	
+		
 		//
 		
 	}
