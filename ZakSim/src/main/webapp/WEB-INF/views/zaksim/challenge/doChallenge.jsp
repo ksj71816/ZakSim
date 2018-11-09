@@ -60,6 +60,31 @@
 <!--바디 끝-->
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$( "#startDate" ).datepicker({
+		minDate: 0
+		, dateFormat: "yy-mm-dd"
+		});
+	
+	$( "#endDate" ).datepicker({
+		minDate: 0
+		, dateFormat: "yy-mm-dd"
+		});
+	
+	
+	});
+	
+
+</script>
+
+
 
 <script type="text/javascript">
 
@@ -93,7 +118,27 @@ $(document).ready(function() {
 	function toPriceChallenge(){
 		
 		if( $("#doChal [name='title']").val() == '' || $("#doChal [name='title']").val() == null ) {
-			alert("!!");
+			alert("도전명을 입력해 주세요!");
+			return false;
+		}
+		
+		
+		if( $( "#startDate" ).val()== null || $( "#endDate" ).val()== null ) {
+			alert("도전 날짜를 입력해 주세요!");
+			
+			return false;
+		}
+		
+		
+		if( $( "#startDate" ).val()==$( "#endDate" ).val() ) {
+			alert("도전 시작일과 종료일이 같습니다!");
+			
+			return false;
+		}
+		
+		if(  $( "#startDate" ).val()  >  $( "#endDate" ).val() ){
+			alert("도전 종료일이 시작일보다 빠릅니다.");
+			
 			return false;
 		}
 		

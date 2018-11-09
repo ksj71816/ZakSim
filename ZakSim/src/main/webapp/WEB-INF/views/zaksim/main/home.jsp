@@ -2,12 +2,14 @@
     pageEncoding="UTF-8"%>
 
 
+
 <!-- header include -->
 <%@include file="/WEB-INF/views/zaksim/main/header.jsp" %>
 
 <!-- css include -->
 
 <link rel="stylesheet" type="text/css" href="/css/main/image_hover.css">
+
 
 <!-- 바디 -->
 

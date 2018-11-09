@@ -79,8 +79,10 @@
    background-color: rgba(240, 200, 240, 0.7);">
     <div class="container mb-5 ">
       <div class="row mb-5">
-        <div class="col-md-5 border border-dark"> 달력 API 
-        
+      
+      <!-- 캘린더 추가 -->
+        <div class="col-md-5 px-0">
+     
         <%@include file="/WEB-INF/views/zaksim/challenge/include/calendar.jsp" %>
         
         </div>
