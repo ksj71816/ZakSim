@@ -156,8 +156,8 @@
 				success : function(data) {
 					if (data.findPwResult) {
 						// 해당 정보를 찾고 임시 비밀번호를 생성이 될 때
-//						$('.modal-body').html('임시 비밀번호가 이메일로 발송되었습니다.<br>임시 비밀번호로 로그인해주세요.');
-						$('.modal-body').html('임시 비밀번호 : ' + data.temPw + '<br>임시 비밀번호로 로그인해주세요.');
+						$('.modal-body').html('임시 비밀번호가 이메일로 발송되었습니다.<br>임시 비밀번호로 로그인해주세요.');
+						
 					} else {
 						// 해당 정보를 찾지 못 하였을 때
 						$('.modal-body').html('해당되는 정보가 없습니다.<br>회원가입을 해주세요.');

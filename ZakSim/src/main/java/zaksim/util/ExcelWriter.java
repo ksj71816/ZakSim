@@ -117,7 +117,7 @@ public class ExcelWriter {
 
 	    
 	    // 입력된 내용 파일로 쓰기
-        File file = new File("D:\\회원통계_" + format.format(new Date()) +".xlsx");
+        File file = new File("C:\\Users\\olaf\\Desktop\\회원통계_" + format.format(new Date()) +".xlsx");
         FileOutputStream fos = null;
         
         try {

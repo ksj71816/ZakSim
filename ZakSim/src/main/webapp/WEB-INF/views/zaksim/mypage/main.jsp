@@ -66,17 +66,16 @@
 						
 						      <!-- Modal body -->
 						      <div class="modal-body">
-							      <form method="get" id="deleteform">
+							      
+							      <form action="/zaksim/mypage/delete" method="post" id="deleteform">
 							      	<div class="form-group">
 										<label for="pwd" style="float:left;">비밀번호</label>
-									    <input type="password" class="form-control" name="password">
-									</div>
-									
-									<div style="float:right;">
-										<a class="btn btn-warning"><button class="close" data-dismiss="modal">취소</button></a>
-										<button type="submit" class="btn btn-danger" id="deletebtn" data-dismiss="modal">탈퇴</button>
+									    <input type="password" class="form-control" id="passwordck" name="passwordck"/>
+										<input type="submit" style="float:right;" class="btn btn-danger" id="deletebtn" value="탈퇴" data-dismiss="modal">
+										<a class="btn btn-warning" style="float:right;"><button class="close" data-dismiss="modal">취소</button></a>
 									</div>
 								  </form>
+								  
 						      </div>
 						    </div>
 						    
@@ -90,7 +89,7 @@
 	        <div class="col-md-7">
 	        	
 	        	<div class="card">
-			        <div class="mt-3">
+			        <div class="mt-3">,,
 			        	<p>OO/OO 부터 OO/OO 까지</p>
 		                 	<p>OOOOO에</p>
 		      			<p>10000원을 걸고 도전 중</p>
@@ -246,11 +245,10 @@
 	 <!-- footer include -->
 <%@include file="/WEB-INF/views/zaksim/main/footer.jsp" %>
 	
-	<script type="text/javascript">
-	 	$('#deletebtn').click(function(){
-		  //submit form
-		  // $('#myForm').submit(); // not working for me
-		  // $('#myForm')[0].submit(); //works, but is ugly
-		  $('#deleteform').trigger('submit');  //works great
-		});
-    </script>
+<!-- 	<script type="text/javascript"> -->
+// 		$('#myForm').on('submit', function(e){
+// 		  $('#myModal').modal('show');
+// 		  e.preventDefault();
+// 		});
+
+<!--     </script> -->

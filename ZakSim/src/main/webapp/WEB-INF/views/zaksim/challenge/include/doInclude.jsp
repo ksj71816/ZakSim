@@ -17,12 +17,13 @@
             </div>
             <form id="doChal" class="col-md-6" >
               <input class="form-control mt-3 " name="title" type="text" placeholder="도전할 목표을 입력하세요." maxlength="100" required="required">
-              <input class="form-control mt-3" name="startDate" type="date" required="required">
-              <input class="form-control mt-3" name="endDate" type="date" required="required">
+              <input class="form-control mt-3" id="startDate" name="startDate" type="text" placeholder="도전 시작일" required="required" style="cursor: pointer;">
+              <input class="form-control mt-3" id="endDate" name="endDate" type="text" placeholder="도전 종료일" required="required" style="cursor: pointer;">
               <button type="button" onclick="toPriceChallenge();" class="btn text-white btn-lg mt-5 ml-5" value="도전글 설정" style="background-color: rgb(187, 68, 56);">도전금 설정</button>
             </form>
           </div>
         </div>
         <div class="col-md-2"></div>
       </div>
-      
+
+

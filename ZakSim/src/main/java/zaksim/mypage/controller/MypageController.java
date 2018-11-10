@@ -1,5 +1,7 @@
 package zaksim.mypage.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import zaksim.dto.ZakSimMember;
@@ -33,51 +36,34 @@ public class MypageController {
 
 	
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String MypageUpdate (Model model, HttpSession session, ZakSimMember memberDto) {
-//		 logger.info("update");
-		 
-		 memberDto = mypageService.memberInfo((String)session.getAttribute("login_id"));
-		 
-//		 logger.info(memberDto.getNick());
-		 
-//		 session.setAttribute("login_nick", memberDto.getNick());
-//		 session.setAttribute("name", memberDto.getName());
-//		 session.setAttribute("phone", memberDto.getPhone());
-//		 session.setAttribute("email", memberDto.getEmail());
-		 
-//		 model.addAttribute("id", memberDto.getId());
-		 model.addAttribute("nick", memberDto.getNick());
-		 model.addAttribute("name", memberDto.getName());
-		 model.addAttribute("phone", memberDto.getPhone());
-		 model.addAttribute("email", memberDto.getEmail());
+	public String MypageUpdate (Model model, HttpSession session) {
+		logger.info((String) session.getAttribute("login_id"));
+		
+		String id = (String) session.getAttribute("login_id");
+	        
+		if(id == null) {
+	        return "redirect:/zaksim/main/home";
+		}
+	    else{
+	        model.addAllAttributes(mypageService.memberInfo(id));
+	        return "/zaksim/mypage/update";
+	    }
 
-		 return "/zaksim/mypage/update";
 	}
 	
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String MypageUpdateProcess(ZakSimMember memberDto, HttpServletRequest request) {
-		logger.info(request.getParameter("newPassword1"));
+	public String MypageUpdateProcess(@RequestParam HashMap<String, Object> params) {
+		logger.info((String)params.get("ID"));
+		
+		mypageService.updateMember(params); 
 
-//        mypageService.updateMember(memberDto); 
-        
-        // 수정된 내용 세션에 반영
-		
-//		if () {
-//			mypageService.updateMember(memberDto);
-		
-//			return "redirect:/zaksim/mypage/main";
-//		} else {
-//			return "redirect:/zaksim/mypage/update";
-//		}
-		
 		return "redirect:/zaksim/mypage/main";
 	}
 	
 	
 	@RequestMapping(value="/groups", method=RequestMethod.GET)
 	public void MypageGroups() {
-		
 		
 	}
 	
@@ -89,10 +75,13 @@ public class MypageController {
 	}
 	
 
-	@RequestMapping(value="/mypage/delete", method=RequestMethod.GET)
-	public String MypageDelete(HttpSession session) {
+	@RequestMapping(value="/delete", method=RequestMethod.POST)
+	public String MypageDelete(String password, HttpServletRequest request) {
+		logger.info(request.getParameter("passwordck"));
 		
-		mypageService.deleteMember((String)session.getAttribute("id"));
+		password = request.getParameter("passwordck");
+		
+		mypageService.deleteMember(password);
 		
 		return "redirect:/zaksim/main/home";
 	}

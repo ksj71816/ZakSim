@@ -76,8 +76,8 @@
 				<tbody>
 					<tr>
 						<th class="align-middle cols">아이디</th>
-						<td><input type="text" class="form-control form-control-sm mr-sm-2" value="${login_id }" 
-						 style="width: 400px;" id="id" name="id" disabled/></td>
+						<td><input type="text" class="form-control form-control-sm mr-sm-2" value="${ID }" 
+						 style="width: 400px;" id="ID" name="ID" readonly="readonly"/></td>
 						<td></td>
 					</tr>
 					<tr>
@@ -86,11 +86,11 @@
 							<input type="password" class="form-control form-control-sm mr-sm-2"
 							style="width: 400px;" id="newPassword1" name="newPassword1"/>
 						 	<ul>
-                        		<li class="mt-3" style="font-size: 12px; color:red; line-height: 200%;">비밀번호는 8~16자의 영문, 숫자,
+                        		<li class="mt-3" style="font-size: 10px; color:red; line-height: 200%;">비밀번호는 8~16자의 영문, 숫자,
                            		 특수문자를 2가지 이상 혼합해서 사용하셔야합니다.</li>
-                        		<li style="font-size: 12px; line-height: 200%;">자주 쓰는 사이트의 비밀번호가 같을 경우,
+                        		<li style="font-size: 10px; line-height: 200%;">자주 쓰는 사이트의 비밀번호가 같을 경우,
                             	주기적으로 변경하는게 안전합니다.</li>
-                        		<li style="font-size: 12px; line-height: 200%;">안전한 개인정보관리를 위해서 주기적으로 변경하시는 것이 안전합니다. </li>
+                        		<li style="font-size: 10px; line-height: 200%;">안전한 개인정보관리를 위해서 주기적으로 변경하시는 것이 안전합니다. </li>
                             </ul>
 						</td>
 						<td></td>
@@ -104,25 +104,25 @@
 					<tr>
 						<th class="align-middle">이름</th>
 						<td><input type="text" class="form-control form-control-sm mr-sm-2"
-						style="width: 400px;" value="${name }" name="name" disabled /></td>
+						style="width: 400px;" value="${NAME }" ID="NAME" name="NAME" disabled /></td>
 						<td></td>
 					</tr>
 					<tr>
 						<th class="align-middle">닉네임</th>
 						<td><input type="text" class="form-control form-control-sm mr-sm-2"
-						style="width: 400px;" value="${nick }" id="nick" name="nick"/></td>
+						style="width: 400px;" value="${NICK }" id="NICK" name="NICK"/></td>
 						<td></td>
 					</tr>
 					<tr>
 						<th class="align-middle">연락처</th>
 						<td><input type="text" class="form-control form-control-sm mr-sm-2"
-						style="width: 400px;" value="${phone }" id="phone" name="phone"/></td>
+						style="width: 400px;" value="${PHONE }" id="PHONE" name="PHONE"/></td>
 						<td></td>
 					</tr>
 					<tr>
 						<th class="align-middle">현재 이메일</th>
 						<td><input type="text" class="form-control form-control-sm mr-sm-2"
-						style="width: 400px;" value="${email }" id="email" name="email" disabled/></td>
+						style="width: 400px;" value="${EMAIL }" id="EMAIL" name="EMAIL" disabled/></td>
 						<td></td>
 					</tr>
 					<tr>
@@ -195,10 +195,8 @@
 	    	    var nickB = $("#nick").val();
 	    	    var phoneB = $("#phone").val();
 	    	    var emailB = $("#Cemail").val();
-//	    	    var addr1 = $("#addr1").val();
 	
 				var userID = document.getElementById("id").value;
-//      	    var password = document.getElementById("password").value;
 		    	var newPassword1 = document.getElementById("newPassword1").value;
 		    	var newPassword2 = document.getElementById("newPassword2").value;
 		    	var checkemail = document.getElementById("Cemail").value;
@@ -289,8 +287,6 @@
 //	    	        $("#addr3").focus();
 //	    	        return false;
 //	    	    }
- 
-		    	 
 
 		    	 // 기존 비밀번호와 새 비밀번호 일치 여부
 // 		    	 if (password == newPassword2) {

@@ -133,8 +133,6 @@ public class DoChallenge {
 		chal.setTitle(title);	//도전명
 		chal.setStatus("ing");	//도전 상태  ing(시작)/done(종료)/halt(포기)
 		
-		logger.info("도전 데이터"+chal);// 테스트 
-		
 		
 		
 		
@@ -145,18 +143,23 @@ public class DoChallenge {
 		 * > payment 객체에 set challenge idx > Payment daoImpl로 전달해서 insert > 확인
 		 * */
 		
+		// 시퀀스 값 받기
+		int seq=dochalsv.getSeqNextval();	
+//		System.out.println(seq); //테스트-완
+		chal.setIdx(seq); // 도전 idx
+		payment.setChallengeIdx(seq); // 결제 idx
+		
+		logger.info("도전 데이터"+chal);// 테스트 -완
+		logger.info("결제 데이터"+payment);
 		
 		
+		// 도전 insert
+		dochalsv.setCahllengeInfo(chal);
 		
-		// 도전금 정보 받기
+		// 결제 insert
+		dochalsv.setPayment(payment);
 		
 		
-		
-		// 챌린지DB insert	// sysdate 추가
-				
-		// paymentDB insert
-		
-		// 데이터 전달 (boolean=true 일때)
 		return dc.endChallengeGet();
 	}
 	

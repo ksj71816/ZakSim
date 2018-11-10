@@ -2,12 +2,14 @@
     pageEncoding="UTF-8"%>
 
 
+
 <!-- header include -->
 <%@include file="/WEB-INF/views/zaksim/main/header.jsp" %>
 
 <!-- css include -->
 
 <link rel="stylesheet" type="text/css" href="/css/main/image_hover.css">
+
 
 <!-- 바디 -->
 
@@ -313,7 +315,7 @@
         </div>
         <div class="col-md-9 px-0 ">
           
-         <div style="height:3px; background-color:gray;" class="col rounded my-2 mt-3"></div> 
+         <div style="height:2px; background-color:gray;" class="col rounded my-2 mt-3"></div> 
         </div>
         <div class="col-md-1 ml-4"><a href="/zaksim/challenge/challengers" class="btn btn-outline-white text-muted "><b>+더보기</b></a></div>
       </div>
@@ -448,5 +450,5 @@
     
         <!-- footer include -->
 <%@include file="/WEB-INF/views/zaksim/main/footer.jsp" %>
-    
+      
     

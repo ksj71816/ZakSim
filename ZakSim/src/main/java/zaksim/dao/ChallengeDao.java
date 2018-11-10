@@ -1,7 +1,13 @@
 package zaksim.dao;
 
+import java.util.Map;
+
+import zaksim.dto.Challenge;
+import zaksim.dto.Payment;
+
 public interface ChallengeDao {
 
+	
 	// 기간 별 인증률
 	void selectCertificationRate(int period);
 
@@ -22,5 +28,20 @@ public interface ChallengeDao {
 
 	// 기간 별 종료 도전 수
 	void selectEndNum(int period);
-
+	
+	
+//--------------------Do Challenge-------------------------------
+	
+	// 도전하기 시퀀스 select
+	public int selectSeq();
+	
+	// 도전하기 insert
+	public void insertChallenge(Challenge chal);
+	
+	// 결제정보 insert
+	public void insertPayment(Payment pay);
+	
+	// 도전 정보 select
+	public Challenge selectChallenge(int memberIdx);
+	
 }

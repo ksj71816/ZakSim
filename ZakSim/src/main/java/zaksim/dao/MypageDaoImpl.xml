@@ -5,36 +5,32 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="zaksim.dao.MypageDao">
-	
-	 <resultMap type="zaksim.dto.ZakSimMember" id="ZakSimMember">
-	  	<result property="id" column="id"/>
-	  	<result property="password" column="password"/>
-	  	<result property="nick" column="nick"/>
-	  	<result property="name" column="name"/>
-	  	<result property="email" column="email"/>
-	  	<result property="phone" column="phone"/>
-	  	<result property="memberType" column="member_type"/>
-	  </resultMap>
- 
- 
-	  <!-- parameterType: 정보를 받아온다 resultType: 정보를 돌려준다 -->
-	  <select id="memberInfo" parameterType="String" resultType="zaksim.dto.ZakSimMember">
-	        SELECT name, nick, phone, email FROM ZaksimMember
-	        WHERE id = #{id}
-	  </select> 
-	  
-	  <update id="updateMember" parameterType="zaksim.dto.ZakSimMember">
-	  		UPDATE ZaksimMember 
-	  		SET password = #{password}, 
-	  		nick = #{nick}, 
-	  		phone = #{phone},
-	  		email = #{email}
-	  		WHERE id = #{id}
-	  </update>
-	  
-	  <delete id="deleteMember" parameterType="String">
-	  		DELETE FROM ZaksimMember
-	  		WHERE id = #{id}
-	  </delete>
-    
+
+	<resultMap type="zaksim.dto.ZakSimMember" id="ZakSimMember">
+		<result property="memberType" column="member_type" />
+		<result property="joinDate" column="join_date" />
+		<result property="suspensionDate" column="suspension_date" />
+	</resultMap>
+
+
+	<!-- parameterType: 정보를 받아온다 resultType: 정보를 돌려준다 -->
+	<select id="memberInfo" parameterType="String" resultMap="ZakSimMember">
+		SELECT * FROM ZaksimMember
+		WHERE id = #{id}
+	</select>
+
+	<update id="updateMember" parameterType="zaksim.dto.ZakSimMember">
+		UPDATE ZaksimMember
+		SET password = #{password},
+		nick = #{nick},
+		phone = #{phone},
+		email = #{email}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="deleteMember" parameterType="String">
+		DELETE FROM ZaksimMember
+		WHERE id = #{id}
+	</delete>
+
 </mapper>

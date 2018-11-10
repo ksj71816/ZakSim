@@ -109,12 +109,10 @@ public class LoginController {
 		Map<String, Object> map = new HashMap<>();
 		if ( pw != null ) {
 			map.put("findPwResult", true); // 결과 반환(비밀번호 찾기 완료)
-			map.put("temPw", pw); // 임시 비밀번호 반환(이메일 발송 기능 전에 잠시 사용하기로...) TODO: 이메일 발송 기능 후, 삭제바람
 		} else {
 			map.put("findPwResult", false); // 결과 반환(비밀번호 찾기 실패-정보 없음)
 		}
 		return map;
-//		return "redirect:/zaksim/login/login"; // TODO: 리다이렉트는 jsp 쪽에서 하자
 	}
 	
 	// 회원가입

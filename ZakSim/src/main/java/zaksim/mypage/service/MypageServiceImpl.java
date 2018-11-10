@@ -1,5 +1,9 @@
 package zaksim.mypage.service;
 
+import java.util.HashMap;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,7 +12,6 @@ import zaksim.dto.Challenge;
 import zaksim.dto.CommunityGroup;
 import zaksim.dto.ZakSimMember;
 
-
 @Service
 public class MypageServiceImpl implements MypageService {
 	
@@ -16,16 +19,21 @@ public class MypageServiceImpl implements MypageService {
 
 	// 유저 정보 로드
 	@Override
-	public ZakSimMember memberInfo(String id) {
+	public HashMap<String, Object> memberInfo(String id) {
 		
 		return memberDao.memberInfo(id);
 	}
 	
 	// 유저 정보 수정
 	@Override
-	public void updateMember(ZakSimMember memberDto) {
+	public void updateMember(HashMap<String, Object> params) {
+		System.out.println((String)params.get("ID"));
 		
-		memberDao.updateMember(memberDto);
+		HashMap<String, Object> record = memberDao.memberInfo((String)params.get("ID"));
+
+		record.putAll(params);
+
+		memberDao.updateMember(record);
 	}
 	
 	// 유저가 참여한 그룹 로드
@@ -44,9 +52,9 @@ public class MypageServiceImpl implements MypageService {
 	
 	// 유저 탈퇴
 	@Override
-	public void deleteMember(String id) {
+	public void deleteMember(String password) {
 		
-		memberDao.deleteMember(id);
+		memberDao.deleteMember(password);
 	}
 
 }
