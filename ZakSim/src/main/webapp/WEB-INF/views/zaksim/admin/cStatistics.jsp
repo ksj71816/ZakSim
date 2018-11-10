@@ -30,7 +30,7 @@
  				</div>
  				<div class="col-4">
  					<div class="row justify-content-start">
- 						<p class="data-subTitle" style="border-color: #ccc !important;">수익</p>
+ 						<p class="data-subTitle" style="border-color: #ccc !important;">기부금</p>
  					</div>
  				</div>
  			</div>

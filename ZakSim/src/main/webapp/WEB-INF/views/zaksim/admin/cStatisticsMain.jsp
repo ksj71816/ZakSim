@@ -39,10 +39,10 @@
 						<thead>
 							<tr>
 								<th>날짜</th>
-								<th>총 회원수</th>
-								<th>가입 인원</th>
-								<th>탈퇴 인원</th>
-								<th>방문수</th>
+								<th>총 회원수</th>  
+								<th>신청 도전수</th>
+								<th>평균 도전금(원)</th>
+								<th>인증률</th>
 							</tr>
 						</thead>
 						<tbody id="detailTable">
