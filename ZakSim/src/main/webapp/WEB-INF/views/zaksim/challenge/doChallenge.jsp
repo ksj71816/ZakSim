@@ -123,7 +123,7 @@ $(document).ready(function() {
 		}
 		
 		
-		if( $( "#startDate" ).val()== null || $( "#endDate" ).val()== null ) {
+		if( $( "#startDate" ).val()== "" || $( "#endDate" ).val()== "" ) {
 			alert("도전 날짜를 입력해 주세요!");
 			
 			return false;
@@ -131,13 +131,13 @@ $(document).ready(function() {
 		
 		
 		if( $( "#startDate" ).val()==$( "#endDate" ).val() ) {
-			alert("도전 시작일과 종료일이 같습니다!");
+			alert("도전 날짜를 확인해 주세요!");
 			
 			return false;
 		}
 		
 		if(  $( "#startDate" ).val()  >  $( "#endDate" ).val() ){
-			alert("도전 종료일이 시작일보다 빠릅니다.");
+			alert("도전 날짜를 확인해 주세요!");
 			
 			return false;
 		}
@@ -427,19 +427,19 @@ $("[name='money']").attr("required", true);
                 </div>
                 
                 <div class="row " style="padding-bottom: 0rem!important;">
-                    <h6>
+                    <h6 class="mx-4">
                         <p style="margin-bottom: 5px;">
-                            <i class="fa d-inline mr-3 text-secondary fa-phone text-white" style="padding-left: 30px;"></i>☎&nbsp; 02 - 1234 - 5678
+                            <i class="fa d-inline mr-3 text-secondary fa-phone text-white" style="padding-left: 30px;"></i>02 - 1234 - 5678
                         </p>
                     </h6>
-                    <h6>
+                    <h6 class="mx-4">
                         <p style="margin-bottom: 5px;">
-                            <i class="fa d-inline mr-3 text-secondary fa-envelope-o text-white" style="padding-left: 30px;"></i>✉ info@KHAcademy.com
+                            <i class="fa d-inline mr-3 text-secondary fa-envelope-o text-white" style="padding-left: 30px;"></i>info@KHAcademy.com
                         </p>
                     </h6>
-                    <h6>
+                    <h6 class="mx-4">
                         <p style="margin-bottom: 5px;">
-                            <i class="fa d-inline mr-3 fa-map-marker text-secondary text-white" style="padding-left: 30px;"></i>▼&nbsp;서울특별시 강남구 역삼동123
+                            <i class="fa d-inline mr-3 fa-map-marker text-secondary text-white" style="padding-left: 30px;"></i>서울특별시 강남구 역삼동123
                         </p>
                     </h6>
                 </div>

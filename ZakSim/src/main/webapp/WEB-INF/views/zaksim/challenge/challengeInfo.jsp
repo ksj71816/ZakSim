@@ -19,13 +19,13 @@
           <img class="img-fluid d-block my-2 rounded-circle float-right" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" style="	height: 140px; width: 140px;	border-right-width: 3px;	border-top-width: 3px;	border-bottom-width: 3px;    border-left-width: 3px;	border-style: solid;	border-color: white;">
         </div>
         <div class="col-md-6 row" >
-          <div class="col-md-12 my-3 mx-3 text-center">
+          <div class="col-md-12 mt-2 mx-3 text-center">
             <h4>${sessionScope.login_nick }의 <b class="text-danger">도전 24일차</b></h4>
           </div>
-       <div class=" mx-3 col-md-12" style=" height:70px;  border-right-width: 2px;	border-top-width: 2px;	border-bottom-width: 2px;    border-left-width: 2px;	border-style:solid;	border-color: white;"> 
+       <div class=" mx-3 col-md-12" style=" height:70px;"> 
 		
-		<div class="m-1">
-		<h6 class="mt-2"><b>도전 인증률</b></h6>
+		<div class="m-0">
+		<h6 class="mt-1"><b>도전 인증률</b></h6>
 		<div class="progress mb-2" style="height: 25px; border-right-width: 1px;	border-top-width: 1px;	border-bottom-width: 1px;    border-left-width: 1px;	border-style:solid;	border-color: white;"> 
 		    <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
 		      40%
@@ -54,15 +54,16 @@
          
          
           <h4 class="text-center my-2 mb-4">도전 정보</h4>
-           
-         <a class="my-2 d-flex justify-content-center align-items-end">  <h5 class="mb-1"> <fmt:formatDate value="${info.startDate}" pattern="yyyy-MM-dd"/></h5>&nbsp;부터&nbsp; 
-         	<h5 class="mb-1"><fmt:formatDate value="${info.endDate}" pattern="yyyy-MM-dd"/></h5>&nbsp;까지 </a>
+          <hr style="border:2px white solid;"> 
+        
+             <a class="my-2 d-flex justify-content-center align-items-end">  <h5 class="mb-0 text-danger"> <fmt:formatDate value="${info.startDate}" pattern="yyyy-MM-dd"/></h5>&nbsp;부터&nbsp; 
+         		<h5 class="mb-0 text-danger"><fmt:formatDate value="${info.endDate}" pattern="yyyy-MM-dd"/></h5>&nbsp;까지 </a>
          
-          <a class="my-2 d-flex justify-content-center align-items-end"> 도전금&nbsp;<h4 class="mb-0"> ${info.money}원</h4>을 걸고</a>
+         	 <a class="my-2 d-flex justify-content-center align-items-end"> 도전금&nbsp;<h4 class="mb-0 text-info"> ${info.money}원</h4>을 걸고</a>
           
-         <a class="my-2 d-flex justify-content-center align-items-end"><h5 class="mb-1"><b>${info.title}</b></h5>&nbsp;도전중 </a>  
-          
-          <a class="btn btn-sm w-25 my-4 btn-primary text-white" href="/zaksim/challenge/citation"> 도전 인증 </a>
+        	 <a class="my-2 d-flex justify-content-center align-items-end"><h5 class="mb-0 text-danger"><b>${info.title}</b></h5>&nbsp;도전중 </a>  
+           
+          	 <a class="btn btn-sm w-25 my-4 btn-primary text-white" href="/zaksim/challenge/citation"> 도전 인증 </a>
         
         
         </div>
@@ -126,18 +127,18 @@
            
            <div class="col-md-6 text-center">
            
-            <c:if test="${empty status }">
-                <a class="btn btn-lg w-25 my-4 ml-0 btn-primary text-white " href="/zaksim/challenge/vow">서약서 작성</a>
+            <c:if test="${sessionScope.status eq 'ing' }">
+                <a class="btn btn-lg  my-4 ml-0 btn-primary text-white " href="/zaksim/challenge/vow">서약서 작성</a>
             </c:if>
             
-            <c:if test="${status }">
-                <a class="btn btn-lg w-25 my-4 ml-0 btn-primary text-white " href="#modal">서약서 확인</a>
+            <c:if test="${sessionScope.status ne 'ing' }">
+                <a class="btn btn-lg  my-4 ml-0 btn-primary text-white " href="#modal">서약서 확인</a>
             </c:if>
             
             </div>
             
             <div class="col-md-6 text-center"> 
-                <a class="btn btn-lg w-25 my-4 ml-0 btn-dark text-white " href="#modal">도전 포기</a>
+                <a class="btn btn-lg my-4 ml-0 btn-dark text-white " href="#modal">도전 포기</a>
             </div>
             
         </div>
@@ -199,19 +200,19 @@
                 </div>
                 
                 <div class="row " style="padding-bottom: 0rem!important;">
-                    <h6>
+                    <h6 class="mx-4">
                         <p style="margin-bottom: 5px;">
-                            <i class="fa d-inline mr-3 text-secondary fa-phone text-white" style="padding-left: 30px;"></i>☎&nbsp; 02 - 1234 - 5678
+                            <i class="fa d-inline mr-3 text-secondary fa-phone text-white" style="padding-left: 30px;"></i>02 - 1234 - 5678
                         </p>
                     </h6>
-                    <h6>
+                    <h6 class="mx-4">
                         <p style="margin-bottom: 5px;">
-                            <i class="fa d-inline mr-3 text-secondary fa-envelope-o text-white" style="padding-left: 30px;"></i>✉ info@KHAcademy.com
+                            <i class="fa d-inline mr-3 text-secondary fa-envelope-o text-white" style="padding-left: 30px;"></i> info@KHAcademy.com
                         </p>
                     </h6>
-                    <h6>
+                    <h6 class="mx-4">
                         <p style="margin-bottom: 5px;">
-                            <i class="fa d-inline mr-3 fa-map-marker text-secondary text-white" style="padding-left: 30px;"></i>▼&nbsp;서울특별시 강남구 역삼동123
+                            <i class="fa d-inline mr-3 fa-map-marker text-secondary text-white" style="padding-left: 30px;"></i>서울특별시 강남구 역삼동123
                         </p>
                     </h6>
                 </div>

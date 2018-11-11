@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
 <!-- header include -->
@@ -80,7 +81,7 @@
 		<div class="col-md-6 col-lg-6 rounded m-2 mx-5 text-center" style="background-color: blanchedalmond;    border-right-width: 5px;	border-top-width: 5px;	border-bottom-width: 5px;    border-left-width: 5px;	border-style: solid;	border-color: white;">
           <h3 class="text-center my-4 mb-4"><b>도전 정보</b></h3>
           <hr  style="border:2px white solid;">
-          <h4 class="my-5"> 로그인 후 이용해 주세요! </h4>
+          <h4 class="mt-5" style="margin-top: 80px!important;"> 로그인 후 이용해 주세요! </h4>
         </div>
        
     </c:if>
@@ -98,7 +99,7 @@
         </div>
         
         
-      <c:if test="${empty status }">
+      <c:if test="${ sessionScope.status ne 'ing'}">
       
         <!-- 비도전 중일때 -->
 		<div class="col-md-6 col-lg-6 rounded m-2 mx-5 text-center" style="background-color: blanchedalmond;    border-right-width: 5px;	border-top-width: 5px;	border-bottom-width: 5px;    border-left-width: 5px;	border-style: solid;	border-color: white;">
@@ -115,19 +116,20 @@
         
         
         
-      <c:if test="${status }">
+       <c:if test="${ sessionScope.status eq 'ing' }">
         <!-- 도전중일때 -->
         <div class="col-md-6 col-lg-6 rounded m-2 mx-5 text-center" 
          style="background-color: blanchedalmond;    border-right-width: 5px;	border-top-width: 5px;	border-bottom-width: 5px;    border-left-width: 5px;	border-style: solid;	border-color: white;">
-          <h3 class="text-center mt-2 mb-3">도전 정보</h3>
-          <hr style="border:2px white solid;">
+          <h4 class="text-center mt-2 mb-3">도전 정보</h4>
+           <hr  style="border:2px white solid;">
           
-          	<a class="my-2 d-flex justify-content-center align-items-end">  <h5 class="mb-1"> 10월 26일</h5>&nbsp;부터&nbsp; <h5 class="mb-1">12월 31일</h5>&nbsp;까지 </a>
+             <a class="my-2 d-flex justify-content-center align-items-end">  <h5 class="mb-0 text-danger"> <fmt:formatDate value="${info.startDate}" pattern="yyyy-MM-dd"/></h5>&nbsp;부터&nbsp; 
+         		<h5 class="mb-0 text-danger"><fmt:formatDate value="${info.endDate}" pattern="yyyy-MM-dd"/></h5>&nbsp;까지 </a>
          
-          	<a class="my-2 d-flex justify-content-center align-items-end"> 도전금&nbsp;<h4 class="mb-0"> 30,000</h4>원을 걸고</a>
+         	 <a class="my-2 d-flex justify-content-center align-items-end"> 도전금&nbsp;<h4 class="mb-0 text-info"> ${info.money}원</h4>을 걸고</a>
           
-         	<a class="my-2 d-flex justify-content-center align-items-end"><h5 class="mb-1"><b>헬스,운동하기</b></h5>&nbsp;도전중 </a>  
-          
+        	 <a class="my-2 d-flex justify-content-center align-items-end"><h5 class="mb-0 text-danger"><b>${info.title}</b></h5>&nbsp;도전중 </a>  
+        
           	<a class="btn btn-sm w-50 btn-info my-2 mt-4" href="/zaksim/challenge/challengeInfo"> 도전 정보 확인 </a>
         </div>
       </c:if>
