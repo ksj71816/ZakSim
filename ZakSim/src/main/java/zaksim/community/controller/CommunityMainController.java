@@ -51,6 +51,7 @@ public class CommunityMainController {
 			model.addAttribute("categoryList", communityListService.categoryList());
 			// 키워드 리스트
 			model.addAttribute("keywordList", communityListService.keywordList());
+
 		}
 		
 

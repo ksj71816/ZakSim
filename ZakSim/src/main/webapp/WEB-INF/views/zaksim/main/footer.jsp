@@ -50,19 +50,19 @@
                 </div>
                 
                 <div class="row " style="padding-bottom: 0rem!important;">
-                    <h6>
+                    <h6 class="mx-4">
                         <p style="margin-bottom: 5px;">
-                            <i class="fa d-inline mr-3 text-secondary fa-phone text-white" style="padding-left: 30px;"></i>☎&nbsp; 02 - 1234 - 5678
+                            <i class="fa d-inline mr-3 text-secondary fa-phone text-white" style="padding-left: 30px;"></i>02 - 1234 - 5678
                         </p>
                     </h6>
-                    <h6>
+                    <h6 class="mx-4">
                         <p style="margin-bottom: 5px;">
-                            <i class="fa d-inline mr-3 text-secondary fa-envelope-o text-white" style="padding-left: 30px;"></i>✉ info@KHAcademy.com
+                            <i class="fa d-inline mr-3 text-secondary fa-envelope-o text-white" style="padding-left: 30px;"></i>info@KHAcademy.com
                         </p>
                     </h6>
-                    <h6>
+                    <h6 class="mx-4">
                         <p style="margin-bottom: 5px;">
-                            <i class="fa d-inline mr-3 fa-map-marker text-secondary text-white" style="padding-left: 30px;"></i>▼&nbsp;서울특별시 강남구 역삼동123
+                            <i class="fa d-inline mr-3 fa-map-marker text-secondary text-white" style="padding-left: 30px;"></i>서울특별시 강남구 역삼동123
                         </p>
                     </h6>
                 </div>
@@ -77,27 +77,11 @@
         </div>
     </div>
 
-    <!-- ribbon -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-	<!-- pie chart -->
-	<script src="http://rendro.github.io/easy-pie-chart/javascripts/jquery.easy-pie-chart.js"></script> 
-	
-	<script>
-		// 파이 차트
-		$(function () {
-		    $('.min-chart#chart-sales').easyPieChart({
-		        barColor: "#4caf50",
-		        onStep: function (from, to, percent) {
-		            $(this.el).find('#percent').text(Math.round(percent));
-		        }
-		    });
-		});
-
-	</script>
-	
+<!-- jquery 충돌? -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>	
 </body>
+
 
 </html>

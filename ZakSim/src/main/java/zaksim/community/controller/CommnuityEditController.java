@@ -93,7 +93,7 @@ public class CommnuityEditController {
 			communityEditService.createKeyword(groupKeyword);
 		}
 		
-		// 그룹 맴버에 저장
+		// 그룹 맴버에 맴버 생성
 		 GroupMember groupMember= new GroupMember();
 		 
 		 System.out.println("그룹 인덱스 : "+ communityGroup.getIdx());
@@ -227,5 +227,20 @@ public class CommnuityEditController {
 		return "redirect:/zaksim/community/communityMain";
 		
 
+	}
+	
+	
+	
+	// 커뮤니티 좋아요
+	@RequestMapping(value ="/recommend", method=RequestMethod.GET)
+	public ModelAndView recommend() {
+		
+		ModelAndView modelAndView = new ModelAndView();
+		
+		
+		
+		modelAndView.setViewName("jsonView");
+		
+		return modelAndView;
 	}
 }

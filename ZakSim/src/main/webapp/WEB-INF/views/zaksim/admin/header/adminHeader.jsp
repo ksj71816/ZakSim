@@ -157,7 +157,7 @@ body {
 		<div class="dropdown-container">
 			<a href="/zaksim/admin/mStatistics">회원</a>
 			<a href="/zaksim/admin/cStatistics">도전</a>
-			<a href="/zaksim/admin/pStatistics">수익</a>
+			<a href="/zaksim/admin/pStatistics">기부금</a>
 		</div>
 	</div>
 <!-- sidenav -->

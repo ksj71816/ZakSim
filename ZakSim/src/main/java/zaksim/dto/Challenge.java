@@ -23,7 +23,7 @@ public class Challenge {
 	private int money;
 	//도전명
 	private String title;
-	//도전 상태 ex) ing/done/halt(중도포기)
+	//도전 상태 ex) ing/done/half(중도포기)
 	private String status;
 	//달성 결과 ex) success/fail
 	private String result;

@@ -6,6 +6,21 @@
   
   <mapper namespace="zaksim.dao.ChallengeDao">
   
+  <resultMap type="zaksim.dto.Challenge" id="Challenge">
+
+	<result column="idx" property="idx"/>
+	<result column="member_idx" property="memberIdx"/>
+	<result column="apply_date" property="applyDate"/>
+	<result column="start_date" property="startDate"/>
+	<result column="end_date" property="endDate"/>
+	<result column="money" property="money"/>
+	<result column="title" property="title"/>
+	<result column="status" property="status"/>
+	<result column="result" property="result"/>
+	
+  </resultMap>
+  
+  
   	<select id="selectSeq" resultType="int">
   		
   		select challenge_seq.nextval from dual
@@ -26,5 +41,14 @@
   		VALUES ( #{impUid} , #{merchantUid} , #{buyerIdx} , #{challengeIdx} , #{price} , #{paidAt} , #{status} , #{paymentOption} )
   	
   	</insert>
+  	
+  	
+  	<select id="selectChallenge" parameterType="int" resultMap="Challenge">
+  	
+	  	SELECT * FROM  
+	 		(SELECT * FROM challenge WHERE member_idx=#{memberIdx} ORDER BY idx DESC) 
+		WHERE ROWNUM = 1
+  	
+  	</select>
   
   </mapper>

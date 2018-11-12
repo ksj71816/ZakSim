@@ -3,10 +3,11 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
 <mapper namespace="zaksim.dao.CommunityMemberListDao">
 
-		<resultMap type="zaksim.dto.CommunityGroup" id="CommunityGroup">
+	<resultMap type="zaksim.dto.CommunityGroup"
+		id="CommunityGroup">
 		<result column="idx" property="idx" />
 		<result column="member_idx" property="member_idx" />
 		<result column="category_idx" property="category_idx" />
@@ -26,12 +27,29 @@
 		<collection property="communityGroup"
 			resultMap="CommunityGroup" />
 	</resultMap>
-	
-	
-	<select id="members" resultMap="GroupMember" parameterType="int">
-		select * from groupmember m, communitygroup g where m.group_idx = g.idx
+
+	<resultMap type="zaksim.dto.ZakSimMember" id="ZakSimMember">
+		<result column="idx" property="idx" />
+		<result column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="nick" property="nick" />
+		<collection property="communityGroup"
+			resultMap="CommunityGroup" />
+		<collection property="groupMember"
+			resultMap="GroupMember" />
+	</resultMap>
+
+
+<!-- 	<select id="members" resultMap="GroupMember" parameterType="int"> -->
+<!-- 		select * from groupmember m, communitygroup g where m.group_idx = -->
+<!-- 		g.idx -->
+<!-- 	</select> -->
+
+	<select id="members" resultMap="GroupMember" >
+		select distinct m.member_idx from groupmember m, zaksimmember z where
+		z.idx = m.member_idx
 	</select>
-	
 
 
-  </mapper>
+
+</mapper>

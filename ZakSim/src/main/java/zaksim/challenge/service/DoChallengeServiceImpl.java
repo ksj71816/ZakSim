@@ -31,26 +31,13 @@ public class DoChallengeServiceImpl implements DoChallengeService{
 		challengeDao.insertChallenge(chal);
 	}
 
-	// 도전 정보 가져오기
-	@Override
-	public Challenge getChallengeInfo(ZakSimMember user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	// 결제 정보 입력
 	@Override
 	public void setPayment(Payment pay) {
 
 		challengeDao.insertPayment(pay);
 		
-	}
-
-	// 결제 정보 가져오기
-	@Override
-	public Payment getPayment(ZakSimMember user) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	

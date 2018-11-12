@@ -7,6 +7,8 @@ import zaksim.dto.GroupMember;
 public interface CommunityMemberListDao {
 
 	// 그룹별 회원 정보
-	public List<GroupMember> members(int idx);
+	public List<GroupMember> members();
+	
+
 	
 }

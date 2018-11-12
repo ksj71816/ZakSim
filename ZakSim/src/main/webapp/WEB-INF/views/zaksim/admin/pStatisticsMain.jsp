@@ -10,7 +10,7 @@
 						<p class="align-self-center mt-5" id="joinNum" style="font-size: 70px; font-family: Dohyeon;">${joinNum}</p>
 					</div>
 					<div class="row justify-content-center mb-3">
-						<p style="font-family: Dohyeon;">가입 인원</p>
+						<p style="font-family: Dohyeon;">도전 성공률</p>
 					</div>
 				</div>
 				<div class="col-6 border ml-2" id="canvasDiv">
@@ -39,10 +39,9 @@
 						<thead>
 							<tr>
 								<th>날짜</th>
-								<th>총 회원수</th>
-								<th>가입 인원</th>
-								<th>탈퇴 인원</th>
-								<th>방문수</th>
+								<th>종료 도전수/진행 도전수</th>
+								<th>실패 도전수</th>
+								<th>예비 기부금(원)</th>
 							</tr>
 						</thead>
 						<tbody id="detailTable">

@@ -1,5 +1,7 @@
 package zaksim.dao;
 
+import java.util.Map;
+
 import zaksim.dto.Challenge;
 import zaksim.dto.Payment;
 
@@ -38,5 +40,8 @@ public interface ChallengeDao {
 	
 	// 결제정보 insert
 	public void insertPayment(Payment pay);
+	
+	// 도전 정보 select
+	public Challenge selectChallenge(int memberIdx);
 	
 }

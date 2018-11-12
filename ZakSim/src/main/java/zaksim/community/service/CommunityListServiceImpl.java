@@ -66,12 +66,21 @@ public class CommunityListServiceImpl  implements CommunityListService{
 		return communityListDAO.categoryList2();
 	}
 
- @Override
+	
 	// 카테고리별 정보
+	@Override
 	public List<CommunityGroup> categoryGroup(int idx){
-	 
 	 return communityListDAO.categoryGroup(idx);
  }
+
+	// 그룹 좋아요
+	@Override
+	public GroupLike groupLike(int idx) {
+		// TODO Auto-generated method stub
+		return communityListDAO.groupLike(idx);
+	}
+
+
 
 
 	

@@ -14,12 +14,12 @@
 	border-color: lightgray;
 }
 
-#comment {
-	border-color: black;
-	border: 1px solid;
-	background-color: lightgray;
-	border-color: white;
-}
+/* #comment { */
+/* 	border-color: black; */
+/* 	border: 1px solid; */
+/* 	background-color: lightgray; */
+/* 	border-color: white; */
+/* } */
 
 #commentPhoto {
 	width: 70px;

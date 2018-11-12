@@ -19,10 +19,18 @@ public class ZakSimMember {
 	private Date joinDate;
 	private String status;				// 계정 정지 / 정상
 	private Date suspensionDate;	// 계정 정지 처분 날짜
-	
+	private int suspendNum;
+	private Date leaveDate;	
 	CommunityGroup communityGroup;
-	
-	
+	GroupMember groupMember;
+	@Override
+	public String toString() {
+		return "ZakSimMember [reportNum=" + reportNum + ", rnum=" + rnum + ", idx=" + idx + ", memberType=" + memberType
+				+ ", id=" + id + ", password=" + password + ", nick=" + nick + ", name=" + name + ", email=" + email
+				+ ", phone=" + phone + ", joinDate=" + joinDate + ", status=" + status + ", suspensionDate="
+				+ suspensionDate + ", suspendNum=" + suspendNum + ", leaveDate=" + leaveDate + ", communityGroup="
+				+ communityGroup + ", groupMember=" + groupMember + "]";
+	}
 	public int getReportNum() {
 		return reportNum;
 	}
@@ -101,12 +109,17 @@ public class ZakSimMember {
 	public void setSuspensionDate(Date suspensionDate) {
 		this.suspensionDate = suspensionDate;
 	}
-	@Override
-	public String toString() {
-		return "ZakSimMember [reportNum=" + reportNum + ", rnum=" + rnum + ", idx=" + idx + ", memberType=" + memberType
-				+ ", id=" + id + ", password=" + password + ", nick=" + nick + ", name=" + name + ", email=" + email
-				+ ", phone=" + phone + ", joinDate=" + joinDate + ", status=" + status + ", suspensionDate="
-				+ suspensionDate + ", communityGroup=" + communityGroup + "]";
+	public int getSuspendNum() {
+		return suspendNum;
+	}
+	public void setSuspendNum(int suspendNum) {
+		this.suspendNum = suspendNum;
+	}
+	public Date getLeaveDate() {
+		return leaveDate;
+	}
+	public void setLeaveDate(Date leaveDate) {
+		this.leaveDate = leaveDate;
 	}
 	public CommunityGroup getCommunityGroup() {
 		return communityGroup;
@@ -114,5 +127,14 @@ public class ZakSimMember {
 	public void setCommunityGroup(CommunityGroup communityGroup) {
 		this.communityGroup = communityGroup;
 	}
+	public GroupMember getGroupMember() {
+		return groupMember;
+	}
+	public void setGroupMember(GroupMember groupMember) {
+		this.groupMember = groupMember;
+	}
+	
+	
+
 
 }

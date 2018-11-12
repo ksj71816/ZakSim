@@ -5,6 +5,7 @@ import java.util.List;
 import zaksim.dto.CommunityCategory;
 import zaksim.dto.CommunityGroup;
 import zaksim.dto.GroupKeyword;
+import zaksim.dto.GroupLike;
 
 public interface CommunityListService {
 
@@ -32,5 +33,8 @@ public interface CommunityListService {
 	
 	// 카테고리별 정보
 	public List<CommunityGroup> categoryGroup(int idx);
+	
+	// 커뮤니티 좋아요
+	public GroupLike groupLike(int idx);
 	
 }

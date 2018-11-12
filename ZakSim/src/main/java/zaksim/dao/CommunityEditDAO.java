@@ -43,4 +43,7 @@ public interface CommunityEditDAO {
 	// 그룹 맴버 삭제
 	public void deleteGroupMember(int idx);
 	
+	// 그룹 좋아요
+//	public void likeGroup(int idx);
+	
 }

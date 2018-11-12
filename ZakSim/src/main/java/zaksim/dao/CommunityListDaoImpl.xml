@@ -167,7 +167,7 @@
 		FROM
 		(SELECT g.idx g_idx, g.title ,g.content , g.image ,g.max , g.open_date , 
 		g.secret
-		, g.password
+		, g.password 
 		FROM CommunityGroup g
 		order by g.idx desc) gk
 		left join (select count(*) as like_num, group_idx as l_group_idx from
@@ -211,7 +211,7 @@
 		FROM
 		(SELECT g.idx g_idx, g.title ,g.content , g.image ,g.max ,
 		g.open_date , g.secret
-		, g.password, c.idx
+		, g.password, c.idx,g.member_idx
 		FROM CommunityGroup g, CommunityCategory c
 		WHERE g.category_idx = c.idx and g.idx=#{idx }) gk
 		left join
@@ -262,7 +262,9 @@
 		like_num desc, null desc) l on l.l_group_idx=gk.g_idx
 	</select>
 	
-
+	<select id="groupLike" resultMap="GroupLike" parameterType="int">
+		select group_idx, count(group_idx) as like_num from groupLike group by group_idx having group_idx=#{group_idx }
+	</select>
 
 
 

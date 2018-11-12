@@ -10,10 +10,18 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>ZakSim</title>
+    
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 
 <style type="text/css">
+
+
+
+
  #navbarToggle {  
     position: relative;  
    
@@ -100,22 +108,25 @@
         <c:if test="${sessionScope.login}">
 	        
 	        <!-- 도전중 일때 -->
-	        <c:if test="${ status }">
-	        <a href="/zaksim/challenge/challengeInfo" style="text-decoration: none; " >나의 도전</a>
+	        <c:if test="${ sessionScope.status eq 'ing' }">
+	        <a href="/zaksim/challenge/challengeInfo" style="text-decoration: none; " >나의 도전 </a>
 	        </c:if>
 	        
 	        <!-- 도전중이 아닐때 -->
-	        <c:if test="${empty status }">
-	        <a href="/zaksim/challenge/doChallenge" style="text-decoration: none; " >나의 도전</a>
+	        <c:if test="${sessionScope.status ne 'ing'}">
+	        <a href="/zaksim/challenge/doChallenge" style="text-decoration: none; " >나의 도전 </a>
 	        </c:if>
+       
         </c:if>
         
         <c:if test="${not sessionScope.login}"> 
-        	<a href="/zaksim/main/notLogin" style="text-decoration: none; " >나의 도전</a>
+        	<a href="/zaksim/main/notLogin" style="text-decoration: none; " >나의 도전 </a>
         </c:if>
         
         
         </li>
+        
+        
         <li class="nav-item  font-weight-bold text-black-50 mx-2" style="font-size: 15px;">
         <a href="/zaksim/challenge/challengers" style="text-decoration: none;  " >도전자 인증</a>
         </li>
