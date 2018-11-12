@@ -10,7 +10,7 @@ public interface CommunityListService {
 
 
 	// 가입한 그룹 리스트
-	public List<CommunityGroup> joinedGroupList( );
+	public List<CommunityGroup> joinedGroupList(int idx);
 	
 	// 인기그룹 리스트
 	public List<CommunityGroup> popularGroupList( );

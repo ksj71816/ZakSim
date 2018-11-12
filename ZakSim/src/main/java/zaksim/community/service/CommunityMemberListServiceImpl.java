@@ -14,9 +14,9 @@ public class CommunityMemberListServiceImpl implements CommunityMemberListServic
 	@Autowired CommunityMemberListDao communityMemberListDao;
 
 	@Override
-	public List<GroupMember> members() {
+	public List<GroupMember> members(int idx) {
 		// TODO Auto-generated method stub
-		return communityMemberListDao.members();
+		return communityMemberListDao.members(idx);
 	}
 
 

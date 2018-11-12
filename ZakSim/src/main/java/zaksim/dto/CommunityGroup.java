@@ -38,13 +38,15 @@ public class CommunityGroup {
     private String password;
     
     CommunityCategory communityCategory;
+    
+    ZakSimMember zakSimMember;
 
 	@Override
 	public String toString() {
 		return "CommunityGroup [currval=" + currval + ", idx=" + idx + ", member_idx=" + member_idx + ", category_idx="
 				+ category_idx + ", title=" + title + ", content=" + content + ", image=" + image + ", max=" + max
 				+ ", open_date=" + open_date + ", secret=" + secret + ", password=" + password + ", communityCategory="
-				+ communityCategory + "]";
+				+ communityCategory + ", zakSimMember=" + zakSimMember + "]";
 	}
 
 	public int getCurrval() {
@@ -142,6 +144,15 @@ public class CommunityGroup {
 	public void setCommunityCategory(CommunityCategory communityCategory) {
 		this.communityCategory = communityCategory;
 	}
+
+	public ZakSimMember getZakSimMember() {
+		return zakSimMember;
+	}
+
+	public void setZakSimMember(ZakSimMember zakSimMember) {
+		this.zakSimMember = zakSimMember;
+	}
+
 
 
 

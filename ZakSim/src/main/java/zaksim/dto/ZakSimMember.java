@@ -20,6 +20,8 @@ public class ZakSimMember {
 	private String status;				// 계정 정지 / 정상
 	private Date suspensionDate;	// 계정 정지 처분 날짜
 	
+	CommunityGroup communityGroup;
+	
 	
 	public int getReportNum() {
 		return reportNum;
@@ -104,6 +106,13 @@ public class ZakSimMember {
 		return "ZakSimMember [reportNum=" + reportNum + ", rnum=" + rnum + ", idx=" + idx + ", memberType=" + memberType
 				+ ", id=" + id + ", password=" + password + ", nick=" + nick + ", name=" + name + ", email=" + email
 				+ ", phone=" + phone + ", joinDate=" + joinDate + ", status=" + status + ", suspensionDate="
-				+ suspensionDate + "]";
+				+ suspensionDate + ", communityGroup=" + communityGroup + "]";
 	}
+	public CommunityGroup getCommunityGroup() {
+		return communityGroup;
+	}
+	public void setCommunityGroup(CommunityGroup communityGroup) {
+		this.communityGroup = communityGroup;
+	}
+
 }

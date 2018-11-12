@@ -7,6 +7,7 @@ import zaksim.dao.CommunityEditDAO;
 import zaksim.dto.CommunityCategory;
 import zaksim.dto.CommunityGroup;
 import zaksim.dto.GroupKeyword;
+import zaksim.dto.GroupMember;
 
 @Service
 public class CommunityEditServiceImpl implements CommunityEditService{
@@ -66,8 +67,8 @@ public class CommunityEditServiceImpl implements CommunityEditService{
 
 	// 그룹 수정
 	@Override
-	public void updateGroup(int group_idx) {
-		communityEditDAO.updateGroup(group_idx);
+	public void updateGroup(CommunityGroup communityGroup) {
+		communityEditDAO.updateGroup(communityGroup);
 	}
 
 	// 그룹 삭제
@@ -75,6 +76,22 @@ public class CommunityEditServiceImpl implements CommunityEditService{
 	public void deleteGroup(int idx) {
 		communityEditDAO.deleteGroup(idx);
 	}
+
+	// 그룹 맴버 추가
+	@Override
+	public void addMember(GroupMember groupMember) {
+		// TODO Auto-generated method stub
+		communityEditDAO.addMember(groupMember);
+	}
+	
+	// 그룹 맴버 삭제
+	@Override
+	public void deleteGroupMember(int idx) {
+		
+	}
+
+
+
 
 
 

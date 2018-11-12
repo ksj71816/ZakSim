@@ -32,6 +32,7 @@
 		<result column="password" property="password" />
 		<collection property="communityCategory"
 			resultMap="CommunityCategory" />
+
 	</resultMap>
 
 	<resultMap type="zaksim.dto.GroupKeyword" id="GroupKeyword">
@@ -54,6 +55,23 @@
 		<collection property="communityCategory"
 			resultMap="CommunityCategory" />
 	</resultMap>
+	
+<!-- 	idx, member_type, id, password, nick, name, email, phone, join_date, status, suspension_date -->
+<!-- 		<resultMap type="zaksim.dto.ZakSimMember" id="ZaksimMember"> -->
+<!-- 		<result column="idx" property="idx" /> -->
+<!-- 		<result column="memberType" property="member_type" /> -->
+<!-- 		<result column="id" property="id" /> -->
+<!-- 		<result column="password" property="password" /> -->
+<!-- 		<result column="nick" property="nick" /> -->
+<!-- 		<result column="name" property="name" /> -->
+<!-- 		<result column="email" property="email" /> -->
+<!-- 		<result column="phone" property="phone" /> -->
+<!-- 		<result column="joinDate" property="join_date" /> -->
+<!-- 		<result column="status" property="status" /> -->
+<!-- 		<result column="suspensionDate" property="suspension_date" /> -->
+<!-- 				<collection property="communityGroup" -->
+<!-- 			resultMap="CommunityGroup" /> -->
+<!-- 	</resultMap> -->
 
 	<resultMap type="zaksim.dto.CommunityCategory"
 		id="CommunityCategory">
@@ -62,21 +80,37 @@
 		<result column="image" property="image" />
 	</resultMap>
 
-	<select id="joinedGroupList" resultMap="GroupLike">
-		select * from
+	<select id="joinedGroupList" resultMap="GroupLike" parameterType="int">
+         select * from
 		(select
 		c.idx g_idx,
 		c.title, c.content, c.image, c.max, c.open_date, c.secret,
 		c.password
-		from groupmember m, communitygroup c where m.member_idx=2
+		from ZaksimMember m, communitygroup c where c.member_idx=#{idx }
 		and
-		m.group_idx=c.idx
+		m.idx=c.member_idx
 		) g
 		left join (select count(*) like_num, group_idx
 		l_group_idx from grouplike
 		GROUP BY group_idx) l on
 		l.l_group_idx=g.g_idx
 	</select>
+
+<!-- 	<select id="joinedGroupList" resultMap="GroupLike"> -->
+<!-- 		select * from -->
+<!-- 		(select -->
+<!-- 		c.idx g_idx, -->
+<!-- 		c.title, c.content, c.image, c.max, c.open_date, c.secret, -->
+<!-- 		c.password -->
+<!-- 		from groupmember m, communitygroup c where m.member_idx=2 -->
+<!-- 		and -->
+<!-- 		m.group_idx=c.idx -->
+<!-- 		) g -->
+<!-- 		left join (select count(*) like_num, group_idx -->
+<!-- 		l_group_idx from grouplike -->
+<!-- 		GROUP BY group_idx) l on -->
+<!-- 		l.l_group_idx=g.g_idx -->
+<!-- 	</select> -->
 
 	<select id="keywordList" resultMap="GroupKeyword">
 		select k.group_idx, k.keyword
@@ -127,18 +161,17 @@
 	</select>
 
 
-
 	<select id="newGroupList" resultMap="GroupLike">
 		SELECT
 		*
 		FROM
-		(SELECT g.idx g_idx, g.title ,g.content , g.image ,g.max , g.open_date ,
+		(SELECT g.idx g_idx, g.title ,g.content , g.image ,g.max , g.open_date , 
 		g.secret
 		, g.password
 		FROM CommunityGroup g
 		order by g.idx desc) gk
 		left join (select count(*) as like_num, group_idx as l_group_idx from
-		grouplike -->
+		grouplike
 		GROUP BY group_idx) l on l.l_group_idx=gk.g_idx
 	</select>
 
@@ -178,9 +211,9 @@
 		FROM
 		(SELECT g.idx g_idx, g.title ,g.content , g.image ,g.max ,
 		g.open_date , g.secret
-		, g.password
-		FROM CommunityGroup g
-		WHERE g.idx=#{idx}) gk
+		, g.password, c.idx
+		FROM CommunityGroup g, CommunityCategory c
+		WHERE g.category_idx = c.idx and g.idx=#{idx }) gk
 		left join
 		(select count(*) as like_num, group_idx as l_group_idx from
 		grouplike
@@ -209,6 +242,8 @@
 
 <!-- 	</select> -->
 
+
+
 	<select id="categoryGroup" resultMap="GroupLike">
 		SELECT
 		*
@@ -227,8 +262,7 @@
 		like_num desc, null desc) l on l.l_group_idx=gk.g_idx
 	</select>
 	
-	<select id="member" >
-	</select>
+
 
 
 

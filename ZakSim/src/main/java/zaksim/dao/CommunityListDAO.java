@@ -6,11 +6,12 @@ import zaksim.dto.CommunityCategory;
 import zaksim.dto.CommunityGroup;
 import zaksim.dto.GroupKeyword;
 import zaksim.dto.GroupMember;
+import zaksim.dto.ZakSimMember;
 
 public interface CommunityListDAO {
 
 	// 그룹 리스트
-	public List<CommunityGroup> joinedGroupList( );
+	public List<CommunityGroup> joinedGroupList(int idx);
 	
 	// 인기그룹 리스트
 	public List<CommunityGroup> popularGroupList( );
@@ -34,7 +35,5 @@ public interface CommunityListDAO {
 	public List<CommunityGroup> categoryGroup(int idx);
 	
 
-	
-	
 	
 }

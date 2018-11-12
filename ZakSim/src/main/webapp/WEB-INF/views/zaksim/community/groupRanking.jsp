@@ -120,39 +120,6 @@
 			</c:forEach>
 
 
-			<c:forEach var="communityList" items="${communityList }" step="1"
-				begin="3" end="8" varStatus="status">
-
-				<!-- 랭킹 -->
-				<div class="form-inline"
-					style="margin-top: 50px; font-size: 30px; margin-left: 150px; box-shadow: 5px 5px 5px; margin-right: 100px; margin-bottom: 60px;">
-					<table class="table table-borderless">
-						<tbody>
-							<tr>
-								<th scope="col">
-									<p style="font-size: 60px;">&nbsp;&nbsp;${ status.index+1 }</p>
-								</th>
-								<th scope="col"><img class="groupImg"
-									src="${communityList.communityGroup.image }"
-									style="width: 90px;"></th>
-								<th scope="col"
-									style="text-align: center; width: 300px; word-break: break-all"
-									wrap="hard">${communityList.communityGroup.title }<br>
-									<c:forEach var="keywordList" items="${keywordList }">
-										<c:if
-											test="${communityList.communityGroup.idx eq keywordList.group_idx}">
-											<span>#${keywordList.keyword }</span>
-										</c:if>
-									</c:forEach>
-								</th>
-								<th scope="col" style="text-align: center;">좋아요<br>${communityList.likeNum }</th>
-								<th scope="col" style="text-align: center;">달성도<br>96%
-								</th>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</c:forEach>
 
 
 			<c:forEach var="communityList" items="${communityList }" step="1"

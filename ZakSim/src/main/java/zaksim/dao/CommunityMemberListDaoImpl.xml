@@ -28,7 +28,7 @@
 	</resultMap>
 	
 	
-	<select id="members" resultMap="GroupMember">
+	<select id="members" resultMap="GroupMember" parameterType="int">
 		select * from groupmember m, communitygroup g where m.group_idx = g.idx
 	</select>
 	
