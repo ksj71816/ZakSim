@@ -50,19 +50,19 @@
                 </div>
                 
                 <div class="row " style="padding-bottom: 0rem!important;">
-                    <h6>
+                    <h6 class="mx-4">
                         <p style="margin-bottom: 5px;">
-                            <i class="fa d-inline mr-3 text-secondary fa-phone text-white" style="padding-left: 30px;"></i>☎&nbsp; 02 - 1234 - 5678
+                            <i class="fa d-inline mr-3 text-secondary fa-phone text-white" style="padding-left: 30px;"></i>02 - 1234 - 5678
                         </p>
                     </h6>
-                    <h6>
+                    <h6 class="mx-4">
                         <p style="margin-bottom: 5px;">
-                            <i class="fa d-inline mr-3 text-secondary fa-envelope-o text-white" style="padding-left: 30px;"></i>✉ info@KHAcademy.com
+                            <i class="fa d-inline mr-3 text-secondary fa-envelope-o text-white" style="padding-left: 30px;"></i>info@KHAcademy.com
                         </p>
                     </h6>
-                    <h6>
+                    <h6 class="mx-4">
                         <p style="margin-bottom: 5px;">
-                            <i class="fa d-inline mr-3 fa-map-marker text-secondary text-white" style="padding-left: 30px;"></i>▼&nbsp;서울특별시 강남구 역삼동123
+                            <i class="fa d-inline mr-3 fa-map-marker text-secondary text-white" style="padding-left: 30px;"></i>서울특별시 강남구 역삼동123
                         </p>
                     </h6>
                 </div>

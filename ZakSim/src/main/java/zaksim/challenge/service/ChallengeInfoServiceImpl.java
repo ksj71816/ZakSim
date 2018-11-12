@@ -16,6 +16,8 @@ public class ChallengeInfoServiceImpl implements ChallengeInfoService {
 	@Override
 	public Challenge getChallengeInfo(int memberIdx) {
 	
+		System.out.println("service : "+memberIdx);
+		
 		return chalDao.selectChallenge(memberIdx);
 	}
 
