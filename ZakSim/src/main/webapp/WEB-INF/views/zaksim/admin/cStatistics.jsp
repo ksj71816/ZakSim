@@ -183,42 +183,44 @@ function changePeriod() {
 	
 	$.ajax({
 		type: "post"
-		, url : "/zaksim/admin/mStatistics/changePeriod"
+		, url : "/zaksim/admin/cStatistics/changePeriod"
 		, data : {
 			startDate : startDate,
 			endDate : endDate
 		}
 		, success: function( result ) {
-			console.log(result);
+// 			console.log(result);
 			
-			$("#innerhtml").empty();
+			$("#rateDiv").empty();
+			$("#canvasDiv").empty();
+			
+			var rData = [];
 			
 			var labels = [];
+			var cData = [];
 			var mData = [];
-			var vData = [];
 			
-			$("#joinNum").text(result.joinNum);
+			rData.push(result.rate.boardNum);
+			rData.push(result.rate.dateNum-result.rate.boardNum);
 			
-			for(var i=0; i<result.memberCount.length; i++) {
+			changeDoughnutChart(rData);
+			
+			for(var i=0; i<result.chalCount.length; i++) {
 				
-				var date = (new Date(result.memberCount[i].memberCountDate).getMonth() + 1) + "월 "
-				+ new Date(result.memberCount[i].memberCountDate).getDate() + "일"
+				var date = (new Date(result.chalCount[i].today).getMonth() + 1) + "월 "
+				+ new Date(result.chalCount[i].today).getDate() + "일"
 				
 				labels.push(date);
 				
-				mData.push(result.memberCount[i].memberCount);
-			}
-			
-			for(var i=0; i<result.visits.length; i++) {
-				
-				vData.push(result.visits[i].visits);
+				cData.push(result.chalCount[i].chalCount);
+				mData.push(result.chalCount[i].avgMoney/1000);
 			}
 			
 			if((getFormatDate(new Date()) == startDate) ||
 					(getFormatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24)) == startDate)) {
-				changeChart("bar", labels, mData, vData);							
+				changeChart("bar", labels, cData, mData);							
 			} else {
-				changeChart("line", labels, mData, vData);		
+				changeChart("line", labels, cData, mData);		
 			}
 			
 			
@@ -229,15 +231,12 @@ function changePeriod() {
 			for(var i=0; i<result.detailList.length; i++) {
 				detailTable += "<tr>"
 								+ "<td>" + getFormatDate(new Date(result.detailList[i].today)) + "</td>"
-								+ "<td>" + result.detailList[i].todayCount + "</td>"
-								+ "<td>" + result.detailList[i].joinCount + "</td>"
-								+ "<td>"
-								+ (result.detailList[i].joinCount-(result.detailList[i].todayCount-result.detailList[i].yesterdayCount))
-								+ "</td>"
-								+ "<td>" + result.detailList[i].visits + "</td>"
+								+ "<td>" + result.detailList[i].totalMem + "</td>"
+								+ "<td>" + result.detailList[i].chalCount + "</td>"
+								+ "<td>" + result.detailList[i].avgMoney + "</td>"
 								+ "</tr>";
 			}
-			console.log("detailTable : " + detailTable);
+// 			console.log("detailTable : " + detailTable);
 			
 			$("#detailTable").html(detailTable);
 			 
@@ -252,17 +251,63 @@ function changePeriod() {
 	});	
 }
 
+function changeDoughnutChart(datas) {
+	$("#rateDiv").html("<canvas id='rateChart' width='300' height='200'></canvas>");
+	var ctx = document.getElementById("rateChart").getContext('2d');
+	
+	var myDoughnutChart = new Chart(ctx, {
+	    type: 'doughnut',
+	    data : {
+    	    datasets: [{
+    	        data: datas,
+    	        backgroundColor: [
+                    "#FF6384",
+                    "#FFCE56"
+                ],
+                hoverBackgroundColor: [
+                    "#FF6384",
+                    "#FFCE56"
+                ]
+    	    }],
+    	    labels: [
+    	        '인증',
+    	        '미인증'
+    	    ]
+    	},
+    	options: {
+            legend: {
+      		  position:'bottom', 
+      	      labels:{
+      	    	  pointStyle:'circle',
+      	    	  usePointStyle:true
+      	      }
+      	  },
+            elements: {
+                center: {
+                  text: Math.round(datas[0]/(datas[1]+datas[0])*100) + '%',
+                  color: '#FF6384', //Default black
+                  fontStyle: 'Helvetica', //Default Arial
+                  sidePadding: 15 //Default 20 (as a percentage)
+              }
+            },
+            cutoutPercentage:70,
+            rotation: 1 * Math.PI,
+            circumference: 1 * Math.PI
+    }
+	});
+}
 
-function changeChart(type, labels, mData, vData){
+function changeChart(type, labels, cData, mData){
 	$("#canvasDiv").html("<canvas id='myChart' width='400' height='180'></canvas>");
 	var ctx = document.getElementById("myChart").getContext('2d');
+	
 	var myChart = new Chart(ctx, {
 	    type: type,
 	    data: {
 	        labels: labels,
 	        datasets: [{
-	            label: '회원수',
-	            data: mData,
+	            label: '신청 도전수',
+	            data: cData,
 	            backgroundColor: [
 	                'rgba(255, 99, 132, 0.2)'
 	            ],
@@ -272,8 +317,8 @@ function changeChart(type, labels, mData, vData){
 	            borderWidth: 1
 	        },
 	        {
-	            label: '방문수',
-	            data: vData,
+	            label: '평균 도전금 (단위 : 천원)',
+	            data: mData,
 	            backgroundColor: [
 	                'rgba(0, 99, 50, 0.2)'
 	            ],
@@ -295,13 +340,22 @@ function changeChart(type, labels, mData, vData){
 	});
 }
 
-function excelDown() {
+function excelDown() {	
+	// 헤드 셀 배열에 담아 보내기
+	var th = $("th");
+	var head = [];
+	
+	for(var i=0; i<th.length; i++) {
+		head.push(th.eq(i).text());
+	}
+	
 	$.ajax({
 		type: "post"
-		, url : "/zaksim/admin/mStatistics/downloadExcel"
+		, url : "/zaksim/admin/cStatistics/downloadExcel"
 		, data : {
 			startDate : $("#startDate").val(),
-			endDate : $("#endDate").val()
+			endDate : $("#endDate").val(),
+			head : head
 		}
 		, dataType: "json"
 		, success: function( result ) {
@@ -318,6 +372,52 @@ function excelDown() {
 		}
 	});	
 }
+
+
+
+
+// 차트 위에 글씨 쓰기
+Chart.pluginService.register({
+  beforeDraw: function (chart) {
+    if (chart.config.options.elements.center) {
+      //Get ctx from string
+      var ctx = chart.chart.ctx;
+
+      //Get options from the center object in options
+      var centerConfig = chart.config.options.elements.center;
+      var fontStyle = centerConfig.fontStyle || 'Arial';
+      var txt = centerConfig.text;
+      var color = centerConfig.color || '#000';
+      var sidePadding = centerConfig.sidePadding || 20;
+      var sidePaddingCalculated = (sidePadding/100) * (chart.innerRadius * 2)
+      //Start with a base font of 30px
+      ctx.font = "60px " + fontStyle;
+
+      //Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+      var stringWidth = ctx.measureText(txt).width;
+      var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+      // Find out how much the font can grow in width.
+      var widthRatio = elementWidth / stringWidth;
+      var newFontSize = Math.floor(30 * widthRatio);
+      var elementHeight = (chart.innerRadius * 2);
+
+      // Pick a new font size so it will not be larger than the height of label.
+      var fontSizeToUse = Math.min(newFontSize, elementHeight);
+
+      //Set font settings to draw it correctly.
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+      var centerY = ((chart.chartArea.top + chart.chartArea.bottom)*2 / 3);
+      ctx.font = fontSizeToUse+"px " + fontStyle;
+      ctx.fillStyle = color;
+
+      //Draw text in center
+      ctx.fillText(txt, centerX, centerY);
+    }
+  }
+});
 
 </script>
 

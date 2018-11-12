@@ -26,7 +26,6 @@ public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired MemberService memberService;
-//	Paging paging;
 	
 	
 	// 화면 연결
@@ -63,8 +62,6 @@ public class MemberController {
 	@ResponseBody
 	public Map<String, Object> reportDetail(ZakSimMember member) {
 		
-//		System.out.println(member.getIdx());
-		
 		// 신고 상세 가져오기
 		HashMap<String, Object> map = new HashMap<>();
 		
@@ -81,14 +78,10 @@ public class MemberController {
 	// 계정 정지하기
 	@RequestMapping(value="/suspend", method = RequestMethod.POST, produces="application/json; charset=utf-8")
 	@ResponseBody
-	public Map<String, String> suspend(ZakSimMember member) {
-		
-		// 페이징 객체 생성
-		// 서비스.계정 정지();
-		// 서비스.리스트 정보 받아오기();
-		// 모델에 값 넣기
-		
+	public Map<String, String> suspend(String[] suspendIdx) {
 		HashMap<String, String> map = new HashMap<>();
+		
+		System.out.println("suspendIdx : " + suspendIdx);
 		
 		return map;
 	}

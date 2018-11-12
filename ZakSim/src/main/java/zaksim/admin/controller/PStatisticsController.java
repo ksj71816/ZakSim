@@ -1,6 +1,7 @@
 package zaksim.admin.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -9,12 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import zaksim.admin.service.PStatisticsService;
+import zaksim.dto.CStatistics;
+import zaksim.dto.PStatistics;
 import zaksim.util.ExcelWriter;
 
 @Controller
@@ -27,42 +29,42 @@ private static final Logger logger = LoggerFactory.getLogger(PStatisticsControll
 	
 	ExcelWriter excelWriter;
 	
-	// 화면 연결
-	// 기간 변경
-	// 엑셀 다운
-	
 	
 	@RequestMapping(value = "/pStatistics", method = RequestMethod.GET)
-	public void pStatisticsForm(Model model) {
-		// 화면 연결
-		// memberService.당일 가입 수 가져오기();
-		// memberService.최근 일주일간? 회원수 추이 가져오기();
-		// memberService.최근 일주일간 방문수 추이 가져오기();
-		// memberService.상세 통계자료 가져오기();
-		// 모델에 값 넣기
+	public void pStatisticsForm() {
 	}
 	
 	@RequestMapping(value="/pStatistics/changePeriod", method = RequestMethod.POST, produces="application/json; charset=utf-8")
 	@ResponseBody
-	public Map<String, String> changePeriod(int period) {
+	public Map<String, Object> changePeriod(String startDate, String endDate) {
+		HashMap<String, Object> map = new HashMap<>();
 		
-		// 화면 연결
-		// memberService.기간 가입 수 가져오기();
-		// memberService.기간 회원수 추이 가져오기();
-		// memberService.기간 방문수 추이 가져오기();
-		// memberService.상세 통계자료 가져오기();
+		PStatistics rate = pStatisticsrService.viewSuccessRate(startDate, endDate);
+		List<PStatistics> moneyList = pStatisticsrService.viewChallengeMoney(startDate, endDate);
+		List<PStatistics> detailList = pStatisticsrService.viewDetailList(startDate, endDate);
 		
-		HashMap<String, String> map = new HashMap<>();
+		
+		map.put("rate", rate);
+		map.put("moneyList", moneyList);
+		map.put("detailList", detailList);
 		
 		return map;
 	}
 	
 	@RequestMapping(value="/pStatistics/downloadExcel", method = RequestMethod.POST)
 	@ResponseBody
-	public void downloadExcel(HttpServletResponse response) {
+	public Map<String, String> downloadExcel(HttpServletResponse response, String startDate, String endDate) {
 		
-		// ExcelWriter.파일 생성();
-		// 서비스.파일 다운로드();
+	    Map<String, String> map = new HashMap<>();
+
+	    List<PStatistics> detailList = pStatisticsrService.viewDetailList(startDate, endDate);
+	    
+	    ExcelWriter excelWriter = new ExcelWriter();
+	    excelWriter.profitsExcelDown(response, detailList);
+	    
+	    map.put("result", "success");
+	    
+	    return map;
 	}
 
 }

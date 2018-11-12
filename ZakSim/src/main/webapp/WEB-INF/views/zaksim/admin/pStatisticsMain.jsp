@@ -6,8 +6,8 @@
 			<div class="row mt-3 mr-2">
 				<div class="col-1"></div>
 				<div class="col-4 border">
-					<div class="row justify-content-center pt-2">
-						<p class="align-self-center mt-5" id="joinNum" style="font-size: 70px; font-family: Dohyeon;">${joinNum}</p>
+					<div class="row justify-content-center pt-2 pl-3 pr-3" id="rateDiv">
+						<canvas id="rateChart" width="300" height="200"></canvas>
 					</div>
 					<div class="row justify-content-center mb-3">
 						<p style="font-family: Dohyeon;">도전 성공률</p>
@@ -39,7 +39,7 @@
 						<thead>
 							<tr>
 								<th>날짜</th>
-								<th>종료 도전수/진행 도전수</th>
+								<th>종료 도전수</th>
 								<th>실패 도전수</th>
 								<th>예비 기부금(원)</th>
 							</tr>

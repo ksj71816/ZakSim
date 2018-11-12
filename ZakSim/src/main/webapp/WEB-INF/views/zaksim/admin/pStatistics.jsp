@@ -183,42 +183,44 @@ function changePeriod() {
 	
 	$.ajax({
 		type: "post"
-		, url : "/zaksim/admin/mStatistics/changePeriod"
+		, url : "/zaksim/admin/pStatistics/changePeriod"
 		, data : {
 			startDate : startDate,
 			endDate : endDate
 		}
 		, success: function( result ) {
-			console.log(result);
+// 			console.log(result);
 			
-			$("#innerhtml").empty();
+			$("#rateDiv").empty();
+			$("#canvasDiv").empty();
+			
+			var rData = [];
 			
 			var labels = [];
 			var mData = [];
-			var vData = [];
+			var fData = [];
+
+			rData.push(result.rate.failChal);
+			rData.push(result.rate.endChal-result.rate.failChal);
 			
-			$("#joinNum").text(result.joinNum);
+			changeDoughnutChart(rData);
 			
-			for(var i=0; i<result.memberCount.length; i++) {
+			for(var i=0; i<result.moneyList.length; i++) {
 				
-				var date = (new Date(result.memberCount[i].memberCountDate).getMonth() + 1) + "월 "
-				+ new Date(result.memberCount[i].memberCountDate).getDate() + "일"
+				var date = (new Date(result.moneyList[i].today).getMonth() + 1) + "월 "
+				+ new Date(result.moneyList[i].today).getDate() + "일"
 				
 				labels.push(date);
 				
-				mData.push(result.memberCount[i].memberCount);
-			}
-			
-			for(var i=0; i<result.visits.length; i++) {
-				
-				vData.push(result.visits[i].visits);
+				mData.push(result.moneyList[i].money);
+				fData.push(result.moneyList[i].failMoney);
 			}
 			
 			if((getFormatDate(new Date()) == startDate) ||
 					(getFormatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24)) == startDate)) {
-				changeChart("bar", labels, mData, vData);							
+				changeChart("bar", labels, mData, fData);							
 			} else {
-				changeChart("line", labels, mData, vData);		
+				changeChart("line", labels, mData, fData);		
 			}
 			
 			
@@ -229,12 +231,9 @@ function changePeriod() {
 			for(var i=0; i<result.detailList.length; i++) {
 				detailTable += "<tr>"
 								+ "<td>" + getFormatDate(new Date(result.detailList[i].today)) + "</td>"
-								+ "<td>" + result.detailList[i].todayCount + "</td>"
-								+ "<td>" + result.detailList[i].joinCount + "</td>"
-								+ "<td>"
-								+ (result.detailList[i].joinCount-(result.detailList[i].todayCount-result.detailList[i].yesterdayCount))
-								+ "</td>"
-								+ "<td>" + result.detailList[i].visits + "</td>"
+								+ "<td>" + result.detailList[i].endChal + "</td>"
+								+ "<td>" + result.detailList[i].failChal + "</td>"
+								+ "<td>" + result.detailList[i].money + "</td>"
 								+ "</tr>";
 			}
 			console.log("detailTable : " + detailTable);
@@ -252,6 +251,51 @@ function changePeriod() {
 	});	
 }
 
+function changeDoughnutChart(datas) {
+	$("#rateDiv").html("<canvas id='rateChart' width='300' height='200'></canvas>");
+	var ctx = document.getElementById("rateChart").getContext('2d');
+	
+	var myDoughnutChart = new Chart(ctx, {
+	    type: 'doughnut',
+	    data : {
+    	    datasets: [{
+    	        data: datas,
+    	        backgroundColor: [
+                    "#FF6384",
+                    "#FFCE56"
+                ],
+                hoverBackgroundColor: [
+                    "#FF6384",
+                    "#FFCE56"
+                ]
+    	    }],
+    	    labels: [
+    	        '도전 실패',
+    	        '도전 성공'
+    	    ]
+    	},
+    	options: {
+            legend: {
+      		  position:'bottom', 
+      	      labels:{
+      	    	  pointStyle:'circle',
+      	    	  usePointStyle:true
+      	      }
+      	  },
+            elements: {
+                center: {
+                  text: Math.round(datas[0]/(datas[1]+datas[0])*100) + '%',
+                  color: '#FFCE56', //Default black
+                  fontStyle: 'Helvetica', //Default Arial
+                  sidePadding: 15 //Default 20 (as a percentage)
+              }
+            },
+            cutoutPercentage:70,
+            rotation: 1 * Math.PI,
+            circumference: 1 * Math.PI
+    }
+	});
+}
 
 function changeChart(type, labels, mData, vData){
 	$("#canvasDiv").html("<canvas id='myChart' width='400' height='180'></canvas>");
@@ -261,7 +305,7 @@ function changeChart(type, labels, mData, vData){
 	    data: {
 	        labels: labels,
 	        datasets: [{
-	            label: '회원수',
+	            label: '누적 도전금',
 	            data: mData,
 	            backgroundColor: [
 	                'rgba(255, 99, 132, 0.2)'
@@ -272,7 +316,7 @@ function changeChart(type, labels, mData, vData){
 	            borderWidth: 1
 	        },
 	        {
-	            label: '방문수',
+	            label: '누적 기부금',
 	            data: vData,
 	            backgroundColor: [
 	                'rgba(0, 99, 50, 0.2)'
@@ -298,7 +342,7 @@ function changeChart(type, labels, mData, vData){
 function excelDown() {
 	$.ajax({
 		type: "post"
-		, url : "/zaksim/admin/mStatistics/downloadExcel"
+		, url : "/zaksim/admin/pStatistics/downloadExcel"
 		, data : {
 			startDate : $("#startDate").val(),
 			endDate : $("#endDate").val()
@@ -318,6 +362,49 @@ function excelDown() {
 		}
 	});	
 }
+
+//차트 위에 글씨 쓰기
+Chart.pluginService.register({
+  beforeDraw: function (chart) {
+    if (chart.config.options.elements.center) {
+      //Get ctx from string
+      var ctx = chart.chart.ctx;
+
+      //Get options from the center object in options
+      var centerConfig = chart.config.options.elements.center;
+      var fontStyle = centerConfig.fontStyle || 'Arial';
+      var txt = centerConfig.text;
+      var color = centerConfig.color || '#000';
+      var sidePadding = centerConfig.sidePadding || 20;
+      var sidePaddingCalculated = (sidePadding/100) * (chart.innerRadius * 2)
+      //Start with a base font of 30px
+      ctx.font = "60px " + fontStyle;
+
+      //Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+      var stringWidth = ctx.measureText(txt).width;
+      var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+      // Find out how much the font can grow in width.
+      var widthRatio = elementWidth / stringWidth;
+      var newFontSize = Math.floor(30 * widthRatio);
+      var elementHeight = (chart.innerRadius * 2);
+
+      // Pick a new font size so it will not be larger than the height of label.
+      var fontSizeToUse = Math.min(newFontSize, elementHeight);
+
+      //Set font settings to draw it correctly.
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+      var centerY = ((chart.chartArea.top + chart.chartArea.bottom)*2 / 3);
+      ctx.font = fontSizeToUse+"px " + fontStyle;
+      ctx.fillStyle = color;
+
+      //Draw text in center
+      ctx.fillText(txt, centerX, centerY);
+    }
+  }
+});
 
 </script>
 

@@ -191,7 +191,7 @@ function changePeriod() {
 		, success: function( result ) {
 			console.log(result);
 			
-			$("#innerhtml").empty();
+			$("#canvasDiv").empty();
 			
 			var labels = [];
 			var mData = [];
@@ -256,6 +256,7 @@ function changePeriod() {
 function changeChart(type, labels, mData, vData){
 	$("#canvasDiv").html("<canvas id='myChart' width='400' height='180'></canvas>");
 	var ctx = document.getElementById("myChart").getContext('2d');
+	
 	var myChart = new Chart(ctx, {
 	    type: type,
 	    data: {

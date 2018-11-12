@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +20,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import zaksim.dto.CStatistics;
 import zaksim.dto.MStatistics;
+import zaksim.dto.PStatistics;
 
 public class ExcelWriter {
 	
@@ -117,7 +118,7 @@ public class ExcelWriter {
 
 	    
 	    // 입력된 내용 파일로 쓰기
-        File file = new File("C:\\Users\\olaf\\Desktop\\회원통계_" + format.format(new Date()) +".xlsx");
+        File file = new File("D:\\회원통계_" + format.format(new Date()) +".xlsx");
         FileOutputStream fos = null;
         
         try {
@@ -136,6 +137,218 @@ public class ExcelWriter {
                 e.printStackTrace();
             }
         }
+		
+	}
+	
+	public void challengeExcelDown(HttpServletResponse response, List<CStatistics> detailList) {	
+		
+		 // 워크북 생성
+		XSSFWorkbook wb = new XSSFWorkbook();
+		XSSFSheet sheet = wb.createSheet("도전 통계");
+		XSSFRow row = null;
+		XSSFCell cell = null;
+	    int rowNo = 0;
+	    
+	    // 테이블 헤더용 스타일
+	    CellStyle headStyle = wb.createCellStyle();
+
+	   
+	    headStyle.setBorderTop(BorderStyle.THIN);
+	    headStyle.setBorderBottom(BorderStyle.THIN);
+	    headStyle.setBorderLeft(BorderStyle.THIN);
+	    headStyle.setBorderRight(BorderStyle.THIN);
+
+	    // 배경색
+	    headStyle.setFillForegroundColor(HSSFColorPredefined.BRIGHT_GREEN.getIndex());
+	    headStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+	    // 데이터 가운데 정렬
+	    headStyle.setAlignment(HorizontalAlignment.CENTER);
+
+	    // 테두리
+	    CellStyle bodyStyle = wb.createCellStyle();
+	    bodyStyle.setBorderTop(BorderStyle.THIN);
+	    bodyStyle.setBorderBottom(BorderStyle.THIN);
+	    bodyStyle.setBorderLeft(BorderStyle.THIN);
+	    bodyStyle.setBorderRight(BorderStyle.THIN);
+	    bodyStyle.setAlignment(HorizontalAlignment.CENTER);
+	    
+
+	    // 헤더 생성
+	    row = sheet.createRow(rowNo++);
+
+	    cell = row.createCell(0);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("날짜");
+
+	    cell = row.createCell(1);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("총 회원수");
+
+	    cell = row.createCell(2);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("신청 도전수");
+	    
+	    cell = row.createCell(3);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("평균 도전금(원)");
+	    
+	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+	    // 데이터 부분 생성
+	    for(CStatistics list : detailList) {
+	        row = sheet.createRow(rowNo++);
+	        
+	        cell = row.createCell(0);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(format.format(list.getToday()));
+
+		    cell = row.createCell(1);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(list.getTotalMem());
+
+		    cell = row.createCell(2);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(list.getChalCount());
+		    
+		    cell = row.createCell(3);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(list.getAvgMoney());
+	    }
+	    
+	    for (int i=0; i<=3; i++){
+	    	sheet.autoSizeColumn(i);
+	    	sheet.setColumnWidth(i, (sheet.getColumnWidth(i))+(short)1024);
+	    }
+
+
+	    
+	    // 입력된 내용 파일로 쓰기
+       File file = new File("D:\\도전통계_" + format.format(new Date()) +".xlsx");
+       FileOutputStream fos = null;
+       
+       try {
+           fos = new FileOutputStream(file);
+           wb.write(fos);
+       } catch (FileNotFoundException e) {
+           e.printStackTrace();
+       } catch (IOException e) {
+           e.printStackTrace();
+       } finally {
+           try {
+               if(wb!=null) wb.close();
+               if(fos!=null) fos.close();
+               
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+       }
+		
+	}
+	
+	public void profitsExcelDown(HttpServletResponse response, List<PStatistics> detailList) {	
+		
+		 // 워크북 생성
+		XSSFWorkbook wb = new XSSFWorkbook();
+		XSSFSheet sheet = wb.createSheet("기부현황 통계");
+		XSSFRow row = null;
+		XSSFCell cell = null;
+	    int rowNo = 0;
+	    
+	    // 테이블 헤더용 스타일
+	    CellStyle headStyle = wb.createCellStyle();
+
+	   
+	    headStyle.setBorderTop(BorderStyle.THIN);
+	    headStyle.setBorderBottom(BorderStyle.THIN);
+	    headStyle.setBorderLeft(BorderStyle.THIN);
+	    headStyle.setBorderRight(BorderStyle.THIN);
+
+	    // 배경색
+	    headStyle.setFillForegroundColor(HSSFColorPredefined.BRIGHT_GREEN.getIndex());
+	    headStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+	    // 데이터 가운데 정렬
+	    headStyle.setAlignment(HorizontalAlignment.CENTER);
+
+	    // 테두리
+	    CellStyle bodyStyle = wb.createCellStyle();
+	    bodyStyle.setBorderTop(BorderStyle.THIN);
+	    bodyStyle.setBorderBottom(BorderStyle.THIN);
+	    bodyStyle.setBorderLeft(BorderStyle.THIN);
+	    bodyStyle.setBorderRight(BorderStyle.THIN);
+	    bodyStyle.setAlignment(HorizontalAlignment.CENTER);
+	    
+
+	    // 헤더 생성
+	    row = sheet.createRow(rowNo++);
+
+	    cell = row.createCell(0);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("날짜");
+
+	    cell = row.createCell(1);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("종료 도전수");
+
+	    cell = row.createCell(2);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("실패 도전수");
+	    
+	    cell = row.createCell(3);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("예비 기부금(원)");
+	    
+	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+	    // 데이터 부분 생성
+	    for(PStatistics list : detailList) {
+	        row = sheet.createRow(rowNo++);
+	        
+	        cell = row.createCell(0);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(format.format(list.getToday()));
+
+		    cell = row.createCell(1);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(list.getEndChal());
+
+		    cell = row.createCell(2);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(list.getFailChal());
+		    
+		    cell = row.createCell(3);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(list.getMoney());
+	    }
+	    
+	    for (int i=0; i<=3; i++){
+	    	sheet.autoSizeColumn(i);
+	    	sheet.setColumnWidth(i, (sheet.getColumnWidth(i))+(short)1024);
+	    }
+
+
+	    
+	    // 입력된 내용 파일로 쓰기
+       File file = new File("D:\\기부현황통계_" + format.format(new Date()) +".xlsx");
+       FileOutputStream fos = null;
+       
+       try {
+           fos = new FileOutputStream(file);
+           wb.write(fos);
+       } catch (FileNotFoundException e) {
+           e.printStackTrace();
+       } catch (IOException e) {
+           e.printStackTrace();
+       } finally {
+           try {
+               if(wb!=null) wb.close();
+               if(fos!=null) fos.close();
+               
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+       }
 		
 	}
 

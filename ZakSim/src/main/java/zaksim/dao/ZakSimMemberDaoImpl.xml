@@ -10,6 +10,8 @@
   	<result property="memberType" column="member_type"/>
   	<result property="joinDate" column="join_date"/>
   	<result property="suspensionDate" column="suspension_date"/>
+  	<result property="suspendNum" column="suspend_num"/>
+  	<result property="leaveDate" column="leave_date"/>
   </resultMap>
   
   <resultMap type="zaksim.dto.MStatistics" id="MStatistics">
