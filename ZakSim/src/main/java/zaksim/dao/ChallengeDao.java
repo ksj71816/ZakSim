@@ -1,27 +1,27 @@
 package zaksim.dao;
 
+import java.util.List;
 import java.util.Map;
 
+import zaksim.dto.CStatistics;
 import zaksim.dto.Challenge;
+import zaksim.dto.PStatistics;
 import zaksim.dto.Payment;
 
 public interface ChallengeDao {
 
 	
 	// 기간 별 인증률
-	void selectCertificationRate(int period);
+	CStatistics selectCertificationRate(Map<String, String> param);
 
 	// 기간 별 신청 도전 수
-	void selectChallengeNum(int period);
+	List<CStatistics> selectChallengeNum(Map<String, String> param);
 
 	// 누적 도전금
-	void selectChallengeMony(int period);
-
-	// 회원 수
-//	void selectMemberNum(int period);
+	List<PStatistics> selectChallengeMony(Map<String, String> param);
 
 	// 기간 별 도전 성공률
-	void selectSuccessNum(int period);
+	PStatistics selectSuccessNum(Map<String, String> param);
 
 	// 기간 별 평균 도전금
 	void selectAverageChallengeMony(int period);
@@ -29,6 +29,11 @@ public interface ChallengeDao {
 	// 기간 별 종료 도전 수
 	void selectEndNum(int period);
 	
+	// 도전 통계 상세 리스트
+	List<CStatistics> selectCStatisticsDetailData(Map<String, String> param);
+
+	// 기부현황 통계 상세 리스트
+	List<PStatistics> selectPStatisticsDetailData(Map<String, String> param);
 	
 //--------------------Do Challenge-------------------------------
 	
@@ -43,5 +48,6 @@ public interface ChallengeDao {
 	
 	// 도전 정보 select
 	public Challenge selectChallenge(int memberIdx);
+
 	
 }

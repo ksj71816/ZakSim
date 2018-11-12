@@ -6,11 +6,11 @@
 			<div class="row mt-3 mr-2">
 				<div class="col-1"></div>
 				<div class="col-4 border">
-					<div class="row justify-content-center pt-2">
-						<p class="align-self-center mt-5" id="joinNum" style="font-size: 70px; font-family: Dohyeon;">${joinNum}</p>
+					<div class="row justify-content-center pt-2 pl-3 pr-3" id="rateDiv">
+						<canvas id="rateChart" width="300" height="200"></canvas>
 					</div>
 					<div class="row justify-content-center mb-3">
-						<p style="font-family: Dohyeon;">가입 인원</p>
+						<p style="font-family: Dohyeon;">개인 도전 인증률</p>
 					</div>
 				</div>
 				<div class="col-6 border ml-2" id="canvasDiv">
@@ -42,7 +42,6 @@
 								<th>총 회원수</th>  
 								<th>신청 도전수</th>
 								<th>평균 도전금(원)</th>
-								<th>인증률</th>
 							</tr>
 						</thead>
 						<tbody id="detailTable">
