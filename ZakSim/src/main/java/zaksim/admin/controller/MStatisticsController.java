@@ -36,15 +36,7 @@ public class MStatisticsController {
 
 	
 	@RequestMapping(value = "/mStatistics", method = RequestMethod.GET)
-	public void mStatisticsForm(Model model) {
-//		int joinNum = mStatisticsrService.viewJoinNum("오늘");
-//		List<MemberCount> memberCount = mStatisticsrService.viewMemberNum("오늘");
-//		List<Visits> visits = mStatisticsrService.viewVisitsNum("오늘");
-////		List<MStatistics> detailList = mStatisticsrService.viewDetailList("오늘");
-//		
-//		model.addAttribute("joinNum", joinNum);
-//		model.addAttribute("memberCount", memberCount);
-//		model.addAttribute("visits", visits);
+	public void mStatisticsForm() {
 	}
 	
 	@RequestMapping(value="/mStatistics/changePeriod", method = RequestMethod.POST, produces="application/json; charset=utf-8")

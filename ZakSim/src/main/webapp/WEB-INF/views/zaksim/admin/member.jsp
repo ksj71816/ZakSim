@@ -40,17 +40,17 @@
 						<div class="btn-group" style="margin-right: 7px;">
 				            <button class="btn btn-outline-danger dropdown-toggle" id="categoryDrop" data-toggle="dropdown">전체 회원</button>
 				            <div class="dropdown-menu">
-				            	<a class="dropdown-item" id="all">전체 회원</a>
-				            	<a class="dropdown-item" id="warn">계정 정지 대상</a>
-				            	<a class="dropdown-item" id="suspension">계정 정지 회원</a>
+				            	<a class="dropdown-item categoryDrop" id="all">전체 회원</a>
+				            	<a class="dropdown-item categoryDrop" id="warn">계정 정지 대상</a>
+				            	<a class="dropdown-item categoryDrop" id="suspension">계정 정지 회원</a>
 				          	</div>
 						</div>
 						<div class="btn-group">
 				            <button class="btn btn-outline-danger dropdown-toggle" id="pageCountDrop" data-toggle="dropdown">10개씩 보기</button>
 				            <div class="dropdown-menu">
-				            	<a class="dropdown-item" id="pageCount10">10개씩 보기</a>
-				            	<a class="dropdown-item" id="pageCount15">15개씩 보기</a>
-				            	<a class="dropdown-item" id="pageCount30">30개씩 보기</a>
+				            	<a class="dropdown-item pageCountDrop" id="pageCount10">10개씩 보기</a>
+				            	<a class="dropdown-item pageCountDrop" id="pageCount15">15개씩 보기</a>
+				            	<a class="dropdown-item pageCountDrop" id="pageCount30">30개씩 보기</a>
 				            	<%-- 힘내! 뿅뿅 --%>
 				          	</div>
 						</div>	
@@ -161,6 +161,7 @@
         
       </div>
       <div class="modal-footer">
+      	<button type="button" class="btn btn-primary" onclick="suspend();">계정 정지</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -176,109 +177,41 @@
 	
 <script type="text/javascript">	
 
-
-$("#all").click(function() {
-	$("#categoryDrop").text($("#all").text());
+//카테고리 선택 시
+$(".categoryDrop").click(function() {
+	$("#categoryDrop").text($(this).text());
 	
-	var category = $("#categoryDrop").text();
-	var pageCount = $("#pageCountDrop").text().substr(0,2);
-	var searchId = $("#searchId").val();
-	
-	console.log(category + ", " + pageCount + ", " + searchId);
-	
-	paging(category, pageCount, searchId);
+	clickPageLink($("#categoryDrop").text(), $("#pageCountDrop").text().substr(0,2), $("#searchId").val(), 1);
 });
 
-$("#warn").click(function() {
-	$("#categoryDrop").text($("#warn").text());
+// 리스트 갯수 선택 시
+$(".pageCountDrop").click(function() {
+	$("#pageCountDrop").text($(this).text());
 	
-	var category = $("#categoryDrop").text();
-	var pageCount = $("#pageCountDrop").text().substr(0,2);
-	var searchId = $("#searchId").val();
-	
-	console.log(category + ", " + pageCount + ", " + searchId);
-	
-	paging(category, pageCount, searchId);
+	clickPageLink($("#categoryDrop").text(), $("#pageCountDrop").text().substr(0,2), $("#searchId").val(), 1);
 });
 
-$("#suspension").click(function() {
-	$("#categoryDrop").text($("#suspension").text());
-	
-	var category = $("#categoryDrop").text();
-	var pageCount = $("#pageCountDrop").text().substr(0,2);
-	var searchId = $("#searchId").val();
-	
-	console.log(category + ", " + pageCount + ", " + searchId);
-	
-	paging(category, pageCount, searchId);
-});
-
-$("#pageCount10").click(function() {
-	$("#pageCountDrop").text($("#pageCount10").text());
-	
-	var category = $("#categoryDrop").text();
-	var pageCount = $("#pageCountDrop").text().substr(0,2);
-	var searchId = $("#searchId").val();
-	
-	console.log(category + ", " + pageCount + ", " + searchId);
-	
-	paging(category, pageCount, searchId);
-});
-
-$("#pageCount15").click(function() {
-	$("#pageCountDrop").text($("#pageCount15").text());
-	
-	var category = $("#categoryDrop").text();
-	var pageCount = $("#pageCountDrop").text().substr(0,2);
-	var searchId = $("#searchId").val();
-	
-	console.log(category + ", " + pageCount + ", " + searchId);
-	
-	paging(category, pageCount, searchId);
-});
-
-$("#pageCount30").click(function() {
-	$("#pageCountDrop").text($("#pageCount30").text());
-	
-	var category = $("#categoryDrop").text();
-	var pageCount = $("#pageCountDrop").text().substr(0,2);
-	var searchId = $("#searchId").val();
-	
-	console.log(category + ", " + pageCount + ", " + searchId);
-	
-	paging(category, pageCount, searchId);
-});
-
-// 카테고리 또는 리스트 갯수 변경 시
-function paging(category, pageCount, searchId) {
-	$.ajax({
-		type: "get"
-		, url : "/zaksim/admin/memberTable?category=" + category + "&pageCount=" + pageCount + "&searchId=" + searchId
-		, dataType: "html"
-		, success: function( data ) {
-			$("#pagingDiv").html(data);
-		}
-		, error: function( e ) {
-			console.log("--- error ---");
-			console.log( e.responseText );
-		}
-		, complete: function() {
-			//입력 창 초기화
-		}
-	});	
+// 검색 버튼 클릭 시
+function searching() {
+	clickPageLink($("#categoryDrop").text(), $("#pageCountDrop").text().substr(0,2), $("#searchId").val(), 1);
 }
 
-// 검색
-function searching() {
+// 페이징 버튼 클릭 시
+$("#pagingDiv").on("click", '.page-link', function() {
+	
 	var category = $("#categoryDrop").text();
 	var pageCount = $("#pageCountDrop").text().substr(0,2);
 	var searchId = $("#searchId").val();
-	
-	console.log(category + ", " + pageCount + ", " + searchId);
-	
+	var curPage = $(this).attr('data-curPage');
+
+	clickPageLink(category, pageCount, searchId, curPage);	
+});
+
+// 페이징 ajax
+function clickPageLink(category, pageCount, searchId, curPage) {
 	$.ajax({
 		type: "get"
-		, url : "/zaksim/admin/memberTable?category=" + category + "&pageCount=" + pageCount + "&searchId=" + searchId
+		, url : "/zaksim/admin/memberTable?curPage=" + curPage + "&category=" + category + "&pageCount=" + pageCount + "&searchId=" + searchId
 		, dataType: "html"
 		, success: function( data ) {
 			$("#pagingDiv").html(data);
@@ -310,8 +243,8 @@ $("#pagingDiv").on("click", ".data-span-modal", function() {
 			$("#memberNick").text(data.memberData.nick);
 			$("#memberEmail").text(data.memberData.email);
 			$("#memberSuspendDate").text(data.memberData.suspensionDate);
-			$("#memberSuspendNum").text("suspendNum");
-			$("#memberBlockStatus").text("blockStatus");
+			$("#memberSuspendNum").text(data.memberData.suspendNum);
+			$("#memberBlockStatus").text(data.memberData.status);
 			
 			var text = "";
 			
@@ -345,37 +278,7 @@ $("#pagingDiv").on("click", ".data-span-modal", function() {
 	});	
 });
 
-// 페이징 버튼 클릭 시
-$("#pagingDiv").on("click", ".page-link", function() {
-	
-	var category = $("#categoryDrop").text();
-	var pageCount = $("#pageCountDrop").text().substr(0,2);
-	var searchId = $("#searchId").val();
-	var curPage = $(this).attr('data-curPage');
-	
-	console.log(category + ", " + pageCount + ", " + searchId + ", " + curPage);
-	
-	$.ajax({
-		type: "get"
-		, url : "/zaksim/admin/memberTable?curPage=" + curPage + "&category=" + category + "&pageCount=" + pageCount + "&searchId=" + searchId
-		, dataType: "html"
-		, success: function( data ) {
-			console.log(data);
-			
-			$("#pagingDiv").html(data);
-		}
-		, error: function( e ) {
-			console.log("--- error ---");
-			console.log( e.responseText );
-		}
-		, complete: function() {
-			//입력 창 초기화
-		}
-	});	
-	
-});
-
-// 전체 선택하기, 해제하기
+//체크박스 전체 선택하기, 해제하기
 $("#pagingDiv").on("click", "[name=checkAll]", function(){
 	$("[name=checkOne]").prop("checked", $(this).prop("checked") );
 });
@@ -398,6 +301,8 @@ $("#pagingDiv").on("click", "[name=checkOne]", function() {
 	}
 });
 
+var suspendIdx = [];
+
 // 계정 정지 버튼 클릭 시
 $("#suspendBtn").click(function() {
 	var checkList = $("[name=checkOne]:checked");
@@ -405,11 +310,14 @@ $("#suspendBtn").click(function() {
 	var suspendMemberId = [];
 
 	checkList.each(function(i) {
-		suspendMemberIdx.push(checkList.parent().parent().eq(i).children("td").eq(0).text());
-		suspendMemberId.push(checkList.parent().parent().eq(i).children("td").eq(3).text());
+		if(checkList.parent().parent().eq(i).children("td").eq(12).text() >= 10){
+			suspendMemberIdx.push(checkList.parent().parent().eq(i).children("td").eq(0).text());
+			suspendMemberId.push(checkList.parent().parent().eq(i).children("td").eq(3).text());
+		}
 	});
-	console.log(suspendMemberIdx);
-	console.log(suspendMemberId);
+	
+	suspendIdx = suspendMemberIdx;
+	console.log(suspendIdx);
 	
 	var modalText = "";
 	
@@ -423,6 +331,30 @@ $("#suspendBtn").click(function() {
 	$("#suspendModal").modal('show');
 });
 
+function suspend() {
+	console.log(suspendIdx);
+	$.ajax({
+		type: "post"
+		, url : "/zaksim/admin/suspend"
+		, data : {
+			suspendIdx : suspendIdx
+		}
+		, dataType: "json"
+		, success: function( data ) {
+			
+			$("#suspendModal").modal('hide');
+			
+// 			$(location).attr('href', '/zaksim/admin/member');
+		}
+		, error: function( e ) {
+			console.log("--- error ---");
+			console.log( e.responseText );
+		}
+		, complete: function() {
+			//입력 창 초기화
+		}
+	});	
+}
 
 </script>
 

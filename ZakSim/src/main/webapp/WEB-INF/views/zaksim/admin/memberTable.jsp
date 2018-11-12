@@ -23,6 +23,7 @@
 								<th>Join Date</th>
 								<th>Status</th>
 								<th>Suspension Date</th>
+								<th>계정 정지 횟수</th>
 								<th>신고 횟수</th>
 							</tr>
 						</thead>
@@ -50,6 +51,7 @@
 								<c:if test="${not empty member.suspensionDate }">
 									<td>${member.suspensionDate}</td>								
 								</c:if>
+								<td>${member.suspendNum}</td>
 								<td><span class="data-span-modal">${member.reportNum}</span></td>
 							</tr>
 						</c:forEach>

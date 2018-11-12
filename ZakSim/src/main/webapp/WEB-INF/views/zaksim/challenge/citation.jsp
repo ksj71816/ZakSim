@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
 
 <!-- header include -->
 <%@include file="/WEB-INF/views/zaksim/main/header.jsp" %>
@@ -67,10 +67,13 @@
           
             <div style="height:2px; background-color:white;" class="col rounded my-2">
             </div>
+          
+    <form id="upload" action="/zaksim/challenge/citation" method="POST" enctype="multipart/form-data">
+         
             
           <div class="text-left text-center text-white">
             <p class="mx-1 text-left" >이미지 </p>
-            <img id="blah" class="w-100 h-100 img-fluid d-block rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" style=" border-right-width: 3px;	border-top-width: 3px;	border-bottom-width: 3px;    border-left-width: 3px;	border-style: solid;	border-color: white; ">
+            <img name="file" id="blah" class="w-100 h-100 img-fluid d-block rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" style=" border-right-width: 3px;	border-top-width: 3px;	border-bottom-width: 3px;    border-left-width: 3px;	border-style: solid;	border-color: white; ">
           </div>
           
           
@@ -87,7 +90,7 @@
             
           <div class="form-group text-center text-white">
             <label for="exampleFormControlTextarea1" class="d-flex mx-1">메세지</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" id="textarea" rows="3"></textarea>
             
             <div class="row">
             <!-- <div class="col-md-4">
@@ -95,12 +98,14 @@
             </div>
             <div class="col-md-4"> </div> -->
             	<div class="col-md-12">
-            	<a class="btn  btn-primary mt-5 " href="/zaksim/challenge/challengeInfo"> 인증 하기 </a>
+            	<button type="button" onclick="toCitation();" class="btn btn-primary mt-5 " >인증 하기</button>
             	</div>
             </div>
               
           </div>
           
+    </form>
+        
         </div>
         
         <div class="col-md-2"> </div>
@@ -177,6 +182,10 @@ function addZeros(num, digit) { // 자릿수 맞춰주기
 
 
 </script>
+     
+     
+
+      
      
      
    

@@ -20,6 +20,20 @@
 	
   </resultMap>
   
+  <resultMap type="zaksim.dto.CStatistics" id="CStatistics">
+	<result property="totalMem" column="total_mem"/>
+	<result property="chalCount" column="chal_count"/>
+	<result property="avgMoney" column="avg_money"/>
+	<result property="dateNum" column="date_num"/>
+	<result property="boardNum" column="board_num"/>
+  </resultMap>
+  
+  <resultMap type="zaksim.dto.PStatistics" id="PStatistics">
+	<result property="endChal" column="end_chal"/>
+	<result property="failChal" column="fail_chal"/>
+	<result property="failMoney" column="fail_money"/>
+  </resultMap>
+  
   
   	<select id="selectSeq" resultType="int">
   		
@@ -49,6 +63,139 @@
 	 		(SELECT * FROM challenge WHERE member_idx=#{memberIdx} ORDER BY idx DESC) 
 		WHERE ROWNUM = 1
   	
+  	</select>
+  	
+  	
+  	<select id="selectCStatisticsDetailData" parameterType="map" resultMap="CStatistics">
+  		SELECT m.*, DECODE(c.chal_count, NULL, 0, c.chal_count) chal_count, DECODE(c.avg_money, NULL, 0, c.avg_money) avg_money
+  		FROM (
+			SELECT mem.membercount_date today, mem.membercount total_mem
+			FROM membercount mem
+			WHERE membercount_date <![CDATA[ > ]]>= to_date(#{startDate}, 'yyyy-mm-dd')
+			AND membercount_date <![CDATA[ < ]]>= to_date(#{endDate}, 'yyyy-mm-dd')
+			ORDER BY membercount_date asc) m
+		LEFT JOIN (
+			SELECT apply_date, count(*) chal_count, DECODE(avg(money), NULL, 0, avg(money)) avg_money
+			FROM challenge
+			GROUP BY apply_date) c
+		ON m.today = c.apply_date
+		ORDER BY today ASC
+  	</select>
+  	
+  	<select id="selectPStatisticsDetailData" parameterType="map" resultMap="PStatistics">
+  		SELECT D.*, DECODE(c1.end_chal, NULL, 0, c1.end_chal) end_chal,
+  			DECODE(c2.fail_chal, NULL, 0, c2.fail_chal) fail_chal, DECODE(c2.money, NULL, 0, c2.money) money
+  		FROM (
+  			SELECT TO_DATE(#{startDate},'yyyy-mm-dd') + LEVEL - 1 AS today
+			FROM DUAL
+			CONNECT BY LEVEL <![CDATA[ < ]]>= TO_DATE(#{endDate},'yyyy-mm-dd') - TO_DATE(#{startDate},'yyyy-mm-dd') + 1) D
+		LEFT JOIN (
+			SELECT end_date, count(*) end_chal
+			FROM challenge
+			GROUP BY end_date) c1
+		ON d.today = c1.end_date
+		LEFT JOIN (
+			SELECT end_date end_date2, count(*) fail_chal, sum(money)/10 money
+			FROM challenge
+			WHERE result='fail'
+			GROUP BY end_date) c2
+		ON d.today = c2.end_date2
+		ORDER BY today ASC
+  	</select>
+  	
+  	<select id="selectCertificationRate" parameterType="map" resultMap="CStatistics">
+  		SELECT COUNT(*) chal_count, SUM(date_num) date_num, SUM(board_num) board_num
+		FROM (
+		    SELECT C.idx, (C.end_date - C.start_date + 1) AS date_num, DECODE(B.board_num, null, 0, B.board_num) board_num
+		    FROM (
+		        SELECT idx,
+		            CASE
+		                WHEN start_date <![CDATA[ > ]]>= TO_DATE(#{startDate}, 'yyyy-mm-dd')
+		                THEN start_date
+		                ELSE TO_DATE(#{startDate}, 'yyyy-mm-dd')
+		            END AS start_date,
+		            CASE
+		                WHEN end_date <![CDATA[ < ]]>= TO_DATE(#{endDate}, 'yyyy-mm-dd')
+		                THEN end_date
+		                ELSE TO_DATE(#{endDate}, 'yyyy-mm-dd')
+		            END AS end_date
+		        FROM challenge
+		        WHERE (start_date <![CDATA[ > ]]>= TO_DATE(#{startDate}, 'yyyy-mm-dd') AND start_date <![CDATA[ < ]]>= TO_DATE(#{endDate}, 'yyyy-mm-dd'))
+		        OR (end_date <![CDATA[ > ]]>= TO_DATE(#{startDate}, 'yyyy-mm-dd') AND end_date <![CDATA[ < ]]>= TO_DATE(#{endDate}, 'yyyy-mm-dd'))
+		        OR (start_date <![CDATA[ < ]]>= TO_DATE(#{startDate}, 'yyyy-mm-dd') AND end_date <![CDATA[ > ]]>= TO_DATE(#{endDate}, 'yyyy-mm-dd'))
+		    ) C
+		    LEFT JOIN (
+		        SELECT challenge_idx, COUNT(*) AS board_num
+		        FROM board
+		        WHERE written_date <![CDATA[ > ]]>= TO_DATE(#{startDate}, 'yyyy-mm-dd')
+		        AND written_date <![CDATA[ < ]]>= TO_DATE(#{endDate}, 'yyyy-mm-dd')
+		        GROUP BY challenge_idx
+		    ) B
+		    ON C.idx = B.challenge_idx
+		) CB
+  	</select>
+  	
+  	<select id="selectChallengeNum" parameterType="map" resultMap="CStatistics">
+		SELECT D.today, DECODE(C.chal_count, null, 0, C.chal_count) chal_count, DECODE(C.avg_money, null, 0, C.avg_money) avg_money
+		FROM (
+		    SELECT TO_DATE(#{startDate},'yyyy-mm-dd') + LEVEL - 1 AS today
+		    FROM DUAL
+		    CONNECT BY LEVEL <![CDATA[ < ]]>= TO_DATE(#{endDate},'yyyy-mm-dd') - TO_DATE(#{startDate},'yyyy-mm-dd') + 1) D
+		LEFT JOIN (
+		    SELECT apply_date, count(*) chal_count, avg(money) avg_money
+		    FROM challenge
+		    GROUP BY apply_date) C
+		ON C.apply_date = D.today
+  	</select>
+  	
+  	<select id="selectSuccessNum" parameterType="map" resultMap="PStatistics">
+  		SELECT SUM(end_chal) end_chal, SUM(fail_chal) fail_chal
+		FROM (
+		    SELECT D.*, DECODE(c1.end_chal, NULL, 0, c1.end_chal) end_chal,
+		  			DECODE(c2.fail_chal, NULL, 0, c2.fail_chal) fail_chal, DECODE(c2.money, NULL, 0, c2.money) money
+	  		FROM (
+	  			SELECT TO_DATE(#{startDate},'yyyy-mm-dd') + LEVEL - 1 AS today
+				FROM DUAL
+				CONNECT BY LEVEL <![CDATA[ < ]]>= TO_DATE(#{endDate},'yyyy-mm-dd') - TO_DATE(#{startDate},'yyyy-mm-dd') + 1) D
+		LEFT JOIN (
+			SELECT end_date, count(*) end_chal
+			FROM challenge
+			GROUP BY end_date) c1
+		ON d.today = c1.end_date
+		LEFT JOIN (
+			SELECT end_date end_date2, count(*) fail_chal, sum(money)/10 money
+			FROM challenge
+			WHERE result='fail'
+			GROUP BY end_date) c2
+		ON d.today = c2.end_date2
+		ORDER BY today ASC
+        )
+  	</select>
+  	
+  	<select id="selectChallengeMony" parameterType="map" resultMap="PStatistics">
+  		SELECT today, DECODE(money, NULL, LAG(money) OVER (ORDER BY today), money) money,
+  			DECODE(fail_money, NULL, LAG(fail_money) OVER (ORDER BY today), fail_money) fail_money
+  		FROM (
+			SELECT D.today, SUM(c.money) OVER (ORDER BY D.today) money, SUM(c2.fail_money) OVER (ORDER BY D.today) fail_money
+			FROM (
+				SELECT TO_DATE(#{startDate},'yyyy-mm-dd') + LEVEL - 1 AS today
+				FROM DUAL
+				CONNECT BY LEVEL <![CDATA[ < ]]>= TO_DATE(#{endDate},'yyyy-mm-dd') - TO_DATE(#{startDate},'yyyy-mm-dd') + 1) D
+			LEFT JOIN (
+				SELECT apply_date, SUM(money) money
+				FROM challenge
+				GROUP BY apply_date
+				ORDER BY apply_date
+			) c
+			ON c.apply_date = d.today
+			LEFT JOIN ( 
+				SELECT end_date, SUM(money)/10 fail_money
+				FROM challenge
+				GROUP BY end_date
+				ORDER BY end_date
+			) c2
+			ON c2.end_date = d.today
+		)
   	</select>
   
   </mapper>
