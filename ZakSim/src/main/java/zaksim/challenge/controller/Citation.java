@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import zaksim.challenge.service.ChallengeInfoService;
 import zaksim.dto.Challenge;
@@ -46,8 +47,13 @@ public class Citation {
 	
 	
 	@RequestMapping(value="/citation", method=RequestMethod.POST)
-	public void citationPost() {
+	public String citationPost(MultipartFile file) {
 		
+		logger.info("citationPOST 활성화");
+		logger.info(file.getOriginalFilename());
+		
+		
+		return "redirect:/zaksim/challenge/citation";
 	}
 	
 	

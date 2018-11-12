@@ -2,37 +2,9 @@
     pageEncoding="UTF-8"%>
 
 
-<style>
-
-#filedrag
-{
-	display: none;
-	font-weight: bold;
-	text-align: center;
-	padding: 1em 0;
-	margin: 1em 0;
-	color: #555;
-	border: 2px dashed #555;
-	border-radius: 7px;
-	cursor: default;
-}
-
-#filedrag.hover
-{
-	color: #f00;
-	border-color: #f00;
-	border-style: solid;
-	box-shadow: inset 0 3px 4px #888;
-}
+<link rel="stylesheet" href="/css/challenge/dragNdrop.css">
 
 
-
-</style>
-
-
-
-
-<form id="upload" action="/zaksim/challenge/citaion" method="POST" enctype="multipart/form-data">
 
 <fieldset>
 
@@ -52,7 +24,6 @@
 
 </fieldset>
 
-</form>
 
 <div id="messages">
 <p>Status Messages</p>
@@ -106,6 +77,7 @@ function Init() {
 	var fileselect = $id("fileselect"),
 		filedrag = $id("filedrag"),
 		submitbutton = $id("submitbutton");
+	
 
 	// file select
 	fileselect.addEventListener("change", FileSelectHandler, false);
@@ -119,6 +91,7 @@ function Init() {
 		filedrag.addEventListener("dragleave", FileDragHover, false);
 		filedrag.addEventListener("drop", FileSelectHandler, false);
 		filedrag.style.display = "block";
+	
 		
 		// 버튼 숨김
 		submitbutton.style.display = "none";
@@ -127,7 +100,9 @@ function Init() {
 		fileselect.style.display = "none";
 		
 		// 파일 정보 숨김
-		messages.style.display = "none";
+ 		messages.style.display = "none";
+		
+		
 		
 	}
 
@@ -139,8 +114,11 @@ function FileDragHover(e) {
 	e.stopPropagation();
 	e.preventDefault();
 	e.target.className = (e.type == "dragover" ? "hover" : "");
+
+	
 }
 
+var file;
 
 //file selection
 function FileSelectHandler(e) {
@@ -150,7 +128,7 @@ function FileSelectHandler(e) {
 
 	// fetch FileList object
 	var files = e.target.files || e.dataTransfer.files;
-
+		file=files[0];
 	  
 //     console.log("-------------------");
 //     console.log("files");
@@ -191,7 +169,7 @@ function ParseFile(file) {
 
 // 	console.log("-------------------");
 // 	console.log("file");
-// 	console.log(file);
+	console.log(file);
 //	console.log("-------------------");
 	
 	// 이미지 정보 출력
@@ -203,6 +181,41 @@ function ParseFile(file) {
 	);
 	
 }
+
+
+
+function toCitation(){
+	console.log("toCitation()");
+	console.log(file);
+	 $.ajax({
+	      type: "post"
+	      , url : "/zaksim/challenge/citation"
+	      , data :
+	      	{
+	      		file : file["0"]
+   	  		, text : $("#textarea").val()
+	      	}
+	 
+   	  , dataType: "json"
+	      , success: function( data ) {
+				console.log("전송 성공!!");	         
+
+	      }
+	      , error: function( e ) {
+	         console.log("--- error ---");
+	         console.log( e.responseText );
+	      }
+	      , complete: function() {
+	         //입력 창 초기화
+	      }
+	   }); 
+	 
+	
+	
+}
+
+
+
 
 </script>
 
