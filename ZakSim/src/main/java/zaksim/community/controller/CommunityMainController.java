@@ -27,23 +27,36 @@ public class CommunityMainController {
 	@RequestMapping(value="/communityMain", method=RequestMethod.GET)
 	public void commnunityMain(Model model, HttpSession session ) {
 		
-		session.setAttribute("userId", "김혁수");
-		session.setAttribute("userIdx", "10");
+		if(session.getAttribute("login_idx") != null ) {
+			String idx = (String)session.getAttribute("login_idx").toString();
+			
+			// 가입한 그룹
+			model.addAttribute("joinedGroupLIst", communityListService.joinedGroupList(Integer.parseInt(idx)));
+			// 인기있는 그룹
+			model.addAttribute("popularGroupList", communityListService.popularGroupList());
+			// 새로운 그룹
+			model.addAttribute("newGroupList", communityListService.newGroupList());
+			// 카테고리 그룹
+			model.addAttribute("categoryList", communityListService.categoryList());
+			// 키워드 리스트
+			model.addAttribute("keywordList", communityListService.keywordList());
+			
+		}
+		else {
+			// 인기있는 그룹
+			model.addAttribute("popularGroupList", communityListService.popularGroupList());
+			// 새로운 그룹
+			model.addAttribute("newGroupList", communityListService.newGroupList());
+			// 카테고리 그룹
+			model.addAttribute("categoryList", communityListService.categoryList());
+			// 키워드 리스트
+			model.addAttribute("keywordList", communityListService.keywordList());
 
-		// 가입한 그룹
-		model.addAttribute("joinedGroupLIst", communityListService.joinedGroupList());
+		}
 		
-		// 키워드 리스트
-		model.addAttribute("keywordList", communityListService.keywordList());
+
 		
-		// 인기있는 그룹
-		model.addAttribute("popularGroupList", communityListService.popularGroupList());
-		
-		// 새로운 그룹
-		model.addAttribute("newGroupList", communityListService.newGroupList());
-		
-		// 카테고리 그룹
-		model.addAttribute("categoryList", communityListService.categoryList());
+
 		
 	}
 
@@ -52,16 +65,13 @@ public class CommunityMainController {
 	@RequestMapping(value="/searchCommunity", method=RequestMethod.POST)
 	public String searchCommunityProcess(Model model, String selectSearch, String searchContent) {
 
-
 		if(selectSearch.equals("communutyName")) {
-		
 			model.addAttribute("searchGroup", communitySearchService.searchGroup(searchContent));
 			model.addAttribute("keywordList", communityListService.keywordList());
 			model.addAttribute("selectSearch", selectSearch);
 			model.addAttribute("searchContent", searchContent);
 
 		} else if(selectSearch.equals("communutyCategory")) {
-			
 			model.addAttribute("searchCategoryGroup", communitySearchService.searchCategoryGroup(searchContent));
 			model.addAttribute("keywordList", communityListService.keywordList());
 			model.addAttribute("selectSearch", selectSearch);
@@ -73,7 +83,6 @@ public class CommunityMainController {
 			model.addAttribute("selectSearch", selectSearch);
 			model.addAttribute("searchContent", searchContent);
 		}
-		
 		
 		return "/zaksim/community/searchCommunity";
 

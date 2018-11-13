@@ -149,6 +149,10 @@ $(document).ready(function() {
 		      type: "get"
 		      , url : "/zaksim/challenge/priceChallenge"
 		      , data : params
+		      
+		      /* file : file,
+	    	  text : $("#id").val()
+		       */
 		      , dataType: "html"
 		      , success: function( data ) {
 // 		         console.log(data);

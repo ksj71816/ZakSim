@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="zaksim.dao.CommunityBoardDAO">
+  
+  	<resultMap type="zaksim.dto.CommunityGroup"
+		id="CommunityGroup">
+		<result column="g_idx" property="idx" />
+		<result column="g_member_idx" property="member_idx" />
+		<result column="g_category_idx" property="category_idx" />
+		<result column="g_title" property="title" />
+		<result column="g_content" property="content" />
+		<result column="g_image" property="image" />
+		<result column="g_max" property="max" />
+		<result column="g_open_date" property="open_date" />
+		<result column="g_secret" property="secret" />
+		<result column="g_password" property="password" />
+	</resultMap>
+	
+	<resultMap type="zaksim.dto.Board" id="Board">
+		<result column="b_idx" property="idx" />
+		<result column="b_challenge_idx" property="challenge_idx" />
+		<result column="b_group_idx" property="group_idx" />
+		<result column="b_writer_idx" property="writer_idx" />
+		<result column="b_title" property="title" />
+		<result column="b_content" property="content" />
+		<result column="b_image" property="image" />
+		<result column="b_open" property="open" />
+		<result column="b_certification" property="certification" />
+		<result column="b_written_date" property="written_date" />
+		<result column="b_hit" property="hit" />
+		<collection property="communityGroup" resultMap="CommunityGroup" />
+		<collection property="zakSimMember" resultMap="ZakSimMember" />
+	</resultMap>
+	
+  <resultMap type="zaksim.dto.ZakSimMember" id="ZakSimMember">
+  	<result property="idx" column="m_idx" />
+  	<result property="nick" column="m_nick"/>
+  	<collection property="communityGroup" resultMap="CommunityGroup" />
+  </resultMap>
+  
+<!--   <select id="informationBoard" resultMap="Board" parameterType="int"> -->
+  
+<!--   select g.idx g_idx, g.member_idx g_member_idx, g.category_idx g_category_idx, g.title g_title, g.content g_content, g.image g_image, -->
+<!--   g.max g_max, g.open_date g_open_date, g.secret g_secret, g.password g_password, b.idx b_idx, b.challenge_idx b_challenge_idx, -->
+<!--   b.group_idx b_group_idx, b.writer_idx b_writer_idx, b.title b_title, b.content b_content, b.image b_image, b.open b_open, -->
+<!--   b.certification b_certification, b.written_date b_written_date, b.hit b_hit -->
+<!--    from communityGroup g, board b where b.group_idx = g.idx and g.idx=#{idx } -->
+  
+<!--   </select> -->
+
+
+<select id="informationBoard" resultMap="Board" parameterType="int">
+	  select * from
+ 	 	(select g.idx g_idx, g.member_idx g_member_idx, g.category_idx g_category_idx, g.title g_title, g.content g_content, g.image g_image,
+ 		g.max g_max, g.open_date g_open_date, g.secret g_secret, g.password g_password, b.idx b_idx, b.challenge_idx b_challenge_idx,
+  		b.group_idx b_group_idx, b.writer_idx b_writer_idx, b.title b_title, b.content b_content, b.image b_image, b.open b_open,
+ 		 b.certification b_certification, b.written_date b_written_date, b.hit b_hit
+   		from communityGroup g, board b where b.group_idx = g.idx and g.idx=#{idx } order by g.idx desc)q left join 
+   		(select nick m_nick, m.idx m_idx from zaksimmember m) p 
+   		on q.b_writer_idx = p.m_idx
+</select>
+  
+  
+  </mapper>

@@ -5,12 +5,14 @@ import java.util.List;
 import zaksim.dto.CommunityCategory;
 import zaksim.dto.CommunityGroup;
 import zaksim.dto.GroupKeyword;
+import zaksim.dto.GroupLike;
 import zaksim.dto.GroupMember;
+import zaksim.dto.ZakSimMember;
 
 public interface CommunityListDAO {
 
 	// 그룹 리스트
-	public List<CommunityGroup> joinedGroupList( );
+	public List<CommunityGroup> joinedGroupList(int idx);
 	
 	// 인기그룹 리스트
 	public List<CommunityGroup> popularGroupList( );
@@ -33,8 +35,7 @@ public interface CommunityListDAO {
 	// 카테고리별 정보
 	public List<CommunityGroup> categoryGroup(int idx);
 	
-
-	
-	
+	// 커뮤니티 좋아요
+	public GroupLike groupLike(int idx);
 	
 }

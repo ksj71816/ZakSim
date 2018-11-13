@@ -47,12 +47,17 @@ public class Board {
 	// 신고
 	private Report report;
 
+	private CommunityGroup communityGroup;
+
+	private ZakSimMember zakSimMember;
+
 	@Override
 	public String toString() {
 		return "Board [idx=" + idx + ", challenge_idx=" + challenge_idx + ", group_idx=" + group_idx + ", writer_idx="
 				+ writer_idx + ", title=" + title + ", content=" + content + ", image=" + image + ", open=" + open
 				+ ", certification=" + certification + ", written_date=" + written_date + ", hit=" + hit + ", comment="
-				+ comment + ", boardLike=" + boardLike + ", report=" + report + "]";
+				+ comment + ", boardLike=" + boardLike + ", report=" + report + ", communityGroup=" + communityGroup
+				+ ", zakSimMember=" + zakSimMember + "]";
 	}
 
 	public int getIdx() {
@@ -167,6 +172,21 @@ public class Board {
 		this.report = report;
 	}
 
+	public CommunityGroup getCommunityGroup() {
+		return communityGroup;
+	}
+
+	public void setCommunityGroup(CommunityGroup communityGroup) {
+		this.communityGroup = communityGroup;
+	}
+
+	public ZakSimMember getZakSimMember() {
+		return zakSimMember;
+	}
+
+	public void setZakSimMember(ZakSimMember zakSimMember) {
+		this.zakSimMember = zakSimMember;
+	}
 
 
 

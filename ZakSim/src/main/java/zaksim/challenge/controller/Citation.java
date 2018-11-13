@@ -1,5 +1,7 @@
 package zaksim.challenge.controller;
 
+import java.io.File;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -46,8 +48,15 @@ public class Citation {
 	
 	
 	@RequestMapping(value="/citation", method=RequestMethod.POST)
-	public void citationPost() {
+	public String citationPost(Model model ) {
 		
+		logger.info("citationPOST 활성화");
+		logger.info(model.toString());
+		logger.info("");
+		
+		
+		
+		return "redirect:/zaksim/challenge/challengeInfo";
 	}
 	
 	

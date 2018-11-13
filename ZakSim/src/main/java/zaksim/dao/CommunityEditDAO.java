@@ -1,10 +1,9 @@
 package zaksim.dao;
 
-import java.util.List;
-
 import zaksim.dto.CommunityCategory;
 import zaksim.dto.CommunityGroup;
 import zaksim.dto.GroupKeyword;
+import zaksim.dto.GroupMember;
 import zaksim.dto.ZakSimMember;
 
 public interface CommunityEditDAO {
@@ -17,6 +16,9 @@ public interface CommunityEditDAO {
 	
 	// 그룹 개설
 	public void createGroup(CommunityGroup communityGroup);
+	
+	// 그룹 맴버 추가
+	public void addMember(GroupMember groupMember);
 	
 	// 
 	public int getnextval();
@@ -33,9 +35,15 @@ public interface CommunityEditDAO {
 	
 	
 	// 그룹 수정
-	public void updateGroup(int group_idx);
+	public void updateGroup(CommunityGroup communityGroup);
 	
 	// 그룹 삭제
 	public void deleteGroup(int idx);
+	
+	// 그룹 맴버 삭제
+	public void deleteGroupMember(int idx);
+	
+	// 그룹 좋아요
+//	public void likeGroup(int idx);
 	
 }

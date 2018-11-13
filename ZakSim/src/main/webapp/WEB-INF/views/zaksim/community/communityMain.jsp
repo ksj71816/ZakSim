@@ -32,8 +32,8 @@
 						<option value="communutyCategory">카테고리</option>
 						<option value="communutyKeyword">키워드</option>
 					</select> <input type="text" class="form-control mx-3" style="width: 600px;"
-						name="searchContent" placeholder="검색할 내용" required="required">
-					<input type="submit" class="btn btn-outline-info" value="Search" />
+						name="searchContent" placeholder="검색할 내용"> <input
+						type="submit" class="btn btn-outline-info" value="Search" />
 
 				</div>
 			</form>
@@ -55,7 +55,8 @@
 
 			<c:if test="${!empty joinedGroupLIst}">
 				<button type="button" class="btn btn-outline-primary"
-					style="float: right; margin-top: 30px;">+ 더보기</button>
+					style="float: right; margin-top: 30px;" id="joinedGroupViewMore">+
+					더보기</button>
 
 
 				<button type="button" class="btn btn-outline-danger"
@@ -71,65 +72,81 @@
 
 			<div class="form-inline" style="margin-bottom: 50px;">
 
-				<!-- 참여하고 있는 모임이 없을 시 -->
-				<c:if test="${empty  joinedGroupLIst}">
 
-					<div
-						style="text-align: center; color: gray; font-size: 20px; font-style: italic; margin-left: 400px;">
-						<p>참여하고 있는 모임이 없습니다.</p>
-						<p>- 모임을 만드세요. -</p>
-						<button type="button" class="btn btn-danger" style="width: 200px;"
-							data-toggle="modal" data-target=".bd-example-modal-lg">모임
-							만들기</button>
-					</div>
+					<!-- 참여하고 있는 모임이 없을 시 -->
+					<c:if test="${empty  joinedGroupLIst}">
+						<c:if test="${sessionScope.login_idx eq null}">
+						
+						<div
+							style="text-align: center; color: gray; font-size: 20px; font-style: italic; margin-left: 400px;">
+							<p>로그인 후 이용 하세요.</p>
+							<button type="button" class="btn btn-danger"
+								style="width: 200px;" data-toggle="modal" disabled="disabled"
+								data-target=".bd-example-modal-lg">모임 만들기</button>
+						</div>
+						
+						</c:if>
+						
+						<c:if test="${sessionScope.login_idx ne null}">
+						<div
+							style="text-align: center; color: gray; font-size: 20px; font-style: italic; margin-left: 400px;">
+							<p>참여하고 있는 모임이 없습니다.</p>
+							<p>- 모임을 만드세요. -</p>
+							<button type="button" class="btn btn-danger"
+								style="width: 200px;" data-toggle="modal"
+								data-target=".bd-example-modal-lg">모임 만들기</button>
+						</div>
+						</c:if>
+		
+					</c:if>
 
-				</c:if>
 
 
-				<!-- 참여하고 있는 모임이 있을 시 -->
-				<c:if test="${joinedGroupLIst ne null }">
-					<c:forEach var="joinedGroupLIst" items="${joinedGroupLIst }"
-						begin="0" end="2" step="1">
-						<div class="card" style="width: 20rem; margin-right: 15px;">
-							<div class="hovereffect">
-								<img class="card-img-top"
-									src="${joinedGroupLIst.communityGroup.image }"
-									alt="Card image cap">
-								<div class="card-body">
-									<span>
-										<h3 class="card-title">${joinedGroupLIst.communityGroup.title }
-											<c:if test="${joinedGroupLIst.communityGroup.secret==1 }">
-												<img alt="" src="/resouces/image/community/자물쇠.png">
-											</c:if>
-										</h3>
-									</span> <span class="form-inline"> <span style="color: red;">
-											<h4>♥ &nbsp;${joinedGroupLIst.likeNum }</h4>
-									</span>
-									</span>
-									<p class="card-text">
-										키워드 :
-										<c:forEach items="${keywordList }" var="keyword">
-											<c:if
-												test="${joinedGroupLIst.communityGroup.idx eq keyword.group_idx}">
+					<!-- 참여하고 있는 모임이 있을 시 -->
+					<c:if test="${joinedGroupLIst ne null }">
+						<c:forEach var="joinedGroupLIst" items="${joinedGroupLIst }"
+							begin="0" end="2" step="1">
+							<div class="card" style="width: 20rem; margin-right: 15px;">
+								<div class="hovereffect">
+									<img class="card-img-top"
+										src="${joinedGroupLIst.communityGroup.image }"
+										alt="Card image cap">
+									<div class="card-body">
+										<span>
+											<h3 class="card-title">${joinedGroupLIst.communityGroup.title }
+												<c:if test="${joinedGroupLIst.communityGroup.secret==1 }">
+													<img alt="" src="/resouces/image/community/자물쇠.png">
+												</c:if>
+											</h3>
+										</span> <span class="form-inline"> <span style="color: red;">
+												<h4>♥ &nbsp;${joinedGroupLIst.likeNum }</h4>
+										</span>
+										</span>
+										<p class="card-text">
+											키워드 :
+											<c:forEach items="${keywordList }" var="keyword">
+												<c:if
+													test="${joinedGroupLIst.communityGroup.idx eq keyword.group_idx}">
 													#${keyword.keyword } 
 											</c:if>
-										</c:forEach>
-									</p>
+											</c:forEach>
+										</p>
+									</div>
+
+									<div class="overlay">
+										<br> <br> <br> <a class="info" href="#">
+											<button type="button" class="btn btn-danger"
+												onclick="moveURL(${joinedGroupLIst.communityGroup.idx }, ${joinedGroupLIst.communityGroup.secret })">상세보기</button>
+										</a>
+
+									</div>
+
 								</div>
-
-								<div class="overlay">
-									<br> <br> <br> <a class="info" href="#">
-										<button type="button" class="btn btn-danger"
-											onclick="moveURL(${joinedGroupLIst.communityGroup.idx })">상세보기</button>
-									</a>
-
-								</div>
-
 							</div>
-						</div>
 
-					</c:forEach>
-				</c:if>
+						</c:forEach>
+					</c:if>
+
 
 			</div>
 
@@ -156,43 +173,40 @@
 								<div class="card-body">
 									<span>
 										<h3 class="card-title">${popularGroupList.communityGroup.title }
-<%-- 											<c:if test="${popularGroupList.communityGroup.secret==1 }"> --%>
-<!-- 												<img style="width: 10px; height: auto;" alt="" src="/resources/image/community/자물쇠.png"> -->
-<%-- 											</c:if> --%>
+											<%-- 											<c:if test="${popularGroupList.communityGroup.secret==1 }"> --%>
+											<!-- 												<img style="width: 10px; height: auto;" alt="" src="/resources/image/community/자물쇠.png"> -->
+											<%-- 											</c:if> --%>
 										</h3>
 									</span> <span class="form-inline"> <span style="color: red;">
 											<h4>♥ &nbsp;${popularGroupList.likeNum }</h4>
 									</span>
 									</span>
 									<p class="card-text">
-									<c:if test="${empty keywordList }">
+										<c:if test="${empty keywordList }">
 										키워드 :
 										</c:if>
 										<c:forEach items="${keywordList }" var="keyword">
 											<c:if
 												test="${popularGroupList.communityGroup.idx eq keyword.group_idx}">
-												#${keyword.keyword } 
+												#${keyword.keyword }
 											</c:if>
 										</c:forEach>
 									</p>
 								</div>
 								<div class="overlay">
-									<br> <br> <a class="info"> 
-<%-- 									<c:if test="${userIdx ne popularGroupList.communityGroup.member_idx }"> --%>
-											<c:if test="${popularGroupList.communityGroup.secret == 1 }">
-												<button type="button" class="btn btn-primary"
-													data-toggle="modal" data-target="#join">가입하기</button>
-												<br>
-												<br>
-											</c:if>
-											<c:if test="${popularGroupList.communityGroup.secret == 0 }">
-												<button type="button" class="btn btn-primary">가입하기</button>
-												<br>
-												<br>
-											</c:if>
-<%-- 										</c:if> --%>
+									<br> <br> <a class="info"> <%-- 									<c:if test="${userIdx ne popularGroupList.communityGroup.member_idx }"> --%>
+										<c:if test="${popularGroupList.communityGroup.secret == 1 }">
+											<button type="button" class="btn btn-primary"
+												data-toggle="modal" data-target="#join">가입하기</button>
+											<br>
+											<br>
+										</c:if> <c:if test="${popularGroupList.communityGroup.secret == 0 }">
+											<button type="button" class="btn btn-primary">가입하기</button>
+											<br>
+											<br>
+										</c:if> <%-- 										</c:if> --%>
 										<button type="button" class="btn btn-danger"
-											onclick="moveURL(${popularGroupList.communityGroup.idx })">상세보기</button>
+											onclick="moveURL(${popularGroupList.communityGroup.idx }, ${popularGroupList.communityGroup.secret })">상세보기</button>
 									</a>
 								</div>
 							</div>
@@ -220,7 +234,6 @@
 
 
 				<div class="form-inline" style="margin-bottom: 50px;">
-
 					<c:forEach var="newGroupList" items="${newGroupList }" begin="0"
 						end="2" step="1">
 						<div class="card" style="width: 20rem; margin-right: 15px;">
@@ -231,19 +244,19 @@
 								<div class="card-body">
 									<span>
 										<h3 class="card-title">${newGroupList.communityGroup.title }
-<%-- 											<c:if test="${newGroupList.communityGroup.secret==1 }"> --%>
-<!-- 												<img alt="" style="width: 20px; height: auto;"  src="/resources/image/community/자물쇠.png"> -->
-<%-- 											</c:if> --%>
+											<%-- 											<c:if test="${newGroupList.communityGroup.secret==1 }"> --%>
+											<!-- 												<img alt="" style="width: 20px; height: auto;"  src="/resources/image/community/자물쇠.png"> -->
+											<%-- 											</c:if> --%>
 										</h3>
 									</span> <span class="form-inline"> <span style="color: red;">
 											<h4>♥ &nbsp;${newGroupList.likeNum }</h4>
 									</span>
 									</span>
 									<p class="card-text">
-									<c:if test="${empty keywordList }">
+										<c:if test="${empty keywordList }">
 										키워드 :
 										</c:if>
-										<c:forEach items="${keywordList }" var="keyword" >
+										<c:forEach items="${keywordList }" var="keyword">
 											<c:if
 												test="${newGroupList.communityGroup.idx eq keyword.group_idx}">
 												#${keyword.keyword } 
@@ -253,22 +266,30 @@
 									<p class="card-text"></p>
 								</div>
 								<div class="overlay">
-									<br> <br> <a class="info"> <c:if
-											test="${userIdx ne newGroupList.communityGroup.member_idx }">
+									${newGroupList.communityGroup.member_idx}
+									${sessionScope.login_idx } <br> <br> <a class="info">
+										<c:if
+											test="${sessionScope.login_idx  ne newGroupList.communityGroup.member_idx }">
 											<c:if test="${newGroupList.communityGroup.secret == 1 }">
-												<button type="button" class="btn btn-primary"
+
+												<button type="button" class="btn btn-primary" id="joinBtn"
 													data-toggle="modal" data-target="#join">가입하기</button>
 												<br>
 												<br>
+
 											</c:if>
 											<c:if test="${newGroupList.communityGroup.secret == 0 }">
-												<button type="button" class="btn btn-primary">가입하기</button>
-												<br>
-												<br>
+												<c:if
+													test="${newGroupList.communityGroup.member_idx eq sessionScope.login_idx }">
+													<button type="button" class="btn btn-primary">가입하기</button>
+													<br>
+													<br>
+												</c:if>
 											</c:if>
 										</c:if>
 										<button type="button" class="btn btn-danger"
-											onclick="moveURL(${newGroupList.communityGroup.idx })">상세보기</button>
+											onclick="moveURL(${newGroupList.communityGroup.idx }, ${newGroupList.communityGroup.secret })">
+											상세보기</button>
 									</a>
 								</div>
 							</div>
@@ -292,9 +313,10 @@
 				<div class="form-inline" style="margin-bottom: 50px;">
 					<c:forEach var="categoryList" items="${categoryList }" begin="0"
 						end="2" step="1">
-						<div class="card" style="width: 20rem; margin-right: 15px;" >
+						<div class="card" style="width: 20rem; margin-right: 15px;">
 
-							<div class="hovereffect" style="cursor: pointer;" onclick="categoryClick(${categoryList.idx})">
+							<div class="hovereffect" style="cursor: pointer;"
+								onclick="categoryClick(${categoryList.idx})">
 								<img class="card-img-top" src="${categoryList.image }"
 									alt="Card image cap">
 								<div class="card-body">
@@ -321,9 +343,21 @@
 
 
 
+
+
+
+<!-- 위로가기 버튼 -->
+<div class="top-button">
+	<a href=""><img id="upImg" src="/resources/image/community/위로.png">
+	</a>
+</div>
+
+<!-- footer include -->
+<%@include file="/WEB-INF/views/zaksim/main/footer.jsp"%>
+
 <!-- 가입하기 -->
 <div class="modal" id="join" tabindex="-1" role="dialog"
-	aria-labelledby="exampleModalVerticalLabel" aria-hidden="true">
+	aria-labelledby="exampleModalVerticalLabel" aria-hidden="false">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -337,37 +371,28 @@
 				<form>
 					<div class="form-group">
 						<label for="recipient-name" class="form-control-label">비밀번호</label>
-						<input type="password" class="form-control" id="recipient-password" />
+						<input type="password" class="form-control"
+							id="recipient-password" />
 					</div>
 				</form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-				<button type="button" class="btn btn-primary" id= "joinedComm">입장하기</button>
+				<button type="button" class="btn btn-primary" id="joinedComm">입장하기</button>
 			</div>
 		</div>
 	</div>
 </div>
 
 
-<!-- 위로가기 버튼 -->
-<div class="top-button">
-	<a href=""><img id="upImg" src="/resources/image/community/위로.png">
-	</a>
-</div>
-
-<!-- footer include -->
-<%@include file="/WEB-INF/views/zaksim/main/footer.jsp"%>
-
-
-
-<!-- 모달 -->
+<!-- 모임 만들기 모달 -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
-	id="createModal" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	id="createModal" aria-labelledby="myLargeModalLabel" aria-hidden="false">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<form id="form1" action="/zaksim/community/createCommunity"
-				method="post" runat="server" enctype="multipart/form-data">
+				method="post" runat="server" enctype="multipart/form-data"
+				onsubmit="return create();">
 
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel"
@@ -409,12 +434,12 @@
 									<div style="padding-bottom: 0px; margin-left: 50px;">
 										<span style="font-size: 20px;"><strong>모임명 : </strong></span>
 										<input class="form-control" type="text" style="height: 30px;"
-											name="title" maxlength="20" required="required" id="commName"
+											name="title" maxlength="20" id="commName"
 											placeholder="20자 이내로 작성하세요"> <br> <br> <span
 											style="font-size: 20px;"><strong>최대 모임 인원 : </strong></span>
 										<input class="form-control" type="number"
 											style="width: 80px; height: 30px;" placeholder="100" min="1"
-											id="commMax" max="100" name="max" required="required"><strong>명</strong>
+											id="commMax" max="100" name="max"><strong>명</strong>
 										<br> <span
 											style="margin-left: 50px; font-size: 15px; color: gray;">※
 											최대 100명까지 가능</span>
@@ -464,7 +489,7 @@
 
 
 									<span style="margin-left: 50px; margin-right: 70px;"><strong>카테고리</strong></span>
-									<select name="category"
+									<select name="category_idx"
 										class="custom-select mb-2 mr-sm-2 mb-sm-0"
 										style="height: 40px; width: 150px;">
 										<option value=1>운동</option>
@@ -477,8 +502,7 @@
 										<span style="margin-left: 50px; margin-right: 90px;"><strong>키워드</strong></span>
 
 										<input type="text" class="form-control" style="width: 300px;"
-											name="keyword" name="keyword" placeholder="ex) #키워드1#키워드2"
-											required="required" 
+											name="keyword" id="keyword" placeholder="ex) #키워드1#키워드2"
 											onkeyup="this.value=this.value.replace(/[^#0-9가-힣a-zA-Z]/g,'')">
 									</div>
 									<br>
@@ -486,11 +510,10 @@
 										<span style="margin-left: 50px; margin-right: 90px;"><strong>소개글</strong></span>
 
 										<br>
-										<textarea class="form-control" name="content"
+										<textarea class="form-control" name="content" id="contentText"
 											onkeydown="content(this)"
 											style="width: 300px; margin-bottom: 20px;"
-											onkeyup="content(this)" placeholder="내용을 입력하세요"
-											required="required"></textarea>
+											onkeyup="content(this)" placeholder="내용을 입력하세요"></textarea>
 
 
 									</div>
@@ -503,8 +526,7 @@
 						</div>
 					</div>
 					<div class="modal-footer" style="">
-						<input type="submit" class="btn btn-danger" id="create"
-							value="만들기" />
+						<input type="submit" class="btn btn-danger" value="만들기" />
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">취소</button>
 					</div>
@@ -523,8 +545,9 @@
 <link rel="stylesheet" type="text/css" href="/css/community/button.css">
 <link rel="stylesheet" type="text/css" href="/css/community/main.css">
 
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.28.12/sweetalert2.all.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 
@@ -543,6 +566,38 @@
 			return false;
 		});
 	});
+</script>
+
+
+<script type="text/javascript">
+ $(document).ready(function() {
+		// 공개 클릭 시 숨기기 / 비공개 클릭 시 보이기 
+		var radioVal = $('input[name="secret"]:checked').val();
+		if(radioVal==0){
+			$(".screctRadio").hide();
+			$("#password1").attr("disabled", false);
+			$("#password2").attr("disabled", false);
+		}
+		else {
+			$(".screctRadio").show();
+// 			$("#password1").attr("required", true);
+// 			$("#password2").attr("required", true);
+		}
+
+		$("#screctRadio1").click(function() {
+			$("#password1").val("");
+			$("#password2").val("");
+			$("#password1").attr("disabled", false);
+			$("#password2").attr("disabled", false);
+			$(".screctRadio").hide();
+		});
+
+		$("#screctRadio2").click(function() {
+// 			$("#password1").attr("required", true);
+// 			$("#password2").attr("required", true);
+			$(".screctRadio").fadeIn();
+		});
+ });
 </script>
 
 <script type="text/javascript">
@@ -579,40 +634,26 @@
 			}
 		});
 
-		// 공개 클릭 시 숨기기 / 비공개 클릭 시 보이기
-		$(".screctRadio").hide();
-
-		$("#screctRadio1").click(function() {
-			$(".screctRadio").hide();
-		});
-
-		$("#screctRadio2").click(function() {
-			$(".screctRadio").fadeIn();
-		});
-
-		$("#join").click(function() {
-			$("#createModal").modal();
+		$("#joinBtn").click(function() {
+			
+			console.log("모달 클릭");
+			
+			console.log($("#join").modal());
+			$("#join").modal();
 		});
 		
 		
-		$("#create").click(function() {
+
 			
-			var pw2 = document.getElementById('password2').value;
-			
-			if(pw1 != pw2){
-				alert('비밀번호가 일치하지 않습니다.');
-				return;
-			}
-			
-			else{
-				$('#form1').submit();
-			}
-			
-		});
-		
 
 		
+
+
 		
+		/* 가입한 모임 더 보기 */
+		$("#joinedGroupViewMore").click(function() {
+			location.href = "/zaksim/community/joinCommunity";
+		});
 
 		/* 인기모임 더 보기 */
 		$("#popularGroupViewMore").click(function() {
@@ -631,8 +672,20 @@
 
 	});
 	
-	function moveURL(url) {
+	
+	function moveURL(url, secret) {
+		
+		if(secret == 1){
+			swal({
+					type: 'error',
+					title: 'Oops...',
+					text: '비밀커뮤니티입니다'
+			});
+			return;
+		}
+		else{
 		document.location.href = "/zaksim/community/enrollCommunity?idx="+url;
+		}
 	}
 	
 	function categoryClick(categoryIdx){
@@ -641,6 +694,136 @@
 		
 	}
 	
+	
+	function create() {
+		var commName = document.getElementById("commName").value;
+		var commMax = document.getElementById("commMax").value;
+		var pw1 = document.getElementById("password1").value;
+		var pw2 = document.getElementById('password2').value;
+		var keyword= document.getElementById('keyword').value;
+		var contentText= document.getElementById('contentText').value;
+		
+		var radioVal = $('input[name="secret"]:checked').val();
+		
+		if(radioVal ==0 ){
+
+			
+			if(commName == null || commName==''){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '커뮤니티명을 입력하세요.'
+				});
+				return false;
+				
+			}
+			if(commMax == null || commMax==''){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '최대인원을 입력하세요.'
+				});
+				return false;
+				
+			}
+			if(keyword == null || keyword==''){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '키워드를 입력하세요.'
+				});
+				return false;
+				
+			}
+			else if(contentText== null || contentText==''){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '소개글을 입력하세요.'
+				});
+				return false;
+			}
+			else{
+				swal({
+					type: 'success',
+					title: 'success ! ',
+					text: '생성되었습니다.'
+			});
+				return true;
+			}
+			
+		}
+		
+		else{			
+			if(commName == null || commName==''){
+			swal({
+				type: 'error',
+				title: 'Oops...',
+				text: '커뮤니티명을 입력하세요.'
+		});
+		return false;
+		
+	}
+	if(commMax == null || commMax==''){
+		swal({
+				type: 'error',
+				title: 'Oops...',
+				text: '최대인원을 입력하세요.'
+		});
+		return false;
+		
+	}
+			if(pw1 == null || pw1==''){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '비밀번호를 입력하세요.'
+				});
+				return false;
+			}
+		
+			else if(pw2 == null || pw2==''){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '비밀번호 확인을 입력하세요.'
+				});
+				return false;
+			}
+		
+			else if(pw1 != pw2){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '비밀번호가 일치하지 않습니다.'
+				});
+				return false;
+			}
+			
+			else if(keyword == null || keyword==''){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '키워드를 입력하세요.'
+				});
+				return false;
+				
+			}
+			else if(contentText== null || contentText==''){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '소개글을 입력하세요.'
+				});
+				return false;
+			}
+		
+			else{
+				return true;
+			}
+		
+		}
+	}
 
 </script>
 

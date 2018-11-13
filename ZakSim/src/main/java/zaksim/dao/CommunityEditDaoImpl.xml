@@ -21,11 +21,14 @@
 		#{max}, default, #{secret}, #{password})
 	</insert>
 	
+	<insert id="addMember" parameterType="zaksim.dto.GroupMember">
+			insert into GroupMember (idx, group_idx, member_idx) values (groupmember_SEQ.nextval, #{group_idx } , #{member_idx } )		
+	</insert>
+	
 	
 	<select id="getnextval" resultType="int">
 		select communitygroup_seq.nextval from dual
 	</select>
-
 
 
 	<insert id="createKeyword"
@@ -34,11 +37,15 @@
 		VALUES (groupkeyword_SEQ.nextval, #{group_idx}, #{keyword})
 	</insert>
 	
-	
-	<update id="updateGroup" parameterType="int">
-update communityGroup set category_idx=#{category_idx }, title=#{title }, content=#{comtent },
-		 image=#{image }, max=#{max }
-		 where idx=#{idx }
+	<update id="updateGroup" parameterType="zaksim.dto.CommunityGroup">
+		update communityGroup set category_idx=#{category_idx }, title=#{title }, content=#{content }, secret= #{secret },
+		<if test="secret == 1">
+			password = #{password },
+		</if>
+		<if test="secret == 0">
+			password = null,
+		</if>
+		image=#{image }, max=#{max }  where idx=#{idx }
 	</update>
 	
 	<delete id="deleteKeyword" parameterType="int">
@@ -47,6 +54,10 @@ update communityGroup set category_idx=#{category_idx }, title=#{title }, conten
  	
  	<delete id="deleteGroup" parameterType="int">
  		delete from communityGroup where idx=#{idx }
+ 	</delete>
+ 	
+ 	<delete id="deleteGroupMember" parameterType="int">
+ 		delete from groupMember where idx=#{idx }
  	</delete>
 
 

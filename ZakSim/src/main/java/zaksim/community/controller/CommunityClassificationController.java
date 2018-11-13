@@ -1,6 +1,7 @@
 package zaksim.community.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +24,19 @@ public class CommunityClassificationController {
 	
 	// 가입한 커뮤니티 화면 GET
 	@RequestMapping(value="/joinCommunity", method=RequestMethod.GET)
-	public void joinCommunity(Model model) {
+	public void joinCommunity(Model model, HttpSession session) {
+		
+		String idx = (String)session.getAttribute("login_idx").toString();
+		
+		System.out.println("!zzzzzzzzzzzzzzzzzzzzzzzzzzzz : "+ idx);
+		
+		// 가입한 그룹 리스트
+		model.addAttribute("joinedGroupList", communityListService.joinedGroupList(Integer.parseInt(idx)));
+		// 키워드 리스트
+		model.addAttribute("keywordList", communityListService.keywordList());
 		
 	}
+		
 		
 	// 인기있는 커뮤니티 화면 GET
 	@RequestMapping(value="/popularCommunity", method=RequestMethod.GET)
@@ -52,7 +63,6 @@ public class CommunityClassificationController {
 	// 카테고리 화면 GET
 	@RequestMapping(value="/categoryCommunity", method=RequestMethod.GET)
 	public void category(Model model) {
-		
 		model.addAttribute("categoryList", communityListService.categoryList());
 	}
 
