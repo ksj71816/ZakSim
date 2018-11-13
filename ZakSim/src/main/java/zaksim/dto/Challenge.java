@@ -6,6 +6,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class Challenge {
 	
+	private int rnum;
+	
 	//인덱스
 	private int idx;
 	//유저 인덱스
@@ -34,6 +36,14 @@ public class Challenge {
 	
 	
 	
+	public int getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
+
 	public int getIdx() {
 		return idx;
 	}
@@ -126,9 +136,8 @@ public class Challenge {
 
 	@Override
 	public String toString() {
-		return "Challenge [idx=" + idx + ", memberIdx=" + memberIdx + ", applyDate=" + applyDate + ", startDate="
-				+ startDate + ", endDate=" + endDate + ", money=" + money + ", title=" + title + ", status=" + status
-				+ ", result=" + result + ", dateNum=" + dateNum + ", boardNum=" + boardNum + "]";
+		return "Challenge [rnum=" + rnum + ", idx=" + idx + ", memberIdx=" + memberIdx + ", applyDate=" + applyDate
+				+ ", startDate=" + startDate + ", endDate=" + endDate + ", money=" + money + ", title=" + title
+				+ ", status=" + status + ", result=" + result + ", dateNum=" + dateNum + ", boardNum=" + boardNum + "]";
 	}
-
 }

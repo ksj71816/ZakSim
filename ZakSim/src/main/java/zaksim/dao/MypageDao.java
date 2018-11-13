@@ -1,6 +1,5 @@
 package zaksim.dao;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,10 +16,10 @@ public interface MypageDao {
 	public ZakSimMember memberInfo(int idx);
 	
 	// 유저 정보 수정
-	public int updateMember(HashMap<String, Object> params);
+	public int updateMember(ZakSimMember member);
 	
 	// 유저 탈퇴
-	public int deleteMember(String id);
+	public int deleteMember(int idx);
 	
 	// 유저가 참여한 그룹 로드
 	public List<CommunityGroup> memberGroup(Map<String, String> param);
@@ -45,5 +44,11 @@ public interface MypageDao {
 
 	// 도전 인증률 계산
 	public Challenge selectChallengeRate(int challengeIdx);
+
+	// 비밀번호 확인
+	public int selectPw(ZakSimMember member);
+
+	// 지난 도전들
+	public List<Challenge> selectEndChal(int idx);
 	
 }

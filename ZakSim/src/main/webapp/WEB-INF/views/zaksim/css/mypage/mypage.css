@@ -24,3 +24,25 @@
 .mBorder-sub {
 	border: 1px solid indianred;
 }
+
+.mLi {
+	font-size: 0.8em !important;
+	line-height: 200% !important;
+}
+
+.mInput {
+	width: 500px !important;
+}
+
+.mTable {
+	width:900px;
+	margin-left: auto !important;
+}
+
+.failColor {
+	color: red; 
+}
+
+.successColor {
+	color: green; 
+}

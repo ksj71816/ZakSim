@@ -213,7 +213,8 @@ function changePeriod() {
 			}
 			
 			if((getFormatDate(new Date()) == startDate) ||
-					(getFormatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24)) == startDate)) {
+					(getFormatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24)) == startDate) ||
+					new Date(endDate)-new Date(startDate) == 0) {
 				changeChart("bar", labels, mData, fData);							
 			} else {
 				changeChart("line", labels, mData, fData);		

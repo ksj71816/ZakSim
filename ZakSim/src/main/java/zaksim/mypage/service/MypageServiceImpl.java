@@ -1,8 +1,6 @@
 package zaksim.mypage.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,13 +26,8 @@ public class MypageServiceImpl implements MypageService {
 	
 	// 유저 정보 수정
 	@Override
-	public void updateMember(HashMap<String, Object> params) {
-		
-//		HashMap<String, Object> record = memberDao.memberInfo((String)params.get("ID"));
-//
-//		record.putAll(params);
-//
-//		memberDao.updateMember(record);
+	public void updateMember(ZakSimMember member) {
+		memberDao.updateMember(member);
 	}
 	
 	// 유저가 참여한 그룹 로드
@@ -51,8 +44,8 @@ public class MypageServiceImpl implements MypageService {
 	
 	// 유저 탈퇴
 	@Override
-	public void deleteMember(String password) {
-		memberDao.deleteMember(password);
+	public void deleteMember(int idx) {
+		memberDao.deleteMember(idx);
 	}
 
 	@Override
@@ -83,6 +76,20 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public Challenge viewRate(int challengeIdx) {
 		return memberDao.selectChallengeRate(challengeIdx);
+	}
+
+	@Override
+	public boolean checkPw(ZakSimMember member) {
+		if(memberDao.selectPw(member) > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public List<Challenge> viewEndChalList(int idx) {
+		return memberDao.selectEndChal(idx);
 	}
 
 }
