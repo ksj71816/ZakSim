@@ -77,7 +77,10 @@
         </div>
     </div>
 
-<!-- jquery 충돌? -->
+
+<!-- jquery 플러그인 min버전으로 바꿨어요 -->
+<!-- 바디에 추가하신분들 빼주세요 -->
+<!-- jquery 스크립트는 풋터 인클루드 아래에 추가해주세요! -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>	
 </body>

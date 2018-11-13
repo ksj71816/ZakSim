@@ -1,6 +1,6 @@
 package zaksim.challenge.controller;
 
-import java.io.File;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,8 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import zaksim.challenge.service.ChallengeInfoService;
 import zaksim.dto.Challenge;
@@ -46,13 +48,13 @@ public class Citation {
 		
 	}
 	
-	
+	@ResponseBody
 	@RequestMapping(value="/citation", method=RequestMethod.POST)
-	public String citationPost(Model model ) {
+	public String citationPost(Model model, @RequestBody Map<String, Object> citation) {
 		
 		logger.info("citationPOST 활성화");
 		logger.info(model.toString());
-		logger.info("");
+		logger.info(citation.toString());
 		
 		
 		
@@ -63,14 +65,7 @@ public class Citation {
 	
 	
 	
-	
-	
-	@RequestMapping(value="/test", method=RequestMethod.GET)
-	public void test() {
-		
-		
-	}
-	
+
 	
 	
 	

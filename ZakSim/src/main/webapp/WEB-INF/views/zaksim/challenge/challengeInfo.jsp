@@ -6,7 +6,11 @@
 <!-- header include -->
 <%@include file="/WEB-INF/views/zaksim/main/header.jsp" %>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+
+<!-- 캘린더 스타일 추가 -->
+<link rel="stylesheet" href="/css/challenge/calendar.css">
   
 
   <!--바디-->
@@ -81,12 +85,17 @@
     <div class="container mb-5 ">
       <div class="row mb-5">
       
-      <!-- 캘린더 추가 -->
         <div class="col-md-5 px-0">
      
-        <%@include file="/WEB-INF/views/zaksim/challenge/include/calendar.jsp" %>
+      	<!-- 캘린더 추가 -->
+			<div class="m-1" id="pnlEventCalendar" style="width:100%; height: 334.667px; border-right-width: 5px;	border-top-width: 5px;	border-bottom-width: 5px;    border-left-width: 5px;	border-style: solid;	border-color: firebrick;"></div>
+			
+			<!-- 제거 예정 테스트용 -->
+			 <p>(테스트)캘린더 입력 값: <b><span id="lblEventCalendar">[date]</span></b></p>
+		<!-- 캘린더 끝 -->  
         
         </div>
+        
         <div class="col-md-1">
         </div>
         <div class="col-md-6 h-50 p-0" style="border-right-width: 5px;	border-top-width: 5px;	border-bottom-width: 5px;    border-left-width: 5px;	border-style: solid;	border-color: white; ">
@@ -152,87 +161,196 @@
 
 
 
-
-<!-- footer include -->
-
-   <div class=" text-white" style="background-color: rgb(33, 33, 33)">
-        <div class="container">
-
-
-            <div class="row justify-content-center">
-
-                <div class="col pt-4 text-center">
-                    <a href="#" class="text-secondary" style="margin-bottom: 5px;"> <b>회사소개</b></a>
-                </div>
-                <div class="col pt-4 text-center">
-                    <a href="#" class="text-secondary" style="margin-bottom: 5px;"> <b>이용약관</b></a>
-                </div>
-                <div class="col pt-4 text-center">
-                    <a href="#" class="text-secondary" style="margin-bottom: 5px;"> <b>개인정보처리방침</b></a>
-                </div>
-                <div class="col pt-4 text-center">
-                    <a href="#" class="text-secondary " style="margin-bottom: 5px;"> <b>운영정책</b></a>
-                </div>
-
-            </div>
-
-            <hr style="border-style: solid; border-color: dimgray;">
-
-            <div class="row justify-content-center">
-
-                <div class="row text-center">
-                    <div class="col-xl-12">
-                        <h5>
-                            <p class="text-white" style="margin-top: 11px; margin-bottom: 11px;"> Project : ZakSim thirty day</p>
-                        </h5>
-                    </div>
-                </div>
-
-                <div class=" row text-center">
-                    <div class="col-xl-12">
-                        <h6>
-                            <p class="text-white"> Header : 권수정</p>
-                        </h6>
-                        <h6>
-                            <p class="text-white" style="padding-left: 30px;"> Member : 권미현, 김진섭, 김혁수, 배창환 </p>
-                        </h6>
-                    </div>
-                </div>
-                
-                <div class="row " style="padding-bottom: 0rem!important;">
-                    <h6 class="mx-4">
-                        <p style="margin-bottom: 5px;">
-                            <i class="fa d-inline mr-3 text-secondary fa-phone text-white" style="padding-left: 30px;"></i>02 - 1234 - 5678
-                        </p>
-                    </h6>
-                    <h6 class="mx-4">
-                        <p style="margin-bottom: 5px;">
-                            <i class="fa d-inline mr-3 text-secondary fa-envelope-o text-white" style="padding-left: 30px;"></i> info@KHAcademy.com
-                        </p>
-                    </h6>
-                    <h6 class="mx-4">
-                        <p style="margin-bottom: 5px;">
-                            <i class="fa d-inline mr-3 fa-map-marker text-secondary text-white" style="padding-left: 30px;"></i>서울특별시 강남구 역삼동123
-                        </p>
-                    </h6>
-                </div>
-
-            </div>
-
-            <div class="row">
-                <div class="col-md-12 mt-1">
-                    <p class="text-center text-white">© Copyright 2018 ZakSim thirty day - All rights reserved </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-<!-- jquery 충돌? -->
-<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> --> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>	
-</body>
-
-
-</html>        
+   <!-- footer include -->
         
+<%@include file="/WEB-INF/views/zaksim/main/footer.jsp" %>
+
+
+
+
+
+<!-- 스크립트 -->
+
+	<script type="text/javascript">
+		
+		(function ($) {
+			
+			$.fn.calendar = function (opts) {
+				var options = $.extend({
+					color: '#308B22',
+					months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+					days: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'],
+					onSelect: function (event) {}
+				}, $.fn.calendar.defaults, opts);
+				
+				return this.each(function () {
+					var currentYear, currentMonth, currentDay, currentCalendar;
+					
+					initCalendar($(this), options);
+				});
+			};
+			
+			function initCalendar(wrapper, options) {
+				var color = options.color; 
+				
+				wrapper.addClass('calendar').empty();
+				
+				var header = $('<header>').appendTo(wrapper);
+				header.addClass('calendar-header');
+				header.css({
+					background: color,
+					color: createContrast(color)
+				});
+				
+				var buttonLeft = $('<span>').appendTo(header);
+				buttonLeft.addClass('button').addClass('left');
+				buttonLeft.html(' &lang; ');
+				buttonLeft.bind('click', function () { currentCalendar = $(this).parents('.calendar'); selectMonth(false, options); });
+				buttonLeft.bind('mouseover', function () { $(this).css('background', createAccent(color, -20)); });
+				buttonLeft.bind('mouseout', function () { $(this).css('background', color); });
+				
+				var headerLabel = $('<span>').appendTo(header);
+				headerLabel.addClass('header-label')
+				headerLabel.html(' Month Year ');
+				headerLabel.bind('click', function () { 
+					currentCalendar = $(this).parents('.calendar');
+					selectMonth(null, options, new Date().getMonth(), new Date().getFullYear());
+					
+					currentDay = new Date().getDate();
+					triggerSelectEvent(options.onSelect);
+				});
+				
+				var buttonRight = $('<span>').appendTo(header);
+				buttonRight.addClass('button').addClass('right');
+				buttonRight.html(' &rang; ');
+				buttonRight.bind('click', function () { currentCalendar = $(this).parents('.calendar'); selectMonth(true, options); });
+				buttonRight.bind('mouseover', function () { $(this).css('background', createAccent(color, -20)); });
+				buttonRight.bind('mouseout', function () { $(this).css('background', color); });
+				
+				var dayNames = $('<table>').appendTo(wrapper);
+				dayNames.append('<thead><th>' + options.days.join('</th><th>') + '</th></thead>');
+				dayNames.css({
+					width: '100%'
+				});
+				
+				var calendarFrame = $('<div>').appendTo(wrapper);
+				calendarFrame.addClass('calendar-frame');
+				
+				headerLabel.click();
+			}
+			
+			function selectMonth(next, options, month, year) {
+				var tmp = currentCalendar.find('.header-label').text().trim().split(' '), tmpYear = parseInt(tmp[1], 10);
+				
+				currentMonth = month || ((next) ? ((tmp[0] === options.months[options.months.length - 1]) ? 0 : options.months.indexOf(tmp[0]) + 1) : ((tmp[0] === options.months[0]) ? 11 : options.months.indexOf(tmp[0]) - 1));
+				currentYear = year || ((next && currentMonth === 0) ? tmpYear + 1 : (!next && currentMonth === 11) ? tmpYear - 1 : tmpYear);
+				
+				var calendar = createCalendar(currentMonth, currentYear, options), frame = calendar.frame();
+				
+				currentCalendar.find('.calendar-frame').empty().append(frame);
+				currentCalendar.find('.header-label').text(calendar.label);
+				
+				frame.on('click', 'td', function () {
+					$('td').removeClass('selected');
+					$(this).addClass('selected');
+					
+					currentDay = $(this).text();
+					triggerSelectEvent(options.onSelect);
+				});
+			}	
+			
+			function createCalendar(month, year, options) {
+				var currentDay = 1, daysLeft = true,
+				startDay = new Date(year, month, currentDay).getDay() - 1,
+				lastDays = [31, (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], 
+				calendar = [];
+				
+				var i = 0;
+				while(daysLeft) {
+					calendar[i] = [];
+					
+					for(var d = 0; d < 7; d++) {
+						if(i == 0) {
+							if(d == startDay) {
+								calendar[i][d] = currentDay++;
+								startDay++;
+							}
+						} else if(currentDay <= lastDays[month]) {
+							calendar[i][d] = currentDay++;
+						} else {
+							calendar[i][d] = ''; 
+							daysLeft = false;
+						}
+						
+						if (currentDay > lastDays[month]) { 
+							daysLeft = false; 
+						} 
+					}
+					
+					i++;
+				}
+				
+				var frame = $('<table>').addClass('current');
+				var frameBody = $('<tbody>').appendTo(frame);
+				
+				for(var j = 0; j < calendar.length; j++) {
+					var frameRow = $('<tr>').appendTo(frameBody);
+					
+					$.each(calendar[j], function (index, item) {
+						var frameItem = $('<td>').appendTo(frameRow);
+						frameItem.text(item);
+					});
+				}
+				
+				$('td:empty', frame).addClass('disabled');
+				if(currentMonth === new Date().getMonth()) { 
+					$('td', frame).filter(function () { return $(this).text() === new Date().getDate().toString(); }).addClass('today'); 
+				} 
+			
+				return { frame: function () { return frame.clone() }, label: options.months[month] + ' ' + year };
+			}
+			
+			function triggerSelectEvent(event) {
+				var date = new Date(currentYear, currentMonth, currentDay);
+					
+				var label = [];
+				label[0] = (date.getDate() < 10) ? '0' + date.getDate() : date.getDate();
+				label[1] = ((date.getMonth() + 1) < 10) ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+				label[2] = (date.getFullYear());
+
+				if(event != undefined) {
+					event({date: date, label: label.join('.')});
+				}
+			}
+			
+			function createContrast(color) {
+				if(color.length < 5) {
+					color += color.slice(1);
+				}
+				
+				return (color.replace('#','0x')) > (0xffffff) ? '#222' : '#fff';
+			}
+			
+			function createAccent(color, percent) {
+				var num = parseInt(color.slice(1),16), amt = Math.round(2.55 * percent), R = (num >> 16) + amt, G = (num >> 8 & 0x00FF) + amt, B = (num & 0x0000FF) + amt;
+				return '#' + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 + (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
+			}
+
+		}(jQuery));
+		
+		
+		</script>
+		
+		
+		
+			<script>
+			$(function () {
+				$('#pnlEventCalendar').calendar({
+					color: '#ff0000',
+					months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+					days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],onSelect: function (event) {
+					$('#lblEventCalendar').text(event.label);
+				}});
+			});
+			</script>
+			
