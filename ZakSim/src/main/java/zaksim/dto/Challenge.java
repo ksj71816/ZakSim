@@ -28,6 +28,10 @@ public class Challenge {
 	//달성 결과 ex) success/fail
 	private String result;
 	
+	// 인증률 계산용 변수
+	private int dateNum;	// 도전 일 수 
+	private int boardNum;	// 인증글 갯수
+	
 	
 	
 	public int getIdx() {
@@ -104,12 +108,27 @@ public class Challenge {
 		this.result = result;
 	}
 
+	public int getDateNum() {
+		return dateNum;
+	}
+
+	public void setDateNum(int dateNum) {
+		this.dateNum = dateNum;
+	}
+
+	public int getBoardNum() {
+		return boardNum;
+	}
+
+	public void setBoardNum(int boardNum) {
+		this.boardNum = boardNum;
+	}
+
 	@Override
 	public String toString() {
 		return "Challenge [idx=" + idx + ", memberIdx=" + memberIdx + ", applyDate=" + applyDate + ", startDate="
 				+ startDate + ", endDate=" + endDate + ", money=" + money + ", title=" + title + ", status=" + status
-				+ ", result=" + result + "]";
+				+ ", result=" + result + ", dateNum=" + dateNum + ", boardNum=" + boardNum + "]";
 	}
-	
-	
+
 }

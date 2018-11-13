@@ -10,6 +10,9 @@ public class PStatistics {
 	private int money;	
 	private int failMoney;
 	
+	private int successChal;
+	private int ingChal;
+	
 	
 	public Date getToday() {
 		return today;
@@ -51,10 +54,26 @@ public class PStatistics {
 		this.failMoney = failMoney;
 	}
 
+	public int getSuccessChal() {
+		return successChal;
+	}
+
+	public void setSuccessChal(int successChal) {
+		this.successChal = successChal;
+	}
+
+	public int getIngChal() {
+		return ingChal;
+	}
+
+	public void setIngChal(int ingChal) {
+		this.ingChal = ingChal;
+	}
+
 	@Override
 	public String toString() {
 		return "PStatistics [today=" + today + ", endChal=" + endChal + ", failChal=" + failChal + ", money=" + money
-				+ ", failMoney=" + failMoney + "]";
+				+ ", failMoney=" + failMoney + ", successChal=" + successChal + ", ingChal=" + ingChal + "]";
 	}
 
 }

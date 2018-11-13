@@ -11,26 +11,134 @@
 		<result property="joinDate" column="join_date" />
 		<result property="suspensionDate" column="suspension_date" />
 	</resultMap>
+	
+  <resultMap type="zaksim.dto.PStatistics" id="PStatistics">
+	<result property="failChal" column="fail_chal"/>
+	<result property="successChal" column="success_chal"/>
+	<result property="ingChal" column="ing_chal"/>
+  </resultMap>
 
-
-	<!-- parameterType: 정보를 받아온다 resultType: 정보를 돌려준다 -->
-	<select id="memberInfo" parameterType="String" resultMap="ZakSimMember">
+  <resultMap type="zaksim.dto.QnA" id="QnA">
+	<result property="writerIdx" column="writer_idx"/>
+	<result property="writtenDate" column="written_date"/>
+	<result property="upperIdx" column="upper_idx"/>
+  </resultMap>
+  
+   <resultMap type="zaksim.dto.Challenge" id="Challenge">
+	<result column="idx" property="idx"/>
+	<result column="member_idx" property="memberIdx"/>
+	<result column="apply_date" property="applyDate"/>
+	<result column="start_date" property="startDate"/>
+	<result column="end_date" property="endDate"/>
+	<result column="money" property="money"/>
+	<result column="title" property="title"/>
+	<result column="status" property="status"/>
+	<result column="result" property="result"/>
+  </resultMap> 
+    
+  
+	<select id="memberInfo" parameterType="int" resultMap="ZakSimMember">
 		SELECT * FROM ZaksimMember
-		WHERE id = #{id}
+		WHERE idx = #{idx}
 	</select>
 
-	<update id="updateMember" parameterType="zaksim.dto.ZakSimMember">
+	<update id="updateMember">
 		UPDATE ZaksimMember
 		SET password = #{password},
 		nick = #{nick},
 		phone = #{phone},
 		email = #{email}
-		WHERE id = #{id}
+		WHERE idx = #{idx}
 	</update>
 
 	<delete id="deleteMember" parameterType="String">
 		DELETE FROM ZaksimMember
 		WHERE id = #{id}
 	</delete>
+	
+	<select id="selectChalData" parameterType="int" resultMap="PStatistics">
+		SELECT c1.success_chal, c2.fail_chal, c3.ing_chal
+		FROM (
+			SELECT count(*) success_chal
+			FROM challenge
+			WHERE member_idx=#{idx} AND result = 'success'
+		) c1
+		LEFT JOIN (
+			SELECT count(*) fail_chal
+			FROM challenge
+			WHERE member_idx=#{idx} AND result = 'fail'
+		) c2
+		ON 1=1
+		LEFT JOIN (
+			SELECT count(*) ing_chal
+			FROM challenge
+			WHERE member_idx=#{idx} AND status = 'ing'
+		) c3
+		ON 1=1
+	</select>
+	
+	<select id="selectQnaList" parameterType="int" resultMap="QnA">
+		SELECT Q2.IDX, Q2.TITLE, Q2.WRITTEN_DATE, Q2.STATUS
+		FROM (
+			SELECT ROWNUM RNUM, Q.* 
+			FROM (
+				SELECT * 
+				FROM QNA 
+				WHERE WRITER_IDX=#{idx} 
+				ORDER BY WRITTEN_DATE DESC, IDX DESC
+			) Q 
+		) Q2
+		WHERE RNUM <![CDATA[ < ]]>= 5
+	</select>
+	
+	<select id="selectBoard" parameterType="int" resultType="zaksim.dto.Board">
+		SELECT B2.*
+		FROM (
+			SELECT rownum rnum, B1.*
+			FROM (
+				SELECT *
+				FROM board
+				WHERE writer_idx=#{idx}
+				ORDER BY written_date DESC, idx ASC
+			) B1 
+		) B2
+		WHERE rnum <![CDATA[ < ]]>= 4
+	</select>
+	
+	<select id="selectCommunityGroup" parameterType="int" resultType="zaksim.dto.CommunityGroup">
+		SELECT C2.*
+		FROM (
+			SELECT rownum rnum, c1.*
+			FROM (
+				SELECT *
+				FROM CommunityGroup
+				WHERE member_idx=2
+				ORDER BY open_date DESC, idx ASC
+			) C1 
+		) C2
+		WHERE rnum <![CDATA[ < ]]>= 4
+	</select>
+	
+	<select id="selectChallenge" parameterType="int" resultMap="Challenge">
+		SELECT *
+		FROM challenge
+		WHERE member_idx=#{idx}
+		AND status='ing'
+	</select>
+	
+	<select id="selectChallengeRate" parameterType="int" resultMap="Challenge">
+		SELECT * 
+		FROM (
+			SELECT end_date - start_date + 1 dateNum 
+			FROM challenge 
+			WHERE idx=#{challengeIdx}
+		) C
+		left join (
+			SELECT count(*) boardNum 
+			FROM board 
+			WHERE challenge_idx=#{challengeIdx} AND certification=1
+		) B
+		on 1=1
+	</select>
 
 </mapper>

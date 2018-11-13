@@ -1,6 +1,7 @@
 package zaksim.mypage.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,10 +14,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
+import zaksim.dto.Board;
+import zaksim.dto.Challenge;
+import zaksim.dto.CommunityGroup;
+import zaksim.dto.PStatistics;
+import zaksim.dto.QnA;
 import zaksim.dto.ZakSimMember;
-import zaksim.mypage.controller.MypageController;
 import zaksim.mypage.service.MypageService;
 
 
@@ -30,22 +34,44 @@ public class MypageController {
 	
 	
 	@RequestMapping(value="/main", method=RequestMethod.GET)
-	public void MypageMain() {
+	public String MypageMain(Model model, HttpSession session) {
 		
+		if((boolean)session.getAttribute("login") == false) {
+			
+	        return "redirect:/zaksim/login/login";
+		}
+	    else{
+	    	int idx = (Integer)session.getAttribute("login_idx");
+	    	ZakSimMember member = mypageService.memberInfo(idx);
+	    	Challenge ingChal = mypageService.viewChallenge(idx);
+	    	Challenge rate = mypageService.viewRate(ingChal.getIdx());
+	    	PStatistics chal = mypageService.viewChalChart(idx);
+	    	List<QnA> qnaList = mypageService.viewQnaList(idx);
+	    	List<Board> boardList = mypageService.viewBoard(idx);
+	    	List<CommunityGroup> groupList = mypageService.viewGroup(idx);
+	    	
+	        model.addAttribute("member", member);
+	        model.addAttribute("ingChal", ingChal);
+	        model.addAttribute("rate", rate);
+	        model.addAttribute("chal", chal);
+	        model.addAttribute("qnaList", qnaList);
+	        model.addAttribute("boardList", boardList);
+	        model.addAttribute("groupList", groupList);
+	        
+	        return "/zaksim/mypage/main";
+	    }
 	}
 
 	
 	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public String MypageUpdate (Model model, HttpSession session) {
-		logger.info((String) session.getAttribute("login_id"));
-		
-		String id = (String) session.getAttribute("login_id");
-	        
-		if(id == null) {
+	    
+		if((boolean)session.getAttribute("login") == false) {
+			
 	        return "redirect:/zaksim/main/home";
 		}
-	    else{
-	        model.addAllAttributes(mypageService.memberInfo(id));
+	    else {
+	        
 	        return "/zaksim/mypage/update";
 	    }
 
