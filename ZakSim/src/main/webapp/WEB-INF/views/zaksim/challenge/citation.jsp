@@ -96,8 +96,8 @@
 			<input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
 			
 			<div>
-				<!-- <label for="fileselect">Files to upload:</label> -->
-				<input type="file" id="fileselect" name="fileselect[]" multiple="multiple" />
+<!-- 				 <label for="fileselect">Files to upload:</label> -->
+				<input type="file" id="fileselect" name="fileselect[0]" multiple="multiple" />
 				<div id="filedrag" style="background-color: aliceblue;">이곳에 이미지 파일을 드래그 해서 올려주세요.</div>
 			</div>
 			
@@ -130,7 +130,7 @@
             </div>
             <div class="col-md-4"> </div> -->
             	<div class="col-md-12">
-            	<button type="submit"  class="btn btn-primary mt-5 " >인증 하기</button>
+            	<button type="button" onclick="toCitation();" class="btn btn-primary mt-5 " >인증 하기</button>
             	</div>
             </div>
               
@@ -150,7 +150,17 @@
   </div>
             
 <!--바디 끝-->
-     
+ 
+   
+        <!-- footer include -->
+        
+<%@include file="/WEB-INF/views/zaksim/main/footer.jsp" %>
+
+
+
+
+
+    
 <!-- 작성일 스크립트 -->
 <script type="text/javascript">
 
@@ -217,7 +227,6 @@ function addZeros(num, digit) {
      
      
      
-     
 
  <!-- 파일 드래그 앤 드랍,파일리더 스크립트 -->
 <script type="text/javascript">
@@ -228,11 +237,11 @@ function $id(id) {
 	return document.getElementById(id);
 }
 
-//
+//파일 태그 추가
 //output information
 function Output(msg) {
 	var m = $id("messages");
-	m.innerHTML = msg + m.innerHTML;
+	m.innerHTML = msg;
 }
 
 
@@ -282,10 +291,10 @@ function Init() {
 		submitbutton.style.display = "none";
 		
 		// 셀렉터 숨김
-		fileselect.style.display = "none";
+	//	fileselect.style.display = "none";
 		
 		// 파일 정보 숨김
- 		messages.style.display = "none";
+ 	//	messages.style.display = "none";
 		
 		
 		
@@ -353,10 +362,9 @@ function FileSelectHandler(e) {
 
 function ParseFile(file) {
 
-// 	console.log("-------------------");
 // 	console.log("file");
 	console.log(file);
-//	console.log("-------------------");
+	
 	
 	// 이미지 정보 출력
 	Output(
@@ -364,48 +372,53 @@ function ParseFile(file) {
 		"</strong> type: <strong>" + file.type +
 		"</strong> size: <strong>" + file.size +
 		"</strong> bytes</p>"
+		
+		
 	);
 	
 }
 
 
 
-function toCitation(){
-	console.log("toCitation()");
-	console.log(file);
-	 $.ajax({
-	      type: "post"
-	      , url : "/zaksim/challenge/citation"
-	      , data :
-	      	{
-	      		file : file["0"]
-   	  		, text : $("#textarea").val()
-	      	}
-	 
-   	  , dataType: "json"
-	      , success: function( data ) {
-				console.log("전송 성공!!");	         
-
-	      }
-	      , error: function( e ) {
-	         console.log("--- error ---");
-	         console.log( e.responseText );
-	      }
-	      , complete: function() {
-	         //입력 창 초기화
-	      }
-	   }); 
-	 
-	
-}
-
+		function toCitation(){
+			console.log("toCitation()");
+			console.log(file);
+			
+			
+			
+			$.ajax({
+			      type: "post"
+			      , url : "/zaksim/challenge/citation"
+			      , data :{
+			       		img : file
+		   	  			,text : $("#textarea").val()
+			      }
+		   	  	  , dataType: "json"
+				  
+		   	  	  
+		   	  	  ,contentType: "application/json; charset=UTF-8"
+			      , processData: false
+				  , success: function( data ) {
+						console.log("전송 성공!!");	         
+						console.log(img);
+						
+			      }
+			      , error: function( e ) {
+			         console.log("--- error ---");
+			         console.log( e.responseText );
+			     	console.log(img);
+					
+			      }
+			      , complete: function() {
+			         //입력 창 초기화
+			      }
+			   }); 
+			 
+			
+		}
+		
 </script>
 
       
      
      
-   
-     
-  
-        <!-- footer include -->
-<%@include file="/WEB-INF/views/zaksim/main/footer.jsp" %>
