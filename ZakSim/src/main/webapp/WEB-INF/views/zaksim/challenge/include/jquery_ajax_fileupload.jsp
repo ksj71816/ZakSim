@@ -59,6 +59,9 @@ $(document).ready(function() {
 
 
 
+
+onclick="toCitation();"
+
 <!-- 
 
 
