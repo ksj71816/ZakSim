@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+.dohyeon {
+	font-family: Dohyeon !important;
+}
+
+.title {
+	border-left: 5px solid indianred;
+}
+
+.mDeleteBtn {
+	padding-left: 3.5em;
+	color: gray; 
+	text-decoration: underline;
+	font-size: 0.8em;
+}
+
+.mBorder {
+	border: 1px solid indianred;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.mBorder-sub {
+	border: 1px solid indianred;
+}
