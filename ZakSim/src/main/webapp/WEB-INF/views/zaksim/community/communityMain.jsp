@@ -278,7 +278,8 @@
 									<p class="card-text"></p>
 								</div>
 								<div class="overlay">
-									<br> <br> <a class="info">
+									<br> <br> 
+									<a class="info">
 										<c:if test="${sessionScope.login_idx  ne newGroupList.communityGroup.member_idx }">
 											<c:if test="${newGroupList.communityGroup.secret == 1 }">
 
@@ -388,7 +389,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-				<button type="button" class="btn btn-primary" id="joinedComm">가입하기</button>
+				<button type="button" class="btn btn-primary joinedComm" >가입하기</button>
 			</div>
 		</div>
 	</div>
@@ -658,13 +659,23 @@
 			console.log(memberIdx);
 		});
 		
-
-		$("#joinedComm").click(function() {
-			var idx = $(".idxx").val();
-			var pw =$("#commPass").val();
-			
-			console.log(idx);
-			console.log(pw);
+// 		checkList.each(function(i) {
+// 			if(checkList.parent().parent().eq(i).children("td").eq(12).text() >= 10){
+// 				suspendMemberIdx.push(checkList.parent().parent().eq(i).children("td").eq(0).text());
+// 				suspendMemberId.push(checkList.parent().parent().eq(i).children("td").eq(3).text());
+// 			}
+		
+		$(".joinedComm").click(function() {
+// 			var idx = $(".idxx").val();
+				console.log($(#joinBtn));
+			     console.log($(this).parent().parent().parent().parent().parent().children("input").eq(0).val());
+				console.log()
+// 			var pw =$("#commPass").val();
+// 			var check = $("#joinBtn");
+// 			console.log(check);
+// 			console.log(check.parent().parent().parent().parent().parent().children("input").eq(0).val() );
+// // 			console.log(idx);
+// 			console.log(pw);
 			
 // 				$.ajax({
 // 					type :"post"
