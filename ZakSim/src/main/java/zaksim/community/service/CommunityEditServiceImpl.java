@@ -122,6 +122,14 @@ public class CommunityEditServiceImpl implements CommunityEditService{
 		
 	}
 
+	// 커뮤니티 가입
+	@Override
+	public void joinedMember(GroupMember groupMember) {
+		// TODO Auto-generated method stub
+		communityEditDAO.joinedMember(groupMember);
+	}
+
+	
 
 
 
