@@ -98,6 +98,27 @@
 </div>
 <!-- Excel Download Modal -->
 
+<!-- Error Modal -->
+<div class="modal" id="errorModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title mt-1 mb-1" style="font-family: Dohyeon; font-weight: 300;"><i class="fas fa-exclamation-triangle" style="color: #ff9f0b;"></i> 오류</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="errMsg"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Error Modal -->
+
 
 
 <script type="text/javascript">
@@ -163,9 +184,11 @@ $("#okBtn").click(function() {
 	var endDate = $("#endDate").val();
 	
 	if(endDate > getFormatDate(new Date())) {
-		alert("종료 날짜는 오늘까지만 설정이 가능합니다. - modal로 변경");
+		$("#errMsg").text("종료 날짜는 오늘까지 설정이 가능합니다.");
+		$("#errorModal").modal('show');
 	} else if(endDate < startDate) {
-		alert("시작날짜와 종료날짜를 확인해주세요. - modal로 변경");		
+		$("#errMsg").text("시작날짜와 종료날짜를 확인해주세요.");
+		$("#errorModal").modal('show');	
 	} else {
 		 changePeriod();		
 	}
@@ -185,7 +208,7 @@ function changePeriod() {
 			endDate : endDate
 		}
 		, success: function( result ) {
-			console.log(result);
+// 			console.log(result);
 			
 			$("#canvasDiv").empty();
 			

@@ -59,6 +59,28 @@
             
 <!--바디 끝-->
 
+<!-- pay Modal -->
+<div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="font-family: Dohyeon; font-weight: 300;">결제 완료</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+    	<div class="row ml-1 mr-1">
+    		<p id="modalBody"></p>
+    	</div>        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- pay Modal -->
 
 <!-- footer include -->
         
@@ -186,169 +208,87 @@ $(document).ready(function() {
 
 
 <script type="text/javascript">
+
+// 얜 뭐지?
 $("[name='money']").attr("required", true);
 
-  var IMP = window.IMP; // 생략해도 괜찮습니다.
-  IMP.init("imp14263647"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
-  
-  
-  $('#chageDiv').on("click","#payBtn",function() {
-	  
-	  console.log("버튼 활성화");
-	  console.log($("#money").val());
-	  console.log($("#startDate").text());
-	  console.log($("#endDate").text());
-	  console.log($("#chalTitle").text());
-	  console.log('${user.email}');
-	  console.log('${user.name}');
-	  console.log('${user.phone}');
-	  
-		
-//      var msg = "";
-    
+var IMP = window.IMP; // 생략해도 괜찮습니다.
+//IMP.init("imp14263647"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
+IMP.init("imp29063736"); 	// 권수정 아이디용 가맹점 식별코드
+
+
+$('#chageDiv').on("click","#payBtn",function() {
+	
+	var radio = $("[name=optradio]:checked").val();
+	
+	if(radio == '카드 결제') {
+		pay("html5_inicis", "card", "card");
+	} else if(radio == '휴대폰 결제') {
+		pay("danal", "phone", "phone");
+	} else if(radio == '실시간 계좌이체') {
+		pay("danal_tpay", "trans", "bank");
+	}
+	
+});
+
+
+function pay(pg, pay_method, paymentOption) {
     // 결제 정보 설정 
-     IMP.request_pay({ // param
-          pg: "html5_inicis",   // PG사 - 'html5_inicis':이니시스(웹표준결제)
-          pay_method: "card",   // 결제방식 - 'card':신용카드
-          merchant_uid: 'merchant_' + new Date().getTime(), // 고유주문번호 - random, unique
-          
-          name: $("#chalTitle").text(), // 도전 명
-          amount: $("#money").val(),   // 결제금액
-          
-          buyer_email: '${user.email}',   // 주문자Email - db에서 가져오기
-          buyer_name: '${user.name}',               // 주문자명 - db에서 가져오기
-          buyer_tel: '${user.phone}'      // 주문자연락처 - db에서 가져오기
-      }, function (rsp) { // callback - 결제 이후 호출됨, 이곳에서 DB에 저장하는 로직을 작성한다
-      
-          if (rsp.success) {   // 결제 성공 로직
-             
+    IMP.request_pay({ // param
+         pg: pg,   // PG사 - 'html5_inicis':이니시스(웹표준결제)
+         pay_method: pay_method,   // 결제방식 - 'card':신용카드
+         merchant_uid: 'merchant_' + new Date().getTime(), // 고유주문번호 - random, unique
+         
+         name: $("#chalTitle").text(), // 도전 명
+         amount: $("#money").val(),   // 결제금액
+         
+         buyer_email: '${user.email}',   // 주문자Email - db에서 가져오기
+         buyer_name: '${user.name}',     // 주문자명 - db에서 가져오기
+         buyer_tel: '${user.phone}'      // 주문자연락처 - db에서 가져오기
+     }, function (rsp) { // callback - 결제 이후 호출됨, 이곳에서 DB에 저장하는 로직을 작성한다
+     
+         if (rsp.success) {   // 결제 성공 로직
             
-             
-             //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-            
-       
-            /*  챌린지 insert
-            	결제 insert
-            	정보 취합 넘겨 주는 역할 - post역활
-            */	
-        
-             jQuery.ajax({
-                url: "/zaksim/challenge/priceChallenge", //cross-domain error가 발생하지 않도록 주의해주세요
-                type: 'post',
-                dataType: 'html',
-                data: {
-                	
-                	
-//                 	var obj = {};
-//                 	obj["id"] = '${user.id}';
-//                 	obj["challenge"] = '${info}';
-                	
-                	
-//                 	var data = JSON.stringify(obj); // 데이터를 컨트롤러에 data라는 문자열로 전달하기 위함
-                	// 컨트롤러에서 받는 방법 ------------
-//                 	public ModelAndView myMethod(String data){
-//                 		mav.setViewName('jsonView');
-//                 	}
-                	//-------------------
-//                 	result = JSON.parse(responseData);// 결과값(String)을 JsonObject로 바꾸는 방법 (만약 jsonView로 지정했을시 불필요)
-//                 	result.challenge  // 객체 자원에 key값으로 접근하는 방법 (Json object)
-                 	
-                 	
-                   impUid : rsp.imp_uid,
-                   merchantUid : rsp.merchant_uid,
-                  
-                // 도전 정보 , 타이틀, 시작일, 종료일, 도전금
-               	   title : $("#chalTitle").text() , /* 도전 정보 전달 */
+            jQuery.ajax({
+               url: "/zaksim/challenge/priceChallenge", //cross-domain error가 발생하지 않도록 주의해주세요
+               type: 'post',
+               dataType: 'html',
+               data: {
+                  impUid : rsp.imp_uid,
+                  merchantUid : rsp.merchant_uid,
+              	   title : $("#chalTitle").text() , /* 도전 정보 전달 */
 				   startDate : $("#startDate").text() ,
 				   endDate : $("#endDate").text() ,
-               
-                   // 도전자 정보
-                   buyerIdx : '${sessionScope.login_idx}',
-                   name : '${user.name}',
-                   email : '${user.email}',
-                   phone : '${user.phone}',
-                   
-                   // 결제 시각
-                   paidAt : new Date(rsp.paid_at),  
-                   
-                   
-                   // 결제 상태
-                   status : rsp.status,
-                   
-                   //기타 필요한 데이터가 있으면 추가 전달
-                   
-                   // 결제 금액 - 도전금
-                   price : rsp.paid_amount,
-                   paymentOption : 'card' 
-                	  
-                }
-                , success: function( data ) {
-                   console.log(data);
-                   
-                  /*  msg = '결제가 완료되었습니다.';
-                  msg += '\n고유ID : ' + rsp.imp_uid;
-                   msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-                   msg += '\n결제 금액 : ' + rsp.paid_amount;
-                  msg += '\n카드 승인번호 : ' + rsp.apply_num;
-                   
-                   alert(msg); */
-                   
-                   $("#chageDiv").html(data);
-                   
-                }
-             });
-             
-//  --------------------------------  여기까지 주석 
-             
-             
-             
-             
-//              .done(function(data) {
-//                 console.log(data);
-//                 //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-//                 if ( everythings_fine ) {
-//                    var msg = '결제가 완료되었습니다.';
-//                    msg += '\n고유ID : ' + rsp.imp_uid;
-//                    msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-//                    msg += '\n결제 금액 : ' + rsp.paid_amount;
-//                    msg += '\n카드 승인번호 : ' + rsp.apply_num;
-                   
-//                    alert(msg);
-//                 } else {
-//                    //[3] 아직 제대로 결제가 되지 않았습니다.
-//                    //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-//                 }
-//              });
-
-            var msg = '결제가 완료되었습니다.';
-             msg += '\n고유ID : ' + rsp.imp_uid;
-             msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-             msg += '\n결제 금액 : ' + rsp.paid_amount;
-             msg += '\n카드 승인번호 : ' + rsp.apply_num;
-             
-             
-             /* $("#모달 아이디").modal("show"); */
-             
-             alert(msg);
-             
-             $(".data-cmenu").attr("style","");
+                  buyerIdx : '${sessionScope.login_idx}',
+                  name : '${user.name}',
+                  email : '${user.email}',
+                  phone : '${user.phone}',
+                  paidAt : new Date(rsp.paid_at),  
+                  status : rsp.status,
+                  price : rsp.paid_amount,
+                  paymentOption : paymentOption 
+               }
+               , success: function( data ) {
+//                   console.log(data);
+                  
+                  $("#chageDiv").html(data);
+                  
+               }
+            });
+         
+            $("#modalBody").html("결제가 완료되었습니다.<br>결제 금액 : " + rsp.paid_amount + "<br>${sessionScope.login_nick}님의 도전을 응원합니다!");
+			$("#payModal").modal('show');            
+            
+            $(".data-cmenu").attr("style","");
 	         $("#cmenu3").attr("style","background-color:rgb(154, 28, 15); padding-top:7px; ");
-	         
-	        
-             
-          } else {
-             console.log('fail');
-              var msg = '결제에 실패하였습니다.';
-              msg += '\n에러내용 : ' + rsp.error_msg;
-              alert(msg); 
-          }
-           
-      });
-     
-//      alert(msg); 
-     
-  });
-  
-  </script>
+            
+         } else {
+        	 
+        	 $("#modalBody").html("결제 실패!<br>에러 : " + rsp.error_msg);
+ 			 $("#payModal").modal('show');
+         }
+     });
+}
+</script>
   
   

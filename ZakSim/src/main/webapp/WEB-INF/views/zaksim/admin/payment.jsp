@@ -20,7 +20,10 @@
  			
  			<div class="row mt-3">
 				<div class="col-1"></div>
-				<div class="col-10 pr-0 d-flex justify-content-end">
+				<div class="col-5">
+					<span id="import" class="badge badge-pill mt-3" style="width: 16.2em; background-color: #929292; color: white;">결제 관리 사이트로 이동</span>
+				</div>
+				<div class="col-5 pr-0 d-flex justify-content-end">
 					<div class="input-group mb-3 data-search-form">
 						<input type="text" class="form-control" placeholder="input ID" id="searchId" name="searchId">
 						<div class="input-group-append">
@@ -105,6 +108,39 @@
   </div>
 </div>
 <!-- Refund Modal -->
+
+<!-- The Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="font-family: Dohyeon; font-weight: 300;">회원 탈퇴</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+    	<div class="row ml-1 mr-1">
+    		<p>비밀번호 확인 후 회원 탈퇴가 진행됩니다.</p>
+    		<p style="font-size: 0.9em; color: red;">* 탈퇴 시에는 관련된 모든 정보가 삭제되어 복구할 수 없습니다.</p>
+    	</div> 
+    	<div class="row">
+    		<div class="col-md-3">비밀번호</div>
+    		<div class="col-md-9"><input type="password" id="password"/></div>
+    	</div>
+    	<div class="row" style="height: 30px;">
+    		<div class="col-md-3"></div>
+    		<div class="col-md-9"><p id="checkText" style="font-size: 0.9em;"></p></div>
+    	</div>          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-danger" id="deleteBtn" onclick="deleteMem();">탈퇴</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal end -->
 
 
 
@@ -330,6 +366,10 @@ function refund() {
 		}
 	});	
 }
+
+$("#import").click(function() {
+	window.open('https://admin.iamport.kr/payments', '_blank');
+});
 
 </script>
 

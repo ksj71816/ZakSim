@@ -50,7 +50,7 @@
 					</div>
 	
 		          	<div class="mt-3 mb-3">
-		          		<a href="#" class="btn btn-sm btn-outline-danger"><i class="fas fa-check" style="color: #ff3d00;"></i> 인증하기</a>
+		          		<a href="/zaksim/challenge/citation" class="btn btn-sm btn-outline-danger"><i class="fas fa-check" style="color: #ff3d00;"></i> 인증하기</a>
 		          	</div>
 		        </c:if>
 		        
@@ -176,7 +176,7 @@
 	       	  
 	       	  <div class="col-md-1">
 	       	  	<div>
-			  		<a href="/zaksim/mypage/groups" class="btn btn-outline-white text-muted" ><b>+더보기</b></a>
+			  		<a href="/zaksim/community/joinCommunity" class="btn btn-outline-white text-muted" ><b>+더보기</b></a>
 			  	</div>
 			  </div>
 			  
