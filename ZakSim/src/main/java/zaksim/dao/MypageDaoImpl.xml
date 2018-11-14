@@ -130,7 +130,7 @@
 			FROM (
 				SELECT *
 				FROM CommunityGroup
-				WHERE member_idx=2
+				WHERE member_idx=#{idx}
 				ORDER BY open_date DESC, idx ASC
 			) C1 
 		) C2
