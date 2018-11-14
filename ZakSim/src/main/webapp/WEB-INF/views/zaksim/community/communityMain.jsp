@@ -104,8 +104,9 @@
 
 					<!-- 참여하고 있는 모임이 있을 시 -->
 					<c:if test="${joinedGroupLIst ne null }">
-						<c:forEach var="joinedGroupLIst" items="${joinedGroupLIst }"
+						<c:forEach var="joinedGroupLIst" items="${joinedGroupLIst }"	
 							begin="0" end="2" step="1">
+							
 							<div class="card" style="width: 20rem; margin-right: 15px;">
 								<div class="hovereffect">
 									<img class="card-img-top"
@@ -165,6 +166,7 @@
 				<div class="form-inline" style="margin-bottom: 50px;">
 					<c:forEach var="popularGroupList" items="${popularGroupList }"
 						begin="0" end="2" step="1">
+						<input type="hidden" class= "memberIdxx" value="${popularGroupList.communityGroup.member_idx }">
 						<div class="card" style="width: 20rem; margin-right: 15px;">
 							<div class="hovereffect">
 								<img class="card-img-top"
@@ -201,7 +203,7 @@
 											<br>
 											<br>
 										</c:if> <c:if test="${popularGroupList.communityGroup.secret == 0 }">
-											<button type="button" class="btn btn-primary">가입하기</button>
+											<button type="button" class="btn btn-primary" id ="noPassJoin">가입하기</button>
 											<br>
 											<br>
 										</c:if> <%-- 										</c:if> --%>
@@ -234,8 +236,17 @@
 
 
 				<div class="form-inline" style="margin-bottom: 50px;">
+					
+<%-- 					<c:forEach var="newGroupList" items="${newGroupList }"> --%>
+<%-- 					${newGroupList } <br><br> --%>
+<%-- 					</c:forEach> --%>
+					
 					<c:forEach var="newGroupList" items="${newGroupList }" begin="0"
 						end="2" step="1">
+<%-- 						${newGroupList	.idx } --%>
+						<input type="hidden" class="idxx" value="${newGroupList	.idx }">
+						<input type="hidden" class="memberIdxx" value="${newGroupList.member_idx }">
+						
 						<div class="card" style="width: 20rem; margin-right: 15px;">
 							<div class="hovereffect">
 								<img class="card-img-top"
@@ -257,8 +268,9 @@
 										키워드 :
 										</c:if>
 										<c:forEach items="${keywordList }" var="keyword">
+										
 											<c:if
-												test="${newGroupList.communityGroup.idx eq keyword.group_idx}">
+												test="${newGroupList.idx eq keyword.group_idx}">
 												#${keyword.keyword } 
 											</c:if>
 										</c:forEach>
@@ -266,10 +278,8 @@
 									<p class="card-text"></p>
 								</div>
 								<div class="overlay">
-									${newGroupList.communityGroup.member_idx}
-									${sessionScope.login_idx } <br> <br> <a class="info">
-										<c:if
-											test="${sessionScope.login_idx  ne newGroupList.communityGroup.member_idx }">
+									<br> <br> <a class="info">
+										<c:if test="${sessionScope.login_idx  ne newGroupList.communityGroup.member_idx }">
 											<c:if test="${newGroupList.communityGroup.secret == 1 }">
 
 												<button type="button" class="btn btn-primary" id="joinBtn"
@@ -281,14 +291,14 @@
 											<c:if test="${newGroupList.communityGroup.secret == 0 }">
 												<c:if
 													test="${newGroupList.communityGroup.member_idx eq sessionScope.login_idx }">
-													<button type="button" class="btn btn-primary">가입하기</button>
+													<button type="button" class="btn btn-primary" id= "noPassJoin">가입하기</button>
 													<br>
 													<br>
 												</c:if>
 											</c:if>
 										</c:if>
 										<button type="button" class="btn btn-danger"
-											onclick="moveURL(${newGroupList.communityGroup.idx }, ${newGroupList.communityGroup.secret })">
+											onclick="moveURL(${newGroupList.idx }, ${newGroupList.communityGroup.secret })">
 											상세보기</button>
 									</a>
 								</div>
@@ -361,7 +371,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalVerticalLabel">입장하기</h5>
+				<h5 class="modal-title" id="exampleModalVerticalLabel">가입하기</h5>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -372,13 +382,13 @@
 					<div class="form-group">
 						<label for="recipient-name" class="form-control-label">비밀번호</label>
 						<input type="password" class="form-control"
-							id="recipient-password" />
+							id="commPass" />
 					</div>
 				</form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-				<button type="button" class="btn btn-primary" id="joinedComm">입장하기</button>
+				<button type="button" class="btn btn-primary" id="joinedComm">가입하기</button>
 			</div>
 		</div>
 	</div>
@@ -546,8 +556,8 @@
 <link rel="stylesheet" type="text/css" href="/css/community/main.css">
 
 
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.28.12/sweetalert2.all.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.28.12/sweetalert2.all.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 
@@ -634,17 +644,51 @@
 			}
 		});
 
-		$("#joinBtn").click(function() {
+// 		$("#joinBtn").click(function() {
 			
-			console.log("모달 클릭");
+// 			console.log("모달 클릭");
 			
-			console.log($("#join").modal());
-			$("#join").modal();
+// 			console.log($("#join").modal());
+// 			$("#join").modal();
+// 		});
+		
+		$("#noPassJoin").click(function() {
+			var memberIdx = $(".memberIdxx").val();
+			
+			console.log(memberIdx);
 		});
 		
-		
 
+		$("#joinedComm").click(function() {
+			var idx = $(".idxx").val();
+			var pw =$("#commPass").val();
 			
+			console.log(idx);
+			console.log(pw);
+			
+// 				$.ajax({
+// 					type :"post"
+// 					, url : "/ajax/ajax03"
+// 		 			, dataType : "json"
+// 					, success : function (data) {
+// 						alert("success");
+
+// 						console.log(data.result);
+// 						console.log(data);
+					
+					
+
+// 					if(data.result){
+// 						//하고 싶은 일 
+// 						alert('성공!!');	
+// 					}
+					
+// 					}, error : function() {
+// 						alert("error");	
+// 					}
+// 				})
+						
+		});
 
 		
 
