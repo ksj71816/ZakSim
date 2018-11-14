@@ -829,7 +829,7 @@ $("#btnDiv").on("click", ".btnRecommend", function() {
 	
 	// 추천 버튼 취소 클릭 이벤트 처리	
 $("#btnDiv").on("click", ".noBtnRecommend", function() {
-	console.log(8)
+
 		var idxx = $('#idxx').val();
 
 		$.ajax({

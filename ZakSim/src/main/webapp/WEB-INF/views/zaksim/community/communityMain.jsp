@@ -280,6 +280,7 @@
 								<div class="overlay">
 									<br> <br> 
 									<a class="info">
+
 										<c:if test="${sessionScope.login_idx  ne newGroupList.communityGroup.member_idx }">
 											<c:if test="${newGroupList.communityGroup.secret == 1 }">
 
@@ -667,13 +668,13 @@
 		
 		$(".joinedComm").click(function() {
 // 			var idx = $(".idxx").val();
-				console.log($(#joinBtn));
-			     console.log($(this).parent().parent().parent().parent().parent().children("input").eq(0).val());
+
+// 			     console.log($(this).parent().parent().parent().parent().parent().children("input").eq(0).val());
 				console.log()
 // 			var pw =$("#commPass").val();
-// 			var check = $("#joinBtn");
-// 			console.log(check);
-// 			console.log(check.parent().parent().parent().parent().parent().children("input").eq(0).val() );
+			var check = $("#joinBtn"); 
+			console.log(check); 
+			console.log(check.parent().parent().parent().parent().parent().children("input").eq(0).val() );
 // // 			console.log(idx);
 // 			console.log(pw);
 			
