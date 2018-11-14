@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import zaksim.community.service.CommunityBoardService;
+import zaksim.community.service.CommunityEditService;
 import zaksim.community.service.CommunityListService;
 import zaksim.community.service.CommunityMemberListService;
+import zaksim.dto.GroupLike;
 
 // 가입된 커뮤니티
 @Controller
@@ -26,6 +28,7 @@ public class CommunityJoinController {
 	@Autowired CommunityListService communityListService;
 	@Autowired CommunityMemberListService communityMemberListService;
 	@Autowired CommunityBoardService communityBoardService;
+	@Autowired CommunityEditService communityEditService;
 
 	// 해당 커뮤니티 화면 GET
 	@RequestMapping(value="/enrollCommunity", method=RequestMethod.GET)
@@ -35,6 +38,8 @@ public class CommunityJoinController {
 			// 그룹 idx 가져옴
 			String idx = request.getParameter("idx");
 
+			// 세션 가져오기
+			String login = (String)session.getAttribute("login_idx").toString();
 
 			// 그룹 정보 넘기기
 			model.addAttribute("groupInfo", communityListService.info(Integer.parseInt(idx)));
@@ -52,7 +57,17 @@ public class CommunityJoinController {
 			// 그룹 좋아요
 			model.addAttribute("groupLike", communityListService.groupLike(Integer.parseInt(idx)));
 			
+			// 
 			
+			GroupLike groupLike = new GroupLike();
+			groupLike.setGroup_idx(Integer.parseInt(idx));
+			groupLike.setMember_idx(Integer.parseInt(login));
+			
+			
+			// 좋아요 눌렀는지 - 눌렀으면 true 안눌렀으면 false
+			model.addAttribute("like", communityEditService.like(groupLike));
+			
+
 
 		
 

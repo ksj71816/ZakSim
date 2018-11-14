@@ -1,10 +1,10 @@
 package zaksim.community.service;
 
-import java.util.List;
 
 import zaksim.dto.CommunityCategory;
 import zaksim.dto.CommunityGroup;
 import zaksim.dto.GroupKeyword;
+import zaksim.dto.GroupLike;
 import zaksim.dto.GroupMember;
 
 public interface CommunityEditService {
@@ -44,6 +44,15 @@ public interface CommunityEditService {
 	
 	// 그룹 맴버 삭제
 	public void deleteGroupMember(int idx);
+
 	
+	// 좋아요 확인
+	public boolean like(GroupLike groupLike);
+	
+	// 좋아요 추가
+	public void likeGroup(GroupLike groupLike);
+	
+	// 그룹 좋아요 취소
+	public void disLikeGroup(GroupLike groupLike);
 
 }

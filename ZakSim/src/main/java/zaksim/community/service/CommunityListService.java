@@ -17,7 +17,8 @@ public interface CommunityListService {
 	public List<CommunityGroup> popularGroupList( );
 	
 	// 새로운 그룹 리스트
-	public List<CommunityGroup> newGroupList();
+//	public List<CommunityGroup> newGroupList();
+	public List<GroupLike> newGroupList();
 	
 	// 카테고리 리스트
 	public List<CommunityCategory> categoryList();

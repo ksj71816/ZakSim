@@ -28,8 +28,10 @@
 		<div class="col"></div>
 
 		<c:forEach var="groupInfo" items="${groupInfo }">
+		
+		<input type="hidden" id ="idxx"value="${groupInfo.communityGroup.idx }">
 
-			<div class="col-sm-11" style="margin-top: 50px; margin-right: 50px;">
+			<div class="col-sm-11" style="margin-top: 50px; margin-right: 50px;" id="btnDiv">
 				<strong style="font-size: 150%">${groupInfo.communityGroup.title }</strong>
 				<c:if
 					test="${groupInfo.communityGroup.member_idx eq sessionScope.login_idx }">
@@ -37,10 +39,27 @@
 						style="float: right; color: red; border-color: red; margin-left: 30px;"
 						data-toggle="modal" data-target="#updateCommunityModal">수정하기</button>
 				</c:if>
+				
+	
 
 				<c:if test="${ null ne sessionScope.login_idx}">
-					<button type="button" class="btn btn-outline-success"
-						id="btnRecommend" style="float: right; margin-right: 30px;">좋아요 ${groupLike.likeNum }</button>
+				
+					<c:if test="${groupInfo.communityGroup.member_idx ne sessionScope.login_idx }">
+						<button type="button" class="btn btn-outline-info"
+							style="float: right; color: red; border-color: red; margin-left: 30px; margin-right: 30px;" 
+							data-toggle="modal" data-target="#updateCommunityModal">가입하기</button>
+					</c:if>					
+				
+					<c:if test="${like }">
+						<button type="button" class="btn btn-outline-info noBtnRecommend"
+							 style="float: right; margin-right: 30px; margin-left: 30px;" id="recommendBtn">좋아요 취소
+							&nbsp; ${groupLike.likeNum }</button>
+					</c:if>
+					<c:if test="${!like }">
+						<button type="button" class="btn btn-outline-success btnRecommend"
+						 style="float: right; margin-right: 30px; margin-left: 30px;" id="recommendBtn">좋아요 &nbsp; ${groupLike.likeNum }</button>
+					</c:if>
+					
 				</c:if>
 
 
@@ -148,7 +167,7 @@
 									</div>
 									<div class="form-group">
 										<label for="message-text" class="form-control-label"><strong>Content:</strong></label>
-										<textarea class="form-control" id="board-text"
+										<textarea class="form-control" id="board-text1"
 											onkeydown="boardCommnet(this)" onkeyup="boardCommnet(this)"></textarea>
 									</div>
 								</form>
@@ -377,7 +396,7 @@
 					</div>
 					<div class="form-group">
 						<label for="message-text" class="form-control-label"><strong>Content:</strong></label>
-						<textarea class="form-control" id="board-text"
+						<textarea class="form-control" id="board-text2"
 							onkeydown="boardCommnet(this)" onkeyup="boardCommnet(this)"></textarea>
 					</div>
 				</form>
@@ -548,7 +567,7 @@
 													<div class="form-inline">
 														<span><strong>새로운 비밀번호</strong></span> <input
 															type="password" class="form-control"
-															style="margin-left: 22px;" id="password1" name="password">
+															style="margin-left: 22px;" id="password1" name="password1">
 													</div>
 													<span style="margin-left: 140px; display: none;"
 														id="pass1Comment"></span>
@@ -671,6 +690,9 @@
 </script>
 
 <script type="text/javascript">
+
+
+
 	$(document).ready(function() {
 
 		// 댓글 더 보기
@@ -685,12 +707,15 @@
 		
 		// 댓글 쓰기
 		$("#commentWrite").click(function() {
+			
+			
 			if($("#writeComment").css("display")=="none"){
 				$("#writeComment").fadeIn();
 			}
 			else {
 				$('#writeComment').css("display", "none");
 			}
+			
 		});
 		
 		// 대댓글 쓰기
@@ -762,17 +787,78 @@
 </script>
 
 <script type="text/javascript">
-if(${recommend }) { //추천상태
-	$("#btnRecommend")
-		.addClass("btn-danger")
-		.removeClass("btn-primary")
-		.text("추천 취소");
-} else {	//추천 안 한상태
-	$("#btnRecommend")
-		.addClass("btn-primary")
-		.removeClass("btn-danger")
-		.text("추천");
-}
+
+// if(${like }) { //추천상태
+// 	$(".btnRecommend")
+// 		.addClass("btn-outline-danger")
+// 		.removeClass("btn-outline-success")
+// 		.text("추천 취소");
+// } else {	//추천 안 한상태
+// 	$(".btnRecommend")
+// 		.addClass("btn-outline-success")
+// 		.removeClass("btn-outline-danger")
+// 		.text("좋아요");
+// }
+
+// 추천 버튼 클릭 이벤트 처리
+$("#btnDiv").on("click", ".btnRecommend", function() {
+	var idxx = $('#idxx').val();
+	console.log("yes");
+
+	$.ajax({
+		type: "post"
+		, url: "/zaksim/community/recommend"
+		, dataType: "json"
+		, data: {
+			idx: idxx
+		}
+		, success: function(data) {
+			$("#recommendBtn").removeClass("btnRecommend").addClass("noBtnRecommend");
+			console.log(data.groupLike);
+			$(".noBtnRecommend").text("좋아요 취소 "+data.groupLike.likeNum);
+			
+			
+		}
+		, error: function(e) {
+			console.log("fail");
+			
+			console.log(e.responseText);
+		}
+	});
+});
+	
+	// 추천 버튼 취소 클릭 이벤트 처리	
+$("#btnDiv").on("click", ".noBtnRecommend", function() {
+	console.log(8)
+		var idxx = $('#idxx').val();
+
+		$.ajax({
+			type: "post"
+			, url: "/zaksim/community/noRecommend"
+			, dataType: "json"
+			, data: {
+				idx: idxx
+			}
+			, success: function(data) {
+				
+				$("#recommendBtn").removeClass("noBtnRecommend").addClass("btnRecommend");
+				
+				console.log(data.groupLike);
+				$(".btnRecommend").text("좋아요 "+data.groupLike.likeNum);
+				
+			}
+			, error: function(e) {
+				console.log("fail");
+				
+				console.log(e.responseText);
+			}
+		});
+	
+	
+	
+});
+	
+
 </script>
 
 

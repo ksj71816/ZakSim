@@ -151,7 +151,7 @@
 		(SELECT g.idx
 		g_idx, g.title ,g.content , g.image ,g.max , g.open_date , g.secret
 		,
-		g.password
+		g.password,g.member_idx
 		FROM CommunityGroup g order by g_idx asc) gk
 		left join (select count(*) as
 		like_num, group_idx as l_group_idx from
@@ -161,18 +161,27 @@
 	</select>
 
 
+<!-- 	<select id="newGroupList" resultMap="CommunityGroup"> -->
 	<select id="newGroupList" resultMap="GroupLike">
 		SELECT
-		*
-		FROM
-		(SELECT g.idx g_idx, g.title ,g.content , g.image ,g.max , g.open_date , 
-		g.secret
-		, g.password 
+  		  g.idx, 
+  		  g.title,
+   		 g.content,
+   		 g.image,
+    	g.max,
+   		 g.open_date,
+   		 g.secret,
+   		 g.password,
+   		 g.member_idx,
+    		like_num,
+   		 l_group_idx
 		FROM CommunityGroup g
-		order by g.idx desc) gk
-		left join (select count(*) as like_num, group_idx as l_group_idx from
-		grouplike
-		GROUP BY group_idx) l on l.l_group_idx=gk.g_idx
+		left join (
+    		select count(*) as like_num, group_idx as l_group_idx from grouplike
+   		 GROUP BY group_idx
+		) l
+		on l.l_group_idx=g.idx
+		order by idx desc
 	</select>
 
 
@@ -263,7 +272,7 @@
 	</select>
 	
 	<select id="groupLike" resultMap="GroupLike" parameterType="int">
-		select group_idx, count(group_idx) as like_num from groupLike group by group_idx having group_idx=#{group_idx }
+		select count(*) as like_num from groupLike where group_idx=#{idx }
 	</select>
 
 

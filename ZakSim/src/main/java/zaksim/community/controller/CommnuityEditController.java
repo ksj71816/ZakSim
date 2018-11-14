@@ -3,7 +3,9 @@ package zaksim.community.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -27,6 +29,7 @@ import zaksim.dao.CommunityEditDAO;
 import zaksim.dto.CommunityCategory;
 import zaksim.dto.CommunityGroup;
 import zaksim.dto.GroupKeyword;
+import zaksim.dto.GroupLike;
 import zaksim.dto.GroupMember;
 
 // 커뮤니티 편집
@@ -230,13 +233,93 @@ public class CommnuityEditController {
 	}
 	
 	
-	
 	// 커뮤니티 좋아요
-	@RequestMapping(value ="/recommend", method=RequestMethod.GET)
-	public ModelAndView recommend() {
+	@RequestMapping(value ="/recommend", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, GroupLike> recommend(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		
+		response.setContentType("application/json; charset=utf-8");
+		
+		Map<String, GroupLike> map = new HashMap<>();
+		
+		
+		String temp1 = request.getParameter("idx");
+		String temp2 = (String)session.getAttribute("login_idx").toString();
+		
+		
+		int idx = Integer.parseInt(temp1);
+		int login_idx =Integer.parseInt(temp2);
+		
+		GroupLike groupLike = new GroupLike();
+		
+		// 객체에 저장
+		groupLike.setGroup_idx(idx);
+		groupLike.setMember_idx(login_idx);
+		
+		// GroupLike Insert
+		communityEditService.likeGroup(groupLike);
+		
+		// 좋아요 갯수
+		map.put("groupLike", communityListService.groupLike(idx));
+		
+		
+		return map;
+		
+	}
+	
+	// ㅋ ㅓ뮤니티 좋아요 취소
+	@RequestMapping(value="/noRecommend", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, GroupLike> noRecommend(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+	
+		System.out.println("sssss");
+		
+		response.setContentType("application/json; charset=utf-8");
+		
+		Map<String, GroupLike> map = new HashMap<>();
+		
+		String temp1 = request.getParameter("idx");
+		String temp2 = (String)session.getAttribute("login_idx").toString();
+		
+		System.out.println("인덱스 : "+ temp1);
+		
+		System.out.println("로그인 : "+ temp2);
+		
+		
+		int idx = Integer.parseInt(temp1);
+		int login_idx =Integer.parseInt(temp2);
+		
+		GroupLike groupLike = new GroupLike();
+		
+		// 객체에 저장
+		groupLike.setGroup_idx(idx);
+		groupLike.setMember_idx(login_idx);
+		
+		// GroupLike delete
+		communityEditService.disLikeGroup(groupLike);
+		
+
+		// 좋아요 갯수
+		map.put("groupLike", communityListService.groupLike(idx));
+		
+		
+		
+		// 
+		
+		
+		return map;
+	}
+	
+	
+	
+	
+	// 커뮤니티 가입하기
+	@RequestMapping(value="/join", method=RequestMethod.POST)
+	public ModelAndView joinCommunity() {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
+
 		
 		
 		modelAndView.setViewName("jsonView");
