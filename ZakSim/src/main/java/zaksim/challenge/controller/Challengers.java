@@ -65,7 +65,7 @@ public class Challengers {
 			System.out.println("데이터 토탈 카운트 : "+ttc);
 			
 		// Paging 계산하기 : 매개변수 3번재 숫자가 조회할 게시물 수
-			Paging paging = new Paging(ttc, curPage, 5);
+			Paging paging = new Paging(ttc, curPage, 20);
 			
 			System.out.println("Paging dto: "+paging);
 			

@@ -34,54 +34,28 @@
       
       
       
-        <!--이미지 반복문 1행-->
+        <!--이미지 반복문  1페이당 20개씩, 4개당 1줄씩-->
         <div class="row mt-4">
+        
+        
+        <c:forEach var="citation" items="${citation}" begin="0" end="20" step="1">
           <!--이미지 1개-->
           <div class="col-md-3 col-lg-3 col-sm-3 h-25">
             <div class="hovereffect text-center my-1" style="">
-              <img class="img-responsive" src="https://picsum.photos/1200/350/?image=144">
+              <img class="img-responsive" src="${citation.image}">
               <div class="overlay">
-                <h2>Hover effect 1v2</h2>
-                <a class="info" href="#">link here</a>
+                <h2>${citation.title}</h2>
+                <a class="info" href="#">게시물 확인</a>
               </div>
             </div>
           </div>
           <!--이미지 끝-->
-          <!--이미지 1개-->
-          <div class="col-md-3 col-lg-3 col-sm-3 h-25">
-            <div class="hovereffect text-center my-1" style="">
-              <img class="img-responsive" src="https://picsum.photos/1200/350/?image=132">
-              <div class="overlay">
-                <h2>Hover effect 1v2</h2>
-                <a class="info" href="#">link here</a>
-              </div>
-            </div>
-          </div>
-          <!--이미지 끝-->
-          <!--이미지 1개-->
-          <div class="col-md-3 col-lg-3 col-sm-3 h-25">
-            <div class="hovereffect text-center my-1" style="">
-              <img class="img-responsive" src="https://picsum.photos/1200/350/?image=133">
-              <div class="overlay">
-                <h2>Hover effect 1v2</h2>
-                <a class="info" href="#">link here</a>
-              </div>
-            </div>
-          </div>
-          <!--이미지 끝-->
-          <!--이미지 1개-->
-          <div class="col-md-3 col-lg-3 col-sm-3 h-25">
-            <div class="hovereffect text-center my-1" style="">
-              <img class="img-responsive" src="https://picsum.photos/1200/350/?image=134">
-              <div class="overlay">
-                <h2>Hover effect 1v2</h2>
-                <a class="info" href="#">link here</a>
-              </div>
-            </div>
-          </div>
-          <!--이미지 끝-->
+          
+          </c:forEach>
+          
+       
         </div>
-        <!--1행 끝-->
+  
       
       
      
