@@ -100,19 +100,25 @@ public class MypageController {
 	}
 	
 
-	@RequestMapping(value="/delete", method=RequestMethod.POST)
-	public String MypageDelete(HttpSession session) {
+	@RequestMapping(value="/delete", method=RequestMethod.POST, produces="application/json; charset=utf-8")
+	@ResponseBody
+	public Map<String, Boolean> MypageDelete(HttpSession session) {
 		
+		HashMap<String, Boolean> map = new HashMap<>();
+		
+		mypageService.changeGroupMember((Integer)session.getAttribute("login_idx"));
 		mypageService.deleteMember((Integer)session.getAttribute("login_idx"));
 		
-		if((Boolean)session.getAttribute("adminLogin")) {
+		if((Boolean)session.getAttribute("adminLogin") != null && (Boolean)session.getAttribute("adminLogin")) {
 			session.invalidate();
 			session.setAttribute("adminLogin", true);
 		} else {
 			session.invalidate();
 		}
 		
-		return "redirect:/zaksim/main/home";
+		map.put("result", true);
+		
+		return map;
 	}
 	
 	

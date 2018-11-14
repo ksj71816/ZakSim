@@ -31,4 +31,8 @@
  	WHERE rz.reporter_idx=m.idx
   </select>
   
+  <delete id="deleteReport" parameterType="int">
+  	DELETE FROM report WHERE member_idx=#{index}
+  </delete>
+  
   </mapper>

@@ -1,6 +1,5 @@
 package zaksim.mypage.service;
 
-import java.util.HashMap;
 import java.util.List;
 
 import zaksim.dto.Board;
@@ -11,7 +10,6 @@ import zaksim.dto.QnA;
 import zaksim.dto.ZakSimMember;
 
 
-// 2018.10.30
 public interface MypageService {
 
 	// 유저 정보 로드
@@ -52,6 +50,9 @@ public interface MypageService {
 
 	// 지난 도전들
 	public List<Challenge> viewEndChalList(int idx);
+	
+	// 탈퇴 시 개설 그룹 장 양도
+	public void changeGroupMember(int idx);
 	
 	
 	

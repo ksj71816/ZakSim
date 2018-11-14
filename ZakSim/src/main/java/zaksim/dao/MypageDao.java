@@ -50,5 +50,17 @@ public interface MypageDao {
 
 	// 지난 도전들
 	public List<Challenge> selectEndChal(int idx);
+
+	// 탈퇴 시 개설 그룹 인덱스 반환
+	public List<CommunityGroup> selectCommunityGroupMember(int idx);
+
+	// 탈퇴 시 그룹 장 양도
+	public void updateGroupMember(CommunityGroup g);
+
+	// 그룹의 멤버 수 반환
+	public int checkAnotherMember(CommunityGroup g);
+
+	// 그룹 삭제
+	public void deleteCommunityGroup(CommunityGroup g);
 	
 }

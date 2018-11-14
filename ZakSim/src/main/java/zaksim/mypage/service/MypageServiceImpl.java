@@ -92,4 +92,18 @@ public class MypageServiceImpl implements MypageService {
 		return memberDao.selectEndChal(idx);
 	}
 
+	@Override
+	public void changeGroupMember(int idx) {
+		List<CommunityGroup> group = memberDao.selectCommunityGroupMember(idx);
+		
+		if(group != null) {	// 개설한 그룹이 있다면
+			for(CommunityGroup g : group) {
+				if(memberDao.checkAnotherMember(g) > 1) {	// 자신 이외의 멤버가 있다면
+					memberDao.updateGroupMember(g);			// 그룹 장 양도			
+				} else {
+					memberDao.deleteCommunityGroup(g);		// 혼자라면 그룹 삭제
+				}
+			}
+		}
+	}
 }

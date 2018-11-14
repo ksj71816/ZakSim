@@ -344,7 +344,7 @@ $("#suspendBtn").click(function() {
 	var suspendMemberId = [];
 
 	checkList.each(function(i) {
-		if(checkList.parent().parent().eq(i).children("td").eq(13).text() >= 10){
+		if(checkList.parent().parent().eq(i).children("td").eq(12).text() >= 10){
 			suspendMemberIdx.push(checkList.parent().parent().eq(i).children("td").eq(0).text());
 			suspendMemberId.push(checkList.parent().parent().eq(i).children("td").eq(3).text());
 		}
@@ -366,7 +366,6 @@ $("#suspendBtn").click(function() {
 });
 
 function suspend() {
-// 	console.log(suspendIdx);
 	$.ajax({
 		type: "post"
 		, url : "/zaksim/admin/suspend"
@@ -378,7 +377,10 @@ function suspend() {
 			
 			$("#suspendModal").modal('hide');
 			
-// 			$(location).attr('href', '/zaksim/admin/member');
+			$("[name=checkAll]").prop("checked", false );
+			$("[name=checkOne]").prop("checked", false );
+			
+			$(location).attr('href', '/zaksim/admin/member');
 		}
 		, error: function( e ) {
 			console.log("--- error ---");
@@ -399,7 +401,7 @@ $("#blockBtn").click(function() {
 	var blockMemberId = [];
 
 	checkList.each(function(i) {
-		if(checkList.parent().parent().eq(i).children("td").eq(12).text() >= 3){
+		if(checkList.parent().parent().eq(i).children("td").eq(11).text() >= 4){
 			blockMemberIdx.push(checkList.parent().parent().eq(i).children("td").eq(0).text());
 			blockMemberId.push(checkList.parent().parent().eq(i).children("td").eq(3).text());
 		}
@@ -431,6 +433,11 @@ function block() {
 		, success: function( data ) {
 			
 			$("#blockModal").modal('hide');
+			
+			$("[name=checkAll]").prop("checked", false );
+			$("[name=checkOne]").prop("checked", false );
+			
+			$(location).attr('href', '/zaksim/admin/member');
 			
 		}
 		, error: function( e ) {

@@ -21,7 +21,7 @@ public interface MemberService {
 	public List<Report> viewReport(ZakSimMember member);
 	
 	// 계정 정지하기
-	public void suspend(ZakSimMember member);
+	public void suspend(List<String> idx);
 
 
 }

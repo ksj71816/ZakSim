@@ -106,7 +106,7 @@
 							<c:forEach items="${qnaList}" var="qna">
 								<tr>
 									<td style="display: none;">${qna.idx}</td>
-									<td>${qna.title}</td>
+									<td><a href="">${qna.title}</a></td>
 									<td>${qna.writtenDate}</td>
 									<c:if test="${qna.status eq 'ready'}">
 										<td>대기중</td>
@@ -395,10 +395,13 @@ function deleteMem() {
 		, dataType: "json"
 		, success: function( data ) {
 			
-			$("#deleteModal").modal('hide');
-			
-			$(location).attr('href', '/zaksim/main/home');
-			
+			if(data.result) {
+
+				$("#deleteModal").modal('hide');
+				
+				$(location).attr('href', '/zaksim/main/home');
+					
+			}
 		}
 		, error: function( e ) {
 			console.log("--- error ---");

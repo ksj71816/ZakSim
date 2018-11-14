@@ -35,6 +35,19 @@
 	<result column="status" property="status"/>
 	<result column="result" property="result"/>
   </resultMap> 
+  
+  <resultMap type="zaksim.dto.CommunityGroup" id="CommunityGroup">
+	<result column="idx" property="idx" />
+	<result column="member_idx" property="member_idx" />
+	<result column="category_idx" property="category_idx" />
+	<result column="title" property="title" />
+	<result column="content" property="content" />
+	<result column="image" property="image" />
+	<result column="max" property="max" />
+	<result column="open_date" property="open_date" />
+	<result column="secret" property="secret" />
+	<result column="password" property="password" />
+</resultMap>
     
   
 	<select id="memberInfo" parameterType="int" resultMap="ZakSimMember">
@@ -162,5 +175,40 @@
 			AND (status='halt' OR status='done')
 		) C
 	</select>
+	
+	<select id="selectCommunityGroupMember" parameterType="int" resultMap="CommunityGroup">
+		SELECT idx
+		FROM CommunityGroup
+		WHERE member_idx = #{idx}
+	</select>
+	
+	<update id="updateGroupMember" parameterType="zaksim.dto.CommunityGroup">
+		UPDATE CommunityGroup
+		SET member_idx = (
+			SELECT g1.member_idx 
+			FROM (
+				SELECT rownum rnum, g.* 
+				FROM (
+					SELECT * 
+					FROM groupmember 
+					WHERE group_idx=#{idx} 
+					ORDER BY idx asc
+				) g
+			) g1
+			WHERE rnum=1
+		)
+		WHERE idx=#{idx}
+	</update>
+	
+	<select id="checkAnotherMember" parameterType="zaksim.dto.CommunityGroup" resultType="int">
+		SELECT COUNT(*)
+		FROM groupMember
+		WHERE group_idx=#{idx}
+	</select>
+	
+	<delete id="deleteCommunityGroup" parameterType="zaksim.dto.CommunityGroup">
+		DELETE communityGroup
+		WHERE idx=#{idx}
+	</delete>
 
 </mapper>

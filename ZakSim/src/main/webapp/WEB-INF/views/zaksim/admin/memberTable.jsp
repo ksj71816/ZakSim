@@ -49,7 +49,7 @@
 									<td>-</td>
 								</c:if>
 								<c:if test="${not empty member.suspensionDate }">
-									<td>${member.suspensionDate}</td>								
+									<td><fmt:formatDate pattern = "yyyy-MM-dd" value = "${member.suspensionDate}" /></td>								
 								</c:if>
 								<td>${member.suspendNum}</td>
 								<td><span class="data-span-modal">${member.reportNum}</span></td>
