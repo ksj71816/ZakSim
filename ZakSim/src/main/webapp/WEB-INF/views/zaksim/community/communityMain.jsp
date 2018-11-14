@@ -166,8 +166,8 @@
 				<div class="form-inline" style="margin-bottom: 50px;">
 					<c:forEach var="popularGroupList" items="${popularGroupList }"
 						begin="0" end="2" step="1">
-						<input type="hidden" class= "memberIdxx" value="${popularGroupList.communityGroup.member_idx }">
 						<div class="card" style="width: 20rem; margin-right: 15px;">
+						<input type="hidden" class= "memberIdxx" value="${popularGroupList.communityGroup.member_idx }">
 							<div class="hovereffect">
 								<img class="card-img-top"
 									src="${popularGroupList.communityGroup.image }"
@@ -198,12 +198,11 @@
 								<div class="overlay">
 									<br> <br> <a class="info"> <%-- 									<c:if test="${userIdx ne popularGroupList.communityGroup.member_idx }"> --%>
 										<c:if test="${popularGroupList.communityGroup.secret == 1 }">
-											<button type="button" class="btn btn-primary"
-												data-toggle="modal" data-target="#join">가입하기</button>
+											<button type="button" class="btn btn-primary join">가입하기</button>
 											<br>
 											<br>
 										</c:if> <c:if test="${popularGroupList.communityGroup.secret == 0 }">
-											<button type="button" class="btn btn-primary" id ="noPassJoin">가입하기</button>
+											<button type="button" class="btn btn-primary join" id ="noPassJoin">가입하기</button>
 											<br>
 											<br>
 										</c:if> <%-- 										</c:if> --%>
@@ -244,10 +243,10 @@
 					<c:forEach var="newGroupList" items="${newGroupList }" begin="0"
 						end="2" step="1">
 <%-- 						${newGroupList	.idx } --%>
-						<input type="hidden" class="idxx" value="${newGroupList	.idx }">
-						<input type="hidden" class="memberIdxx" value="${newGroupList.member_idx }">
 						
 						<div class="card" style="width: 20rem; margin-right: 15px;">
+						<input type="hidden" class="idxx" value="${newGroupList	.idx }">
+						<input type="hidden" class="memberIdxx" value="${newGroupList.member_idx }">
 							<div class="hovereffect">
 								<img class="card-img-top"
 									src="${newGroupList.communityGroup.image }"
@@ -283,8 +282,7 @@
 										<c:if test="${sessionScope.login_idx  ne newGroupList.communityGroup.member_idx }">
 											<c:if test="${newGroupList.communityGroup.secret == 1 }">
 
-												<button type="button" class="btn btn-primary" id="joinBtn"
-													data-toggle="modal" data-target="#join">가입하기</button>
+												<button type="button" class="btn btn-primary join" id="joinBtn">가입하기</button>
 												<br>
 												<br>
 
@@ -292,7 +290,7 @@
 											<c:if test="${newGroupList.communityGroup.secret == 0 }">
 												<c:if
 													test="${newGroupList.communityGroup.member_idx eq sessionScope.login_idx }">
-													<button type="button" class="btn btn-primary" id= "noPassJoin">가입하기</button>
+													<button type="button" class="btn btn-primary join" id= "noPassJoin">가입하기</button>
 													<br>
 													<br>
 												</c:if>
@@ -653,11 +651,11 @@
 // 			$("#join").modal();
 // 		});
 		
-		$("#noPassJoin").click(function() {
-			var memberIdx = $(".memberIdxx").val();
+// 		$("#noPassJoin").click(function() {
+// 			var memberIdx = $(".memberIdxx").val();
 			
-			console.log(memberIdx);
-		});
+// 			console.log(memberIdx);
+// 		});
 		
 // 		checkList.each(function(i) {
 // 			if(checkList.parent().parent().eq(i).children("td").eq(12).text() >= 10){
@@ -665,43 +663,42 @@
 // 				suspendMemberId.push(checkList.parent().parent().eq(i).children("td").eq(3).text());
 // 			}
 		
-		$(".joinedComm").click(function() {
-// 			var idx = $(".idxx").val();
-				console.log($(#joinBtn));
-			     console.log($(this).parent().parent().parent().parent().parent().children("input").eq(0).val());
-				console.log()
-// 			var pw =$("#commPass").val();
-// 			var check = $("#joinBtn");
-// 			console.log(check);
-// 			console.log(check.parent().parent().parent().parent().parent().children("input").eq(0).val() );
-// // 			console.log(idx);
-// 			console.log(pw);
+// 		$(".joinedComm").click(function() {
+// // 			var idx = $(".idxx").val();
+// 				console.log($(#joinBtn));
+// 			     console.log($(this).parent().parent().parent().parent().parent().children("input").eq(0).val());
+// 				console.log()
+// // 			var pw =$("#commPass").val();
+// // 			var check = $("#joinBtn");
+// // 			console.log(check);
+// // 			console.log(check.parent().parent().parent().parent().parent().children("input").eq(0).val() );
+// // // 			console.log(idx);
+// // 			console.log(pw);
 			
-// 				$.ajax({
-// 					type :"post"
-// 					, url : "/ajax/ajax03"
-// 		 			, dataType : "json"
-// 					, success : function (data) {
-// 						alert("success");
+// // 				$.ajax({
+// // 					type :"post"
+// // 					, url : "/ajax/ajax03"
+// // 		 			, dataType : "json"
+// // 					, success : function (data) {
+// // 						alert("success");
 
-// 						console.log(data.result);
-// 						console.log(data);
+// // 						console.log(data.result);
+// // 						console.log(data);
 					
 					
 
-// 					if(data.result){
-// 						//하고 싶은 일 
-// 						alert('성공!!');	
-// 					}
+// // 					if(data.result){
+// // 						//하고 싶은 일 
+// // 						alert('성공!!');	
+// // 					}
 					
-// 					}, error : function() {
-// 						alert("error");	
-// 					}
-// 				})
+// // 					}, error : function() {
+// // 						alert("error");	
+// // 					}
+// // 				})
 						
-		});
+// 		});
 
-		
 
 
 		
@@ -880,6 +877,11 @@
 		}
 	}
 
+	
+	$(".join").click(function() {
+		console.log("aaa");
+		console.log($(this).parent().parent().parent().parent().children("input").eq(0).val());
+	});
 </script>
 
 
