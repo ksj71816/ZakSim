@@ -63,7 +63,7 @@
             
             <div class="col-md-12 mt-2 text-white">
                 <h3 class="text-center">${info.title}</h3>
-                <h5  class="mt-3 mb-0 p-0 d-flex">작성일 :&nbsp;&nbsp;<span  class="m-0 " id="nowdate" style=" color: tan;"> </span></h5>
+                <h5  class="mt-3 mb-0 p-0 d-flex">작성일 :&nbsp;&nbsp;<span class="m-0 " id="nowdate" style=" color: tan;"> </span></h5>
             <!-- 
                 <div class="mt-3">
                 <a>공개 설정 : <img class="img-fluid d-block mt-2 rounded-circle justify-content-start" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" style="	height: 30px; width: 30px;" >
@@ -81,7 +81,7 @@
             
           <div class="text-left text-center text-white">
             <p class="mx-1 text-left" >이미지 </p>
-            <img name="file" id="blah" class="w-100 h-100 img-fluid d-block rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" style=" border-right-width: 3px;	border-top-width: 3px;	border-bottom-width: 3px;    border-left-width: 3px;	border-style: solid;	border-color: white; ">
+            <img id="blah" class="w-100 h-100 img-fluid d-block rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" style=" border-right-width: 3px;	border-top-width: 3px;	border-bottom-width: 3px;    border-left-width: 3px;	border-style: solid;	border-color: white; ">
           </div>
           
           
@@ -95,10 +95,12 @@
 			
 			<input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
 			
-			<div>
+			<div >
 <!-- 				 <label for="fileselect">Files to upload:</label> -->
-				<input type="file" id="fileselect" name="fileselect[0]" multiple="multiple" />
-				<div id="filedrag" style="background-color: aliceblue;">이곳에 이미지 파일을 드래그 해서 올려주세요.</div>
+				<input id="fileselect" type="file" name="fileselect" multiple="multiple"/>
+				<div id="filedrag" style="background-color: aliceblue;">
+				
+				이곳에 이미지 파일을 드래그 해서 올려주세요.</div>
 			</div>
 			
 			<div id="submitbutton">
@@ -122,7 +124,7 @@
             
           <div class="form-group text-center text-white">
             <label for="exampleFormControlTextarea1" class="d-flex mx-1">메세지</label>
-            <textarea class="form-control" id="textarea" rows="3"></textarea>
+            <textarea class="form-control" id="textarea" name="content" rows="3"></textarea>
             
             <div class="row">
             <!-- <div class="col-md-4">
@@ -130,7 +132,7 @@
             </div>
             <div class="col-md-4"> </div> -->
             	<div class="col-md-12">
-            	<button type="button" onclick="toCitation();" class="btn btn-primary mt-5 " >인증 하기</button>
+            	<button type="submit" class="btn btn-primary mt-5 " >인증 하기</button>
             	</div>
             </div>
               
@@ -294,7 +296,7 @@ function Init() {
 	//	fileselect.style.display = "none";
 		
 		// 파일 정보 숨김
- 	//	messages.style.display = "none";
+ 		messages.style.display = "none";
 		
 		
 		
@@ -312,8 +314,6 @@ function FileDragHover(e) {
 	
 }
 
-// 전역변수 (ajax로 처리하기 위함)
-var file;
 
 //file selection
 function FileSelectHandler(e) {
@@ -323,9 +323,8 @@ function FileSelectHandler(e) {
 
 	// fetch FileList object
 	var files = e.target.files || e.dataTransfer.files;
-		file=files[0];
-	  
-//     console.log("-------------------");
+  		
+    console.log("-------------------");
 //     console.log("files");
 //     console.log(files);
 	
@@ -355,7 +354,12 @@ function FileSelectHandler(e) {
     
       reader.readAsDataURL(files[0]);
       
-	
+      
+      //input 추가
+//    console.log('te');
+// 	  addFileFromLastInput(files);
+      
+      
 }
 
 
@@ -364,7 +368,7 @@ function ParseFile(file) {
 
 // 	console.log("file");
 	console.log(file);
-	
+	 
 	
 	// 이미지 정보 출력
 	Output(
@@ -379,43 +383,67 @@ function ParseFile(file) {
 }
 
 
+//input 추가
+// function addFileFromLastInput(file){
+// 	console.log("인풋추가 실행")
+//     var a = $('input#fileselect.addFile');
+//     a[a.length-1].files;
 
-		function toCitation(){
-			console.log("toCitation()");
-			console.log(file);
+//     try{
+//     	let new_input = '<input id="fileselect2" type="file" name="fileselect" multiple="multiple" class="addFile" />';
+        
+//         $('.file').append(new_input);
+//         console.log("성공이다")
+//     }catch(err){
+// 		console.log("에러다")
+//     }
+
+// //         $('#fileselect').remove();
+//     return 0;
+// }
+
+
+
+
+
+
+
+// form data ajax 처리
+// 		function toCitation(){
+// 			console.log("toCitation()");
+// 			console.log(file);
 			
 			
+// 			var from = $('#upload')[0];
+// 			var formData = new FormData(from);
 			
-			$.ajax({
-			      type: "post"
-			      , url : "/zaksim/challenge/citation"
-			      , data :{
-			       		img : file
-		   	  			,text : $("#textarea").val()
-			      }
-		   	  	  , dataType: "json"
-				  
-		   	  	  
-		   	  	  ,contentType: "application/json; charset=UTF-8"
-			      , processData: false
-				  , success: function( data ) {
-						console.log("전송 성공!!");	         
-						console.log(img);
-						
-			      }
-			      , error: function( e ) {
-			         console.log("--- error ---");
-			         console.log( e.responseText );
-			     	console.log(img);
+// 			formData.append("img",file);
+// 			console.log(formData);
+			
+// 			$.ajax({
+// 			      type: "post"
+// 			      , url : "/zaksim/challenge/citation"
+// 			      , data : formData
+// 		   	  	  , dataType: "json"
+// 				  , enctype: "multipart/form-data"
+					  
+// 				  , success: function( data ) {
+// 						console.log("전송 성공!!");	         
+// 						console.log(formData);
+// 			      }
+// 			      , error: function( e ) {
+// 			         console.log("--- error ---");
+// 			         console.log( e.responseText );
+// 			     	console.log(formData);
 					
-			      }
-			      , complete: function() {
-			         //입력 창 초기화
-			      }
-			   }); 
+// 			      }
+// 			      , complete: function() {
+// 			         //입력 창 초기화
+// 			      }
+// 			   }); 
 			 
 			
-		}
+// 		}
 		
 </script>
 
