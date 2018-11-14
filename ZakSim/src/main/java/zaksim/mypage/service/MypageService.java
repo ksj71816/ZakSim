@@ -18,10 +18,10 @@ public interface MypageService {
 	public ZakSimMember memberInfo(int idx);
 	
 	// 유저 정보 수정
-	public void updateMember(HashMap<String, Object> params);
+	public void updateMember(ZakSimMember member);
 	
 	// 유저 탈퇴
-	public void deleteMember(String id);
+	public void deleteMember(int idx);
 	
 	// 유저가 참여한 그룹 로드
 	public CommunityGroup memberGroup(CommunityGroup groupDto);
@@ -46,6 +46,12 @@ public interface MypageService {
 
 	// 인증률 계산
 	public Challenge viewRate(int challengeIdx);
+
+	// 비밀번호 확인
+	public boolean checkPw(ZakSimMember member);
+
+	// 지난 도전들
+	public List<Challenge> viewEndChalList(int idx);
 	
 	
 	

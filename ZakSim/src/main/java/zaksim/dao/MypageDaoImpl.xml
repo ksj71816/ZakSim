@@ -42,18 +42,23 @@
 		WHERE idx = #{idx}
 	</select>
 
-	<update id="updateMember">
+	<update id="updateMember" parameterType="map">
 		UPDATE ZaksimMember
-		SET password = #{password},
+		SET
+		<if test=" password != null and !password.equals('') ">
+			password = #{password},
+		</if>
+		<if test=" email != null and !email.equals('')">
+			email = #{email},
+		</if>
 		nick = #{nick},
-		phone = #{phone},
-		email = #{email}
+		phone = #{phone}
 		WHERE idx = #{idx}
 	</update>
 
-	<delete id="deleteMember" parameterType="String">
+	<delete id="deleteMember" parameterType="int">
 		DELETE FROM ZaksimMember
-		WHERE id = #{id}
+		WHERE idx = #{idx}
 	</delete>
 	
 	<select id="selectChalData" parameterType="int" resultMap="PStatistics">
@@ -139,6 +144,23 @@
 			WHERE challenge_idx=#{challengeIdx} AND certification=1
 		) B
 		on 1=1
+	</select>
+	
+	<select id="selectPw" parameterType="zaksim.dto.ZakSimMember" resultType="int">
+		SELECT COUNT(*)
+		FROM zakSimMember
+		WHERE idx=#{idx}
+		AND password=#{password}
+	</select>
+	
+	<select id="selectEndChal" parameterType="int" resultMap="Challenge">
+		SELECT rownum rnum, C.*
+		FROM (
+			SELECT *
+			FROM challenge
+			WHERE member_idx=#{idx}
+			AND (status='halt' OR status='done')
+		) C
 	</select>
 
 </mapper>

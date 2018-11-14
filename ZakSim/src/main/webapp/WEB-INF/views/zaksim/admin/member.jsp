@@ -32,10 +32,13 @@
 			
 			<div class="row justify-content-between">
 				<div class="col-1"></div>
-				<div class="col-1">
-					<button class="btn btn-zaksim rounded" type="button" id="suspendBtn">계정 정지</button>
+				<div class="col-5">
+					<div class="row justify-content-start">
+						<button id="suspendBtn" class="btn btn-zaksim rounded" type="button" style="margin-left: 15px; margin-right: 5px;">계정 정지</button>
+						<button id="blockBtn" class="btn btn-zaksim rounded" type="button">영구 정지</button>
+					</div>
 				</div>
-				<div class="col-9">
+				<div class="col-5">
 					<div class="row justify-content-end">
 						<div class="btn-group" style="margin-right: 7px;">
 				            <button class="btn btn-outline-danger dropdown-toggle" id="categoryDrop" data-toggle="dropdown">전체 회원</button>
@@ -169,6 +172,38 @@
 </div>
 <!-- Suspend Modal -->
 
+<!-- Block Modal -->
+<div class="modal" id="blockModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title mt-1 mb-1" style="font-family: Dohyeon; font-weight: 300;">계정 영구 정지 회원 리스트</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+    	<div class="row ml-1 mr-1">
+    		<p class="text-danger" style="font-size: 0.9em;"> 아래의 회원들은 계정이 영구히 정지됩니다.</p>
+    	</div>
+        
+        <div class="row border ml-1 mr-1" style="height: 150px;">
+        	<div class="col-12" style="overflow: auto;">
+        		<div class="row" id="totalMem"></div>
+        		<div class="row" id="memberIdDiv"></div>
+        	</div>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-primary" onclick="block();">영구 정지</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Block Modal -->
+
 
 
 <script type="text/javascript">	
@@ -250,6 +285,9 @@ $("#pagingDiv").on("click", ".data-span-modal", function() {
         				+ "<div class='row' id='reportCategory' style='font-family: Dohyeon;'>"
         				+ data.rList[i].category
         				+ "</div>"
+        				+ "<div class='row' id='reportId'> 신고자 : "
+        				+ data.rList[i].reporterMember.id
+        				+ "</div>"
         				+ "<div class='row' id='reportReason'>"
         				+ data.rList[i].reason
         				+ "</div>"
@@ -306,7 +344,7 @@ $("#suspendBtn").click(function() {
 	var suspendMemberId = [];
 
 	checkList.each(function(i) {
-		if(checkList.parent().parent().eq(i).children("td").eq(12).text() >= 10){
+		if(checkList.parent().parent().eq(i).children("td").eq(13).text() >= 10){
 			suspendMemberIdx.push(checkList.parent().parent().eq(i).children("td").eq(0).text());
 			suspendMemberId.push(checkList.parent().parent().eq(i).children("td").eq(3).text());
 		}
@@ -328,7 +366,7 @@ $("#suspendBtn").click(function() {
 });
 
 function suspend() {
-	console.log(suspendIdx);
+// 	console.log(suspendIdx);
 	$.ajax({
 		type: "post"
 		, url : "/zaksim/admin/suspend"
@@ -341,6 +379,59 @@ function suspend() {
 			$("#suspendModal").modal('hide');
 			
 // 			$(location).attr('href', '/zaksim/admin/member');
+		}
+		, error: function( e ) {
+			console.log("--- error ---");
+			console.log( e.responseText );
+		}
+		, complete: function() {
+			//입력 창 초기화
+		}
+	});	
+}
+
+var blockIdx = [];
+
+//계정 정지 버튼 클릭 시
+$("#blockBtn").click(function() {
+	var checkList = $("[name=checkOne]:checked");
+	var blockMemberIdx = [];
+	var blockMemberId = [];
+
+	checkList.each(function(i) {
+		if(checkList.parent().parent().eq(i).children("td").eq(12).text() >= 3){
+			blockMemberIdx.push(checkList.parent().parent().eq(i).children("td").eq(0).text());
+			blockMemberId.push(checkList.parent().parent().eq(i).children("td").eq(3).text());
+		}
+	});
+	
+	blockIdx = blockMemberIdx;
+	console.log(blockIdx);
+	
+	var modalText = "";
+	
+	for(var i=0; i<blockMemberId.length; i++){
+		modalText += blockMemberId[i] + ", ";
+	}
+
+	$("#totalMem").html("총 " + blockMemberId.length + "명");
+	$("#memberIdDiv").html(modalText.substr(0, modalText.length-2));
+	
+	$("#blockModal").modal('show');
+});
+
+function block() {
+	$.ajax({
+		type: "post"
+		, url : "/zaksim/admin/block"
+		, data : {
+			blockIdx : blockIdx
+		}
+		, dataType: "json"
+		, success: function( data ) {
+			
+			$("#blockModal").modal('hide');
+			
 		}
 		, error: function( e ) {
 			console.log("--- error ---");

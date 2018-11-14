@@ -30,7 +30,7 @@
 				    <a href="/zaksim/mypage/update" class="btn btn-sm btn-outline-danger pt-1" style="width: 100px;">회원 정보수정</a>    	 	
         	 	</div>
         	 	<div class="row pt-1">
-				    <p class="mDeleteBtn" data-toggle="modal" data-target="#myModal">> 회원 탈퇴</p>     	 	
+				    <p class="mDeleteBtn" onclick="deleteModal()">> 회원 탈퇴</p>     	 	
         	 	</div>
          	</div>
 	        
@@ -197,6 +197,63 @@
 	       	</c:forEach>
 		      
 	       	</div><!-- six row end -->
+	       	
+	       	
+	       	
+	       	<div class="row mt-5"><!-- 7 row start -->
+
+	       	  <div class="col-md-2">
+	       	  	<div>
+	       	  		<h4 class="dohyeon title">지난 도전들</h4>
+	       	  	</div>
+	       	  </div>
+	       	  
+	       	   <div class="col-md-10">
+			 	<hr class="mBorder-sub">
+			 </div>
+			  
+		   </div><!-- 7 row end -->
+		   
+		    <div class="row mt-3 mb-5"><!-- 8 row start -->
+		    
+	       	 <table class="table table-hover text-center">
+				<thead>
+					<tr>
+						<th style="display: none;">idx</th>
+						<th>No.</th>
+						<th>도전 목표</th>
+						<th>시작일</th>
+						<th>종료일</th>
+						<th>도전금</th>
+						<th>결과</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${endChalList}" var="endChal">
+						<tr>
+							<td style="display: none;">${endChal.idx}</td>
+							<td>${endChal.rnum}</td>
+							<td><a href="">${endChal.title}</a></td>
+							<td><fmt:formatDate pattern = "yyyy-MM-dd" value = "${endChal.startDate}"/></td>
+							<td><fmt:formatDate pattern = "yyyy-MM-dd" value = "${endChal.endDate}"/></td>
+							<td>${endChal.money}원</td>
+							<c:if test="${endChal.status eq 'halt'}">
+								<td>도전 취소</td>
+							</c:if>
+							<c:if test="${endChal.status ne 'halt'}">
+								<c:if test="${endChal.result eq 'success'}">
+									<td>도전 성공</td>
+								</c:if>
+								<c:if test="${endChal.result eq 'fail'}">
+									<td>도전 실패</td>
+								</c:if>
+							</c:if>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		      
+	       	</div><!-- 8 row end -->
 		      
 	       	
 	      </div>
@@ -204,34 +261,38 @@
 	
 	
 	
-	<!-- The Modal -->
-	<div class="modal fade" id="myModal">
-	  <div class="modal-dialog modal-dialog-centered">
-	  
-	    <div class="modal-content">
-	      <!-- Modal Header -->
-	      <div class="modal-header">
-	        <h4 class="modal-title">회원 탈퇴</h4>
-	      </div>  
-	
-	      <!-- Modal body -->
-	      <div class="modal-body">
-		      
-		      <form action="/zaksim/mypage/delete" method="post" id="deleteform">
-		      	<div class="form-group">
-					<label for="pwd" style="float:left;">비밀번호</label>
-				    <input type="password" class="form-control" id="passwordck" name="passwordck"/>
-					<input type="submit" style="float:right;" class="btn btn-danger" id="deletebtn" value="탈퇴" data-dismiss="modal">
-					<a class="btn btn-warning" style="float:right;"><button class="close" data-dismiss="modal">취소</button></a>
-				</div>
-			  </form>
-			  
-	      </div>
-	    </div>
-	    
-	  </div>
-	</div>
-	<!-- modal end -->
+<!-- The Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="font-family: Dohyeon; font-weight: 300;">회원 탈퇴</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+    	<div class="row ml-1 mr-1">
+    		<p>비밀번호 확인 후 회원 탈퇴가 진행됩니다.</p>
+    		<p style="font-size: 0.9em; color: red;">* 탈퇴 시에는 관련된 모든 정보가 삭제되어 복구할 수 없습니다.</p>
+    	</div> 
+    	<div class="row">
+    		<div class="col-md-3">비밀번호</div>
+    		<div class="col-md-9"><input type="password" id="password"/></div>
+    	</div>
+    	<div class="row" style="height: 30px;">
+    		<div class="col-md-3"></div>
+    		<div class="col-md-9"><p id="checkText" style="font-size: 0.9em;"></p></div>
+    	</div>          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-danger" id="deleteBtn" onclick="deleteMem();">탈퇴</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal end -->
 						
 						
 	 <!-- footer include -->
@@ -282,6 +343,71 @@ function changeDoughnutChart() {
         	cutoutPercentage:60
     	}
 	});
+}
+
+function deleteModal() {
+	$("#password").val("");
+	$("#checkText").text("");
+	$("#deleteModal").modal('show');
+}
+
+$('#password').keyup(function(){
+	checkPw();
+});
+
+function checkPw() {
+	var password = $("#password").val();
+	
+	$.ajax({
+		type: "post"
+		, url : "/zaksim/mypage/checkPw"
+		, data : {
+			password : password
+		}
+		, dataType: "json"
+		, success: function( data ) {
+			
+			if(data.result == true){
+				$("#checkText").css("color", "green");
+				$("#checkText").text("비밀번호가 일치합니다. 정말 떠나시나요?ㅠㅠ");
+				$("#deleteBtn").prop("disabled", false);
+			} else {
+				$("#checkText").css("color", "red");
+				$("#checkText").text("비밀번호가 일치하지 않습니다.");
+				$("#deleteBtn").prop("disabled", true);
+			}
+			
+		}
+		, error: function( e ) {
+			console.log("--- error ---");
+			console.log( e.responseText );
+		}
+		, complete: function() {
+			//입력 창 초기화
+		}
+	});	
+}
+
+function deleteMem() {
+	$.ajax({
+		type: "post"
+		, url : "/zaksim/mypage/delete"
+		, dataType: "json"
+		, success: function( data ) {
+			
+			$("#deleteModal").modal('hide');
+			
+			$(location).attr('href', '/zaksim/main/home');
+			
+		}
+		, error: function( e ) {
+			console.log("--- error ---");
+			console.log( e.responseText );
+		}
+		, complete: function() {
+			//입력 창 초기화
+		}
+	});	
 }
 
 </script>

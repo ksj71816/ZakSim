@@ -2,6 +2,7 @@ package zaksim.mypage.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import zaksim.dto.Board;
 import zaksim.dto.Challenge;
@@ -34,56 +35,54 @@ public class MypageController {
 	
 	
 	@RequestMapping(value="/main", method=RequestMethod.GET)
-	public String MypageMain(Model model, HttpSession session) {
+	public void MypageMain(Model model, HttpSession session) {
 		
-		if((boolean)session.getAttribute("login") == false) {
-			
-	        return "redirect:/zaksim/login/login";
-		}
-	    else{
 	    	int idx = (Integer)session.getAttribute("login_idx");
-	    	ZakSimMember member = mypageService.memberInfo(idx);
 	    	Challenge ingChal = mypageService.viewChallenge(idx);
 	    	Challenge rate = mypageService.viewRate(ingChal.getIdx());
 	    	PStatistics chal = mypageService.viewChalChart(idx);
 	    	List<QnA> qnaList = mypageService.viewQnaList(idx);
 	    	List<Board> boardList = mypageService.viewBoard(idx);
 	    	List<CommunityGroup> groupList = mypageService.viewGroup(idx);
+	    	List<Challenge> endChalList = mypageService.viewEndChalList(idx);
 	    	
-	        model.addAttribute("member", member);
 	        model.addAttribute("ingChal", ingChal);
 	        model.addAttribute("rate", rate);
 	        model.addAttribute("chal", chal);
 	        model.addAttribute("qnaList", qnaList);
 	        model.addAttribute("boardList", boardList);
 	        model.addAttribute("groupList", groupList);
-	        
-	        return "/zaksim/mypage/main";
-	    }
+	        model.addAttribute("endChalList", endChalList);
 	}
 
 	
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String MypageUpdate (Model model, HttpSession session) {
-	    
-		if((boolean)session.getAttribute("login") == false) {
-			
-	        return "redirect:/zaksim/main/home";
-		}
-	    else {
-	        
-	        return "/zaksim/mypage/update";
-	    }
-
+	public void MypageUpdate (Model model, HttpSession session) {
+		
+		int idx = (Integer)session.getAttribute("login_idx");
+    	ZakSimMember member = mypageService.memberInfo(idx);
+    	
+    	model.addAttribute("member", member);
 	}
 	
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String MypageUpdateProcess(@RequestParam HashMap<String, Object> params) {
-		logger.info((String)params.get("ID"));
+	public String MypageUpdateProcess(HttpSession session, ZakSimMember member, String Cemail) {
 		
-		mypageService.updateMember(params); 
+//		System.out.println(member);
+//		System.out.println("Cemail : " + Cemail);
 
+		member.setIdx((Integer)session.getAttribute("login_idx"));
+		
+		if(Cemail != null && !Cemail.equals("")) {
+			member.setEmail(Cemail);
+			mypageService.updateMember(member);
+		} else {
+			mypageService.updateMember(member);
+		}
+
+		session.setAttribute("login_nick", member.getNick());
+		
 		return "redirect:/zaksim/mypage/main";
 	}
 	
@@ -102,25 +101,38 @@ public class MypageController {
 	
 
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
-	public String MypageDelete(String password, HttpServletRequest request) {
-		logger.info(request.getParameter("passwordck"));
+	public String MypageDelete(HttpSession session) {
 		
-		password = request.getParameter("passwordck");
+		mypageService.deleteMember((Integer)session.getAttribute("login_idx"));
 		
-		mypageService.deleteMember(password);
+		if((Boolean)session.getAttribute("adminLogin")) {
+			session.invalidate();
+			session.setAttribute("adminLogin", true);
+		} else {
+			session.invalidate();
+		}
 		
 		return "redirect:/zaksim/main/home";
 	}
 	
 	
-	@RequestMapping(value="/sign", method=RequestMethod.POST)
-	public String MypageSign() {
-				
-		String result;
+	@RequestMapping(value="/checkPw", method=RequestMethod.POST, produces="application/json; charset=utf-8")
+	@ResponseBody
+	public Map<String, Boolean> checkPw(HttpSession session,String password) {
 		
-		result ="";
+		HashMap<String, Boolean> map = new HashMap<>();
 		
-		return result;
+		ZakSimMember member = new ZakSimMember();
+		member.setIdx((Integer)session.getAttribute("login_idx"));
+		member.setPassword(password);
+		
+		if(mypageService.checkPw(member)) {
+			map.put("result", true);
+		} else {
+			map.put("result", false);
+		}
+		
+		return map;
 	}
 	
 }

@@ -85,4 +85,15 @@ public class MemberController {
 		
 		return map;
 	}
+	
+	// 계정 영구 정지하기
+	@RequestMapping(value="/block", method = RequestMethod.POST, produces="application/json; charset=utf-8")
+	@ResponseBody
+	public Map<String, String> block(String[] blockIdx) {
+		HashMap<String, String> map = new HashMap<>();
+		
+		System.out.println("suspendIdx : " + blockIdx);
+		
+		return map;
+	}
 }
