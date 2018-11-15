@@ -195,40 +195,59 @@
 										</c:forEach>
 									</p>
 								</div>
-								<div class="overlay">
-									<br> <br> <a class="info">
-										<% boolean groupFlag =  false; %>
-										<c:forEach var="groupMemberExist" items="${groupMemberExist }">
-
-												<c:if test="${groupMemberExist.group_idx eq popularGroupList.communityGroup.idx }">
-													<% groupFlag = true; %>
-												</c:if>
-										</c:forEach>	
-										
-										<c:if test="<%= !groupFlag %>">
-											<c:if test="${sessionScope.login_idx ne null }">
-											<c:if test="${popularGroupList.communityGroup.secret == 1 }">
-												<button type="button"  class="btn btn-primary secretJoin">가입하기</button>
-												<br>
-												<br>
-											</c:if>
-											</c:if>
-	
-											
-											<c:if test="${sessionScope.login_idx ne null }">
-											 <c:if test="${popularGroupList.communityGroup.secret == 0 }">
-												<button type="button" class="btn btn-primary join" id ="noPassJoin">가입하기</button>
-												<br>
-												<br>
-											</c:if>									
-											</c:if>
-															
-										</c:if>
-										
-										<button type="button" class="btn btn-danger"
-											onclick="moveURL(${popularGroupList.communityGroup.idx }, ${popularGroupList.communityGroup.secret })">상세보기</button>
-									</a>
-								</div>
+					<div class="overlay">
+                           <br> <br> 
+                           <a class="info">
+                              <% boolean groupFlag =  false; %>
+                              <c:forEach var="groupMemberExist" items="${groupMemberExist }">
+                                    <c:if test="${groupMemberExist.group_idx eq popularGroupList.communityGroup.idx }">
+                                       <% groupFlag = true; %>
+                                    </c:if>
+                              </c:forEach>   
+                              
+                              <!-- 로그인 했을 때 -->
+                              <c:if test="${sessionScope.login }">
+                              	
+                              <!-- 가입했을 때 -->
+                              	<c:if test="<%=groupFlag  %>">
+                              		<button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${popularGroupList.communityGroup.idx }, 0)">상세보기</button>
+                              	</c:if>
+                              	
+                              	<!-- 가입 안 했을 때 -->
+                              	<c:if test="<%=!groupFlag  %>">
+                              	
+                              	<!-- 비공개일 떄 -->
+                              	   <c:if test="${popularGroupList.communityGroup.secret == 1 }">
+                                    <button type="button"  class="btn btn-primary secretJoin">가입하기</button>
+                                    <br>
+                                    <br>
+                                 </c:if>
+                                 
+                                 <!-- 공개일 때 -->
+                                   <c:if test="${popularGroupList.communityGroup.secret == 0 }"> 
+                                    <button type="button" class="btn btn-primary join" id ="noPassJoin">가입하기</button> 
+                                    <br> 
+                                    <br> 
+                                  </c:if>    
+                              		
+                              		<button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${popularGroupList.communityGroup.idx }, ${popularGroupList.communityGroup.secret })">상세보기</button>
+                                 
+                              
+                              	</c:if>
+                              
+                              </c:if>
+                              
+                              <!-- 로그인 안했을 때 -->
+                              <c:if test="${!sessionScope.login }">
+                               		<button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${popularGroupList.communityGroup.idx }, ${popularGroupList.communityGroup.secret })">상세보기</button>
+                              </c:if>
+                              
+                           </a>
+                        </div>
+>>>>>>> branch '20181024' of https://github.com/ksj71816/ZakSim.git
 							</div>
 						</div>
 					</c:forEach>
@@ -262,8 +281,8 @@
 
 						
 						<div class="card" style="width: 20rem; margin-right: 15px;">
-						<input type="hidden" class="idxx" value="${newGroupList.idx }">
-						<input type="hidden" class="memberIdxx" value="${newGroupList.member_idx }">
+						<input type="hidden" class="idxx" value="${newGroupList.communityGroup.idx }">
+						<input type="hidden" class="memberIdxx" value="${newGroupList.communityGroup.member_idx }">
 							<div class="hovereffect">
 								<img class="card-img-top"
 									src="${newGroupList.communityGroup.image }"
@@ -284,7 +303,7 @@
 										<c:forEach items="${keywordList }" var="keyword">
 										
 											<c:if
-												test="${newGroupList.idx eq keyword.group_idx}">
+												test="${newGroupList.communityGroup.idx eq keyword.group_idx}">
 												#${keyword.keyword } 
 											</c:if>
 										</c:forEach>
@@ -294,32 +313,53 @@
 								<div class="overlay">
 									<br> <br> 
 									<a class="info">
+                  					 <% boolean groupFlag2 =  false; %>
+                              <c:forEach var="groupMemberExist" items="${groupMemberExist }">
 
-
-										<c:if test="${sessionScope.login_idx ne null }">
-										<c:if test="${sessionScope.login_idx  ne newGroupList.communityGroup.member_idx }">
-											<c:if test="${newGroupList.communityGroup.secret == 1 }">
-
-												<button type="button" class="btn btn-primary secretJoin">가입하기</button>
-												<br>
-												<br>
-
-											</c:if>
-											</c:if>
-											<c:if test="${newGroupList.communityGroup.secret == 0 }">
-												<c:if
-													test="${newGroupList.communityGroup.member_idx eq sessionScope.login_idx }">
-													<button type="button" class="btn btn-primary join" >가입하기</button>
-													<br>
-													<br>
-												</c:if>
-											</c:if>
-
-										</c:if>
-										
-										<button type="button" class="btn btn-danger"
-											onclick="moveURL(${newGroupList.idx }, ${newGroupList.communityGroup.secret })">
-											상세보기</button>
+                                    <c:if test="${groupMemberExist.group_idx eq newGroupList.communityGroup.idx }">
+                                       <% groupFlag2 = true; %>
+                                    </c:if>
+                              </c:forEach>   
+                              
+                              <!-- 로그인 했을 때 -->
+                              <c:if test="${sessionScope.login }">
+                              	
+                              <!-- 가입했을 때 -->
+                              	<c:if test="<%=groupFlag2  %>">
+                              		<button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${newGroupList.communityGroup.idx }, 0)">상세보기</button>
+                              	</c:if>
+                              	
+                              	<!-- 가입 안 했을 때 -->
+                              	<c:if test="<%=!groupFlag2  %>">
+                              	
+                              	<!-- 비공개일 떄 -->
+                              	   <c:if test="${newGroupList.communityGroup.secret == 1 }">
+                                    <button type="button"  class="btn btn-primary secretJoin">가입하기</button>
+                                    <br>
+                                    <br>
+                                 </c:if>
+                                 
+                                 <!-- 공개일 때 -->
+                                   <c:if test="${newGroupList.communityGroup.secret == 0 }"> 
+                                    <button type="button" class="btn btn-primary join" id ="noPassJoin">가입하기</button> 
+                                    <br> 
+                                    <br> 
+                                  </c:if>    
+                              		
+                              		<button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${newGroupList.communityGroup.idx }, ${newGroupList.communityGroup.secret })">상세보기</button>
+                                 
+                              
+                              	</c:if>
+                              
+                              </c:if>
+                              
+                              <!-- 로그인 안했을 때 -->
+                              <c:if test="${!sessionScope.login }">
+                               		<button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${newGroupList.communityGroup.idx }, ${newGroupList.communityGroup.secret })">상세보기</button>
+                              </c:if>
 									</a>
 								</div>
 							</div>

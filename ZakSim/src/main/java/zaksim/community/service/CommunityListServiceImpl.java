@@ -25,13 +25,13 @@ public class CommunityListServiceImpl  implements CommunityListService{
 	
 	// 인기 모임 리스트
 	@Override
-	public List<CommunityGroup> popularGroupList() {
+	public List<GroupLike> popularGroupList() {
 		return communityListDAO.popularGroupList();
 	}
 	
 	// 새로운 그룹 리스트
 	@Override
-	public List<CommunityGroup> newGroupList() {
+	public List<GroupLike> newGroupList() {
 		return communityListDAO.newGroupList();
 	}
 	
