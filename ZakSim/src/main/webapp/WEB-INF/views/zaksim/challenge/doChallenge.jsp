@@ -43,7 +43,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-1"> <img class="img-fluid d-block rounded-circle ml-3" src="/resources/image/challenge/exitBT.png" style="cursor:pointer;	height: 45px; width: 45px;"></div>
+        <div class="col-md-1"> <a onclick="alert();"> <img class="img-fluid d-block rounded-circle ml-3" src="/resources/image/challenge/exitBT.png" style="cursor:pointer;	height: 45px; width: 45px;"></a></div>
       </div>
       
       <div id="chageDiv">
@@ -95,7 +95,44 @@
   integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
   crossorigin="anonymous"></script>
 
+<!-- alert 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.28.12/sweetalert2.all.js"></script>
 
+
+
+<!-- alert 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.28.12/sweetalert2.all.js"></script>
+
+
+<!-- alert 스크립트-->
+<script type="text/javascript">
+
+
+function alert(){
+	
+	swal({
+		  title: '도전을 취소 하시겠습니까?',
+		  text: '작성중인 정보가 초기화 되며, 메인 화면으로 이동 합니다!',
+		  type: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#2E82CC',
+		  cancelButtonColor: '#FC3A3A',
+		  confirmButtonText: '확인',
+		  cancelButtonText: '취소'
+		}).then((result) => {
+		  if (result.value) {
+	
+			  document.location.href = "/zaksim/main/home";
+			  
+		  }
+		})
+	
+}
+		
+</script>
+
+
+<!-- jQuery ui datepicker -->
 <script type="text/javascript">
 $(document).ready(function() {
 	$( "#startDate" ).datepicker({
@@ -116,58 +153,60 @@ $(document).ready(function() {
 
 
 
-<script type="text/javascript">
-
-// var J = $.noConflict('true');
-
-$(document).ready(function() {
-	$("[name='title']").attr("required", true);
-	$("[name='startDate']").attr("required", true);
-	$("[name='endDate']").attr("required", true);
-});
-
-// J(document).ready(function() {
-// 	J("[name='title']").attr("required", true);
-// 	J("[name='startDate']").attr("required", true);
-// 	J("[name='endDate']").attr("required", true);
-// });
-
-</script>
-
-
-
-
 <!-- 도전정보 입력 -->
 <script type="text/javascript">
-
-	
-	
-	
-		
 		
 	function toPriceChallenge(){
 		
 		if( $("#doChal [name='title']").val() == '' || $("#doChal [name='title']").val() == null ) {
-			alert("도전명을 입력해 주세요!");
+			
+			swal({
+				  type: 'error',
+				  title: '도전명을 입력해 주세요.'
+				 // footer: '<a href>Why do I have this issue?</a>'
+				})
+			
+			
 			return false;
 		}
 		
 		
 		if( $( "#startDate" ).val()== "" || $( "#endDate" ).val()== "" ) {
-			alert("도전 날짜를 입력해 주세요!");
+			//alert("도전 날짜를 입력해 주세요!");
+			
+			
+			swal({
+				  type: 'error',
+				  title: '도전 날짜를 입력해 주세요.' 
+				 // footer: '<a href>Why do I have this issue?</a>'
+				})
+			
 			
 			return false;
 		}
 		
 		
 		if( $( "#startDate" ).val()==$( "#endDate" ).val() ) {
-			alert("도전 날짜를 확인해 주세요!");
+			//alert("도전 날짜를 확인해 주세요!");
+			
+			swal({
+				  type: 'error',
+				  title: '도전 날짜를 확인해 주세요.' 
+				 // footer: '<a href>Why do I have this issue?</a>'
+				})
+			
 			
 			return false;
 		}
 		
 		if(  $( "#startDate" ).val()  >  $( "#endDate" ).val() ){
-			alert("도전 날짜를 확인해 주세요!");
+			//alert("도전 날짜를 확인해 주세요!");
+			
+			swal({
+				  type: 'error',
+				  title: '도전 날짜를 확인해 주세요.' 
+				 // footer: '<a href>Why do I have this issue?</a>'
+				})
 			
 			return false;
 		}
@@ -197,9 +236,6 @@ $(document).ready(function() {
 		   });  
 	}
 
-	
-	
-    
 </script>
    
  
@@ -286,6 +322,8 @@ function pay(pg, pay_method, paymentOption) {
         	 
         	 $("#modalBody").html("결제 실패!<br>에러 : " + rsp.error_msg);
  			 $("#payModal").modal('show');
+ 			 
+ 			 
          }
      });
 }

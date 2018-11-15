@@ -120,7 +120,11 @@ public class Citation {
 		
 		citation.setContent(content);
 		
-		// 공개 비공개 처리?
+		// 공개 비공개 처리	// 공개 : 1 , 비공개 = 0
+		int open = board.getOpen();
+		System.out.println("공개 여부확인"+open);
+		
+		citation.setOpen(open);
 		
 		// 인증글 여부 : 1=인증글
 		citation.setCertification(1);
