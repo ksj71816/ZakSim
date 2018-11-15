@@ -357,7 +357,7 @@
 
 <!-- 위로가기 버튼 -->
 <div class="top-button">
-	<a href=""><img id="upImg" src="/resources/image/community/위로.png">
+	<a href=""><img id="upImg" src="/resources/image/community/위로.png" style="width: 50px; height: 50px;">
 	</a>
 </div>
 
@@ -881,6 +881,7 @@
 	$(".join").click(function() {
 		console.log("aaa");
 		console.log($(this).parent().parent().parent().parent().children("input").eq(0).val());
+		$("#join").modal();
 	});
 </script>
 

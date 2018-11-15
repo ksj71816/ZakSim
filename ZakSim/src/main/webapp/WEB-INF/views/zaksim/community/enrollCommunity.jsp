@@ -351,7 +351,7 @@
 
 <!-- 위로가기 버튼 -->
 <div class="top-button">
-	<a href=""><img id="upImg" src="/resources/image/community/위로.png"></a>
+	<a href=""><img id="upImg" src="/resources/image/community/위로.png" style="width: 50px; height: 50px;"></a>
 </div>
 
 <!-- footer include -->
