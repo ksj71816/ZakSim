@@ -3,6 +3,8 @@
         <!-- header include -->
 <%@include file="/WEB-INF/views/zaksim/main/header.jsp" %>
 
+
+
     <div class="container" id="zz">
         <div class="row" style="margin-bottom: 30px;">
             <div class="col">
@@ -14,8 +16,6 @@
                         <span style="color: grey; font-style: italic; margin-left: 20px;">도전횟수와 인증률을 토대로 TOP 20 을 보여줍니다.</span>
                     </strong>
                 </div>
-
-
 
 
 

@@ -15,11 +15,11 @@ public interface CommunityListDAO {
 	public List<CommunityGroup> joinedGroupList(int idx);
 	
 	// 인기그룹 리스트
-	public List<CommunityGroup> popularGroupList( );
+	public List<CommunityGroup> popularGroupList();
 
 	// 새로 시작한 그룹 리스트
-//	public List<CommunityGroup> newGroupList( );
-	public List<GroupLike> newGroupList( );
+	public List<CommunityGroup> newGroupList();
+//	public List<GroupLike> newGroupList(String idx);
 	
 	// 카테고리 리스트
 	public List<CommunityCategory> categoryList();
@@ -38,5 +38,11 @@ public interface CommunityListDAO {
 	
 	// 커뮤니티 좋아요
 	public GroupLike groupLike(int idx);
+	
+	// 그룹맴버 존재하는 지 
+	public List<GroupMember> existMember(int idx);
+	
+	// 커뮤니티 비밀번호 일치여부
+	public int secretCommunityJoin(CommunityGroup communityGroup);
 	
 }
