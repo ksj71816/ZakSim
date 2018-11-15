@@ -8,8 +8,6 @@
 <%@include file="/WEB-INF/views/zaksim/main/header.jsp"%>
 
 
-join : ${joinedGroupList}
-
 <div class="container" id="zz">
 
 	<div class="row" style="margin-bottom: 30px;">
@@ -137,7 +135,7 @@ join : ${joinedGroupList}
 
 									<div class="overlay">
 										<br> <br> <br> <a class="info" href="#">
-											<button type="button" class="btn btn-danger" onclick="moveURL(${joinedGroupList.communityGroup.idx }, ${joinedGroupList.communityGroup.secret })">상세보기</button>
+											<button type="button" class="btn btn-danger" onclick="moveURL(${joinedGroupList.communityGroup.idx }, 0)">상세보기</button>
 
 										</a>
 
@@ -192,7 +190,7 @@ join : ${joinedGroupList}
 										<c:forEach items="${keywordList }" var="keyword">
 											<c:if
 												test="${popularGroupList.communityGroup.idx eq keyword.group_idx}">
-												#${keyword.keyword }
+												#${keyword.keyword}
 											</c:if>
 										</c:forEach>
 									</p>
@@ -206,10 +204,10 @@ join : ${joinedGroupList}
 													<% groupFlag = true; %>
 												</c:if>
 										</c:forEach>	
+										
 										<c:if test="<%= !groupFlag %>">
 											<c:if test="${sessionScope.login_idx ne null }">
 											<c:if test="${popularGroupList.communityGroup.secret == 1 }">
-											<%=groupFlag %>
 												<button type="button"  class="btn btn-primary secretJoin">가입하기</button>
 												<br>
 												<br>
@@ -949,9 +947,6 @@ join : ${joinedGroupList}
 							location.href = "/zaksim/community/enrollCommunity?idx="+idxx;
 						  }
 						})
-				
-				
-				
 				
 			}
 			, error: function(e) {

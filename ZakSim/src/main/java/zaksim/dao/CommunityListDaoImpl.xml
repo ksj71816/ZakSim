@@ -168,7 +168,7 @@
 	<select id="newGroupList" resultMap="GroupLike">
 
 	SELECT
-          g.idx, 
+          g.idx g_idx, 
           g.title,
           g.content,
           g.image,
