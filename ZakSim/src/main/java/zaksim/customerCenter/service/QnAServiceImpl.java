@@ -23,38 +23,52 @@ public class QnAServiceImpl implements QnAService {
 
 	@Override
 	public List<QnA> qnaList(Paging paging) {
-		// TODO Auto-generated method stub
-		return null;
+		return qnaDao.qnaList(paging);
 	}
 
 	@Override
 	public Paging getPaging(int curPage, int listCount, int pageCount) {
-		// TODO Auto-generated method stub
-		return null;
+		int totalCount = qnaDao.countAll();
+		
+		Paging paging = new Paging(totalCount, curPage, listCount, pageCount);
+		
+		return paging;
+	}
+	
+	@Override
+	public List<QnA> qnaListDepth() {
+		return qnaDao.qnaListDepth();
 	}
 
 	@Override
 	public QnA qnaView(int qnaIdx) {
-		// TODO Auto-generated method stub
-		return null;
+		return qnaDao.qnaView(qnaIdx);
+	}
+	
+	@Override
+	public void qnaViewRead(int qnaIdx) {
+		qnaDao.qnaViewRead(qnaIdx);
 	}
 
 	@Override
 	public void qnaWrite(QnA qnaDto) {
-		// TODO Auto-generated method stub
-		
+		qnaDao.qnaWrite(qnaDto);
+	}
+	
+	@Override
+	public void qnaStatus(int upperIdx) {
+		qnaDao.qnaStatus(upperIdx);
 	}
 
 	@Override
 	public void qnaUpdate(QnA qnaDto) {
-		// TODO Auto-generated method stub
-		
+		qnaDao.qnaUpdate(qnaDto);
 	}
 
 	@Override
 	public void qnaDelete(int qnaIdx) {
-		// TODO Auto-generated method stub
-		
+		qnaDao.qnaDelete(qnaIdx);
 	}
+
 
 }

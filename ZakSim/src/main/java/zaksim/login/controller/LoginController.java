@@ -65,6 +65,11 @@ public class LoginController {
 		}
 		
 	}
+	// 소셜 로그인_네이버
+	@RequestMapping(value="/zaksim/login/naverLogin", method=RequestMethod.GET)
+	public void naverLoginCallback() {
+		
+	}
 	
 	// 로그아웃
 	@RequestMapping(value="/zaksim/login/logout", method=RequestMethod.GET)

@@ -53,9 +53,8 @@
 		<br><br>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-3 mx-auto">
-					<button class="btn btn-naver col">Naver 로그인</button>
-				</div>
+				<!-- 네이버아이디로로그인 버튼 노출 영역 -->
+				<div class="col-md-3 mx-auto text-center" id="naverIdLogin"></div>
 			</div>
 			<br>
 			<div class="row">
@@ -67,9 +66,9 @@
 			<div class="row">
 				<div class="col-md-7 mx-auto">
 					<div class="text-center">
-						<button class="btn loginBtnColor col-md-3" id="btnFindIdPage">ID 찾기</button>
-						<button class="btn loginBtnColor col-md-4" id="btnFindPwPage">비밀번호 찾기</button>
-						<button class="btn loginBtnColor col-md-3" id="btnJoinPage">회원가입</button>
+						<a class="btn loginBtnColor col-md-3" href="/zaksim/login/findId">ID 찾기</a>
+						<a class="btn loginBtnColor col-md-4" href="/zaksim/login/findPw">비밀번호 찾기</a>
+						<a class="btn loginBtnColor col-md-3" href="/zaksim/login/join">회원가입</a>
 					</div>
 				</div>
 			</div>
@@ -77,17 +76,8 @@
 	</div>
 
 <%@ include file="../main/footer.jsp" %>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <script type="text/javascript">
-	$('#btnFindIdPage').click(function() {
-		location.href = "/zaksim/login/findId";
-	});
-	$('#btnFindPwPage').click(function() {
-		location.href = "/zaksim/login/findPw";
-	});
-	$('#btnJoinPage').click(function() {
-		location.href = "/zaksim/login/join";
-	});
-	
 	var session = <%=session.getAttribute("login")%>;
 	console.log("LOGIN 세션 : " + session);
 	
@@ -95,4 +85,17 @@
 		$('#loginFailMessage').text('※ 아이디랑 비밀번호를 확인해주세요.');
 		
 	}
+	
+	/* 네이버아디디로로그인 초기화 Script */
+	var naverLogin = new naver.LoginWithNaverId(
+			{
+				clientId: "3Tfw74iqoE6anSkM99vS",
+				callbackUrl: "http://localhost:8088/zaksim/login/naverLogin",
+				isPopup: true, /* 팝업을 통한 연동처리 여부 */
+				loginButton: {color: "green", type: 3, height: 55} /* 로그인 버튼의 타입을 지정 */
+			}
+		);
+		
+	/* 설정정보를 초기화하고 연동을 준비 */
+	naverLogin.init();
 </script>

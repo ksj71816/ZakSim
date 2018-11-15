@@ -1,6 +1,6 @@
 package zaksim.dto;
 
-import java.sql.Date;
+import java.util.Date;
 
 /*
  * 작성일 : 2018.10.18
@@ -16,8 +16,9 @@ public class QnA {
 	private String title; // 타이틀
 	private String content; // 내용
 	private int hit; // 조회수
-	private String status; // 답변 상태
-	private String pri; // 비밀글 여부
+	private String status; // 답변 상태(ready/complete)
+	private String secret; // 비밀글 여부(public/private)
+//	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date writtenDate; // 작성 날짜
 	private int upperIdx; // 상위 문의글 인덱스
 	private int depth; // 깊이
@@ -63,11 +64,11 @@ public class QnA {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getPri() {
-		return pri;
+	public String getSecret() {
+		return secret;
 	}
-	public void setPri(String pri) {
-		this.pri = pri;
+	public void setSecret(String secret) {
+		this.secret = secret;
 	}
 	public Date getWrittenDate() {
 		return writtenDate;
@@ -103,7 +104,7 @@ public class QnA {
 	@Override
 	public String toString() {
 		return "QnA [idx=" + idx + ", writerIdx=" + writerIdx + ", title=" + title + ", content=" + content + ", hit="
-				+ hit + ", status=" + status + ", pri=" + pri + ", writtenDate=" + writtenDate + ", upperIdx="
+				+ hit + ", status=" + status + ", secret=" + secret + ", writtenDate=" + writtenDate + ", upperIdx="
 				+ upperIdx + ", depth=" + depth + ", memberDto=" + memberDto + ", qnaDto=" + qnaDto + "]";
 	}
 	
