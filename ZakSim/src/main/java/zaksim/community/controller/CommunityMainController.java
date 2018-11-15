@@ -32,7 +32,7 @@ public class CommunityMainController {
 		}
 		if(idx!=0) {
 			// 가입한 그룹
-			model.addAttribute("joinedGroupLIst", communityListService.joinedGroupList(idx));
+			model.addAttribute("joinedGroupList", communityListService.joinedGroupList(idx));
 //			// 인기있는 그룹
 //			model.addAttribute("popularGroupList", communityListService.popularGroupList());
 //			// 새로운 그룹

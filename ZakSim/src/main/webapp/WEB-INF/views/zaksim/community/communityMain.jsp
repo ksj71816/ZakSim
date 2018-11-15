@@ -54,7 +54,7 @@
 
 
 
-			<c:if test="${!empty joinedGroupLIst}">
+			<c:if test="${!empty joinedGroupList}">
 				<button type="button" class="btn btn-outline-primary"
 					style="float: right; margin-top: 30px;" id="joinedGroupViewMore">+
 					더보기</button>
@@ -75,7 +75,7 @@
 
 
 					<!-- 참여하고 있는 모임이 없을 시 -->
-					<c:if test="${empty  joinedGroupLIst}">
+					<c:if test="${empty  joinedGroupList}">
 						<c:if test="${sessionScope.login_idx eq null}">
 						
 						<div
@@ -104,31 +104,31 @@
 
 
 					<!-- 참여하고 있는 모임이 있을 시 -->
-					<c:if test="${joinedGroupLIst ne null }">
-						<c:forEach var="joinedGroupLIst" items="${joinedGroupLIst }"	
+					<c:if test="${joinedGroupList ne null }">
+						<c:forEach var="joinedGroupList" items="${joinedGroupList }"	
 							begin="0" end="2" step="1">
 							
 							<div class="card" style="width: 20rem; margin-right: 15px;">
 								<div class="hovereffect">
 									<img class="card-img-top"
-										src="${joinedGroupLIst.communityGroup.image }"
+										src="${joinedGroupList.communityGroup.image }"
 										alt="Card image cap">
 									<div class="card-body">
 										<span>
-											<h3 class="card-title">${joinedGroupLIst.communityGroup.title }
-												<c:if test="${joinedGroupLIst.communityGroup.secret==1 }">
+											<h3 class="card-title">${joinedGroupList.communityGroup.title }
+												<c:if test="${joinedGroupList.communityGroup.secret==1 }">
 													<img alt="" src="/resouces/image/community/자물쇠.png">
 												</c:if>
 											</h3>
 										</span> <span class="form-inline"> <span style="color: red;">
-												<h4>♥ &nbsp;${joinedGroupLIst.likeNum }</h4>
+												<h4>♥ &nbsp;${joinedGroupList.likeNum }</h4>
 										</span>
 										</span>
 										<p class="card-text">
 											키워드 :
 											<c:forEach items="${keywordList }" var="keyword">
 												<c:if
-													test="${joinedGroupLIst.communityGroup.idx eq keyword.group_idx}">
+													test="${joinedGroupList.idx  eq  keyword.group_idx}">
 													#${keyword.keyword } 
 											</c:if>
 											</c:forEach>
@@ -138,7 +138,7 @@
 									<div class="overlay">
 										<br> <br> <br> <a class="info" href="#">
 											<button type="button" class="btn btn-danger"
-												onclick="moveURL(${joinedGroupLIst.communityGroup.idx }, ${joinedGroupLIst.communityGroup.secret })">상세보기</button>
+												onclick="moveURL(${joinedGroupList.idx }, ${joinedGroupList.communityGroup.secret })">상세보기</button>
 										</a>
 
 									</div>
@@ -168,6 +168,7 @@
 					<c:forEach var="popularGroupList" items="${popularGroupList }"
 						begin="0" end="2" step="1">
 						<div class="card" style="width: 20rem; margin-right: 15px;">
+						<input type="hidden" class="idxx" value="${popularGroupList.communityGroup.idx }">
 						<input type="hidden" class= "memberIdxx" value="${popularGroupList.communityGroup.member_idx }">
 							<div class="hovereffect">
 								<img class="card-img-top"
@@ -200,15 +201,15 @@
 									<br> <br> <a class="info">
 										<% boolean groupFlag =  false; %>
 										<c:forEach var="groupMemberExist" items="${groupMemberExist }">
+
 												<c:if test="${groupMemberExist.group_idx eq popularGroupList.communityGroup.idx }">
 													<% groupFlag = true; %>
 												</c:if>
 										</c:forEach>	
-										
 										<c:if test="<%= !groupFlag %>">
 											<c:if test="${sessionScope.login_idx ne null }">
 											<c:if test="${popularGroupList.communityGroup.secret == 1 }">
-											
+											<%=groupFlag %>
 												<button type="button"  class="btn btn-primary secretJoin">가입하기</button>
 												<br>
 												<br>
@@ -295,15 +296,13 @@
 								<div class="overlay">
 									<br> <br> 
 									<a class="info">
-									
 
-<%-- 										<c:if test="${groupMemberExist.member_idx ne sessionScope.login.idx}"> --%>
-										<c:if test="${sessionScope.login_idx  ne newGroupList.communityGroup.member_idx }">
+
 										<c:if test="${sessionScope.login_idx ne null }">
+										<c:if test="${sessionScope.login_idx  ne newGroupList.communityGroup.member_idx }">
 											<c:if test="${newGroupList.communityGroup.secret == 1 }">
 
-												<button type="button" class="btn btn-primary secretJoin" 
-												>가입하기</button>
+												<button type="button" class="btn btn-primary secretJoin">가입하기</button>
 												<br>
 												<br>
 
@@ -319,6 +318,7 @@
 											</c:if>
 
 										</c:if>
+										
 										<button type="button" class="btn btn-danger"
 											onclick="moveURL(${newGroupList.idx }, ${newGroupList.communityGroup.secret })">
 											상세보기</button>
@@ -769,7 +769,12 @@
 					type: 'success',
 					title: 'success ! ',
 					text: '생성되었습니다.'
-			});
+			}).then((result) => {
+				  if (result.value) {
+						console.log("안쪽!!!");
+						location.href = "/zaksim/community/communityMain";
+					  }
+					})
 				return true;
 			}
 			
@@ -908,6 +913,9 @@
 	// 비밀커뮤니티 가입하기 눌렀을 때 인덱스 넘기기
 	$(".secretJoin").click(function() {
 		var idxx = $(this).parent().parent().parent().parent().children("input").eq(0).val();
+		
+		console.log(idxx);
+		
 		$("#join").modal('show');
 		// value 추가
 		$(".idxxx").attr({
