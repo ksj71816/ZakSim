@@ -17,6 +17,8 @@
 	
 	<!-- css 매핑 설정 -->
    	<resources mapping="/css/**" location="/WEB-INF/views/zaksim/css/" />
+   	<!-- summernote 매핑 설정 -->
+   	<resources mapping="/summernote/**" location="/WEB-INF/views/zaksim/customerCenter/QnA/summernote/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

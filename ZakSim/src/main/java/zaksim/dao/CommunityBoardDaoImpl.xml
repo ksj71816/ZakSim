@@ -21,17 +21,17 @@
 	</resultMap>
 	
 	<resultMap type="zaksim.dto.Board" id="Board">
-		<result column="b_idx" property="idx" />
-		<result column="b_challenge_idx" property="challenge_idx" />
-		<result column="b_group_idx" property="group_idx" />
-		<result column="b_writer_idx" property="writer_idx" />
-		<result column="b_title" property="title" />
-		<result column="b_content" property="content" />
-		<result column="b_image" property="image" />
-		<result column="b_open" property="open" />
-		<result column="b_certification" property="certification" />
-		<result column="b_written_date" property="written_date" />
-		<result column="b_hit" property="hit" />
+		<result column="idx" property="idx" />
+		<result column="challenge_idx" property="challenge_idx" />
+		<result column="group_idx" property="group_idx" />
+		<result column="writer_idx" property="writer_idx" />
+		<result column="title" property="title" />
+		<result column="bontent" property="content" />
+		<result column="image" property="image" />
+		<result column="open" property="open" />
+		<result column="certification" property="certification" />
+		<result column="written_date" property="written_date" />
+		<result column="hit" property="hit" />
 		<collection property="communityGroup" resultMap="CommunityGroup" />
 		<collection property="zakSimMember" resultMap="ZakSimMember" />
 	</resultMap>
@@ -42,27 +42,44 @@
   	<collection property="communityGroup" resultMap="CommunityGroup" />
   </resultMap>
   
-<!--   <select id="informationBoard" resultMap="Board" parameterType="int"> -->
-  
-<!--   select g.idx g_idx, g.member_idx g_member_idx, g.category_idx g_category_idx, g.title g_title, g.content g_content, g.image g_image, -->
-<!--   g.max g_max, g.open_date g_open_date, g.secret g_secret, g.password g_password, b.idx b_idx, b.challenge_idx b_challenge_idx, -->
-<!--   b.group_idx b_group_idx, b.writer_idx b_writer_idx, b.title b_title, b.content b_content, b.image b_image, b.open b_open, -->
-<!--   b.certification b_certification, b.written_date b_written_date, b.hit b_hit -->
-<!--    from communityGroup g, board b where b.group_idx = g.idx and g.idx=#{idx } -->
-  
-<!--   </select> -->
+  <select id="informationBoard" resultMap="Board" parameterType="int">
+	SELECT b.*, c.commentNum, l.likeNum
+	FROM (
+	    SELECT * 
+	    FROM Board
+	    WHERE group_idx=#{group_idx}
+	) b
+	LEFT JOIN (
+	    SELECT idx, nick
+	    FROM zaksimMember
+	) z
+	ON b.writer_idx=z.idx
+	LEFT JOIN (
+	    SELECT board_idx, count(*) commentNum 
+	    FROM boardComment 
+	    GROUP BY board_idx
+	) c
+	ON c.board_idx=b.idx
+	LEFT JOIN (
+	    SELECT board_idx, count(*) likeNum
+	    FROM boardLike
+	    GROUP BY board_idx
+	) l
+	ON l.board_idx=b.idx
+	ORDER BY b.idx DESC	
+  </select>
 
 
-<select id="informationBoard" resultMap="Board" parameterType="int">
-	  select * from
- 	 	(select g.idx g_idx, g.member_idx g_member_idx, g.category_idx g_category_idx, g.title g_title, g.content g_content, g.image g_image,
- 		g.max g_max, g.open_date g_open_date, g.secret g_secret, g.password g_password, b.idx b_idx, b.challenge_idx b_challenge_idx,
-  		b.group_idx b_group_idx, b.writer_idx b_writer_idx, b.title b_title, b.content b_content, b.image b_image, b.open b_open,
- 		 b.certification b_certification, b.written_date b_written_date, b.hit b_hit
-   		from communityGroup g, board b where b.group_idx = g.idx and g.idx=#{idx } order by g.idx desc)q left join 
-   		(select nick m_nick, m.idx m_idx from zaksimmember m) p 
-   		on q.b_writer_idx = p.m_idx
-</select>
+<!-- <select id="informationBoard" resultMap="Board" parameterType="int"> -->
+<!-- 	  select * from -->
+<!--  	 	(select g.idx g_idx, g.member_idx g_member_idx, g.category_idx g_category_idx, g.title g_title, g.content g_content, g.image g_image, -->
+<!--  		g.max g_max, g.open_date g_open_date, g.secret g_secret, g.password g_password, b.idx b_idx, b.challenge_idx b_challenge_idx, -->
+<!--   		b.group_idx b_group_idx, b.writer_idx b_writer_idx, b.title b_title, b.content b_content, b.image b_image, b.open b_open, -->
+<!--  		 b.certification b_certification, b.written_date b_written_date, b.hit b_hit -->
+<!--    		from communityGroup g, board b where b.group_idx = g.idx and g.idx=#{idx } order by g.idx desc)q left join  -->
+<!--    		(select nick m_nick, m.idx m_idx from zaksimmember m) p  -->
+<!--    		on q.b_writer_idx = p.m_idx -->
+<!-- </select> -->
   
   
   </mapper>

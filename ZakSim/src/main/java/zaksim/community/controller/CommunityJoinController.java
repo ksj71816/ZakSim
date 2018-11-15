@@ -76,18 +76,21 @@ public class CommunityJoinController {
 				// 그룹 정보 넘기기
 				model.addAttribute("groupInfo", communityListService.info(Integer.parseInt(idx)));
 
+
 				// 키워드 가져오기
 				model.addAttribute("keywordList", communityListService.keywordList());
 				
 				// 회원 리스트 가져오기
 				model.addAttribute("groupMember", communityMemberListService.members());
 
+
 				// 게시글 정보
 				model.addAttribute("boardList", communityBoardService.informationBoard(Integer.parseInt(idx)));
-//				System.out.println("게시판 정보 : "+communityBoardService.informationBoard(Integer.parseInt(idx)));
-			
+		
 				// 그룹 좋아요
 				model.addAttribute("groupLike", communityListService.groupLike(Integer.parseInt(idx)));
+
+
 				
 				
 				
