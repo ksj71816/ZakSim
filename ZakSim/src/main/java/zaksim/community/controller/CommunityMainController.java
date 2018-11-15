@@ -30,28 +30,24 @@ public class CommunityMainController {
 		if(session.getAttribute("login_idx") != null ) {
 			idx =(Integer)session.getAttribute("login_idx");
 		}
-		if(idx!=0) {
+		if(idx!=0) {	// 로그인 했을 때
 			// 가입한 그룹
-			model.addAttribute("joinedGroupList", communityListService.joinedGroupList(idx));
 
+			model.addAttribute("joinedGroupList", communityListService.joinedGroupList(idx));
 			
-		}
+		}	// 로그인 안했을 때
+		
+
 			// 인기있는 그룹
 			model.addAttribute("popularGroupList", communityListService.popularGroupList());
 			// 새로운 그룹
-//			model.addAttribute("newGroupList", communityListService.newGroupList(idx));
 			model.addAttribute("newGroupList", communityListService.newGroupList());
 			// 카테고리 그룹
 			model.addAttribute("categoryList", communityListService.categoryList());
 			// 키워드 리스트
 			model.addAttribute("keywordList", communityListService.keywordList());
-		
-			//
+			// 그룹 멤버 여주 확인용 리스트
 			model.addAttribute("groupMemberExist", communityListService.existMember(idx));
-
-		
-
-		
 	}
 
 	

@@ -30,6 +30,7 @@
 		<result column="open_date" property="open_date" />
 		<result column="secret" property="secret" />
 		<result column="password" property="password" />
+		<result column="g_like_num" property="likeNum" />
 		<collection property="communityCategory"
 			resultMap="CommunityCategory" />
 
@@ -39,8 +40,6 @@
 		<result column="idx" property="idx" />
 		<result column="group_idx" property="group_idx" />
 		<result column="keyword" property="keyword" />
-		<collection property="communityGroup"
-			resultMap="CommunityGroup" />
 	</resultMap>
 
 	<resultMap type="zaksim.dto.GroupLike" id="GroupLike">
@@ -50,10 +49,6 @@
 		<result column="member_idx" property="member_idx" />
 		<collection property="communityGroup"
 			resultMap="CommunityGroup" />
-		<collection property="groupKeyword"
-			resultMap="GroupKeyword" />
-		<collection property="communityCategory"
-			resultMap="CommunityCategory" />
 	</resultMap>
 	
 <!-- 	idx, member_type, id, password, nick, name, email, phone, join_date, status, suspension_date -->
@@ -81,21 +76,17 @@
 	</resultMap>
 
 	<select id="joinedGroupList" resultMap="GroupLike" parameterType="int">
-         select * from
-		(select
---		c.idx g_idx,
-		c.idx,
-		c.title, c.content, c.image, c.max, c.open_date, c.secret,
-		c.password, c.member_idx
-		from ZaksimMember m, communitygroup c where c.member_idx=#{idx }
-		and
-		m.idx=c.member_idx
-		) g
-		left join (select count(*) like_num, group_idx
-		l_group_idx from grouplike
-		GROUP BY group_idx) l on
---		l.l_group_idx=g.g_idx
-		l.l_group_idx=g.idx
+         select g.*, l.like_num from
+      (select
+      c.idx g_idx,
+      c.title, c.content, c.image, c.max, c.open_date, c.secret,
+      c.password, c.member_idx
+      from communitygroup c where c.member_idx=#{idx}
+      ) g
+      left join (select count(*) like_num, group_idx
+      l_group_idx from grouplike
+      GROUP BY group_idx) l on
+      l.l_group_idx=g.g_idx
 	</select>
 
 <!-- 	<select id="joinedGroupList" resultMap="GroupLike"> -->
@@ -147,43 +138,56 @@
 	<!-- </select> -->
 
 	<select id="popularGroupList" resultMap="GroupLike">
-		SELECT
-		*
-		FROM
-		(SELECT g.idx
-		g_idx, g.title ,g.content , g.image ,g.max , g.open_date , g.secret
-		,
-		g.password,g.member_idx
-		FROM CommunityGroup g order by g_idx asc) gk
-		left join (select count(*) as
-		like_num, group_idx as l_group_idx from
-		grouplike
-		GROUP BY group_idx
-		order by like_num desc nulls last) l on l.l_group_idx=gk.g_idx
+	SELECT * from (
+	    SELECT rownum rnum, gl.*
+			FROM (
+				SELECT
+				*
+				FROM
+				(SELECT g.idx
+				g_idx, g.title ,g.content , g.image ,g.max , g.open_date , g.secret
+				,
+				g.password,g.member_idx
+				FROM CommunityGroup g order by g_idx asc) gk
+				left join (select count(*) as
+				like_num, group_idx as l_group_idx from
+				grouplike
+				GROUP BY group_idx
+				order by like_num desc nulls last) l on l.l_group_idx=gk.g_idx
+			) gl
+	    ) rgl
+	    WHERE rgl.rnum <![CDATA[ < ]]>=3
 	</select>
 
 
-	<select id="newGroupList" resultMap="GroupLike">
 
-		SELECT
-     	     g.idx g_idx , 
-       	   g.title,
-         	 g.content,
-         	 g.image,
-     		  g.max,
-       	   g.open_date,
-         	 g.secret,
-          	g.password,
-         	 g.member_idx,
-         	 like_num,
-         	 l_group_idx
-    	  FROM CommunityGroup g
-     	 left join (
-      	    select count(*) as like_num, group_idx as l_group_idx from grouplike
-        	  GROUP BY group_idx
-    	  ) l
-     	 on l.l_group_idx=g.idx
-     	 order by idx desc
+
+	<select id="newGroupList" resultMap="CommunityGroup">
+	  SELECT * from (
+	    SELECT rownum rnum, gl.*
+			FROM (
+				SELECT
+			          g.idx g_idx, 
+			          g.title,
+			          g.content,
+			          g.image,
+			       	  g.max,
+			          g.open_date,
+			          g.secret,
+			          g.password,
+			          g.member_idx,
+			          like_num g_like_num
+			      FROM CommunityGroup g
+			      left join (
+			          select count(*) as like_num, group_idx as l_group_idx from grouplike
+			          GROUP BY group_idx
+			      ) l
+			      on l.l_group_idx=g.idx
+	              order by idx desc
+		    ) gl
+	    ) rgl
+	    WHERE rgl.rnum <![CDATA[ < ]]>=3
+>>>>>>> branch '20181024' of https://github.com/ksj71816/ZakSim.git
 	</select>
 
 

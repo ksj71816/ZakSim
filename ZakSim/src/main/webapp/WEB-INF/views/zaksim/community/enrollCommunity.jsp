@@ -11,7 +11,6 @@
 
 
 
-boardList : ${boardList[0]}
 <div class="container" id="zz">
 
    <div class="row">

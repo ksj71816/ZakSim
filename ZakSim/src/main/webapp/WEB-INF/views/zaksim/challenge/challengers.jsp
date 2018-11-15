@@ -38,14 +38,14 @@
         <div class="row mt-4">
         
         
-        <c:forEach var="citation" items="${citation}" begin="0" end="20" step="1">
+        <c:forEach items="${citation}" begin="0" end="20" step="1" varStatus="i">
           <!--이미지 1개-->
           <div class="col-md-3 col-lg-3 col-sm-3 h-25">
             <div class="hovereffect text-center my-1" style="">
-              <img class="img-responsive" src="${citation.image}">
+              <img class="img-responsive" src="${citation[i.count-1].image}">
               <div class="overlay">
-                <h2>${citation.title}</h2>
-                <a class="info" href="#">게시물 확인</a>
+                <h2>${citation[i.count-1].title}</h2>
+                <a class="text-white info" onclick="viewCitation(${citation[i.count-1].rnum},'${citation[i.count-1].image}')" style="cursor:pointer;">게시물 확인</a>
               </div>
             </div>
           </div>
@@ -103,4 +103,39 @@
     
         <!-- footer include -->
 <%@include file="/WEB-INF/views/zaksim/main/footer.jsp" %>
+
+
+<!-- alert 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.28.12/sweetalert2.all.js"></script>
+
+
+<!-- 게시물 확인 viewer-->
+<script type="text/javascript"> 
+
+	function viewCitation(idx,image){
+		
+		console.log(idx);
+// 		console.log(i);
+// 		console.log('${citation['+i+'].image}');
+		
+		swal({
+			  title: 'Sweet!', 
+			  text: 'Modal with a custom image.',
+			  imageUrl: image,
+			  imageWidth: 400,
+			  imageHeight: 200,
+			  imageAlt: 'Custom image',
+			  animation: false
+			})
+		
+		
+	}
+
+
+</script>
+
+
+
+
+
     

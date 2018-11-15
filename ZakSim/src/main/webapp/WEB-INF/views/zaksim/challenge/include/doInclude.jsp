@@ -8,7 +8,7 @@
             <h2> ${sessionScope.login_nick} 의</h2>
             <h3> 새로운 도전 시작 </h3>
           </div>
-          <div class="row text-center text-muted" style="height: 50px; background-color: rgba(154, 28, 15, 0.5);"> <div class="col-md-12"><h5 class="mt-3">멋진 도전을 시작해 보세요.</h5></div></div>
+          <div class="row text-center text-muted" style="height: 50px; background-color: rgba(154, 28, 15, 0.5);"> <div class="col-md-12"><h5 class="my-2">멋진 도전을 시작해 보세요.</h5></div></div>
           <div class="row mt-5">
             <div class="col-md-4 mt-3 text-white" >
               <p class="text-right mt-3 "> 도전 명 : </p>

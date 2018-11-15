@@ -67,7 +67,7 @@
           
         	 <a class="my-2 d-flex justify-content-center align-items-end"><h5 class="mb-0 text-danger"><b>${info.title}</b></h5>&nbsp;도전중 </a>  
            
-          	 <a class="btn btn-sm w-25 my-4 btn-primary text-white" href="/zaksim/challenge/citation"> 도전 인증 </a>
+          	 <a class="btn btn-sm w-25 my-4 text-white" href="/zaksim/challenge/citation" style="background-color: #962424"> 도전 인증 </a>
         
         
         </div>
@@ -133,7 +133,7 @@
       
       
         <div class="row mb-5 ">
-           
+           <!-- 구현 못해서 주석
            <div class="col-md-6 text-center">
            
             <c:if test="${sessionScope.status eq 'ing' }">
@@ -145,10 +145,19 @@
             </c:if>
             
             </div>
-            
-            <div class="col-md-6 text-center"> 
-                <a class="btn btn-lg my-4 ml-0 btn-dark text-white " href="#modal">도전 포기</a>
+             -->
+          <c:if test="${status eq 'halt'}">   
+            <div class="col-md-12 text-center"> 
+                <a class="btn btn-lg my-4 ml-0 btn-dark text-white " onclick="haltAlert();">도전 취소</a>
             </div>
+          </c:if>  
+            
+          <c:if test="${status eq 'done'}">   
+            <div class="col-md-12 text-center"> 
+                <a class="btn btn-lg my-4 ml-0 btn-dark text-white " onclick="doneAlert();">도전 포기</a>
+            </div>
+          </c:if>  
+            
             
         </div>
       
@@ -171,6 +180,65 @@
 
 <!-- 스크립트 -->
 
+
+<!-- alert 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.28.12/sweetalert2.all.js"></script>
+
+
+<!-- alert 스크립트-->
+<script type="text/javascript">
+
+
+function doneAlert(){
+	
+	swal({
+		  title: '도전을 포기 하시겠습니까?',
+		  text: '비도전 상태로 변경되며, 인증글은 삭제되지 않습니다.',
+		  type: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#2E82CC',
+		  cancelButtonColor: '#FC3A3A',
+		  confirmButtonText: '확인',
+		  cancelButtonText: '취소'
+		}).then((result) => {
+		  if (result.value) {
+	
+			  document.location.href = "/zaksim/challenge/discard";
+			  
+		  }
+		})
+	
+}
+
+function haltAlert(){
+	
+	swal({
+		  title: '도전을 취소 하시겠습니까?',
+		  text: '도전금은 관리자 승인후 3일 이내에 환불 처리 됩니다.',
+		  type: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#2E82CC',
+		  cancelButtonColor: '#FC3A3A',
+		  confirmButtonText: '확인',
+		  cancelButtonText: '취소'
+		}).then((result) => {
+		  if (result.value) {
+	
+			  document.location.href = "/zaksim/challenge/cancel";
+			  
+		  }
+		})
+	
+}
+
+
+
+</script>
+
+
+
+
+<!-- 캘린더 스크립트 -->
 	<script type="text/javascript">
 		
 		(function ($) {
