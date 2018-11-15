@@ -26,34 +26,39 @@ public class CommunityMainController {
 	// 메인 화면 GET
 	@RequestMapping(value="/communityMain", method=RequestMethod.GET)
 	public void commnunityMain(Model model, HttpSession session ) {
-		
+		int idx=0;
 		if(session.getAttribute("login_idx") != null ) {
-			String idx = (String)session.getAttribute("login_idx").toString();
-			
+			idx =(Integer)session.getAttribute("login_idx");
+		}
+		if(idx!=0) {
 			// 가입한 그룹
-			model.addAttribute("joinedGroupLIst", communityListService.joinedGroupList(Integer.parseInt(idx)));
-			// 인기있는 그룹
-			model.addAttribute("popularGroupList", communityListService.popularGroupList());
-			// 새로운 그룹
-			model.addAttribute("newGroupList", communityListService.newGroupList());
-			// 카테고리 그룹
-			model.addAttribute("categoryList", communityListService.categoryList());
-			// 키워드 리스트
-			model.addAttribute("keywordList", communityListService.keywordList());
+			model.addAttribute("joinedGroupLIst", communityListService.joinedGroupList(idx));
+//			// 인기있는 그룹
+//			model.addAttribute("popularGroupList", communityListService.popularGroupList());
+//			// 새로운 그룹
+//			model.addAttribute("newGroupList", communityListService.newGroupList(idx));
+//			// 카테고리 그룹
+//			model.addAttribute("categoryList", communityListService.categoryList());
+//			// 키워드 리스트
+//			model.addAttribute("keywordList", communityListService.keywordList());
+			
+			// 그룹 맴버 리스트
+//			model.addAttribute("groupMemberExist", communityListService.existMember());
+//			System.out.println("그룹 맴버 !!!!!!!!!!!!!!!!!1 : "+ communityListService.existMember());
 			
 		}
-		else {
 			// 인기있는 그룹
 			model.addAttribute("popularGroupList", communityListService.popularGroupList());
 			// 새로운 그룹
+//			model.addAttribute("newGroupList", communityListService.newGroupList(idx));
 			model.addAttribute("newGroupList", communityListService.newGroupList());
 			// 카테고리 그룹
 			model.addAttribute("categoryList", communityListService.categoryList());
 			// 키워드 리스트
 			model.addAttribute("keywordList", communityListService.keywordList());
-
-		}
 		
+			//
+			model.addAttribute("groupMemberExist", communityListService.existMember(idx));
 
 		
 

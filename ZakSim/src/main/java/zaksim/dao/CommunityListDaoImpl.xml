@@ -83,9 +83,10 @@
 	<select id="joinedGroupList" resultMap="GroupLike" parameterType="int">
          select * from
 		(select
-		c.idx g_idx,
+--		c.idx g_idx,
+		c.idx,
 		c.title, c.content, c.image, c.max, c.open_date, c.secret,
-		c.password
+		c.password, c.member_idx
 		from ZaksimMember m, communitygroup c where c.member_idx=#{idx }
 		and
 		m.idx=c.member_idx
@@ -93,7 +94,8 @@
 		left join (select count(*) like_num, group_idx
 		l_group_idx from grouplike
 		GROUP BY group_idx) l on
-		l.l_group_idx=g.g_idx
+--		l.l_group_idx=g.g_idx
+		l.l_group_idx=g.idx
 	</select>
 
 <!-- 	<select id="joinedGroupList" resultMap="GroupLike"> -->
@@ -161,27 +163,27 @@
 	</select>
 
 
-<!-- 	<select id="newGroupList" resultMap="CommunityGroup"> -->
 	<select id="newGroupList" resultMap="GroupLike">
-		SELECT
-  		  g.idx, 
-  		  g.title,
-   		 g.content,
-   		 g.image,
-    	g.max,
-   		 g.open_date,
-   		 g.secret,
-   		 g.password,
-   		 g.member_idx,
-    		like_num,
-   		 l_group_idx
-		FROM CommunityGroup g
-		left join (
-    		select count(*) as like_num, group_idx as l_group_idx from grouplike
-   		 GROUP BY group_idx
-		) l
-		on l.l_group_idx=g.idx
-		order by idx desc
+
+	SELECT
+          g.idx, 
+          g.title,
+          g.content,
+          g.image,
+       g.max,
+          g.open_date,
+          g.secret,
+          g.password,
+          g.member_idx,
+          like_num,
+          l_group_idx
+      FROM CommunityGroup g
+      left join (
+          select count(*) as like_num, group_idx as l_group_idx from grouplike
+          GROUP BY group_idx
+      ) l
+      on l.l_group_idx=g.idx
+      order by idx desc
 	</select>
 
 
@@ -213,6 +215,8 @@
 	<!-- on l.l_group_idx=g.idx -->
 	<!-- order by g.idx desc -->
 	<!-- </select> -->
+	
+
 	
 		<select id="info" resultMap="GroupLike">
 		SELECT
@@ -276,6 +280,16 @@
 	</select>
 
 
+
+	 <select id="secretCommunityJoin" parameterType="zaksim.dto.CommunityGroup" resultType="int">
+	 	 select count(*) from communityGroup where idx = #{idx } and password= #{password } 
+	  </select>
+	  
+
+
+	<select id="existMember" parameterType="int" resultType="zaksim.dto.GroupMember" >
+		select idx, group_idx ,member_idx  from groupMember  where member_idx=#{idx}
+	</select>
 
 
 

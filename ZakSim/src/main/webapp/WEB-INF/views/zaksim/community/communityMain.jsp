@@ -53,6 +53,7 @@
 
 
 
+
 			<c:if test="${!empty joinedGroupLIst}">
 				<button type="button" class="btn btn-outline-primary"
 					style="float: right; margin-top: 30px;" id="joinedGroupViewMore">+
@@ -196,24 +197,35 @@
 									</p>
 								</div>
 								<div class="overlay">
-									<br> <br> <a class="info"> <%-- 									<c:if test="${userIdx ne popularGroupList.communityGroup.member_idx }"> --%>
+									<br> <br> <a class="info">
+										<% boolean groupFlag =  false; %>
+										<c:forEach var="groupMemberExist" items="${groupMemberExist }">
+												<c:if test="${groupMemberExist.group_idx eq popularGroupList.communityGroup.idx }">
+													<% groupFlag = true; %>
+												</c:if>
+										</c:forEach>	
 										
-										<c:if test="${sessionScope.login_idx ne null }">
-										<c:if test="${popularGroupList.communityGroup.secret == 1 }">
+										<c:if test="<%= !groupFlag %>">
+											<c:if test="${sessionScope.login_idx ne null }">
+											<c:if test="${popularGroupList.communityGroup.secret == 1 }">
+											
+												<button type="button"  class="btn btn-primary secretJoin">가입하기</button>
+												<br>
+												<br>
+											</c:if>
+											</c:if>
+	
+											
+											<c:if test="${sessionScope.login_idx ne null }">
+											 <c:if test="${popularGroupList.communityGroup.secret == 0 }">
+												<button type="button" class="btn btn-primary join" id ="noPassJoin">가입하기</button>
+												<br>
+												<br>
+											</c:if>									
+											</c:if>
+															
+										</c:if>
 										
-											<button type="button" class="btn btn-primary secretJoin">가입하기</button>
-											<br>
-											<br>
-										</c:if>
-										</c:if>
-										
-										<c:if test="${sessionScope.login_idx ne null }">
-										 <c:if test="${popularGroupList.communityGroup.secret == 0 }">
-											<button type="button" class="btn btn-primary join" id ="noPassJoin">가입하기</button>
-											<br>
-											<br>
-										</c:if>									
-										</c:if>
 										<button type="button" class="btn btn-danger"
 											onclick="moveURL(${popularGroupList.communityGroup.idx }, ${popularGroupList.communityGroup.secret })">상세보기</button>
 									</a>
@@ -283,13 +295,15 @@
 								<div class="overlay">
 									<br> <br> 
 									<a class="info">
+									
 
+<%-- 										<c:if test="${groupMemberExist.member_idx ne sessionScope.login.idx}"> --%>
 										<c:if test="${sessionScope.login_idx  ne newGroupList.communityGroup.member_idx }">
 										<c:if test="${sessionScope.login_idx ne null }">
 											<c:if test="${newGroupList.communityGroup.secret == 1 }">
 
 												<button type="button" class="btn btn-primary secretJoin" 
-												data-toggle="modal" data-target="#join">가입하기</button>
+												>가입하기</button>
 												<br>
 												<br>
 
@@ -303,6 +317,7 @@
 													<br>
 												</c:if>
 											</c:if>
+
 										</c:if>
 										<button type="button" class="btn btn-danger"
 											onclick="moveURL(${newGroupList.idx }, ${newGroupList.communityGroup.secret })">
@@ -387,6 +402,7 @@
 			<div class="modal-body">
 				<form>
 					<div class="form-group">
+						<input type="hidden" class ="idxxx"> 
 						<label for="recipient-name" class="form-control-label">비밀번호</label>
 						<input type="password" class="form-control"
 							id="commPass" />
@@ -555,7 +571,6 @@
 
 
 
-
 </body>
 
 <link rel="stylesheet" type="text/css" href="/css/community/hover.css">
@@ -563,7 +578,7 @@
 <link rel="stylesheet" type="text/css" href="/css/community/main.css">
 
 
-<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.28.12/sweetalert2.all.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -833,10 +848,73 @@
 
 	$(".joinedComm").click(function() {
 
-		console.log($(".join").parent().parent().parent().parent().children("input").eq(0).val());
+		var idxx = $(".idxxx").val();
+		var commPass = $("#commPass").val();
+		
 
+		
+		$.ajax({
+			type: "post"
+			, url: "/zaksim/community/secretCommunityJoin"
+			, dataType: "json"
+			, data: {
+				idx: idxx,
+				password: commPass
+			}
+			, success: function(data) {
+				
+				if(commPass == null || commPass==''){
+					swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '비밀번호를 입력하세요.'
+					});
+					
+					return false;
+				}
+				
+				if(data.result =='1'){
+					swal({
+						type: 'success',
+						title: 'success !',
+						text: data.success
+					}).then((result) => {
+						  if (result.value) {
+								console.log("안쪽!!!");
+								location.href = "/zaksim/community/enrollCommunity?idx="+idxx;
+							  }
+							})
+				}
+				else{
+					swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '비밀번호가 틀립니다.'
+					});
+				return false;
+				}
+				
+			}
+			, error: function(e) {
+				console.log("fail");
+				console.log(e.responseText);
+			}
+		});
+	
+		
 	});
 	
+
+	// 비밀커뮤니티 가입하기 눌렀을 때 인덱스 넘기기
+	$(".secretJoin").click(function() {
+		var idxx = $(this).parent().parent().parent().parent().children("input").eq(0).val();
+		$("#join").modal('show');
+		// value 추가
+		$(".idxxx").attr({
+				value : idxx
+		});
+		
+	});
 	
 	$(".join").click(function() {
 		
@@ -851,14 +929,20 @@
 			}
 			, success: function(data) {
 				
+				console.log(idxx);
 				console.log(data.success);
 				swal({
-					type: 'error',
-					title: 'Oops...',
+					type: 'success',
+					title: 'success !',
 					text: data.success
-				});
+				}).then((result) => {
+					  if (result.value) {
+							console.log("안쪽!!!");
+							location.href = "/zaksim/community/enrollCommunity?idx="+idxx;
+						  }
+						})
 				
-				location.href = "/zaksim/community/enrollCommunity?idx="+idxx;
+				
 				
 				
 			}

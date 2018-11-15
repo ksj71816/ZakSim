@@ -10,6 +10,7 @@ import zaksim.dto.CommunityCategory;
 import zaksim.dto.CommunityGroup;
 import zaksim.dto.GroupKeyword;
 import zaksim.dto.GroupLike;
+import zaksim.dto.GroupMember;
 
 @Service
 public class CommunityListServiceImpl  implements CommunityListService{
@@ -32,8 +33,8 @@ public class CommunityListServiceImpl  implements CommunityListService{
 	
 	// 새로운 그룹 리스트
 	@Override
-//	public List<CommunityGroup> newGroupList() {
-	public List<GroupLike> newGroupList() {
+	public List<CommunityGroup> newGroupList() {
+//	public List<GroupLike> newGroupList(String idx) {
 		// TODO Auto-generated method stub
 		return communityListDAO.newGroupList();
 	}
@@ -79,6 +80,27 @@ public class CommunityListServiceImpl  implements CommunityListService{
 	public GroupLike groupLike(int idx) {
 		// TODO Auto-generated method stub
 		return communityListDAO.groupLike(idx);
+	}
+
+	
+	// 커뮤니티 비밀번호 일치여부
+	@Override
+	public boolean secretCommunityJoin(CommunityGroup communityGroup) {
+		// TODO Auto-generated method stub
+		if( communityListDAO.secretCommunityJoin(communityGroup)>0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+
+	}
+
+	// 그룹 맴버 존재하는지
+	@Override
+	public List<GroupMember> existMember( int idx) {
+
+		return communityListDAO.existMember(idx);
 	}
 
 
