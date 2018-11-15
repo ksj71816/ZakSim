@@ -8,7 +8,7 @@
 <%@include file="/WEB-INF/views/zaksim/main/header.jsp"%>
 
 
-
+join : ${joinedGroupList}
 
 <div class="container" id="zz">
 
@@ -75,7 +75,7 @@
 
 
 					<!-- 참여하고 있는 모임이 없을 시 -->
-					<c:if test="${empty  joinedGroupLIst}">
+					<c:if test="${empty joinedGroupList}">
 						<c:if test="${sessionScope.login_idx eq null}">
 						
 						<div
@@ -104,31 +104,31 @@
 
 
 					<!-- 참여하고 있는 모임이 있을 시 -->
-					<c:if test="${joinedGroupLIst ne null }">
-						<c:forEach var="joinedGroupLIst" items="${joinedGroupLIst }"	
+					<c:if test="${joinedGroupList ne null }">
+						<c:forEach var="joinedGroupList" items="${joinedGroupList }"	
 							begin="0" end="2" step="1">
 							
 							<div class="card" style="width: 20rem; margin-right: 15px;">
 								<div class="hovereffect">
 									<img class="card-img-top"
-										src="${joinedGroupLIst.communityGroup.image }"
+										src="${joinedGroupList.communityGroup.image }"
 										alt="Card image cap">
 									<div class="card-body">
 										<span>
-											<h3 class="card-title">${joinedGroupLIst.communityGroup.title }
-												<c:if test="${joinedGroupLIst.communityGroup.secret==1 }">
+											<h3 class="card-title">${joinedGroupList.communityGroup.title }
+												<c:if test="${joinedGroupList.communityGroup.secret==1 }">
 													<img alt="" src="/resouces/image/community/자물쇠.png">
 												</c:if>
 											</h3>
 										</span> <span class="form-inline"> <span style="color: red;">
-												<h4>♥ &nbsp;${joinedGroupLIst.likeNum }</h4>
+												<h4>♥ &nbsp;${joinedGroupList.likeNum }</h4>
 										</span>
 										</span>
 										<p class="card-text">
 											키워드 :
 											<c:forEach items="${keywordList }" var="keyword">
 												<c:if
-													test="${joinedGroupLIst.communityGroup.idx eq keyword.group_idx}">
+													test="${joinedGroupList.communityGroup.idx eq keyword.group_idx}">
 													#${keyword.keyword } 
 											</c:if>
 											</c:forEach>
@@ -138,7 +138,7 @@
 									<div class="overlay">
 										<br> <br> <br> <a class="info" href="#">
 											<button type="button" class="btn btn-danger"
-												onclick="moveURL(${joinedGroupLIst.communityGroup.idx }, ${joinedGroupLIst.communityGroup.secret })">상세보기</button>
+												onclick="moveURL(${joinedGroupList.communityGroup.idx }, ${joinedGroupList.communityGroup.secret })">상세보기</button>
 										</a>
 
 									</div>
@@ -168,6 +168,7 @@
 					<c:forEach var="popularGroupList" items="${popularGroupList }"
 						begin="0" end="2" step="1">
 						<div class="card" style="width: 20rem; margin-right: 15px;">
+						<input type="hidden" class="idxx" value="${popularGroupList.communityGroup.idx }">
 						<input type="hidden" class= "memberIdxx" value="${popularGroupList.communityGroup.member_idx }">
 							<div class="hovereffect">
 								<img class="card-img-top"
@@ -204,7 +205,6 @@
 													<% groupFlag = true; %>
 												</c:if>
 										</c:forEach>	
-										
 										<c:if test="<%= !groupFlag %>">
 											<c:if test="${sessionScope.login_idx ne null }">
 											<c:if test="${popularGroupList.communityGroup.secret == 1 }">
@@ -263,7 +263,7 @@
 
 						
 						<div class="card" style="width: 20rem; margin-right: 15px;">
-						<input type="hidden" class="idxx" value="${newGroupList	.idx }">
+						<input type="hidden" class="idxx" value="${newGroupList.idx }">
 						<input type="hidden" class="memberIdxx" value="${newGroupList.member_idx }">
 							<div class="hovereffect">
 								<img class="card-img-top"

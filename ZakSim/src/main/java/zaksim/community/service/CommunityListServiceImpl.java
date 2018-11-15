@@ -19,7 +19,7 @@ public class CommunityListServiceImpl  implements CommunityListService{
 
 	// 가입한 그룹 리스트
 	@Override
-	public List<CommunityGroup> joinedGroupList(int idx) {
+	public List<GroupLike> joinedGroupList(int idx) {
 		// TODO Auto-generated method stub
 		return communityListDAO.joinedGroupList(idx);
 	}

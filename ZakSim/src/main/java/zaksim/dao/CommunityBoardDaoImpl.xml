@@ -45,7 +45,7 @@
   </resultMap>
   
   <select id="informationBoard" resultMap="Board" parameterType="int">
-	SELECT b.*, c.commentNum, l.likeNum
+	SELECT b.*, z.nick m_nick, c.commentNum, l.likeNum
 	FROM (
 	    SELECT * 
 	    FROM Board

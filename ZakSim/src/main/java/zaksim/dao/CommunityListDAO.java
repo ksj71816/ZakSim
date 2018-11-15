@@ -12,7 +12,7 @@ import zaksim.dto.ZakSimMember;
 public interface CommunityListDAO {
 
 	// 그룹 리스트
-	public List<CommunityGroup> joinedGroupList(int idx);
+	public List<GroupLike> joinedGroupList(int idx);
 	
 	// 인기그룹 리스트
 	public List<CommunityGroup> popularGroupList();

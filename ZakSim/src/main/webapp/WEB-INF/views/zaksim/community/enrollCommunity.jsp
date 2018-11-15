@@ -11,7 +11,7 @@
 
 
 
-boardList : ${boardList}
+boardList : ${boardList[0]}
 <div class="container" id="zz">
 
    <div class="row">
@@ -179,22 +179,21 @@ boardList : ${boardList}
 
 
 <!-- 게시글 -->
-<%-- 			<c:forEach items="boardList" var="board"> --%>
-               <div class="card" style="margin-left: 150px; margin-right: 150px;">
-                  <div style="margin-left: 15px; margin-top: 10px;">
-                     <h4 class="card-title">${board.zakSimMember.nick}
-<!--                         <img src="/resources/image/community/sample.png" -->
-<!--                            style="width: 70px; height: 70px; margin-right: 20px;"> -->
-                     </h4>
-                     <p class="card-text">${boardList[0].content}</p>
-                     <p class="card-text">
-                        <small class="text-muted"><fmt:formatDate pattern = "yyyy-MM-dd" value = "${boardList[0].writtenDate}" /></small>
+			<c:forEach items="${boardList}" var="board">
+               <div class="card mb-5" style="margin-left: 150px; margin-right: 150px;">
+                  <div class="ml-4 mr-4">
+                     <h4 class="card-title mt-4" style="font-family: Dohyeon;">${board.zakSimMember.nick}</h4>
+                     <hr>
+                     <p class="card-text mt-4">${board.content}</p>
+                     <p class="card-text mb-3">
+                        <small class="text-muted"><fmt:formatDate pattern = "yyyy-MM-dd" value = "${board.written_date}" /></small>
                      </p>
                   </div>
+                  
                   <!-- 인증 사진 -->
-                  <img class="card-img-bottom"
-                     src="${board.image}" alt="인증">
-                  <div class="row">
+                  <img class="card-img-bottom" src="${board.image}" alt="인증">
+                  
+ 					<div class="row">
                      <div class="col"
                         style="background-color: lightgray; margin-left: 15px; text-align: center;">
 
@@ -206,10 +205,10 @@ boardList : ${boardList}
                         <strong style="cursor: pointer;"> ♡ 좋아요 ${board.likeNum}개</strong>
                      </div>
                   </div>
-                  <div class="row"
+                  <div class="row justify-content-center"
                      style="cursor: pointer; background-color: lightgray; margin-left: 1px; margin-right: 1px; border-color: white;
                      border-top: 1px solid; border-bottom: 1px solid; border-color: white;" >
-                     <strong style="margin-left: 310px;" id="commentWrite">댓글 쓰기</strong>
+                     <strong id="commentWrite">댓글 쓰기</strong>
                   </div>
 
                   <!-- 댓글 쓰기 -->
@@ -242,16 +241,13 @@ boardList : ${boardList}
                      <br>
                   </div>
 
-                  <div class="row"
-                     style="cursor: pointer; background-color: lightgray; margin-left: 1px; margin-right: 1px;">
-                     <strong style="margin-left: 300px;" id="commentOpen">댓글
-                        더 보기</strong>
+                  <div class="row justify-content-center" style="cursor: pointer; background-color: lightgray; margin-left: 1px; margin-right: 1px;">
+                     <strong id="commentOpen">댓글 더 보기</strong>
                   </div>
                </div>
 
 
-
-               <!-- 댓글 -->
+				<!-- 댓글 -->
                <div id="openComment"
                   style="background-color: lightgray; margin-left: 150px; margin-right: 150px; display: none;">
                   <div class="card-body mx-3 ">
@@ -316,29 +312,10 @@ boardList : ${boardList}
                      <br> <br> <br>
 
 
-
-                     <!--                <div style="margin-left: 150px; margin-right: 150px;"> -->
-                     <!--                   <div id="comment"> -->
-                     <!--                      <br> <img src="/resources/image/community/sample.png" -->
-                     <!--                         id="commentPhoto" style="margin-left: 20px;"> <span><strong -->
-                     <!--                         style="margin-left: 30px; font-size: 25px;">닉네임1</strong></span> <br> -->
-                     <!--                      <div style="margin-left: 100px; margin-right: 100px;"> -->
-
-                     <!--                         할지니 인생에 가치를 주는 원질이 되는 것이다 그들은 앞이 긴지라 착목한는 곳이 원대하고 그들은 피가 더운지라 -->
-                     <!--                         뿐이다 그들에게 생명을 불어 넣는 것은 따뜻한 봄바람이다 풀밭에 속잎나고 가지에 싹이 트고 꽃 피고 새 우는 봄날의 -->
-                     <!--                         천지는 얼마나 기쁘며 얼마나 아름다우냐? 이것을 얼음 속에서 불러 내는 것이 따뜻한 봄바람이다 인생에 따뜻한 -->
-                     <!--                         봄바람을 불어 보내는 것은 청춘의 끓는 피다 청춘의 피 <br> <br> <a href="">더 -->
-                     <!--                            보기?</a> -->
-
-                     <!--                      </div> -->
-                     <!--                   </div> -->
-                     <!--                </div> -->
-
-
                   </div>
                </div>
                
-<%--                </c:forEach> --%>
+               </c:forEach>
 
       <div class="col" style="margin-bottom: 300px;"></div>
    </div>
@@ -347,7 +324,7 @@ boardList : ${boardList}
 
 <!-- 위로가기 버튼 -->
 <div class="top-button">
-   <a href=""><img id="upImg" src="/resources/image/community/위로.png"></a>
+   <a href=""><img id="upImg" src="/resources/image/community/위로.png" style="width: 50px; height: 50px;"></a>
 </div>
 
 <!-- footer include -->
