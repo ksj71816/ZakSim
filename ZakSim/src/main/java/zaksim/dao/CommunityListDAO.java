@@ -17,7 +17,7 @@ public interface CommunityListDAO {
 	public List<GroupLike> popularGroupList();
 
 	// 새로 시작한 그룹 리스트
-	public List<GroupLike> newGroupList();
+	public List<CommunityGroup> newGroupList();
 //	public List<GroupLike> newGroupList(String idx);
 	
 	// 카테고리 리스트

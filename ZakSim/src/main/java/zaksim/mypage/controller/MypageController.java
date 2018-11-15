@@ -49,6 +49,7 @@ public class MypageController {
 	    	List<GroupKeyword> keywordList = communityListService.keywordList();
 	    	List<Challenge> endChalList = mypageService.viewEndChalList(idx);
 	    	
+	    	
 	        model.addAttribute("ingChal", ingChal);
 	        model.addAttribute("rate", rate);
 	        model.addAttribute("chal", chal);

@@ -36,6 +36,7 @@ public class CommunityMainController {
 			
 		}	// 로그인 안했을 때
 		
+		
 			// 인기있는 그룹
 			model.addAttribute("popularGroupList", communityListService.popularGroupList());
 			// 새로운 그룹

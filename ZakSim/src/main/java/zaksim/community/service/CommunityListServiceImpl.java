@@ -31,7 +31,7 @@ public class CommunityListServiceImpl  implements CommunityListService{
 	
 	// 새로운 그룹 리스트
 	@Override
-	public List<GroupLike> newGroupList() {
+	public List<CommunityGroup> newGroupList() {
 		return communityListDAO.newGroupList();
 	}
 	
