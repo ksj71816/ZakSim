@@ -52,7 +52,6 @@ public class CommunityJoinController {
 
 			// 게시글 정보
 			model.addAttribute("boardList", communityBoardService.informationBoard(Integer.parseInt(idx)));
-//			System.out.println("게시판 정보 : "+communityBoardService.informationBoard(Integer.parseInt(idx)));
 		
 			// 그룹 좋아요
 			model.addAttribute("groupLike", communityListService.groupLike(Integer.parseInt(idx)));
