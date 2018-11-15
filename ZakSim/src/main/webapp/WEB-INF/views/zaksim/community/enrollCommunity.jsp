@@ -6,23 +6,13 @@
 
 <!-- header include -->
 <%@include file="/WEB-INF/views/zaksim/main/header.jsp"%>
+<link rel="stylesheet" type="text/css" href="/css/community/button.css">
+<link rel="stylesheet" type="text/css" href="/css/community/enrollCommunity.css">
 
+
+
+boardList : ${boardList}
 <div class="container" id="zz">
-
-
-
-   <div class="row" style="margin-bottom: 30px;">
-      <div class="col"></div>
-      <div class="col-9"></div>
-      <div class="col"></div>
-   </div>
-   <div class="row">
-      <div class="col"></div>
-      <div class="col-9"></div>
-
-
-      <div class="col"></div>
-   </div>
 
    <div class="row">
       <div class="col"></div>
@@ -70,8 +60,7 @@
                   <img src="${groupInfo.communityGroup.image }" id="photo">
                </div>
 
-               <div
-                  style="margin-top: 40px; margin-left: 190px; margin-right: 190px;">
+               <div style="margin-top: 40px; margin-left: 190px; margin-right: 190px;">
                   <div style="margin-bottom: 20px;">
                      <strong
                         style="font-size: 150%; margin-left: 30px; margin-right: 30px; cursor: pointer;"
@@ -83,6 +72,7 @@
                         style="font-size: 150%; margin-left: 30px; margin-right: 30px; cursor: pointer;"
                         id="communityAchievement">모임 달성도 </strong>
                   </div>
+                  
                   <div
                      style="margin-left: 50px; margin-right: 50px; margin-bottom: 50px; display: none;"
                      id="communityIntroduceComment">${groupInfo.communityGroup.content }</div>
@@ -123,12 +113,19 @@
                            aria-valuenow="" aria-valuemin="0" aria-valuemax="100">25%</div>
                      </div>
                   </div>
-
-
-
+                 </div>
+                 </div>
                </div>
-               <hr
-                  style="margin-top: 10px; margin-bottom: 30px; border-color: black;">
+			</c:forEach>
+		</div>
+
+
+
+
+
+               <hr style="margin-top: 10px; margin-bottom: 30px; border-color: black;">
+                  
+                  
                <div style="margin-bottom: 100px;">
                   <button type="button" class="btn btn-outline-secondary"
                      data-toggle="collapse" href="#collapseExample"
@@ -180,40 +177,39 @@
                   </div>
                </div>
 
+
+<!-- 게시글 -->
+<%-- 			<c:forEach items="boardList" var="board"> --%>
                <div class="card" style="margin-left: 150px; margin-right: 150px;">
                   <div style="margin-left: 15px; margin-top: 10px;">
-                     <h4 class="card-title">
-                        <img src="/resources/image/community/sample.png"
-                           style="width: 70px; height: 70px; margin-right: 20px;">
-                        닉네임1
+                     <h4 class="card-title">${board.zakSimMember.nick}
+<!--                         <img src="/resources/image/community/sample.png" -->
+<!--                            style="width: 70px; height: 70px; margin-right: 20px;"> -->
                      </h4>
-                     <p class="card-text">This is a wider card with supporting
-                        text below as a natural lead-in to additional content. This
-                        content is a little bit longer.</p>
+                     <p class="card-text">${boardList[0].content}</p>
                      <p class="card-text">
-                        <small class="text-muted">Last updated 3 mins ago</small>
+                        <small class="text-muted"><fmt:formatDate pattern = "yyyy-MM-dd" value = "${boardList[0].writtenDate}" /></small>
                      </p>
                   </div>
                   <!-- 인증 사진 -->
                   <img class="card-img-bottom"
-                     src="https://picsum.photos/1200/350/?image=136" alt="인증">
+                     src="${board.image}" alt="인증">
                   <div class="row">
                      <div class="col"
                         style="background-color: lightgray; margin-left: 15px; text-align: center;">
 
-                        <strong id="comment" style="cursor: pointer;">댓글 n개</strong>
+                        <strong id="comment" style="cursor: pointer;">댓글 ${board.commentNum}개</strong>
 
                      </div>
                      <div class="col"
                         style="background-color: lightgray; margin-right: 15px; text-align: center; ">
-                        <strong style="cursor: pointer;"> ♡ 좋아요 30개</strong>
+                        <strong style="cursor: pointer;"> ♡ 좋아요 ${board.likeNum}개</strong>
                      </div>
                   </div>
                   <div class="row"
                      style="cursor: pointer; background-color: lightgray; margin-left: 1px; margin-right: 1px; border-color: white;
                      border-top: 1px solid; border-bottom: 1px solid; border-color: white;" >
-                     <strong style="margin-left: 310px;" id="commentWrite">댓글
-                        쓰기</strong>
+                     <strong style="margin-left: 310px;" id="commentWrite">댓글 쓰기</strong>
                   </div>
 
                   <!-- 댓글 쓰기 -->
@@ -223,7 +219,7 @@
                         <div>
                            <img src="/resources/image/community/sample.png"
                               class="mx-3 my-3" id="commentPhoto"> <span
-                              style="font-size: 20px;"><strong>닉네임a</strong></span>
+                              style="font-size: 20px;"><strong>${sessionScope.login_nick}</strong></span>
 
                         </div>
                         <div class="mx-5">
@@ -341,12 +337,12 @@
 
                   </div>
                </div>
-      </c:forEach>
+               
+<%--                </c:forEach> --%>
 
       <div class="col" style="margin-bottom: 300px;"></div>
    </div>
 
-</div>
 
 
 <!-- 위로가기 버튼 -->
@@ -491,9 +487,13 @@
                      <div class="row">
                         <div class="col-sm-2"></div>
                         <div class="">
+                        
+                        
+                        
                            <div class="form-inline">
+                           
+                           
                               <div>
-
                                  <input type="hidden" name="idx"
                                     value="${groupInfo.communityGroup.idx }" /> <img id="image"
                                     src="${groupInfo.communityGroup.image }" alt="..."
@@ -507,12 +507,12 @@
                                        value="${groupInfo.communityGroup.image }"
                                        style="align-content: center; margin-left: 40px; position: absolute; font-size: 0px; opacity: 0; right: 0; top: 0; cursor: pointer; height: 36px; width: 100px;">
                                  </div>
+                                 
                                  <input type="hidden" name="image"
                                     value="${groupInfo.communityGroup.image }" />
-
-
-
                               </div>
+                              
+                              
                               <div style="padding-bottom: 0px; margin-left: 50px;">
                                  <span style="font-size: 20px;"><strong>모임명 :
                                  </strong></span> <input class="form-control" type="text"
@@ -528,8 +528,10 @@
                                     최대 100명까지 가능</span>
 
                               </div>
-
+                              
                            </div>
+                           
+                           
 
                            <div style="margin-top: 30px;">
                               <span style="margin-left: 50px; margin-right: 102px;"><strong>공개</strong></span>
@@ -622,16 +624,13 @@
                                     style="width: 300px; margin-bottom: 20px;"
                                     onkeyup="boardCommnet(this)" placeholder="내용을 입력하세요">${groupInfo.communityGroup.content}</textarea>
 
-
                               </div>
-
-
                            </div>
                            <div class="col-sm-1"></div>
-                        </div>
-
+                        
                      </div>
                   </div>
+				</div><!-- modal body -->
 
                   <div class="modal-footer">
                      <input type="submit" class="btn btn-danger" id="update"
@@ -641,6 +640,7 @@
                      <button type="button" class="btn btn-success"
                         onclick="deleteCommnunity(${groupInfo.communityGroup.idx})">삭제</button>
                   </div>
+                  
             </c:forEach>
          </form>
       </div>
@@ -657,12 +657,8 @@
 </body>
 
 
-<link rel="stylesheet" type="text/css" href="/css/community/button.css">
-<link rel="stylesheet" type="text/css"
-   href="/css/community/enrollCommunity.css">
-
-<script type="text/javascript"
-   src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- <script type="text/javascript" -->
+<!--    src="http://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 <script
    src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.28.12/sweetalert2.all.js"></script>
 

@@ -26,12 +26,14 @@
 		<result column="group_idx" property="group_idx" />
 		<result column="writer_idx" property="writer_idx" />
 		<result column="title" property="title" />
-		<result column="bontent" property="content" />
+		<result column="content" property="content" />
 		<result column="image" property="image" />
 		<result column="open" property="open" />
 		<result column="certification" property="certification" />
 		<result column="written_date" property="written_date" />
 		<result column="hit" property="hit" />
+		<result column="COMMENTNUM" property="commentNum" />
+		<result column="likenum" property="likeNum" />
 		<collection property="communityGroup" resultMap="CommunityGroup" />
 		<collection property="zakSimMember" resultMap="ZakSimMember" />
 	</resultMap>
