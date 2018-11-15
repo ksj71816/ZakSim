@@ -187,7 +187,7 @@
 		    ) gl
 	    ) rgl
 	    WHERE rgl.rnum <![CDATA[ < ]]>=3
->>>>>>> branch '20181024' of https://github.com/ksj71816/ZakSim.git
+
 	</select>
 
 
@@ -295,6 +295,29 @@
 		select idx, group_idx ,member_idx  from groupMember  where member_idx=#{idx}
 	</select>
 
+	<select id="popularCount" resultType="int">
+		SELECT COUNT(*) FROM communityGroup
+	</select>
 
-
+	<select id="popularPage" parameterType="zaksim.util.Paging" resultMap="GroupLike">
+		SELECT * from (
+	    SELECT rownum rnum, gl.*
+			FROM (
+				SELECT
+				*
+				FROM
+				(SELECT g.idx
+				g_idx, g.title ,g.content , g.image ,g.max , g.open_date , g.secret
+				,
+				g.password,g.member_idx
+				FROM CommunityGroup g order by g_idx asc) gk
+				left join (select count(*) as
+				like_num, group_idx as l_group_idx from
+				grouplike
+				GROUP BY group_idx
+				order by like_num desc nulls last) l on l.l_group_idx=gk.g_idx
+			) gl
+	    ) rgl
+	    where rgl.rnum between #{startNo} and #{endNo}
+	</select>
 </mapper>
