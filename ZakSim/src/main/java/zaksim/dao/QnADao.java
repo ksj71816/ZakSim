@@ -1,8 +1,10 @@
 package zaksim.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import zaksim.dto.QnA;
+import zaksim.util.Paging;
 
 /*
  * 작성일 : 2018.10.18
@@ -17,12 +19,33 @@ public interface QnADao {
 	 * Q&A 리스트 조회 dao
 	 * @return List<QnA>
 	 */
-	public List<QnA> qnaList();
+	public List<QnA> qnaList(Paging paging);
 	/**
 	 * Q&A 리스트 조회 - 페이징 dao
 	 * @return int
 	 */
 	public int countAll();
+	/**
+	 * Q&A 리스트 조회 - 답변 dao
+	 * @return List<QnA>
+	 */
+	public List<QnA> qnaListDepth();
+	
+	/**
+	 * Q&A 리스트 조회 dao - 내 문의보기
+	 * @return List<QnA>
+	 */
+	public List<QnA> qnaMyList(Map<String, Object> map);
+	/**
+	 * Q&A 리스트 조회 - 페이징 dao - 내 문의보기
+	 * @return int
+	 */
+	public int countMyAll(int memberIdx);
+	/**
+	 * Q&A 리스트 조회 - 답변 dao - 내 문의보기
+	 * @return List<QnA>
+	 */
+	public List<QnA> qnaMyListDepth(int memberIdx);
 	
 	/**
 	 * Q&A 상세보기 dao
@@ -30,12 +53,22 @@ public interface QnADao {
 	 * @return QnA
 	 */
 	public QnA qnaView(int qnaIdx);
+	/**
+	 * Q&A 상세보기 - 조회수 증가 dao
+	 * @param int qnaidx
+	 */
+	public void qnaViewRead(int qnaIdx);
 	
 	/**
 	 * Q&A 작성 dao
 	 * @param QnA qnaDto
 	 */
 	public void qnaWrite(QnA qnaDto);
+	/**
+	 * Q&A 작성 - 답변 완료 dao
+	 * @param int upperIdx
+	 */
+	public void qnaStatus(int upperIdx);
 	
 	/**
 	 * Q&A 수정 dao

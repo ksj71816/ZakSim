@@ -53,4 +53,7 @@ public interface CommunityEditDAO {
 	// 그룹 좋아요 취소
 	public void disLikeGroup(GroupLike groupLike);
 	
+	// 커뮤니티 가입
+	public void joinedMember(GroupMember groupMember);
+	
 }

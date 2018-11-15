@@ -272,7 +272,6 @@ public class CommnuityEditController {
 	@ResponseBody
 	public Map<String, GroupLike> noRecommend(HttpServletRequest request, HttpServletResponse response, HttpSession session){
 	
-		System.out.println("sssss");
 		
 		response.setContentType("application/json; charset=utf-8");
 		
@@ -281,9 +280,7 @@ public class CommnuityEditController {
 		String temp1 = request.getParameter("idx");
 		String temp2 = (String)session.getAttribute("login_idx").toString();
 		
-		System.out.println("인덱스 : "+ temp1);
-		
-		System.out.println("로그인 : "+ temp2);
+	
 		
 		
 		int idx = Integer.parseInt(temp1);
@@ -315,15 +312,34 @@ public class CommnuityEditController {
 	
 	// 커뮤니티 가입하기
 	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public ModelAndView joinCommunity() {
+	@ResponseBody
+	public Map<String, String>  joinCommunity(HttpServletRequest  request, HttpServletResponse response, HttpSession session) {
 		
-		ModelAndView modelAndView = new ModelAndView();
+		response.setContentType("application/json; charset=utf-8");
 		
-
+		Map<String, String> map = new HashMap<>();
+		
+		String temp1 = request.getParameter("idx");
+		String temp2 = (String)session.getAttribute("login_idx").toString();
+		
+	
 		
 		
-		modelAndView.setViewName("jsonView");
+		int idx = Integer.parseInt(temp1);
+		int login_idx =Integer.parseInt(temp2);
 		
-		return modelAndView;
+		GroupMember groupMember = new GroupMember();
+		
+		groupMember.setGroup_idx(idx);
+		groupMember.setMember_idx(login_idx);
+		
+		communityEditService.joinedMember(groupMember);
+		
+		
+		map.put("success", "가입에 성공하였습니다.");
+		
+		
+		
+		return map;
 	}
 }

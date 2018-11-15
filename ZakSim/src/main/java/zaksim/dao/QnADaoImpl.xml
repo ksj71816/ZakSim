@@ -4,5 +4,168 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="zaksim.dao.QnADao">
+ <resultMap type="zaksim.dto.QnA" id="QnA">
+ 	<result property="writerIdx" column="writer_idx" />
+ 	<result property="writtenDate" column="written_date" />
+ 	<result property="upperIdx" column="upper_idx" />
+ </resultMap>
+ 
+<!--  Q&A 리스트 조회 dao -->
+ <select id="qnaList" parameterType="zaksim.util.Paging" resultMap="QnA">
+SELECT *
+FROM (
+ 	SELECT rownum rnum, Q.*
+ 	FROM (
+ 		SELECT Q.idx,
+            Q.writer_idx,
+            Q.title,
+            Q.content,
+            Q.hit,
+            Q.status,
+            Q.secret,
+            TO_CHAR(written_date, 'yyyy-mm-dd hh24:mi:ss') AS written_date,
+            Q.upper_idx,
+            Q.depth,
+            Z.nick,
+            Z.member_type
+        FROM QnA Q, ZakSimMember Z
+        WHERE Q.writer_idx = Z.idx
+        AND upper_idx is null
+ 		ORDER BY Q.idx desc
+ 	) Q
+) R
+WHERE R.rnum BETWEEN #{startNo} AND #{endNo}
+ORDER BY rnum
+ </select>
+ 
+<!--  Q&A 리스트 조회 - 페이징 dao -->
+ <select id="countAll" resultType="int">
+ 	SELECT COUNT(*) FROM QnA
+ 	WHERE upper_idx is null
+ </select>
+ 
+<!--  Q&A 리스트 조회 - 답변 dao -->
+ <select id="qnaListDepth" resultMap="QnA">
+ 	SELECT Q.idx,
+ 	       Q.writer_idx,
+           Q.title,
+           Q.content,
+           Q.hit,
+           Q.status,
+           Q.secret,
+           TO_CHAR(written_date, 'yyyy-mm-dd hh24:mi:ss') AS written_date,
+           Q.upper_idx,
+           Q.depth,
+           Z.nick,
+           Z.member_type
+    FROM QnA Q, ZakSimMember Z
+    WHERE Q.writer_idx = Z.idx
+    AND upper_idx is not null
+ 	ORDER BY Q.upper_idx desc
+ </select>
 
+<!--  Q&A 리스트 조회 dao - 내 문의보기 -->
+ <select id="qnaMyList" parameterType="map" resultMap="QnA">
+SELECT *
+FROM (
+ 	SELECT rownum rnum, Q.*
+ 	FROM (
+ 		SELECT Q.idx,
+            Q.writer_idx,
+            Q.title,
+            Q.content,
+            Q.hit,
+            Q.status,
+            Q.secret,
+            TO_CHAR(written_date, 'yyyy-mm-dd hh24:mi:ss') AS written_date,
+            Q.upper_idx,
+            Q.depth,
+            Z.nick,
+            Z.member_type
+        FROM QnA Q, ZakSimMember Z
+        WHERE Q.writer_idx = Z.idx
+        AND upper_idx is null
+        AND writer_idx = #{memberIdx}
+ 		ORDER BY Q.idx desc
+ 	) Q
+) R
+WHERE R.rnum BETWEEN #{startNo} AND #{endNo}
+ORDER BY rnum
+ </select>
+ 
+<!--  Q&A 리스트 조회 - 페이징 dao - 내 문의보기 -->
+ <select id="countMyAll" parameterType="int" resultType="int">
+ 	SELECT COUNT(*) FROM QnA
+ 	WHERE upper_idx is null
+ 	AND writer_idx = #{memberIdx}
+ </select>
+ 
+<!--  Q&A 리스트 조회 - 답변 dao - 내 문의보기 -->
+ <select id="qnaMyListDepth" resultMap="QnA">
+ 	SELECT Q.idx,
+ 	       Q.writer_idx,
+           Q.title,
+           Q.content,
+           Q.hit,
+           Q.status,
+           Q.secret,
+           TO_CHAR(written_date, 'yyyy-mm-dd hh24:mi:ss') AS written_date,
+           Q.upper_idx,
+           Q.depth,
+           Z.nick,
+           Z.member_type
+    FROM QnA Q, ZakSimMember Z
+    WHERE Q.writer_idx = Z.idx
+    AND upper_idx = #{memberIdx}
+ 	ORDER BY Q.upper_idx desc
+ </select>
+ 
+<!--  Q&A 상세보기 dao -->
+ <select id="qnaView" parameterType="int" resultMap="QnA">
+ 	SELECT * FROM QnA
+ 	WHERE idx = #{qnaIdx}
+ </select>
+
+<!--  Q&A 상세보기 - 조회수 증가 dao -->
+ <update id="qnaViewRead" parameterType="int">
+ 	UPDATE QnA
+ 	SET hit = hit+1
+ 	WHERE idx = #{qnaIdx}
+ </update>
+
+<!--  Q&A 작성 dao -->
+ <insert id="qnaWrite" parameterType="zaksim.dto.QnA">
+ 	INSERT INTO QnA(idx, writer_idx, title, content, hit, status, secret, upper_idx, depth) 
+ 	VALUES(QnA_SEQ.nextval, #{writerIdx}, #{title}, #{content}, 0, #{status}, #{secret},
+ 		<if test="upperIdx == 0">
+ 		null,
+ 		0
+ 		</if>
+ 		<if test="upperIdx != 0">
+ 		#{upperIdx},
+ 		1
+ 		</if>
+ 		)
+ </insert>
+ 
+<!--  Q&A 작성 - 답변 완료 dao -->
+ <update id="qnaStatus" parameterType="int">
+ 	UPDATE QnA
+ 	SET status = '답변 완료'
+ 	WHERE idx = #{upperIdx}
+ </update>
+
+<!--  Q&A 수정 dao -->
+ <update id="qnaUpdate" parameterType="zaksim.dto.QnA">
+ 	UPDATE QnA
+ 	SET title = #{title},
+ 		content = #{content}
+ 	WHERE idx = #{idx}
+ </update>
+
+<!--  Q&A 삭제 dao -->
+ <delete id="qnaDelete" parameterType="int">
+ 	DELETE FROM QnA
+ 	WHERE idx = #{idx}
+ </delete>
  </mapper>

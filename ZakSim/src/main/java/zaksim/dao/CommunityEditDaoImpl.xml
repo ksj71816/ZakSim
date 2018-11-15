@@ -73,5 +73,12 @@
 		delete from groupLike where group_idx = #{group_idx } and member_idx =#{member_idx }
 	</delete>
 	
+<!-- 	public void joinedMember(GroupMember groupMember) -->
+	<insert id="joinedMember" parameterType="zaksim.dto.GroupMember">
+		insert into GroupMember (idx, group_idx, member_idx)
+		VALUES (GroupMember_SEQ.nextval, #{group_idx}, #{member_idx})
+	</insert>
+	
+	
 </mapper>
   
