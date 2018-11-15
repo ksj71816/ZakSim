@@ -7,7 +7,6 @@ import zaksim.dto.CommunityGroup;
 import zaksim.dto.GroupKeyword;
 import zaksim.dto.GroupLike;
 import zaksim.dto.GroupMember;
-import zaksim.dto.ZakSimMember;
 
 public interface CommunityListDAO {
 
@@ -15,10 +14,10 @@ public interface CommunityListDAO {
 	public List<GroupLike> joinedGroupList(int idx);
 	
 	// 인기그룹 리스트
-	public List<CommunityGroup> popularGroupList();
+	public List<GroupLike> popularGroupList();
 
 	// 새로 시작한 그룹 리스트
-	public List<CommunityGroup> newGroupList();
+	public List<GroupLike> newGroupList();
 //	public List<GroupLike> newGroupList(String idx);
 	
 	// 카테고리 리스트

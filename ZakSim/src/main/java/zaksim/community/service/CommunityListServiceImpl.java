@@ -26,14 +26,14 @@ public class CommunityListServiceImpl  implements CommunityListService{
 	
 	// 인기 모임 리스트
 	@Override
-	public List<CommunityGroup> popularGroupList() {
+	public List<GroupLike> popularGroupList() {
 		// TODO Auto-generated method stub
 		return communityListDAO.popularGroupList();
 	}
 	
 	// 새로운 그룹 리스트
 	@Override
-	public List<CommunityGroup> newGroupList() {
+	public List<GroupLike> newGroupList() {
 //	public List<GroupLike> newGroupList(String idx) {
 		// TODO Auto-generated method stub
 		return communityListDAO.newGroupList();

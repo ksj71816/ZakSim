@@ -15,10 +15,10 @@ public interface CommunityListService {
 	public List<GroupLike> joinedGroupList(int idx);
 	
 	// 인기그룹 리스트
-	public List<CommunityGroup> popularGroupList( );
+	public List<GroupLike> popularGroupList( );
 	
 	// 새로운 그룹 리스트
-	public List<CommunityGroup> newGroupList();
+	public List<GroupLike> newGroupList();
 //	public List<GroupLike> newGroupList(String idx);
 	
 	// 카테고리 리스트
