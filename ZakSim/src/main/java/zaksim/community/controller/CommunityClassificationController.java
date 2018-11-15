@@ -40,7 +40,12 @@ public class CommunityClassificationController {
 		
 	// 인기있는 커뮤니티 화면 GET
 	@RequestMapping(value="/popularCommunity", method=RequestMethod.GET)
-	public void popularCommunity(Model model) {
+	public void popularCommunity(Model model, HttpSession session) {
+		
+		int idx=0;
+		if(session.getAttribute("login_idx") != null ) {
+			idx =(Integer)session.getAttribute("login_idx");
+		}
 		
 		// 인기있는 그룹
 		model.addAttribute("popularGroupList", communityListService.popularGroupList());
@@ -48,6 +53,10 @@ public class CommunityClassificationController {
 		model.addAttribute("keywordList", communityListService.keywordList());
 		// 카테고리 리스트
 		model.addAttribute("categoryList", communityListService.categoryList2());
+		//
+		model.addAttribute("groupMemberExist", communityListService.existMember(idx));
+		
+		
 		
 	}
 	

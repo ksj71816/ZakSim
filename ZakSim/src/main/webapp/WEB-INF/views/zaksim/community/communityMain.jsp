@@ -7,7 +7,6 @@
 <!-- header include -->
 <%@include file="/WEB-INF/views/zaksim/main/header.jsp"%>
 
-${newGroupList }
 <div class="container" id="zz">
 
 	<div class="row" style="margin-bottom: 30px;">
