@@ -13,7 +13,7 @@
 <!-- 바디 -->
 
     <!-- 슬라이드 이미지 carousel slide--> 
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div id="carouselExampleIndicators" class="carousel slide mt-3" data-ride="carousel">
     
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>

@@ -280,9 +280,6 @@ public class CommnuityEditController {
 		String temp1 = request.getParameter("idx");
 		String temp2 = (String)session.getAttribute("login_idx").toString();
 		
-	
-		
-		
 		int idx = Integer.parseInt(temp1);
 		int login_idx =Integer.parseInt(temp2);
 		
@@ -328,6 +325,9 @@ public class CommnuityEditController {
 		int idx = Integer.parseInt(temp1);
 		int login_idx =Integer.parseInt(temp2);
 		
+//		System.out.println("인덱스 : " + idx);
+//		System.out.println("로그인 인덱스 : "+ login_idx);
+		
 		GroupMember groupMember = new GroupMember();
 		
 		groupMember.setGroup_idx(idx);
@@ -338,6 +338,55 @@ public class CommnuityEditController {
 		
 		map.put("success", "가입에 성공하였습니다.");
 		
+		
+		
+		return map;
+	}
+	
+	// 비밀커뮤니티 가입처리
+	@RequestMapping(value="/secretCommunityJoin", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> secretCommunityJoin(HttpServletRequest  request, HttpServletResponse response, HttpSession session){
+		
+		Map<String, String> map = new HashMap<>();
+		
+		response.setContentType("application/json; charset=utf-8");
+		
+		// 세션 및 파라미터 가져오기
+		String temp1 = request.getParameter("idx");
+		String temp2 = (String)session.getAttribute("login_idx").toString();
+		String password = request.getParameter("password");
+		
+		int idx = Integer.parseInt(temp1);
+		int login_idx =Integer.parseInt(temp2);
+		
+		// true false 확인
+		CommunityGroup communityGroup = new CommunityGroup();
+		communityGroup.setIdx(idx);
+		communityGroup.setPassword(password);
+		
+		// true일때
+		if(communityListService.secretCommunityJoin(communityGroup)) {
+			
+			// 그룹 맴버에 추가
+			GroupMember groupMember= new GroupMember();
+			groupMember.setGroup_idx(idx);
+			groupMember.setMember_idx(login_idx);
+			// Insert
+			communityEditService.joinedMember(groupMember);
+			
+			map.put("result", "1");
+			map.put("message", "성공하였습니다.");
+			
+		}
+		
+		// false 일 때
+		else {
+			
+			map.put("result", "0");
+			map.put("message", "비밀번호가 틀렸습니다.");
+			
+		}
 		
 		
 		return map;

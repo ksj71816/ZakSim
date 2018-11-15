@@ -55,6 +55,7 @@ public class CommunityClassificationController {
 	@RequestMapping(value="/newCommunity", method=RequestMethod.GET)
 	public void newCommunity(Model model) {
 		// 인기있는 그룹
+//		model.addAttribute("newGroupList", communityListService.newGroupList(null));	
 		model.addAttribute("newGroupList", communityListService.newGroupList());	
 		// 키워드 리스트
 		model.addAttribute("keywordList", communityListService.keywordList());

@@ -106,8 +106,8 @@
 							<c:forEach items="${qnaList}" var="qna">
 								<tr>
 									<td style="display: none;">${qna.idx}</td>
-									<td><a href="">${qna.title}</a></td>
-									<td>${qna.writtenDate}</td>
+									<td><a href="/zaksim/customerCenter/QnA/view?qnaIdx=${qna.idx}">${qna.title}</a></td>
+									<td><fmt:formatDate pattern = "yyyy-MM-dd" value = "${qna.writtenDate}"/></td>
 									<c:if test="${qna.status eq 'ready'}">
 										<td>대기중</td>
 									</c:if>
@@ -147,7 +147,17 @@
 		   
 	       <div class="row mt-3"><!-- forth row start -->
 	       
-	       	<c:forEach items="${boardList}" var="board">
+	       <c:if test="${boardList eq null || boardList eq '[]' }">
+	       	  <div class="col-md-12 d-flex align-items-center justify-content-center" style="height: 200px; background-color: #f6f6f6;">
+	       	  	<div class="dohyeon">
+	       	  	<i class="far fa-sad-tear fa-5x mb-3"></i>
+	       	  	<div class="align-self-center" style="font-size: x-large;">도전 기록이 존재하지 않습니다.</div>
+	       	  	</div>
+	       	  </div>
+	       </c:if>
+	       
+	       <c:if test="${boardList ne null && boardList ne '' }">
+	       	<c:forEach items="${boardList}" var="board" begin="0" end="3" step="1">
 		       	<div class="col-md-3 col-lg-3 col-sm-3">
 		         <div class="hovereffect text-center my-1">
 		           <img class="img-responsive" src="${board.image}" >
@@ -158,7 +168,7 @@
 		         </div>
 		       </div>    
 	       	</c:forEach>
-	         	
+	       </c:if>	
 	       	</div><!-- forth row end -->
 	       	
 	       	
@@ -184,17 +194,32 @@
 		   
 		    <div class="row mt-3 mb-5"><!-- six row start -->
 		    
-	       	 <c:forEach items="${groupList}" var="group">
+		    <c:if test="${groupList eq null || groupList eq '[]' }">
+	       	  <div class="col-md-12 d-flex align-items-center justify-content-center" style="height: 200px; background-color: #f6f6f6;">
+	       	  	<div class="dohyeon">
+	       	  	<i class="far fa-sad-tear fa-5x mb-3"></i>
+	       	  	<div class="align-self-center" style="font-size: x-large;">참여 그룹이 존재하지 않습니다.</div>
+	       	  	</div>
+	       	  </div>
+	       </c:if>
+		    
+		    <c:if test="${groupList ne null && groupList ne '[]' }">
+	       	 <c:forEach items="${groupList}" var="group" begin="0" end="3" step="1">
 		       	<div class="col-md-3 col-lg-3 col-sm-3">
 		         <div class="hovereffect text-center my-1">
 		           <img class="img-responsive" src="${group.image}" >
 		           <div class="overlay">
-		             <h2>${group.title}</h2>
-		             <a class="info" href="#">상세 보기</a>
+		             <h2>${group.title}
+		             	<c:if test="${group.secret==1 }">
+							<img src="/resouces/image/community/자물쇠.png">
+						</c:if>
+					</h2>
+		             <a class="info" href="/zaksim/community/enrollCommunity?idx=${group.idx}">상세 보기</a>
 		           </div>
 		         </div>
 		       </div>    
 	       	</c:forEach>
+		    </c:if>
 		      
 	       	</div><!-- six row end -->
 	       	
@@ -303,6 +328,7 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+	console.log('${boardList}');
 	changeDoughnutChart();
 });
 

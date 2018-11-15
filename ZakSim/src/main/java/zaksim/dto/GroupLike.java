@@ -14,6 +14,8 @@ public class GroupLike {
 	
 	private int likeNum;
 
+	private int joinYn;
+	
 	private CommunityGroup communityGroup;
 	
 	private ZakSimMember zakSimMember;
@@ -25,8 +27,8 @@ public class GroupLike {
 	@Override
 	public String toString() {
 		return "GroupLike [idx=" + idx + ", group_idx=" + group_idx + ", member_idx=" + member_idx + ", likeNum="
-				+ likeNum + ", communityGroup=" + communityGroup + ", zakSimMember=" + zakSimMember + ", groupKeyword="
-				+ groupKeyword + ", communityCategory=" + communityCategory + "]";
+				+ likeNum + ", joinYn=" + joinYn + ", communityGroup=" + communityGroup + ", zakSimMember="
+				+ zakSimMember + ", groupKeyword=" + groupKeyword + ", communityCategory=" + communityCategory + "]";
 	}
 
 	public int getIdx() {
@@ -61,6 +63,14 @@ public class GroupLike {
 		this.likeNum = likeNum;
 	}
 
+	public int getJoinYn() {
+		return joinYn;
+	}
+
+	public void setJoinYn(int joinYn) {
+		this.joinYn = joinYn;
+	}
+
 	public CommunityGroup getCommunityGroup() {
 		return communityGroup;
 	}
@@ -92,6 +102,7 @@ public class GroupLike {
 	public void setCommunityCategory(CommunityCategory communityCategory) {
 		this.communityCategory = communityCategory;
 	}
+
 
 
 	

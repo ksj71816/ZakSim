@@ -79,10 +79,10 @@
 											</c:if>
 
 											<!-- 상태 -->
-											<c:if test="${${list.status eq 'ready'}">
+											<c:if test="${list.status eq 'ready' }">
 												<td>접수 중</td>
 											</c:if>
-											<c:if test="${${list.status eq 'complete'}">
+											<c:if test="${list.status eq 'complete' }">
 												<td>답변 완료</td>
 											</c:if>
 
@@ -118,10 +118,10 @@
 											</c:if>
 
 											<!-- 상태 -->
-											<c:if test="${${list.status eq 'ready'}">
+											<c:if test="${list.status eq 'ready' }">
 												<td>접수 중</td>
 											</c:if>
-											<c:if test="${${list.status eq 'complete'}">
+											<c:if test="${list.status eq 'complete' }">
 												<td>답변 완료</td>
 											</c:if>
 
