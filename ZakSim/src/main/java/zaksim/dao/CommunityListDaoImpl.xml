@@ -308,7 +308,7 @@
 				FROM
 				(SELECT g.idx
 				g_idx, g.title ,g.content , g.image ,g.max , g.open_date , g.secret
-				,
+				,	
 				g.password,g.member_idx
 				FROM CommunityGroup g order by g_idx asc) gk
 				left join (select count(*) as
