@@ -49,5 +49,8 @@ public interface ChallengeDao {
 	// 도전 정보 select
 	public Challenge selectChallenge(int memberIdx);
 
+//------------------ChallengeInfo-------------------------------
+	// 도전 상태 수정
+	public void updateChallenge(Challenge chal);
 	
 }

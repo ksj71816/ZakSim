@@ -40,14 +40,25 @@ public class MainController {
 				
 				logger.info("chal : "+chal);
 				
+				//도전 세션이 없고 도전 정보가 있을때
 				if(session.getAttribute("status")==null && chal!=null) {
 					
 					//도전 상태 세션
 					session.setAttribute("status", chal.getStatus());
+					logger.info("도전 세션 발생 1번째 조건");
+
+					
+					// 도전 세션이 있고 도전 상태가 ing이 아닐때
+				}else if(session.getAttribute("status")!=null && chal.getStatus()!="ing") {
+					
+					//도전 상태 세션
+					session.setAttribute("status", chal.getStatus());
+					logger.info("도전 세션 발생 2번재 조건");
+					
 					
 				};
 				
-				
+			
 				model.addAttribute("info",chal);
 				
 				logger.info("chalInfo model: "+model);
