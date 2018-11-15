@@ -32,7 +32,8 @@ public class CommunityListServiceImpl  implements CommunityListService{
 	
 	// 새로운 그룹 리스트
 	@Override
-	public List<CommunityGroup> newGroupList() {
+//	public List<CommunityGroup> newGroupList() {
+	public List<GroupLike> newGroupList() {
 		// TODO Auto-generated method stub
 		return communityListDAO.newGroupList();
 	}

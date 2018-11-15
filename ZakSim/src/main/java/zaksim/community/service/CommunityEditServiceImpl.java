@@ -7,6 +7,7 @@ import zaksim.dao.CommunityEditDAO;
 import zaksim.dto.CommunityCategory;
 import zaksim.dto.CommunityGroup;
 import zaksim.dto.GroupKeyword;
+import zaksim.dto.GroupLike;
 import zaksim.dto.GroupMember;
 
 @Service
@@ -89,7 +90,46 @@ public class CommunityEditServiceImpl implements CommunityEditService{
 	public void deleteGroupMember(int idx) {
 		
 	}
+	
 
+	
+	// 좋아요 확인
+	@Override
+	public boolean like(GroupLike groupLike) {
+		
+		if(communityEditDAO.like(groupLike)>0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	
+	// 좋아요 추가
+	@Override
+	public void likeGroup(GroupLike groupLike) {
+		// TODO Auto-generated method stub
+		communityEditDAO.likeGroup(groupLike);
+		
+	}
+
+	// 그룹 좋아요 취소
+	@Override
+	public void disLikeGroup(GroupLike groupLike) {
+		// TODO Auto-generated method stub
+		communityEditDAO.disLikeGroup(groupLike);
+		
+	}
+
+	// 커뮤니티 가입
+	@Override
+	public void joinedMember(GroupMember groupMember) {
+		// TODO Auto-generated method stub
+		communityEditDAO.joinedMember(groupMember);
+	}
+
+	
 
 
 

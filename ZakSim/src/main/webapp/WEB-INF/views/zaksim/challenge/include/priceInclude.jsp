@@ -48,13 +48,13 @@
                   
                   
 			    <div class="radio">
-			      <label><input type="radio" name="optradio" checked>카드 결제</label>
+			      <label><input type="radio" name="optradio" value="카드 결제" checked="checked">카드 결제</label>
 			    </div>
 			    <div class="radio">
-			      <label><input type="radio" name="optradio">휴대폰 결제</label>
+			      <label><input type="radio" name="optradio" value="휴대폰 결제">휴대폰 결제</label>
 			    </div>
 			    <div class="radio disabled">
-			      <label><input type="radio" name="optradio" disabled>무통장 입금</label>
+			      <label><input type="radio" name="optradio" value="실시간 계좌이체">실시간 계좌이체</label>
 			    </div>
 			  
                   

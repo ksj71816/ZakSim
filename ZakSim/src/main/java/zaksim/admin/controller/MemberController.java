@@ -78,10 +78,26 @@ public class MemberController {
 	// 계정 정지하기
 	@RequestMapping(value="/suspend", method = RequestMethod.POST, produces="application/json; charset=utf-8")
 	@ResponseBody
-	public Map<String, String> suspend(String[] suspendIdx) {
+	public Map<String, String> suspend(@RequestParam(value="suspendIdx[]") List<String> idx) {
 		HashMap<String, String> map = new HashMap<>();
 		
-		System.out.println("suspendIdx : " + suspendIdx);
+//		System.out.println("suspendIdx : " + idx);
+		
+		memberService.suspend(idx);
+		
+		return map;
+	}
+	
+	// 계정 영구 정지하기
+	@RequestMapping(value="/block", method = RequestMethod.POST, produces="application/json; charset=utf-8")
+	@ResponseBody
+	public Map<String, String> block(@RequestParam(value="blockIdx[]") List<String> idx) {
+		HashMap<String, String> map = new HashMap<>();
+		
+		System.out.println("blockIdx : " + idx);
+		
+		// status->'block'
+		// 도전, 그룹참여, 보드, 문의, 댓글 삭제
 		
 		return map;
 	}

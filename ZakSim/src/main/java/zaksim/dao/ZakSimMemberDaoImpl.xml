@@ -106,6 +106,12 @@
 		LEFT JOIN Visits v
 		ON v.visit_date = mj.today
   	</select>
+  	
+  	<update id="updateMemberStatus" parameterType="int">
+  		UPDATE zakSimMember
+  		SET status='suspend', suspension_date=sysdate, suspend_num=suspend_num+1
+  		WHERE idx=#{idx}
+  	</update>
   
   <!--                      관리자                                                  -->
   

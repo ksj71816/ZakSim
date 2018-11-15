@@ -6,6 +6,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class Challenge {
 	
+	private int rnum;
+	
 	//인덱스
 	private int idx;
 	//유저 인덱스
@@ -28,8 +30,20 @@ public class Challenge {
 	//달성 결과 ex) success/fail
 	private String result;
 	
+	// 인증률 계산용 변수
+	private int dateNum;	// 도전 일 수 
+	private int boardNum;	// 인증글 갯수
 	
 	
+	
+	public int getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
+
 	public int getIdx() {
 		return idx;
 	}
@@ -104,12 +118,26 @@ public class Challenge {
 		this.result = result;
 	}
 
+	public int getDateNum() {
+		return dateNum;
+	}
+
+	public void setDateNum(int dateNum) {
+		this.dateNum = dateNum;
+	}
+
+	public int getBoardNum() {
+		return boardNum;
+	}
+
+	public void setBoardNum(int boardNum) {
+		this.boardNum = boardNum;
+	}
+
 	@Override
 	public String toString() {
-		return "Challenge [idx=" + idx + ", memberIdx=" + memberIdx + ", applyDate=" + applyDate + ", startDate="
-				+ startDate + ", endDate=" + endDate + ", money=" + money + ", title=" + title + ", status=" + status
-				+ ", result=" + result + "]";
+		return "Challenge [rnum=" + rnum + ", idx=" + idx + ", memberIdx=" + memberIdx + ", applyDate=" + applyDate
+				+ ", startDate=" + startDate + ", endDate=" + endDate + ", money=" + money + ", title=" + title
+				+ ", status=" + status + ", result=" + result + ", dateNum=" + dateNum + ", boardNum=" + boardNum + "]";
 	}
-	
-	
 }

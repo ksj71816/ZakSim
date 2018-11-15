@@ -3,6 +3,7 @@ package zaksim.dao;
 import zaksim.dto.CommunityCategory;
 import zaksim.dto.CommunityGroup;
 import zaksim.dto.GroupKeyword;
+import zaksim.dto.GroupLike;
 import zaksim.dto.GroupMember;
 import zaksim.dto.ZakSimMember;
 
@@ -43,7 +44,16 @@ public interface CommunityEditDAO {
 	// 그룹 맴버 삭제
 	public void deleteGroupMember(int idx);
 	
+	// 좋아요 확인
+	public int like(GroupLike groupLike);
+	
 	// 그룹 좋아요
-//	public void likeGroup(int idx);
+	public void likeGroup(GroupLike groupLike);
+	
+	// 그룹 좋아요 취소
+	public void disLikeGroup(GroupLike groupLike);
+	
+	// 커뮤니티 가입
+	public void joinedMember(GroupMember groupMember);
 	
 }

@@ -24,7 +24,7 @@ public interface ZakSimMemberDao {
 	public List<ZakSimMember> selectAdminMemberList(Map<String, Object> param);
 
 	// 계정 정지 처리
-	public void updateMemberStatus(ZakSimMember member);
+	public void updateMemberStatus(int idx);
 	
 	// 기간 별 가입 인원
 	public int selectJoinNum(Map<String, String> param);

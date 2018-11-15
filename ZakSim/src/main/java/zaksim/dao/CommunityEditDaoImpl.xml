@@ -59,7 +59,26 @@
  	<delete id="deleteGroupMember" parameterType="int">
  		delete from groupMember where idx=#{idx }
  	</delete>
+ 	
+ 	<select id="like" parameterType="zaksim.dto.GroupLike" resultType="int">
+  		select count(*) from grouplike where  group_idx=#{group_idx } and member_idx=#{member_idx }
+  	</select>
 
-
+	<insert id="likeGroup" parameterType="zaksim.dto.GroupLike">
+		insert into GroupLike (idx, group_idx, member_idx)
+		VALUES (GroupLike_SEQ.nextval, #{group_idx}, #{member_idx})
+	</insert>
+	
+	<delete id="disLikeGroup" parameterType="zaksim.dto.GroupLike">
+		delete from groupLike where group_idx = #{group_idx } and member_idx =#{member_idx }
+	</delete>
+	
+<!-- 	public void joinedMember(GroupMember groupMember) -->
+	<insert id="joinedMember" parameterType="zaksim.dto.GroupMember">
+		insert into GroupMember (idx, group_idx, member_idx)
+		VALUES (GroupMember_SEQ.nextval, #{group_idx}, #{member_idx})
+	</insert>
+	
+	
 </mapper>
   

@@ -75,7 +75,7 @@
 									
 									<c:forEach items="${keywordList }" var="keyword">
 										<c:if
-											test="${newGroupList.communityGroup.idx eq keyword.group_idx}">
+											test="${newGroupList.idx eq keyword.group_idx}">
 												<p class="card-text">#${keyword.keyword } </p>
 											</c:if>
 									</c:forEach>
@@ -91,7 +91,7 @@
 											<button type="button" class="btn btn-primary">가입하기</button> <br>
 											<br>
 											<button type="button" class="btn btn-danger"
-											onclick="moveURL(${newGroupList.communityGroup.idx })">상세보기</button>
+											onclick="moveURL(${newGroupList.idx })">상세보기</button>
 										</a> <br> <br> <br>
 									</div>
 								</div>

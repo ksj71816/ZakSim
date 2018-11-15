@@ -5,6 +5,9 @@ import java.util.Date;
 //게시글 
 public class Board {
 
+	// 페이징 rnum
+	private int rnum;
+	
 	// 인덱스 
 	private int idx;
 
@@ -51,15 +54,24 @@ public class Board {
 
 	private ZakSimMember zakSimMember;
 
+
 	@Override
 	public String toString() {
-		return "Board [idx=" + idx + ", challenge_idx=" + challenge_idx + ", group_idx=" + group_idx + ", writer_idx="
-				+ writer_idx + ", title=" + title + ", content=" + content + ", image=" + image + ", open=" + open
-				+ ", certification=" + certification + ", written_date=" + written_date + ", hit=" + hit + ", comment="
-				+ comment + ", boardLike=" + boardLike + ", report=" + report + ", communityGroup=" + communityGroup
-				+ ", zakSimMember=" + zakSimMember + "]";
+		return "Board [rnum=" + rnum + ", idx=" + idx + ", challenge_idx=" + challenge_idx + ", group_idx=" + group_idx
+				+ ", writer_idx=" + writer_idx + ", title=" + title + ", content=" + content + ", image=" + image
+				+ ", open=" + open + ", certification=" + certification + ", written_date=" + written_date + ", hit="
+				+ hit + ", comment=" + comment + ", boardLike=" + boardLike + ", report=" + report + ", communityGroup="
+				+ communityGroup + ", zakSimMember=" + zakSimMember + "]";
 	}
 
+	public int getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
+	
 	public int getIdx() {
 		return idx;
 	}

@@ -74,7 +74,13 @@ public class LoginController {
 	// 로그아웃
 	@RequestMapping(value="/zaksim/login/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session) {
-		session.invalidate();
+		
+		if((Boolean)session.getAttribute("adminLogin") != null && (Boolean)session.getAttribute("adminLogin")) {
+			session.invalidate();
+			session.setAttribute("adminLogin", true);
+		} else {
+			session.invalidate();
+		}
 		
 		return "redirect:/zaksim/main/home"; // 메인화면으로 리다이렉트
 	}

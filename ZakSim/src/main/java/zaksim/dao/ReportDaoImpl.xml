@@ -18,7 +18,7 @@
   	<result property="reason" column="reason"/>
   	<result property="memberIdx" column="member_idx"/>
   	<result property="reportDate" column="report_date"/>
-  	<collection property="zakSimMember" resultMap="ZakSimMember"/>
+  	<collection property="reporterMember" resultMap="ZakSimMember"/>
   </resultMap>
   
   <!-- 신고 정보와 신고자 아이디 반환 -->
@@ -30,5 +30,9 @@
  		WHERE r.member_idx = #{idx}) rz, ZakSimMember m
  	WHERE rz.reporter_idx=m.idx
   </select>
+  
+  <delete id="deleteReport" parameterType="int">
+  	DELETE FROM report WHERE member_idx=#{index}
+  </delete>
   
   </mapper>

@@ -51,9 +51,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void suspend(ZakSimMember member) {
-		// TODO Auto-generated method stub
-		zakSimMemberDao.updateMemberStatus(member);
+	public void suspend(List<String> idx) {
+		for(String index : idx) {
+			zakSimMemberDao.updateMemberStatus(Integer.parseInt(index));
+			reportDao.deleteReport(Integer.parseInt(index));
+		}
 		// 디비에서 자동으로 상태변경되게 만들거나 메소드 생성하기
 		
 	}
