@@ -43,7 +43,7 @@
   </resultMap>
   
   <select id="informationBoard" resultMap="Board" parameterType="int">
-	SELECT b.* 
+	SELECT b.*, c.commentNum, l.likeNum
 	FROM (
 	    SELECT * 
 	    FROM Board
@@ -54,7 +54,19 @@
 	    FROM zaksimMember
 	) z
 	ON b.writer_idx=z.idx
-	ORDER BY b.idx DESC
+	LEFT JOIN (
+	    SELECT board_idx, count(*) commentNum 
+	    FROM boardComment 
+	    GROUP BY board_idx
+	) c
+	ON c.board_idx=b.idx
+	LEFT JOIN (
+	    SELECT board_idx, count(*) likeNum
+	    FROM boardLike
+	    GROUP BY board_idx
+	) l
+	ON l.board_idx=b.idx
+	ORDER BY b.idx DESC	
   </select>
 
 

@@ -52,11 +52,11 @@
 <body>
  
     <!-- navbar -->
-    <div class="row navbar navbar-expand-lg m-0">
+    <div class="row navbar navbar-expand-lg mt-3">
         <div class="col-sm-2">
             <span>
             	<a href="/zaksim/main/home">
-            		<img src="/resources/image/main/logo2.png" class="" alt="logo image" style="width: 220px;"/>
+            		<img src="/resources/image/main/logo.png" class="" alt="logo image" style="width: 220px;"/>
 				</a>
        		</span>
           
@@ -188,5 +188,6 @@
   </div>
 
 
+<hr style="border: 1px solid indianred;">
 
 <!-- 해더 끝 -->

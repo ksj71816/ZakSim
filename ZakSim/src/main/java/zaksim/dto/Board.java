@@ -53,16 +53,12 @@ public class Board {
 	private CommunityGroup communityGroup;
 
 	private ZakSimMember zakSimMember;
+	
+	private int commentNum;
+	
+	private int likeNum;
 
 
-	@Override
-	public String toString() {
-		return "Board [rnum=" + rnum + ", idx=" + idx + ", challenge_idx=" + challenge_idx + ", group_idx=" + group_idx
-				+ ", writer_idx=" + writer_idx + ", title=" + title + ", content=" + content + ", image=" + image
-				+ ", open=" + open + ", certification=" + certification + ", written_date=" + written_date + ", hit="
-				+ hit + ", comment=" + comment + ", boardLike=" + boardLike + ", report=" + report + ", communityGroup="
-				+ communityGroup + ", zakSimMember=" + zakSimMember + "]";
-	}
 
 	public int getRnum() {
 		return rnum;
@@ -200,9 +196,29 @@ public class Board {
 		this.zakSimMember = zakSimMember;
 	}
 
+	public int getCommentNum() {
+		return commentNum;
+	}
 
+	public void setCommentNum(int commentNum) {
+		this.commentNum = commentNum;
+	}
 
+	public int getLikeNum() {
+		return likeNum;
+	}
 
+	public void setLikeNum(int likeNum) {
+		this.likeNum = likeNum;
+	}
 
-
+	@Override
+	public String toString() {
+		return "Board [rnum=" + rnum + ", idx=" + idx + ", challenge_idx=" + challenge_idx + ", group_idx=" + group_idx
+				+ ", writer_idx=" + writer_idx + ", title=" + title + ", content=" + content + ", image=" + image
+				+ ", open=" + open + ", certification=" + certification + ", written_date=" + written_date + ", hit="
+				+ hit + ", comment=" + comment + ", boardLike=" + boardLike + ", report=" + report + ", communityGroup="
+				+ communityGroup + ", zakSimMember=" + zakSimMember + ", commentNum=" + commentNum + ", likeNum="
+				+ likeNum + "]";
+	}
 }
