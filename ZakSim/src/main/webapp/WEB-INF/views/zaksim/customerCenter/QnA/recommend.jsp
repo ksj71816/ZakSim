@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
    
    	<!-- 댓글 입력 영역  -->
 	<div class="container">
@@ -22,18 +24,18 @@
 							<div class="form-group">
 								<c:choose>
 									<c:when test="${login}">
-										<textarea rows="3" class="form-control" id="replyContent"
-											name="replyContent" placeholder="댓글을 입력해주세요."></textarea>
+										<textarea rows="3" class="form-control" id="content"
+											name="content" placeholder="댓글을 입력해주세요."></textarea>
 									</c:when>
 									<c:when test="${!login || login eq null}">
-										<textarea rows="3" class="form-control" id="replyContent"
-											name="replyContent" placeholder="로그인 상태여야 입력 가능합니다."
+										<textarea rows="3" class="form-control" id="content"
+											name="content" placeholder="로그인 상태여야 입력 가능합니다."
 											readonly=""></textarea>
 									</c:when>
 								</c:choose>
 							</div>
 							<c:if test="${sessionScope.login}">
-								<button type="submit" class="btn qnaBtnColor btn-md mr-1">댓글 입력</button>
+								<button type="button" class="btn qnaBtnColor btn-md mr-1 write">댓글 입력</button>
 							</c:if>
 						</div>
 					</form>
@@ -54,7 +56,7 @@
                         <div>
                         	<c:if test="${comment.depth > 0}">
                         		<img alt="" src="/resources/image/qna/arrow.png" style="width: 12px;">
-                        		<strong style="color: blue; font-weight: 700 !important;">@${comment.upperIdx}</strong><br>
+                        		<strong style="color: blue; font-weight: 700 !important;">@${comment.upperId}</strong><br>
                         	</c:if>
                            <input style="display: none;" name="upperIdx" value="${comment.idx}"/>
                            <input style="display: none;" name="order" value="${comment.order}"/>
@@ -67,8 +69,8 @@
                         <div>
                            <c:if test="${sessionScope.login_idx ne null }">
                               <c:if test="${sessionScope.login_idx eq comment.writerIdx}">
-                                 <small> <a href="" style="color: blue">수정</a> </small>
-                                 <small class="ml-1"> <a style="color: red" onclick="deleteComment(${comment.order})">삭제</a> </small>                  
+                                 <small class="mouseOver" style="color: blue" onclick="reReplyUpdate(${i.count-1})">수정</small>
+                                 <small class="ml-1"> <a style="color: red" onclick="deleteComment(${view.idx}, ${comment.order})">삭제</a> </small>                  
                               </c:if>
                               <small class="ml-1 mouseOver" onclick="reReplyLi(${i.count-1})" style="color: green">답댓글쓰기</small>
                            </c:if>
@@ -80,7 +82,7 @@
                   </li>
                   
                   
-                  <!-- 답댓글 -->
+                  <!-- 답댓글 작성 -->
                   
                   <li class="list-group-item" id="reReplyLi${i.count-1}" hidden="">
                   <form>
@@ -101,6 +103,28 @@
                      </div>
                      </form>
                   </li>
+                  
+                  <!-- 수정용 폼 -->
+                  <li class="list-group-item" id="reReplyUpdate${i.count-1}" hidden="">
+                  <form>
+                     <div style="margin-left: 20px; margin-right: 20px">
+                        <div class="d-flex w-100 justify-content-between">
+                        	<input style="display: none;" name="qnaIdx" value="${view.idx}"/>
+                           <input style="display: none;" name="idx" value="${comment.idx}"/>
+                           <input style="display: none;" name="depth" value="${comment.depth}"/><!-- upper의 depth -->
+                           <input style="display: none;" value="${comment.writerIdx}"><!-- upper의 작성자 -->
+                           <p style="color: blue">@${comment.zakSimMember.id}</p>
+                           <small class="ml-1 mouseOver" onclick="reReplyUpdateClose(${i.count-1})" style="color: gray">X</small>
+                        </div>
+                        <div class="form-group">
+                           <textarea rows="2" class="form-control" id="content"
+                              name="content">${comment.content}</textarea>
+                        </div>
+                           <button type="button" class="btn qnaBtnColor btn-md mr-1 updateRe"><small>댓글 수정</small></button>
+                     </div>
+                     </form>
+                  </li>
+                  
                </ul>
             </div>
             <label class="col-md-1"> </label>

@@ -53,6 +53,15 @@ public interface MypageService {
 	
 	// 탈퇴 시 개설 그룹 장 양도
 	public void changeGroupMember(int idx);
+
+	// 나의 인증글 모아보기
+	public List<Board> viewMyBoard(int idx);
+
+	// 과거 도전 정보
+	public Challenge viewEndChallengeInfo(int endChalIdx);
+
+	// 과거 도전 인증글
+	public List<Board> viewMyPastChalBoard(int endChalIdx);
 	
 	
 	

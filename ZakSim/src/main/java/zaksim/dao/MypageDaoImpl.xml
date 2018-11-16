@@ -48,6 +48,24 @@
 	<result column="secret" property="secret" />
 	<result column="password" property="password" />
 </resultMap>
+
+	<resultMap type="zaksim.dto.Board" id="Board">
+		<result column="idx" property="idx" />
+		<result column="challenge_idx" property="challenge_idx" />
+		<result column="group_idx" property="group_idx" />
+		<result column="writer_idx" property="writer_idx" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="image" property="image" />
+		<result column="open" property="open" />
+		<result column="certification" property="certification" />
+		<result column="written_date" property="written_date" />
+		<result column="hit" property="hit" />
+		<result column="COMMENTNUM" property="commentNum" />
+		<result column="likenum" property="likeNum" />
+		<collection property="communityGroup" resultMap="CommunityGroup" />
+		<collection property="zakSimMember" resultMap="ZakSimMember" />
+	</resultMap>
     
   
 	<select id="memberInfo" parameterType="int" resultMap="ZakSimMember">
@@ -210,5 +228,17 @@
 		DELETE communityGroup
 		WHERE idx=#{idx}
 	</delete>
+
+	<select id="selectMyBoard" parameterType="int" resultMap="Board">
+		SELECT * FROM board WHERE writer_idx=#{idx} AND certification=1 ORDER BY idx DESC
+	</select>
+
+	<select id="selectEndChallengeInfo" parameterType="int" resultMap="Challenge">
+		SELECT * FROM challenge WHERE idx=#{endChalIdx}
+	</select>
+
+	<select id="selectEndChalBoard" parameterType="int" resultMap="Board">
+		SELECT * FROM board WHERE challenge_idx=#{endChalIdx} ORDER BY idx DESC
+	</select>
 
 </mapper>

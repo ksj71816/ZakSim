@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import zaksim.dao.QnACommentDao;
 import zaksim.dao.QnADao;
+import zaksim.dao.ZakSimMemberDao;
 import zaksim.dto.QnA;
 import zaksim.dto.QnAComment;
+import zaksim.dto.ZakSimMember;
 import zaksim.util.Paging;
 
 /*
@@ -24,6 +26,7 @@ public class QnAServiceImpl implements QnAService {
 	
 	@Autowired QnADao qnaDao;
 	@Autowired QnACommentDao qCommentDao;
+	@Autowired ZakSimMemberDao zDao; 
 
 	@Override
 	public List<QnA> qnaList(Paging paging) {
@@ -101,6 +104,11 @@ public class QnAServiceImpl implements QnAService {
 	@Override
 	public List<QnAComment> viewComment(int qnaIdx) {
 		return qCommentDao.selectComment(qnaIdx);
+	}
+
+	@Override
+	public List<ZakSimMember> getAllMember() {
+		return zDao.selectAllMember();
 	}
 	
 }

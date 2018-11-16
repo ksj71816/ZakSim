@@ -33,14 +33,15 @@ public class QnACommentServiceImpl implements QnACommentService {
 
 	@Override
 	public void qnaCommentUpdate(QnAComment qnaCommentDto) {
-		// TODO Auto-generated method stub
-		
+		qnaCommentDao.qnaCommentUpdate(qnaCommentDto);
 	}
 
 	@Override
-	public void qnaCommentDelete(int qnaCommentIdx) {
-		// TODO Auto-generated method stub
-		
+	public void qnaCommentDelete(int order) {
+		// 댓글 삭제
+		qnaCommentDao.qnaCommentDelete(order);
+		// 아래 order 재조정
+		qnaCommentDao.updateOrderToDelete(order);
 	}
 
 	@Override

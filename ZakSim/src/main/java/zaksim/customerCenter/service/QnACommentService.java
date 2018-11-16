@@ -36,7 +36,7 @@ public interface QnACommentService {
 	 * Q&A 댓글 삭제 service
 	 * @param QnAComment qnaCommentDto
 	 */
-	public void qnaCommentDelete(int qnaCommentIdx);
+	public void qnaCommentDelete(int order);
 
 	// 대댓글 작성
 	public void qnaReCommentWrite(QnAComment qnaCommentDto);

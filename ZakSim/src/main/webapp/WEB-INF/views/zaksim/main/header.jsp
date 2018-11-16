@@ -144,7 +144,12 @@
 	<div class="col-sm-1">
     	<c:if test="${sessionScope.login ne null && sessionScope.login eq true }">
     		<a href="/zaksim/login/logout" style="text-decoration: none; color: black;">
-    			<strong>로그아웃</strong>
+    			<strong>logout</strong>
+    		</a>
+    	</c:if>
+    	<c:if test="${sessionScope.login eq null}">
+    		<a href="/zaksim/login/login" style="text-decoration: none; color: black;">
+    			<strong>login</strong>
     		</a>
     	</c:if>
 	</div>

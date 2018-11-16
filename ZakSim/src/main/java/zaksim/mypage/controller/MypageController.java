@@ -91,19 +91,28 @@ public class MypageController {
 		return "redirect:/zaksim/mypage/main";
 	}
 	
-//	
-//	@RequestMapping(value="/groups", method=RequestMethod.GET)
-//	public void MypageGroups() {
-//		
-//	}
-//	
-//	
-//	@RequestMapping(value="/challenge", method=RequestMethod.GET)
-//	public void MypageChallenge() {
-//		
-//		
-//	}
-//	
+	
+	@RequestMapping(value="/pastChallenge", method=RequestMethod.GET)
+	public void MypageGroups(Model model, int endChalIdx, HttpSession session) {
+		
+		Challenge endChal = mypageService.viewEndChallengeInfo(endChalIdx);
+		List<Board> boardList = mypageService.viewMyPastChalBoard(endChalIdx);
+		
+		model.addAttribute("endChal", endChal);
+		model.addAttribute("boardList", boardList);
+		
+	}
+	
+	
+	@RequestMapping(value="/challenge", method=RequestMethod.GET)
+	public void MypageChallenge(Model model, HttpSession session) {
+		
+		List<Board> boardList = mypageService.viewMyBoard((Integer)session.getAttribute("login_idx"));
+		
+		model.addAttribute("boardList", boardList);
+		
+	}
+	
 
 	@RequestMapping(value="/delete", method=RequestMethod.POST, produces="application/json; charset=utf-8")
 	@ResponseBody

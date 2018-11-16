@@ -24,6 +24,7 @@ public class QnAComment {
 	private ZakSimMember zakSimMember; // 회원 DTO
 	private QnA qna; // Q&A DTO
 	
+	private String upperId;
 	
 	
 	
@@ -87,10 +88,20 @@ public class QnAComment {
 	public void setQna(QnA qna) {
 		this.qna = qna;
 	}
+	
+	
+	public String getUpperId() {
+		return upperId;
+	}
+	public void setUpperId(String upperId) {
+		this.upperId = upperId;
+	}
 	@Override
 	public String toString() {
 		return "QnAComment [idx=" + idx + ", qnaIdx=" + qnaIdx + ", upperIdx=" + upperIdx + ", depth=" + depth
 				+ ", writerIdx=" + writerIdx + ", content=" + content + ", writtenDate=" + writtenDate + ", order="
-				+ order + ", zakSimMember=" + zakSimMember + ", qna=" + qna + "]";
+				+ order + ", zakSimMember=" + zakSimMember + ", qna=" + qna + ", upperId=" + upperId + "]";
 	}
+
+
 }

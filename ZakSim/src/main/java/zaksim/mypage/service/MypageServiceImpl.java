@@ -106,4 +106,19 @@ public class MypageServiceImpl implements MypageService {
 			}
 		}
 	}
+
+	@Override
+	public List<Board> viewMyBoard(int idx) {
+		return memberDao.selectMyBoard(idx);
+	}
+
+	@Override
+	public Challenge viewEndChallengeInfo(int endChalIdx) {
+		return memberDao.selectEndChallengeInfo(endChalIdx);
+	}
+
+	@Override
+	public List<Board> viewMyPastChalBoard(int endChalIdx) {
+		return memberDao.selectEndChalBoard(endChalIdx);
+	}
 }

@@ -36,7 +36,7 @@ public interface QnACommentDao {
 	 * Q&A 댓글 삭제 dao
 	 * @param QnAComment qnaCommentDto
 	 */
-	public void qnaCommentDelete(int qnaCommentIdx);
+	public void qnaCommentDelete(int order);
 
 	// 댓글 가져오기
 	public List<QnAComment> selectComment(int qnaIdx);
@@ -49,5 +49,8 @@ public interface QnACommentDao {
 
 	// 대댓글 작성시 order 수정
 	public void updateOrder(int order);
+
+	// 댓글 삭제를 위한 order 재조정
+	public void updateOrderToDelete(int order);
 	
 }

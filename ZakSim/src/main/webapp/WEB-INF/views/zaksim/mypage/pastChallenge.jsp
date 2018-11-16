@@ -15,7 +15,7 @@
 
 	       	  <div class="col-md-2">
 	       	  	<div>
-	       	  		<h4 class="dohyeon title">도전 기록</h4>
+	       	  		<h4 class="dohyeon title">${endChal.title}</h4>
 	       	  	</div>
 	       	  </div>
 	       	  
@@ -66,6 +66,8 @@
   
   
   function viewCitation(idx,image,content) {
+	  
+	  console.log(image);
 
 	swal({
 		  text: content,

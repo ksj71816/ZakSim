@@ -139,7 +139,9 @@
 	       	  
 	       	  <div class="col-md-1">
 	       	  	<div>
+	       	  	<c:if test="${boardList ne null && boardList ne '[]' }">
 			  		<a href="/zaksim/mypage/challenge" class="btn btn-outline-white text-muted"><b>+더보기</b></a>
+			  	</c:if>
 			  	</div>
 			  </div>
 			  
@@ -156,14 +158,14 @@
 	       	  </div>
 	       </c:if>
 	       
-	       <c:if test="${boardList ne null && boardList ne '' }">
+	       <c:if test="${boardList ne null && boardList ne '[]' }">
 	       	<c:forEach items="${boardList}" var="board" begin="0" end="3" step="1">
 		       	<div class="col-md-3 col-lg-3 col-sm-3">
 		         <div class="hovereffect text-center my-1">
 		           <img class="img-responsive" src="${board.image}" >
 		           <div class="overlay">
 		             <h2>${board.title}</h2>
-		             <a class="info" href="#">상세 보기</a>
+		             <a class="info" onclick="viewCitation(${board.idx}, '${board.image}','${board.content}')" style="cursor:pointer;">상세 보기</a>
 		           </div>
 		         </div>
 		       </div>    
@@ -186,7 +188,9 @@
 	       	  
 	       	  <div class="col-md-1">
 	       	  	<div>
+	       	  	<c:if test="${groupList ne null && groupList ne '[]' }">
 			  		<a href="/zaksim/community/joinCommunity" class="btn btn-outline-white text-muted" ><b>+더보기</b></a>
+			  	</c:if>
 			  	</div>
 			  </div>
 			  
@@ -214,6 +218,7 @@
 							<img src="/resouces/image/community/자물쇠.png">
 						</c:if>
 					</h2>
+					
 		             <a class="info" href="/zaksim/community/enrollCommunity?idx=${group.idx}">상세 보기</a>
 		           </div>
 		         </div>
@@ -258,7 +263,7 @@
 						<tr>
 							<td style="display: none;">${endChal.idx}</td>
 							<td>${endChal.rnum}</td>
-							<td><a href="">${endChal.title}</a></td>
+							<td><a href="/zaksim/mypage/pastChallenge?endChalIdx=${endChal.idx}">${endChal.title}</a></td>
 							<td><fmt:formatDate pattern = "yyyy-MM-dd" value = "${endChal.startDate}"/></td>
 							<td><fmt:formatDate pattern = "yyyy-MM-dd" value = "${endChal.endDate}"/></td>
 							<td>${endChal.money}원</td>
@@ -323,6 +328,8 @@
 	 <!-- footer include -->
 <%@include file="/WEB-INF/views/zaksim/main/footer.jsp" %>
 
+<!-- alert 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.28.12/sweetalert2.all.js"></script>
 
 
 <script type="text/javascript">
@@ -437,6 +444,18 @@ function deleteMem() {
 			//입력 창 초기화
 		}
 	});	
+}
+
+function viewCitation(idx,image,content) {
+
+	swal({
+		  text: content,
+		  imageUrl:image,
+		  imageWidth: 800,
+		  imageHeight: 400,
+		  imageAlt: 'Custom image',
+		  confirmButtonText: '닫기'
+		});
 }
 
 </script>

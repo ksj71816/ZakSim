@@ -5,6 +5,7 @@ import java.util.Map;
 
 import zaksim.dto.QnA;
 import zaksim.dto.QnAComment;
+import zaksim.dto.ZakSimMember;
 import zaksim.util.Paging;
 
 /*
@@ -92,5 +93,8 @@ public interface QnAService {
 	
 	// 댓글 가져오기
 	public List<QnAComment> viewComment(int qnaIdx);
+	
+	// 모든 멤버 정보 가져오기
+	public List<ZakSimMember> getAllMember();
 	
 }

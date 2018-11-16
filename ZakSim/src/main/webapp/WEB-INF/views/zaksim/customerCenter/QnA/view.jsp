@@ -243,17 +243,36 @@
       $('#reReplyLi'+i).attr("hidden", "hidden"); // hidden 속성추가(답댓글창 닫기(숨기기))
    }
    
-   function deleteComment(order) {
+   function reReplyUpdate(i) {
+	      var hidden = $('#reReplyUpdate'+i).attr("hidden");
+	      console.log("hidden 값 : " + hidden);
+	      
+	      if ( hidden == "hidden" ) {         
+	         $('#reReplyUpdate'+i).removeAttr("hidden"); // hidden 풀기(답댓글 창 보이기)
+	      } else if ( hidden != "hidden" ) {
+	         $('#reReplyUpdate'+i).attr("hidden", "hidden"); // hidden 속성추가(답댓글창 닫기(숨기기))
+	      }
+	   }
+	   
+	   function reReplyUpdateClose(i) {
+	      var hidden = $('#reReplyUpdate'+i).attr("hidden");
+	      console.log("hidden 값 : " + hidden);
+	      $('#reReplyUpdate'+i).attr("hidden", "hidden"); // hidden 속성추가(답댓글창 닫기(숨기기))
+	   }
+   
+   function deleteComment(qnaIdx, order) {
+	   console.log('aaaaa');
 	   $.ajax({
 			type: "post"
 			, url : "/zaksim/customerCenter/QnA/comment_delete"
 			, data : {
+				qnaIdx : qnaIdx,
 				order : order
 			}
-			, dataType: "json"
+			, dataType: "html"
 			, success: function( data ) {
 				
-				console.log('success');
+				$("#recommendDiv").html(data);
 				
 			}
 			, error: function( e ) {
@@ -266,22 +285,74 @@
 		});	
    }
    
+	$("#recommendDiv").on("click", ".write", function() {
+	   
+	   var formData = $(this).parent().parent().serialize();
+	   
+	   console.log(formData);
+	  
+	   $.ajax({
+			type: "post"
+			, url : "/zaksim/customerCenter/QnA/comment_write"
+			, data : formData
+			, dataType: "html"
+			, success: function( data ) {
+				console.log(data);
+				
+				$("#recommendDiv").html(data);
+				
+			}
+			, error: function( e ) {
+				console.log("--- error ---");
+				console.log( e.responseText );
+			}
+			, complete: function() {
+				//입력 창 초기화
+			}
+		});	
+   });
+   
    
    $("#recommendDiv").on("click", ".writeRe", function() {
 	   
 	   var formData = $(this).parent().parent().serialize();
 	   
 	   console.log(formData);
-	   console.log($(this).parent().parent());
 	  
 	   $.ajax({
 			type: "post"
 			, url : "/zaksim/customerCenter/QnA/re_comment_write"
-			, data : {
-				formData : formData
-			}
+			, data : formData
 			, dataType: "html"
 			, success: function( data ) {
+				console.log(data);
+				
+				$("#recommendDiv").html(data);
+				
+			}
+			, error: function( e ) {
+				console.log("--- error ---");
+				console.log( e.responseText );
+			}
+			, complete: function() {
+				//입력 창 초기화
+			}
+		});	
+   });
+   
+   $("#recommendDiv").on("click", ".updateRe", function() {
+	   
+	   var formData = $(this).parent().parent().serialize();
+	   
+	   console.log(formData);
+	  
+	   $.ajax({
+			type: "post"
+			, url : "/zaksim/customerCenter/QnA/comment_update"
+			, data : formData
+			, dataType: "html"
+			, success: function( data ) {
+				console.log(data);
 				
 				$("#recommendDiv").html(data);
 				

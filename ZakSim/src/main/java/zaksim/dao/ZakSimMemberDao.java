@@ -93,4 +93,6 @@ public interface ZakSimMemberDao {
 	// -------------- 로그인 ------------------
 
 
+	// 모든 회원 아이디 가져오기
+	public List<ZakSimMember> selectAllMember();
 }

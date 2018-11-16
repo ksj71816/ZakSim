@@ -62,5 +62,14 @@ public interface MypageDao {
 
 	// 그룹 삭제
 	public void deleteCommunityGroup(CommunityGroup g);
+
+	// 나의 인증글 모아보기
+	public List<Board> selectMyBoard(int idx);
+
+	// 과거 도전 정보
+	public Challenge selectEndChallengeInfo(int endChalIdx);
+
+	// 과거 도전 인증글
+	public List<Board> selectEndChalBoard(int endChalIdx);
 	
 }

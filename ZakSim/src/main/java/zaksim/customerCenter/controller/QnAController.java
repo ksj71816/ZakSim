@@ -22,6 +22,7 @@ import zaksim.customerCenter.service.QnAService;
 import zaksim.dto.QnA;
 import zaksim.dto.QnAComment;
 import zaksim.dto.QnAFile;
+import zaksim.dto.ZakSimMember;
 import zaksim.util.Paging;
 
 /*

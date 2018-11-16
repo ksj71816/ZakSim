@@ -14,6 +14,7 @@
   	<result property="writtenDate" column="written_date"/>
   	<result property="depth" column="depth"/>
   	<result property="order" column="c_order"/>
+  	<result property="upperId" column="upper_id"/>
   	<collection property="zakSimMember" resultMap="ZakSimMember"/>
   </resultMap>
   
@@ -30,10 +31,27 @@
   
  
  <select id="selectComment" parameterType="int" resultMap="QnAComment">
- 	SELECT c.*, z.id z_id
-	FROM qnaComment c, zakSimMember z
-	WHERE qna_idx=#{qnaIdx} AND c.writer_idx=z.idx
-	ORDER BY c_order ASC
+<!--  	SELECT c.*, z.id z_id -->
+<!-- 	FROM qnaComment c, zakSimMember z -->
+<!-- 	WHERE qna_idx=#{qnaIdx} AND c.writer_idx=z.idx -->
+<!-- 	ORDER BY c_order ASC -->
+	select a.*, zqc.upper_id 
+	from
+	 	(SELECT c.*, z.id z_id
+		FROM qnaComment c, zakSimMember z
+		WHERE qna_idx=#{qnaIdx} AND c.writer_idx=z.idx
+	) a
+    left join (
+    	SELECT qc.upper_idx, z.id upper_id 
+    	from zaksimMember z, (
+			SELECT distinct c.upper_idx, uc.writer_idx
+			FROM qnaComment c, qnaComment uc 
+			WHERE c.upper_idx= uc.idx
+		) qc
+		where z.idx=qc.writer_idx
+	) zqc
+	on zqc.upper_idx=a.upper_idx
+	order by a.c_order asc
  </select>
  
  <insert id="qnaCommentWrite" parameterType="zaksim.dto.QnAComment">
@@ -65,5 +83,22 @@
  		(SELECT MAX(c_order)+1 c_order FROM qnaComment WHERE qna_idx=#{qnaIdx}))
  	</if>
  </insert>
+ 
+ <update id="updateOrderToDelete" parameterType="int">
+ 	UPDATE qnaComment
+ 	SET c_order=c_order-1
+ 	WHERE c_order <![CDATA[ > ]]> #{order}
+ </update>
+ 
+ <delete id="qnaCommentDelete" parameterType="int">
+ 	DELETE qnaComment 
+ 	WHERE c_order=#{order}
+ </delete>
+ 
+ <update id="qnaCommentUpdate" parameterType="zaksim.dto.QnAComment">
+ 	UPDATE qnaComment
+ 	SET content=#{content}
+ 	WHERE idx=#{idx}
+ </update>
 
  </mapper>
