@@ -1,6 +1,7 @@
 package zaksim.customerCenter.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,25 @@ public class QnAServiceImpl implements QnAService {
 	public List<QnA> qnaListDepth() {
 		return qnaDao.qnaListDepth();
 	}
+	
+	@Override
+	public List<QnA> qnaMyList(Map<String, Object> map) {
+		return qnaDao.qnaMyList(map);
+	}
+
+	@Override
+	public Paging getMyPaging(int curPage, int listCount, int pageCount, int memberIdx) {
+		int totalMyCount = qnaDao.countMyAll(memberIdx);
+		
+		Paging paging = new Paging(totalMyCount, curPage, listCount, pageCount);
+		
+		return paging;
+	}
+
+	@Override
+	public List<QnA> qnaMyListDepth(int memberIdx) {
+		return qnaDao.qnaMyListDepth(memberIdx);
+	}
 
 	@Override
 	public QnA qnaView(int qnaIdx) {
@@ -69,6 +89,5 @@ public class QnAServiceImpl implements QnAService {
 	public void qnaDelete(int qnaIdx) {
 		qnaDao.qnaDelete(qnaIdx);
 	}
-
 
 }

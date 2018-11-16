@@ -77,7 +77,7 @@
 		</div>
 	</div>
 	<!-- Modal -->
-	<div class="modal fade" id="qnaListModal" tabindex="-1" role="dialog">
+	<div class="modal fade" id="qnaWriteModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -96,14 +96,26 @@
 <script type="text/javascript" src="/summernote/summernote-bs4.js" ></script>
 
 <script type="text/javascript">
-	// --- url로 통해 들어올시 로그인 상태가 아니면 막기 ---
+	// --- url로 통해 들어올시 로그인 상태가 아니면 막기 or 관리자 외 답변 작성 못 하게끔 ---
 	var login = <%=session.getAttribute("login") %>;
+	var upper = <%=request.getAttribute("upperIdx") %>
+	var user = <%=session.getAttribute("login_idx") %>
 	
 	if ( login == null || !login || login == "") {			
-		$('#qnaListModal').modal({backdrop: 'static'});
+		$('#qnaWriteModal').modal({backdrop: 'static'}); // 모달 밖 영역 클릭할 수 없게 만듦.
 		$('#btnRedirectLogin').click(function(){
 			location.href = "/zaksim/login/login";
 		});
+	}
+	
+	if ( upper != 0 && user != 1 ) {
+		$('#qnaWriteModal').modal({backdrop: 'static'}); // 모달 밖 영역 클릭할 수 없게 만듦.
+		$('.modal-title').text("경고");
+		$('.modal-body').text("해당 페이지는 관리자만 접근 가능합니다.");
+		
+		$('#btnRedirectLogin').click(function(){
+			location.href = "/zaksim/customerCenter/QnA/list";
+		});		
 	}
 	// --------------------------------------
 
