@@ -121,4 +121,9 @@ public class MypageServiceImpl implements MypageService {
 	public List<Board> viewMyPastChalBoard(int endChalIdx) {
 		return memberDao.selectEndChalBoard(endChalIdx);
 	}
+
+	@Override
+	public int countIngChal(int idx) {
+		return memberDao.selectCountIngChal(idx);
+	}
 }

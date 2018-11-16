@@ -249,8 +249,8 @@ $(document).ready(function() {
 $("[name='money']").attr("required", true);
 
 var IMP = window.IMP; // 생략해도 괜찮습니다.
-//IMP.init("imp14263647"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
-IMP.init("imp29063736"); 	// 권수정 아이디용 가맹점 식별코드
+IMP.init("imp14263647"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
+// IMP.init("imp29063736"); 	// 권수정 아이디용 가맹점 식별코드
 
 
 $('#chageDiv').on("click","#payBtn",function() {

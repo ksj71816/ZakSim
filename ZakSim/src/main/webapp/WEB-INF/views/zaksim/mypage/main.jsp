@@ -36,7 +36,7 @@
 	        
 	        
 	        <div class="col-md-8" style="padding-left: 7rem!important;">
-		        <c:if test="${chal.ingChal ne 0}">
+		        <c:if test="${ingChal ne null}">
 		        	<div class="mt-3 dohyeon">
 			        	<p>
 			        	<fmt:formatDate pattern = "yyyy-MM-dd" value = "${ingChal.startDate}"/> 부터 
@@ -54,7 +54,7 @@
 		          	</div>
 		        </c:if>
 		        
-		        <c:if test="${chal.ingChal eq 0}">
+		        <c:if test="${ingChal eq null}">
 		        	<div class="row mt-3" style="background-color: #f6f6f6;">
 		        		<div class="col-md-12 pt-4 pb-4">
 			        		<p class="dohyeon">진행중인 도전이 없습니다.</p>

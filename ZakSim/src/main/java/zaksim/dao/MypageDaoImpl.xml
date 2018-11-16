@@ -162,6 +162,10 @@
 		AND status='ing'
 	</select>
 	
+	<select id="selectCountIngChal" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM challenge WHERE member_idx=#{idx} AND status='ing'
+	</select>
+	
 	<select id="selectChallengeRate" parameterType="int" resultMap="Challenge">
 		SELECT * 
 		FROM (

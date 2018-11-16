@@ -162,4 +162,16 @@ public class ZakSimMemberServiceImpl implements ZakSimMemberService {
 		return ranNum;
 	}
 
+	@Override
+	public void plusVisits() {
+		// 오늘 날짜의 컬럼 있는지 확인
+		int checkNum = memberDao.checkVisits();
+		
+		if(checkNum > 0) {
+			memberDao.updateVisits();
+		} else {
+			memberDao.insertVisits();
+		}
+	}
+
 }
