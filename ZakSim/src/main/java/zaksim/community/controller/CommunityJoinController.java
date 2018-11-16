@@ -111,12 +111,14 @@ public class CommunityJoinController {
 
 
 	// 커뮤니티 탈퇴 POST
+	@RequestMapping(value="/outCommunity", method=RequestMethod.POST)
 	public String exitCommunity(int idx, HttpSession session) {
 
 		return "";
 	}
 
 	// 커뮤니티 강퇴(AJAX)? POST 
+	@RequestMapping(value="/fireCommunity", method=RequestMethod.POST)
 	public ModelAndView fireCommunity(int idx) {
 
 		ModelAndView  modelAndView = new ModelAndView();
