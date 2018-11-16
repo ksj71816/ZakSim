@@ -21,4 +21,7 @@ public interface BoardDao {
 	
 	public List<Board> selectPagingCitation(Paging paging);
 	
+	// 인증글 삭제
+	public void deleteCitation(int idx);
+	
 }
