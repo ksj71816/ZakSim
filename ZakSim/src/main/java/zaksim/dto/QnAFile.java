@@ -1,6 +1,6 @@
 package zaksim.dto;
 
-import java.sql.Date;
+import java.util.Date;
 
 /*
  * 작성일 : 2018.10.18

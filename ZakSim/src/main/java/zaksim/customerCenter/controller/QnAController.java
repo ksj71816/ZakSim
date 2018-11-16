@@ -14,12 +14,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import zaksim.customerCenter.service.QnACommentService;
 import zaksim.customerCenter.service.QnAFileService;
 import zaksim.customerCenter.service.QnAService;
 import zaksim.dto.QnA;
 import zaksim.dto.QnAComment;
+import zaksim.dto.QnAFile;
 import zaksim.util.Paging;
 
 /*
@@ -114,9 +116,11 @@ public class QnAController {
 		
 		qnaService.qnaViewRead(qnaIdx);
 		QnA qna = qnaService.qnaView(qnaIdx);
+		List<QnAFile> fileList = qnafileService.qnaFileList(qnaIdx);
 		List<QnAComment> commentList = qnaService.viewComment(qnaIdx);
 		
 		model.addAttribute("view", qna);
+		model.addAttribute("fileList", fileList);
 		model.addAttribute("commentList", commentList);
 		
 		return "zaksim/customerCenter/QnA/view";
@@ -130,9 +134,16 @@ public class QnAController {
 		
 	}
 	@RequestMapping(value="/zaksim/customerCenter/QnA/write", method=RequestMethod.POST)
-	public String qnaWrite(HttpSession session, QnA qnaDto, @RequestParam(defaultValue="0") int upperIdx) {
+	public String qnaWrite(HttpSession session, QnA qnaDto, MultipartFile file, @RequestParam(defaultValue="0") int upperIdx) {
 		
-		if (qnaDto.getSecret() == null) {			
+		int qnaIdx = qnaService.getQnAIdx(); // 문의글 인덱스 미리 할당
+		
+		QnAFile qnaFile = qnafileService.getFilePath(file); // 파일 설정
+		qnaFile.setQnaIdx(qnaIdx); // 문의글 인덱스 저장
+		
+		qnaDto.setIdx(qnaIdx);
+		
+		if (qnaDto.getSecret() == null) {
 			qnaDto.setSecret("public");
 		}
 		qnaDto.setWriterIdx((int) session.getAttribute("login_idx"));
@@ -152,6 +163,9 @@ public class QnAController {
 		logger.info("[QnAController] 작성한 문의글(혹은 답변) : " + qnaDto.toString());
 		qnaService.qnaWrite(qnaDto);
 		
+		logger.info("[QnAController] 작성한 문의글(혹은 답변)의 파일 : " + qnaFile.toString());
+		qnafileService.qnaFileUpload(qnaFile); // 파일 업로드
+		
 		return "redirect:/zaksim/customerCenter/QnA/list";
 	}
 	
@@ -160,15 +174,24 @@ public class QnAController {
 	@RequestMapping(value="/zaksim/customerCenter/QnA/update", method=RequestMethod.GET)
 	public void qnaUpdatePage(Model model, @RequestParam int qnaIdx) {
 		QnA dto = qnaService.qnaView(qnaIdx);
+		List<QnAFile> fileList = qnafileService.qnaFileList(qnaIdx);
 		
 		model.addAttribute("old", dto);
+		model.addAttribute("old_fileList", fileList);
 		
 	}
 	@RequestMapping(value="/zaksim/customerCenter/QnA/update", method=RequestMethod.POST)
-	public String qnaUpdate(QnA qnaDto) {
+	public String qnaUpdate(QnA qnaDto, MultipartFile file) {
 		
 		logger.info("[QnAController] 수정한 문의글(혹은 답변) : " + qnaDto.toString());
+		
+		QnAFile qnaFile = qnafileService.getFilePath(file); // 파일 설정
+		qnaFile.setQnaIdx(qnaDto.getIdx());
+		
+		logger.info("[QnAController] 수정한 문의글(혹은 답변)의 파일 : " + qnaFile.toString());
+		
 		qnaService.qnaUpdate(qnaDto);
+		qnafileService.qnaFileUpload(qnaFile);
 		
 		return "redirect:/zaksim/customerCenter/QnA/list";
 	}

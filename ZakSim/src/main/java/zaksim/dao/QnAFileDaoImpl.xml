@@ -4,5 +4,21 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="zaksim.dao.QnAFileDao">
+ <resultMap type="zaksim.dto.QnAFile" id="QnAFile">
+ 	<result property="qnaIdx" column="qna_idx" />
+ 	<result property="writtenDate" column="written_date" />
+ </resultMap>
+ 
+ <!-- Q&A 파일 리스트 조회 dao -->
+ <select id="qnaFileList" resultType="zaksim.dto.QnAFile" parameterType="int">
+ 	SELECT * FROM QnAFile
+ 	WHERE qna_idx=#{qnaIdx}
+ </select>
+ 
+ <!-- Q&A 파일 업로드(첨부) dao -->
+ <insert id="qnaFileUpload" parameterType="zaksim.dto.QnAFile">
+ 	INSERT INTO QnAFile(idx, qna_idx, original, stored)
+ 	VALUES(QnAFile_SEQ.nextval, #{qnaIdx}, #{original}, #{stored})
+ </insert>
 
  </mapper>
