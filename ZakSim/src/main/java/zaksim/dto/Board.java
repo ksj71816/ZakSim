@@ -58,7 +58,8 @@ public class Board {
 	
 	private int likeNum;
 
-
+	//파일 실제 저장명 
+	private String storedName;
 
 	public int getRnum() {
 		return rnum;
@@ -211,6 +212,14 @@ public class Board {
 	public void setLikeNum(int likeNum) {
 		this.likeNum = likeNum;
 	}
+	
+	public String getStoredName() {
+		return storedName;
+	}
+
+	public void setStoredName(String storedName) {
+		this.storedName = storedName;
+	}
 
 	@Override
 	public String toString() {
@@ -219,6 +228,15 @@ public class Board {
 				+ ", open=" + open + ", certification=" + certification + ", written_date=" + written_date + ", hit="
 				+ hit + ", comment=" + comment + ", boardLike=" + boardLike + ", report=" + report + ", communityGroup="
 				+ communityGroup + ", zakSimMember=" + zakSimMember + ", commentNum=" + commentNum + ", likeNum="
-				+ likeNum + "]";
+				+ likeNum + ", storedName=" + storedName + ", getRnum()=" + getRnum() + ", getIdx()=" + getIdx()
+				+ ", getChallenge_idx()=" + getChallenge_idx() + ", getGroup_idx()=" + getGroup_idx()
+				+ ", getWriter_idx()=" + getWriter_idx() + ", getTitle()=" + getTitle() + ", getContent()="
+				+ getContent() + ", getImage()=" + getImage() + ", getOpen()=" + getOpen() + ", getCertification()="
+				+ getCertification() + ", getWritten_date()=" + getWritten_date() + ", getHit()=" + getHit()
+				+ ", getComment()=" + getComment() + ", getBoardLike()=" + getBoardLike() + ", getReport()="
+				+ getReport() + ", getCommunityGroup()=" + getCommunityGroup() + ", getZakSimMember()="
+				+ getZakSimMember() + ", getCommentNum()=" + getCommentNum() + ", getLikeNum()=" + getLikeNum()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+				+ "]";
 	}
 }

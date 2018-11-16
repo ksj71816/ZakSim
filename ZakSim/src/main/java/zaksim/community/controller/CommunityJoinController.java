@@ -34,21 +34,16 @@ public class CommunityJoinController {
 	@RequestMapping(value="/enrollCommunity", method=RequestMethod.GET)
 	public void joinCommunity(Model model, HttpSession session, HttpServletRequest request) {
 
-
 			// 그룹 idx 가져옴
-			String idx = request.getParameter("idx");
-			
+			String idx = request.getParameter("idx");			
 			if(session.getAttribute("login_idx") != null ) {
-				
 				// 세션 가져오기
 				String login = (String)session.getAttribute("login_idx").toString();
-
 				// 그룹 정보 넘기기
 				model.addAttribute("groupInfo", communityListService.info(Integer.parseInt(idx)));
-
 				// 키워드 가져오기
 				model.addAttribute("keywordList", communityListService.keywordList());
-				
+					
 				// 회원 리스트 가져오기
 				model.addAttribute("groupMember", communityMemberListService.members());
 

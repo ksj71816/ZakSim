@@ -11,7 +11,7 @@ public interface CommunityBoardDAO {
 	
 	
 	// 게시글 작성
-	public Board insertBoard(Board board);
+	public void insertBoard(Board board);
 	
 	// 게시글 수정
 	public void updateBoard(Board board);

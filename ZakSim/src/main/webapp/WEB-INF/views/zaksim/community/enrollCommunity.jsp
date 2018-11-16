@@ -136,8 +136,8 @@
                <div class="collapse" id="collapseExample"
                   style="margin-left: 150px; margin-right: 150px; margin-bottom: 50px;">
                   <div class="card card-body">
+                        <form id="boardForm" action="/zaksim/community/enrollBoard" method="post" enctype="multipart/form-data">
                      <div>
-                        <form>
                            <div class="form-group">
                               <label for="recipient-name" class="form-control-label"><strong>
                                     게시글을 작성하세요</strong></label> <br>
@@ -145,34 +145,35 @@
                                  style="margin-left: auto; margin-right: auto;">
                                  <div class="radio"
                                     style="margin-left: 200px; margin-right: 100px;">
-                                    <label> <input type="radio" name="optionsRadios"
-                                       class="textKind" value="nomalText" checked> 일반 글
+                                    <label> <input type="radio" name="certification"
+                                       class="textKind" value=0 checked> 일반 글
                                     </label>
                                  </div>
                                  <div class="radio">
-                                    <label> <input type="radio" name="optionsRadios"
-                                       class="textKind" value="certificationText"> 인증 글
+                                    <label> <input type="radio" name="certification"
+                                       class="textKind" value=1> 인증 글
                                     </label>
                                  </div>
                                  <br> <br>
                                  <div>
-                                    <br> <input type="file" name="image"
+                                    <br> <input type="file" name="imgFile" id="filee"
                                        style="margin-left: 200px;" />
                                  </div>
                               </div>
                            </div>
                            <div class="form-group">
-                              <label for="message-text" class="form-control-label"><strong>Content:</strong></label>
-                              <textarea class="form-control" id="board-text1"
+                              <label for="board-text1" class="form-control-label" ><strong>Content:</strong></label>
+                              <textarea class="form-control" id="board-text1" name="content"
                                  onkeydown="boardCommnet(this)" onkeyup="boardCommnet(this)"></textarea>
                            </div>
-                        </form>
+                        
                      </div>
                      <div style="float: right;">
-                        <button type="button" class="btn btn-danger">등록</button>
+                        <button type="submit" class="btn btn-danger" id ="enrollBoardBtn">등록</button>
                         <button type="reset" class="btn btn-secondary"
                            data-dismiss="modal">초기화</button>
                      </div>
+                     </form>
                   </div>
                </div>
 
@@ -635,6 +636,8 @@
 
 <!-- <script type="text/javascript" -->
 <!--    src="http://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+<!-- jQuery Form Plugin -->
+<script src="http://malsup.github.com/min/jquery.form.min.js"></script> 
 <script
    src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.28.12/sweetalert2.all.js"></script>
 
@@ -662,8 +665,76 @@
 </script>
 
 <script type="text/javascript">
+$(document).ready(function() {
+	
+	$("#enrollBoardBtn").click(function() {
+		var radioVal = $('input[name="optionsRadios"]:checked').val();
+		var file = $("#filee").val();
+		var boardContent = $("#board-text1").val();
+		
+		console.log('라디오 값 : ' + radioVal);
+		console.log('파일 : '+ file);
+		console.log("게시 글  : "+ boardContent);
+		
+		if(radioVal == 1){
+			if(file == null || file ==''){
+	            swal({
+	                  type: 'error',
+	                  title: 'Oops...',
+	                  text: '사진을 등록하세요.'
+	            });
+	            return false;
+			}
+			else 	if(boardContent == null || boardContent ==''){
+	            swal({
+	                  type: 'error',
+	                  title: 'Oops...',
+	                  text: '게시글을 등록하세요.'
+	            });
+	            return false;
+			}
+		}
+		else{
+				if(boardContent == null || boardContent ==''){
+	            swal({
+	                  type: 'error',
+	                  title: 'Oops...',
+	                  text: '게시글을 등록하세요.'
+	            });
+	            return false;
+			}
+		}
+		
+	});
+	
+	
+	
+	
+	
+	$("#boardForm").ajaxForm({
+// 		type: "post" //form에 설정한 값이 기본값 
+// 		, url: "/zaksim/community/enrollBoard" //form에 설정한 값이 기본값
+		data: {
+			
+		}
+		, dataType: "json"
+		, success: function( res ) {
+			console.log("성공");
+			console.log(res);
+		}
+		, error: function() {
+			console.log("실패");
+		}
+		
+		
+	});
+});
+</script>
 
 
+
+
+<script type="text/javascript">
 
    $(document).ready(function() {
 
@@ -760,17 +831,7 @@
 
 <script type="text/javascript">
 
-// if(${like }) { //추천상태
-//    $(".btnRecommend")
-//       .addClass("btn-outline-danger")
-//       .removeClass("btn-outline-success")
-//       .text("추천 취소");
-// } else {   //추천 안 한상태
-//    $(".btnRecommend")
-//       .addClass("btn-outline-success")
-//       .removeClass("btn-outline-danger")
-//       .text("좋아요");
-// }
+
 
 // 추천 버튼 클릭 이벤트 처리
 $("#btnDiv").on("click", ".btnRecommend", function() {

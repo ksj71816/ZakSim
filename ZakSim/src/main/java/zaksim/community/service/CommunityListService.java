@@ -54,6 +54,13 @@ public interface CommunityListService {
 	 * @param paging
 	 * @return
 	 */
-	public List<GroupLike> popularPage(Paging paging);	
+	public List<GroupLike> popularPage(Paging paging);
+
+	/**
+	 * 새로운 그룹 리스트 가져오기 (페이징 적용)
+	 * @param paging
+	 * @return
+	 */
+	public List<GroupLike> newPage(Paging paging);	
 	
 }
