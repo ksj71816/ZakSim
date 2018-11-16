@@ -11,6 +11,7 @@ import zaksim.dto.CommunityGroup;
 import zaksim.dto.GroupKeyword;
 import zaksim.dto.GroupLike;
 import zaksim.dto.GroupMember;
+import zaksim.util.Paging;
 
 @Service
 public class CommunityListServiceImpl  implements CommunityListService{
@@ -31,7 +32,7 @@ public class CommunityListServiceImpl  implements CommunityListService{
 	
 	// 새로운 그룹 리스트
 	@Override
-	public List<GroupLike> newGroupList() {
+	public List<CommunityGroup> newGroupList() {
 		return communityListDAO.newGroupList();
 	}
 	
@@ -89,5 +90,17 @@ public class CommunityListServiceImpl  implements CommunityListService{
 	@Override
 	public List<GroupMember> existMember( int idx) {
 		return communityListDAO.existMember(idx);
+	}
+
+	// 인기그룹 갯수
+	@Override
+	public int popularCount() {
+		return communityListDAO.popularCount();
+	}
+
+	@Override
+	public List<GroupLike> popularPage(Paging paging) {
+		
+		return communityListDAO.popularPage(paging);
 	}
 }
