@@ -66,6 +66,7 @@
 			</c:if>
 
 
+
 			<hr
 				style="margin-top: 40px; border-color: gray; margin-bottom: 40px;">
 
@@ -99,14 +100,13 @@
 						</c:if>
 		
 					</c:if>
-
-
+<script>
+console.log('${joinedGroupList }');
+</script>
 
 					<!-- 참여하고 있는 모임이 있을 시 -->
 					<c:if test="${joinedGroupList ne null }">
-						<c:forEach var="joinedGroupList" items="${joinedGroupList }"	
-							begin="0" end="2" step="1">
-							
+						<c:forEach var="joinedGroupList" items="${joinedGroupList }"	begin="0" end="2" step="1">
 							<div class="card" style="width: 20rem; margin-right: 15px;">
 								<div class="hovereffect">
 									<img class="card-img-top"
@@ -805,7 +805,8 @@
 			}).then((result) => {
 				  if (result.value) {
 						console.log("안쪽!!!");
-						location.href = "/zaksim/community/communityMain";
+// 						location.href = "/zaksim/community/communityMain";
+						window.location.reload();
 					  }
 					})
 				return true;
@@ -918,8 +919,9 @@
 						text: data.success
 					}).then((result) => {
 						  if (result.value) {
-								console.log("안쪽!!!");
-								location.href = "/zaksim/community/enrollCommunity?idx="+idxx;
+// 								console.log("안쪽!!!");
+								window.location.reload();
+// 								location.href = "/zaksim/community/enrollCommunity?idx="+idxx;
 							  }
 							})
 				}

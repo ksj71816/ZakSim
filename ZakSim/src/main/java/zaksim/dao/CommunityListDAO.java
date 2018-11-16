@@ -57,4 +57,26 @@ public interface CommunityListDAO {
 	public List<GroupLike> popularPage(Paging paging);	
 	
 	public int isCommunityMember(Map<String,Integer> map);
+
+	
+	/**
+	 * 새로운 리스트 가져오기(페이징)
+	 * @param paging
+	 * @return
+	 */
+	public List<GroupLike> newPage(Paging paging);
+
+	/**
+	 *  카테고리 갯수 가져오기
+	 * @param category_idx
+	 * @return
+	 */
+	public int categoryCount(int category_idx);
+	
+	/**
+	 * 카테고리 리스트 가져요기 (페이징 ) 
+	 * @param pMap
+	 * @return
+	 */
+	public List<CommunityGroup> categoryPage(Map<String, Object> pMap);
 }

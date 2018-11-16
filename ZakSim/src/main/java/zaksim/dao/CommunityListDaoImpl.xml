@@ -80,7 +80,7 @@
       (select
       c.idx g_idx,
       c.title, c.content, c.image, c.max, c.open_date, c.secret,
-      c.password, c.member_idx
+      c.password
       from communitygroup c where c.member_idx=#{idx}
       ) g
       left join (select count(*) like_num, group_idx
@@ -324,4 +324,61 @@
 	<select id="isCommunityMember" parameterType="map" resultType="Integer">
     select count(*) from groupMember where member_idx = #{memberIdx} AND group_idx = #{groupIdx }
 	</select>
+	
+	<select id="newPage" parameterType="zaksim.util.Paging" resultMap="CommunityGroup">
+	  SELECT * from (
+	    SELECT rownum rnum, gl.*
+			FROM (
+				SELECT
+			          g.idx g_idx, 
+			          g.title,
+			          g.content,
+			          g.image,
+			       	  g.max,
+			          g.open_date,
+			          g.secret,
+			          g.password,
+			          g.member_idx,
+			          like_num g_like_num
+			      FROM CommunityGroup g
+			      left join (
+			          select count(*) as like_num, group_idx as l_group_idx from grouplike
+			          GROUP BY group_idx
+			      ) l
+			      on l.l_group_idx=g.idx
+	              order by idx desc
+		    ) gl
+	    ) rgl
+	    WHERE rgl.rnum between #{startNo} and #{endNo}
+	</select>
+
+
+	<select id="categoryCount" resultType="int" parameterType="int">
+		select count(*) from communityGroup where category_idx = #{category_idx } 
+	</select>
+	
+<!-- 		public List<GroupLike> categoryPage(Paging paging); -->
+	<select id="categoryPage" parameterType="map" resultType="zaksim.dto.CommunityGroup">
+		SELECT * FROM (
+        SELECT rownum rnum, R.* FROM (
+        SELECT
+		*
+		FROM
+		(SELECT g.idx
+		g_idx, g.title ,g.content , g.image ,g.max , g.open_date , g.secret
+		,
+		g.password,c.category
+		FROM CommunityGroup g,
+		CommunityCategory c
+		WHERE g.category_idx = c.idx and c.idx=#{idx } ) gk
+		left join (select count(*) as like_num,
+		group_idx as l_group_idx from
+		grouplike
+		GROUP BY group_idx order by
+		like_num desc, null desc) l on l.l_group_idx=gk.g_idx
+        ) R
+        ) P
+        WHERE rnum between #{paging.startNo } and #{paging.endNo }
+	</select>
+	
 </mapper>

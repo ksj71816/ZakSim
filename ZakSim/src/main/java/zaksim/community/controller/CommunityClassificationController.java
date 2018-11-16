@@ -33,7 +33,7 @@ public class CommunityClassificationController {
 		
 		String idx = (String)session.getAttribute("login_idx").toString();
 		
-		System.out.println("!zzzzzzzzzzzzzzzzzzzzzzzzzzzz : "+ idx);
+		
 		
 		// 가입한 그룹 리스트
 		model.addAttribute("joinedGroupList", communityListService.joinedGroupList(Integer.parseInt(idx)));
@@ -72,12 +72,29 @@ public class CommunityClassificationController {
 	
 	// 새로운 커뮤니티 화면 GET
 	@RequestMapping(value="/newCommunity", method=RequestMethod.GET)
-	public void newCommunity(Model model) {
-		// 인기있는 그룹
-//		model.addAttribute("newGroupList", communityListService.newGroupList(null));	
-		model.addAttribute("newGroupList", communityListService.newGroupList());	
+	public void newCommunity(Model model, HttpSession session, @RequestParam(defaultValue="1", required=false)int curPage) {
+
+		
+		int idx=0;
+		if(session.getAttribute("login_idx") != null ) {
+			idx =(Integer)session.getAttribute("login_idx");
+		}
+		
+		// 새로운 그룹
+//		model.addAttribute("newGroupList", communityListService.newGroupList());	
 		// 키워드 리스트
 		model.addAttribute("keywordList", communityListService.keywordList());
+		//
+		model.addAttribute("groupMemberExist", communityListService.existMember(idx));
+		
+		int totalCount = communityListService.popularCount();
+		Paging paging = new Paging(totalCount, curPage, 15);
+		
+		List<GroupLike> cList = communityListService.newPage(paging);
+		
+		model.addAttribute("newGroupList", cList);
+		model.addAttribute("paging", paging);
+		
 	}
 	
 	// 카테고리 화면 GET

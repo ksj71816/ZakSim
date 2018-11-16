@@ -156,7 +156,7 @@
 		</div>
 
 	<div style="margin-left: 500px; margin-top: 50px;">
-			<jsp:include page="/WEB-INF/views/zaksim/community/paging/pagingBtn.jsp" />
+			<jsp:include page="/WEB-INF/views/zaksim/community/paging/popularPaging.jsp" />
 	</div>
 
 		<div class="col" style="margin-bottom: 300px;"></div>
@@ -671,7 +671,8 @@
 					}).then((result) => {
 						  if (result.value) {
 								console.log("안쪽!!!");
-								location.href = "/zaksim/community/enrollCommunity?idx="+idxx;
+// 								location.href = "/zaksim/community/enrollCommunity?idx="+idxx;
+								window.location.reload();
 							  }
 							})
 				}
@@ -731,7 +732,8 @@
 				}).then((result) => {
 					  if (result.value) {
 							console.log("안쪽!!!");
-							location.href = "/zaksim/community/enrollCommunity?idx="+idxx;
+// 							location.href = "/zaksim/community/enrollCommunity?idx="+idxx;
+							window.location.reload();
 						  }
 						})
 				

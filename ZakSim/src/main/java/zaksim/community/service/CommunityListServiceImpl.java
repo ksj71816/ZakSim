@@ -103,4 +103,10 @@ public class CommunityListServiceImpl  implements CommunityListService{
 		
 		return communityListDAO.popularPage(paging);
 	}
+
+	@Override
+	public List<GroupLike> newPage(Paging paging) {
+		// TODO Auto-generated method stub
+		return communityListDAO.newPage(paging);
+	}
 }
