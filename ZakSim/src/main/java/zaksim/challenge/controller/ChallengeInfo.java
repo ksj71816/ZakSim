@@ -1,7 +1,6 @@
 package zaksim.challenge.controller;
 
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;

@@ -91,19 +91,19 @@ public class MypageController {
 		return "redirect:/zaksim/mypage/main";
 	}
 	
-	
-	@RequestMapping(value="/groups", method=RequestMethod.GET)
-	public void MypageGroups() {
-		
-	}
-	
-	
-	@RequestMapping(value="/challenge", method=RequestMethod.GET)
-	public void MypageChallenge() {
-		
-		
-	}
-	
+//	
+//	@RequestMapping(value="/groups", method=RequestMethod.GET)
+//	public void MypageGroups() {
+//		
+//	}
+//	
+//	
+//	@RequestMapping(value="/challenge", method=RequestMethod.GET)
+//	public void MypageChallenge() {
+//		
+//		
+//	}
+//	
 
 	@RequestMapping(value="/delete", method=RequestMethod.POST, produces="application/json; charset=utf-8")
 	@ResponseBody
