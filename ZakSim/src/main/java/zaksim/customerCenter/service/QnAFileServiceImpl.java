@@ -35,27 +35,23 @@ public class QnAFileServiceImpl implements QnAFileService {
 	@Override
 	public QnAFile getFilePath(MultipartFile file) {
 		QnAFile qnaFile = new QnAFile();
-		
-		if (file.getOriginalFilename() == null || file.getOriginalFilename() == "") {
-			
-		} else {
-			String path = "/resources/upload/qna/";
-			String realpath = context.getRealPath(path);
-			String uid = UUID.randomUUID().toString().split("-")[4];
-			String stored = uid+"_"+file.getOriginalFilename();
-			File dest = new File(realpath, stored);
-			
-			try {
-				file.transferTo(dest);
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			qnaFile.setOriginal(file.getOriginalFilename());
-			qnaFile.setStored(stored);
+	
+		String path = "/resources/upload/qna/";
+		String realpath = context.getRealPath(path);
+		String uid = UUID.randomUUID().toString().split("-")[4];
+		String stored = uid + "_" + file.getOriginalFilename();
+		File dest = new File(realpath, stored);
+
+		try {
+			file.transferTo(dest);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+
+		qnaFile.setOriginal(file.getOriginalFilename());
+		qnaFile.setStored(stored);
 		
 		return qnaFile;
 	}
