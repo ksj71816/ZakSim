@@ -13,24 +13,24 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.servlet.view.AbstractView;
 
-import winwin.dto.Material;
+import zaksim.dto.QnAFile;
 
 public class DownloadView extends AbstractView{
 
 	@Override
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		Material file = (Material)model.get("downFile");
+		QnAFile file = (QnAFile)model.get("downFile");
 		
 		//이진데이터를 표현하는 MIME-TYPE
 		response.setContentType("application/octet-stream");
 		
 		//파일크기 지정(스트림 전송량 지정)
-		response.setContentLength((int)file.getFilesize());
+//		response.setContentLength((int)file.getFilesize());
 		
 		//UTF-8 인코딩해서 문자열 저장
 		String filename
-			= URLEncoder.encode(file.getOriginName(), "utf-8");
+			= URLEncoder.encode(file.getOriginal(), "utf-8");
 		
 		//UTF-8의 오류 수정
 		filename = filename.replace("+", "%20");
@@ -62,10 +62,10 @@ public class DownloadView extends AbstractView{
 		
 		// 서버 저장 path 찾기
 		ServletContext context = request.getSession().getServletContext();
-		String path = context.getRealPath("upload");
+		String path = context.getRealPath("resources\\upload\\qna");
 		
 		// 서버에 저장된 파일 객체 생성
-		File origin = new File(path, file.getStoredName());
+		File origin = new File(path, file.getStored());
 		
 		System.out.println(origin);
 		

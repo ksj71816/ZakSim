@@ -69,7 +69,7 @@
 								<c:forEach var="file" items="${fileList }">
 								<tr>
 									<th class="table-info">파일</th>
-									<td colspan="3"><span onclick="downFile();">${file.original }</span></td>
+									<td colspan="3"><span onclick="downFile();" style="cursor:pointer;">${file.original }</span></td>
 									<script>
 										function downFile(){
 											location.href="/zaksim/customerCenter/QnA/download?qnaIdx="+${view.idx}
