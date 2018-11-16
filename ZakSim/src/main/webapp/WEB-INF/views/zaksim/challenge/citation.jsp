@@ -58,7 +58,7 @@
         <div class="col-md-8 border-white my-3 px-5 py-4 rounded" style="background-color: rgba(33, 33, 33, 0.5); border-right-width: 5px;	border-top-width: 5px;	border-bottom-width: 5px;    border-left-width: 5px;	border-style: solid;">
 
    
-   <form id="upload" action="/zaksim/challenge/citation" method="post" enctype="multipart/form-data">
+   
           <div class="row ">
             
             <div class="col-md-12 mt-2 text-white">
@@ -75,7 +75,6 @@
 	    		</label>
             
             </h5>
-            
             
             </div>
             
@@ -104,7 +103,7 @@
 			
 			<div >
 <!-- 				 <label for="fileselect">Files to upload:</label> -->
-				<input id="fileselect" type="file" name="fileselect" multiple="multiple"/>
+<!-- 				<input id="fileselect" type="file" name="fileselect" multiple="multiple"/> -->
 				<div id="filedrag" style="background-color: aliceblue;">
 				
 				이곳에 이미지 파일을 드래그 해서 올려주세요.</div>
@@ -112,7 +111,7 @@
 			
 			<div id="submitbutton">
 				<button type="submit">Upload Files</button>
-			</div>
+			</div> <!-- none -->
 			
 			</fieldset>
 			
@@ -131,7 +130,7 @@
             
           <div class="form-group text-center text-white">
             <label for="exampleFormControlTextarea1" class="d-flex mx-1">메세지</label>
-            <textarea class="form-control" id="textarea" name="content" rows="3"></textarea>
+            <textarea class="form-control" id="content" name="content" rows="3"></textarea>
             
             <div class="row">
             <!-- <div class="col-md-4">
@@ -139,13 +138,12 @@
             </div>
             <div class="col-md-4"> </div> -->
             	<div class="col-md-12">
-            	<button type="submit" class="btn btn-primary mt-5 " >인증 하기</button>
+            	<button id="auth" type="button" class="btn btn-primary mt-5 " >인증 하기</button>
             	</div>
             </div>
               
           </div>
           
-    </form>
         
         </div>
         
@@ -210,7 +208,6 @@ setInterval(
 
 		function sysdate(){
 			
-			console.log("현재 시각 함수");
 			
 			var nowDate = document.getElementById("nowdate");
 
@@ -309,15 +306,11 @@ if (window.File && window.FileList && window.FileReader) {
 //initialize
 function Init() {
 
-	var fileselect = $id("fileselect"),
+
 		filedrag = $id("filedrag"),
 		submitbutton = $id("submitbutton");
 	
 
-	// file select
-	fileselect.addEventListener("change", FileSelectHandler, false);
-
-	// is XHR2 available?
 	var xhr = new XMLHttpRequest();
 	if (xhr.upload) {
 	
@@ -353,7 +346,7 @@ function FileDragHover(e) {
 	
 }
 
-var file;
+var files;
 
 //file selection
 function FileSelectHandler(e) {
@@ -362,19 +355,15 @@ function FileSelectHandler(e) {
 	FileDragHover(e);
 
 	// fetch FileList object
-	var files = e.target.files || e.dataTransfer.files;
-  	
-	file=files[0];
+ 	files = e.target.files || e.dataTransfer.files;
 	
-    console.log("-------------------");
-//     console.log("files");
-//     console.log(files);
-	
-	
-	// process all File objects // 이미지 정보 전달->출력
-	for (var i = 0, f; f = files[i]; i++) {
-		ParseFile(f);
+
+	if(files.length < 1){
+		console.log("이미지 없음");
+		alert("이미지가 없습니다");
+		return;
 	}
+	
 
 	
 // 파일 리더( 이미지 미리보기 )
@@ -397,53 +386,34 @@ function FileSelectHandler(e) {
       reader.readAsDataURL(files[0]);
       
       
-//      $('#fileselect').val(files[0]);
-//       console.log($('#fileselect').val());
-      //input 추가
-//    console.log('te');
-  addFileFromLastInput(files);
       
       
 }
 
-
-
-function ParseFile(file) {
-
-// 	console.log("file");
-	console.log(file);
-	 
+$('#auth').click(function(){
 	
-	// 이미지 정보 출력
-	Output(
-		"<p>File information: <strong>" + file.name +
-		"</strong> type: <strong>" + file.type +
-		"</strong> size: <strong>" + file.size +
-		"</strong> bytes</p>"
-		
-		
-	);
+	fileMultiUpload(files, $('#filedrag'));
+});
+
+
+function fileMultiUpload(files, obj){
+	var data = new FormData();
+	data.append('fileselect', files[0]);
+	data.append('content',$('#content').val());
+	data.append('open',$('input[name="open"]').val());
 	
-}
-
-
-//input 추가
-function addFileFromLastInput(files){
-	console.log("인풋추가 실행")
-    var a = $('input#fileselect.addFile');
-    a[a.length-1].files;
-
-    try{
-    	let new_input = '<input id="fileselect2" type="file" name="fileselect" multiple="multiple" class="addFile" />';
-        
-        $('.file').append(new_input);
-        console.log("성공이다")
-    }catch(err){
-		console.log("에러다")
-    }
-
-//         $('#fileselect').remove();
-    return 0;
+	
+	$.ajax({
+		url:'/zaksim/challenge/citation',
+		type:'post',
+		data:data,
+		processData:false,
+		contentType: false,
+		success:function(){
+			console.log("에이젝스 성공");
+			location.href="/zaksim/challenge/result/citationSuccess";
+		}
+	});
 }
 
 
@@ -452,42 +422,7 @@ function addFileFromLastInput(files){
 
 
 
-// form data ajax 처리
-// 		function toCitation(){
-// 			console.log("toCitation()");
-// 			console.log(file);
-			
-			
-// 			var from = $('#upload')[0];
-// 			var formData = new FormData(from);
-			
-// 			formData.append("img",file);
-// 			console.log(formData);
-			
-// 			$.ajax({
-// 			      type: "post"
-// 			      , url : "/zaksim/challenge/citation"
-// 			      , data : formData
-// 		   	  	  , dataType: "json"
-// 				  , enctype: "multipart/form-data"
-					  
-// 				  , success: function( data ) {
-// 						console.log("전송 성공!!");	         
-// 						console.log(formData);
-// 			      }
-// 			      , error: function( e ) {
-// 			         console.log("--- error ---");
-// 			         console.log( e.responseText );
-// 			     	console.log(formData);
-					
-// 			      }
-// 			      , complete: function() {
-// 			         //입력 창 초기화
-// 			      }
-// 			   }); 
-			 
-			
-// 		}
+
 		
 </script>
 

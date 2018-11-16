@@ -70,7 +70,6 @@ public class Citation {
 		 MultipartFile fileselect) {
 		
 		logger.info("citationPOST 활성화");
-		logger.info(model.toString());
 		logger.info(board.toString());
 		logger.info(fileselect.toString());
 		
