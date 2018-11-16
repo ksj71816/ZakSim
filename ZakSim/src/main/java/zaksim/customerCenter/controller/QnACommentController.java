@@ -26,12 +26,25 @@ public class QnACommentController {
 
 	// Q&A depth 0 댓글 작성
 	@RequestMapping(value="/zaksim/customerCenter/QnA/comment_write", method=RequestMethod.POST)
-	public void qnaCommentWrite(QnAComment qnaCommentDto, String replyContent, HttpSession session) {
+	public void qnaCommentWrite(QnAComment qnaCommentDto, HttpSession session) {
 
-		qnaCommentDto.setContent(replyContent);
 		qnaCommentDto.setWriterIdx((Integer)session.getAttribute("login_idx"));
 		
 		qnaCommentService.qnaCommentWrite(qnaCommentDto);
+		
+//		return "/zaksim/customerCenter/QnA/view?qnaIdx=" + qnaCommentDto.getQnaIdx();
+
+	}
+	
+	// Q&A 대댓글 작성
+	@RequestMapping(value="/zaksim/customerCenter/QnA/re_comment_write", method=RequestMethod.POST)
+	public void qnaReCommentWrite(QnAComment qnaCommentDto, HttpSession session) {
+
+		qnaCommentDto.setWriterIdx((Integer)session.getAttribute("login_idx"));
+		
+		System.out.println("controller Comment : " + qnaCommentDto);
+		
+		qnaCommentService.qnaReCommentWrite(qnaCommentDto);
 		
 //		return "/zaksim/customerCenter/QnA/view?qnaIdx=" + qnaCommentDto.getQnaIdx();
 

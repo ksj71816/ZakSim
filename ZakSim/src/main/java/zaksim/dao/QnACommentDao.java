@@ -40,5 +40,14 @@ public interface QnACommentDao {
 
 	// 댓글 가져오기
 	public List<QnAComment> selectComment(int qnaIdx);
+
+	// 대댓글 작성
+	public void qnaReCommentWrite(QnAComment qnaCommentDto);
+
+	// 상위 댓글 order 가져오기
+	public int selectUpperOrder(QnAComment qnaCommentDto);
+
+	// 대댓글 작성시 order 수정
+	public void updateOrder(int order);
 	
 }
