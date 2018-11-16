@@ -1,6 +1,7 @@
 package zaksim.customerCenter.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -8,12 +9,14 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import zaksim.customerCenter.service.QnACommentService;
+import zaksim.customerCenter.service.QnAService;
 import zaksim.dto.QnAComment;
 
 /*
@@ -27,6 +30,19 @@ import zaksim.dto.QnAComment;
 public class QnACommentController {
 	
 	@Autowired QnACommentService qnaCommentService;
+	@Autowired QnAService qnaService;
+	
+	// Q&A depth 0 댓글 작성
+	@RequestMapping(value="/zaksim/customerCenter/QnA/comment_list", method=RequestMethod.POST)
+	public String viewQnaComment(int qnaIdx, Model model) {
+
+		List<QnAComment> commentList = qnaService.viewComment(qnaIdx);
+		
+		model.addAttribute("commentList", commentList);
+		
+		return "/zaksim/customerCenter/QnA/recommend";
+		
+	}
 
 	// Q&A depth 0 댓글 작성
 	@RequestMapping(value="/zaksim/customerCenter/QnA/comment_write", method=RequestMethod.POST)
@@ -42,15 +58,15 @@ public class QnACommentController {
 	
 	// Q&A 대댓글 작성
 	@RequestMapping(value="/zaksim/customerCenter/QnA/re_comment_write", method=RequestMethod.POST)
-	public void qnaReCommentWrite(QnAComment qnaCommentDto, HttpSession session) {
+	public String qnaReCommentWrite(QnAComment qnaCommentDto, HttpSession session) {
 
 		qnaCommentDto.setWriterIdx((Integer)session.getAttribute("login_idx"));
 		
 		System.out.println("controller Comment : " + qnaCommentDto);
 		
-		qnaCommentService.qnaReCommentWrite(qnaCommentDto);
+//		qnaCommentService.qnaReCommentWrite(qnaCommentDto);
 		
-//		return "/zaksim/customerCenter/QnA/view?qnaIdx=" + qnaCommentDto.getQnaIdx();
+		return "/zaksim/customerCenter/QnA/comment_list?qnaIdx=" + qnaCommentDto.getQnaIdx();
 
 	}
 	
