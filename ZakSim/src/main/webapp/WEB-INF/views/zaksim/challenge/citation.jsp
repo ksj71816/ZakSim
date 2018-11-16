@@ -46,7 +46,7 @@
           </div>
           
         </div>
-        <div class="col-md-1"><a onclick="alert();"> <img class="img-fluid d-block rounded-circle ml-3" src="/resources/image/challenge/exitBT.png" style="cursor:pointer;	height: 45px; width: 45px;"> </a> </div>
+        <div class="col-md-1"><a onclick="swal();"> <img class="img-fluid d-block rounded-circle ml-3" src="/resources/image/challenge/exitBT.png" style="cursor:pointer;	height: 45px; width: 45px;"> </a> </div>
       </div>
    
 
@@ -172,7 +172,7 @@
 <script type="text/javascript">
 
 
-function alert(){
+function swal(){
 	
 	swal({
 		  title: '인증을 취소 하시겠습니까?',
@@ -392,11 +392,11 @@ function FileSelectHandler(e) {
 $('#auth').click(function(){
 	
 	if(files==null){
-		console.log("인증 사진이 없음.");
+		alert("인증 사진이 없습니다.");
 		return;
 	}
 	if($('#content').val()==null||$('#content').val()==''){
-		console.log("메세지를 입력해주세요");
+		alert("메세지를 입력해주세요.");
 	}
 	
 	
