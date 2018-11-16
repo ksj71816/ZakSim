@@ -40,14 +40,10 @@ public class CommunityGroup {
     CommunityCategory communityCategory;
     
     ZakSimMember zakSimMember;
+    
+    private int likeNum;
 
-	@Override
-	public String toString() {
-		return "CommunityGroup [currval=" + currval + ", idx=" + idx + ", member_idx=" + member_idx + ", category_idx="
-				+ category_idx + ", title=" + title + ", content=" + content + ", image=" + image + ", max=" + max
-				+ ", open_date=" + open_date + ", secret=" + secret + ", password=" + password + ", communityCategory="
-				+ communityCategory + ", zakSimMember=" + zakSimMember + "]";
-	}
+
 
 	public int getCurrval() {
 		return currval;
@@ -153,15 +149,19 @@ public class CommunityGroup {
 		this.zakSimMember = zakSimMember;
 	}
 
+	public int getLikeNum() {
+		return likeNum;
+	}
 
+	public void setLikeNum(int likeNum) {
+		this.likeNum = likeNum;
+	}
 
-
-
-
-
-
-
-
-
-	
+	@Override
+	public String toString() {
+		return "CommunityGroup [currval=" + currval + ", idx=" + idx + ", member_idx=" + member_idx + ", category_idx="
+				+ category_idx + ", title=" + title + ", content=" + content + ", image=" + image + ", max=" + max
+				+ ", open_date=" + open_date + ", secret=" + secret + ", password=" + password + ", communityCategory="
+				+ communityCategory + ", zakSimMember=" + zakSimMember + ", likeNum=" + likeNum + "]";
+	}
 }

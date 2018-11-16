@@ -62,12 +62,9 @@
 	
 								<!-- Date 포멧 설정 -->
 								<jsp:useBean id="today" class="java.util.Date" />
-								<fmt:formatDate value="${today }" pattern="yyyy-MM-dd"
-									var="toDay" />
-								<fmt:formatDate value="${list.writtenDate }" pattern="yyyy-MM-dd"
-									var="writtenDate" />
-								<fmt:formatDate value="${date }" pattern="yyyy-MM-dd"
-									var="writtenDateDepth" />
+								<fmt:formatDate value="${today }" pattern="yyyy-MM-dd" var="toDay" />
+								<fmt:formatDate value="${list.writtenDate }" pattern="yyyy-MM-dd" var="writtenDate" />
+								<fmt:formatDate value="${date }" pattern="yyyy-MM-dd" var="writtenDateDepth" />
 	
 								<tr>
 									<!--번호 -->
@@ -75,13 +72,16 @@
 	
 									<!-- 제목 -->
 									<c:if test="${list.secret eq 'private' }">
-										<td class="text-left"><a
-											href="/zaksim/customerCenter/QnA/view?qnaIdx=${list.idx }"
-											id="aSecret">${list.title } <i class="fas fa-lock"></i></a></td>
+										<td class="text-left">
+											<a href="/zaksim/customerCenter/QnA/view?qnaIdx=${list.idx }"
+												id="aSecret">${list.title } <i class="fas fa-lock"></i>
+											</a>
+										</td>
 									</c:if>
 									<c:if test="${list.secret eq 'public' }">
-										<td class="text-left"><a
-											href="/zaksim/customerCenter/QnA/view?qnaIdx=${list.idx }">${list.title }</a></td>
+										<td class="text-left">
+											<a href="/zaksim/customerCenter/QnA/view?qnaIdx=${list.idx }">${list.title }</a>
+										</td>
 									</c:if>
 	
 									<!-- 상태 -->
@@ -97,8 +97,9 @@
 	
 									<!-- 작성일 -->
 									<c:if test="${writtenDate eq toDay }">
-										<td><fmt:formatDate value="${list.writtenDate }"
-												pattern="HH:mm" /></td>
+										<td>
+											<fmt:formatDate value="${list.writtenDate }" pattern="HH:mm" />
+										</td>
 									</c:if>
 									<c:if test="${writtenDate ne toDay }">
 										<td>${writtenDate }</td>
@@ -117,15 +118,18 @@
 	
 										<!-- 제목 -->
 										<c:if test="${secret eq 'private' }">
-											<td class="text-left"><a
-												href="/zaksim/customerCenter/QnA/view?qnaIdx=${idx }"
-												id="aSecretDepth" style="margin-left: 10px">→ ${title } <i
-													class="fas fa-lock"></i></a></td>
+											<td class="text-left">
+												<a href="/zaksim/customerCenter/QnA/view?qnaIdx=${idx }" 
+													id="aSecretDepth" style="margin-left: 10px">→ ${title } <i class="fas fa-lock"></i>
+												</a>
+											</td>
 										</c:if>
 										<c:if test="${secret eq 'public' }">
-											<td class="text-left"><a
-												href="/zaksim/customerCenter/QnA/view?qnaIdx=${idx }"
-												style="margin-left: 10px">→ ${title }</a></td>
+											<td class="text-left">
+												<a href="/zaksim/customerCenter/QnA/view?qnaIdx=${idx }"
+													style="margin-left: 10px">→ ${title }
+												</a>
+											</td>
 										</c:if>
 	
 										<!-- 상태 -->

@@ -136,71 +136,67 @@
 		</div>
 	</div>
 	<!-- 댓글 입력 영역  -->
-<!-- 	<div class="container"> -->
-<!-- 		<div class="row"> -->
-<!-- 			<label class="col-md-1"> </label> -->
-<!-- 			<div class="col-md-10"> -->
-<!-- 				<div class="card"> -->
-<!-- 					<form action="/reply/reply.do" method="post"> -->
-<!-- 						<div class="form-group card-header"> -->
-<%-- 							<label style="font-weight: bold">${login_nick }</label> --%>
-<!-- 						</div> -->
-<!-- 						<div class="form-group "> -->
-<!-- 							<input type="text" class="form-control" id="boardNo" -->
-<%-- 								name="boardNo" value="${board.boardNo }" readonly="" --%>
-<!-- 								hidden="true"> -->
-<!-- 						</div> -->
-<!-- 						<div class="card-body"> -->
-<!-- 							<div class="form-group"> -->
-<!-- 								login 체크하여 댓글 입력창 활성화 및 비활성화 -->
-<%-- 								<c:choose> --%>
-<%-- 									로그인 상태 --%>
-<%-- 									<c:when test="${login}"> --%>
-<!-- 										<textarea rows="3" class="form-control" id="replyContent" -->
-<!-- 											name="replyContent" placeholder="댓글을 입력해주세요."></textarea> -->
-<%-- 									</c:when> --%>
-<%-- 									비로그인 상태 --%>
-<%-- 									<c:when test="${!login || login eq null}"> --%>
-<!-- 										<textarea rows="3" class="form-control" id="replyContent" -->
-<!-- 											name="replyContent" placeholder="로그인 상태여야 입력 가능합니다." -->
-<!-- 											readonly=""></textarea> -->
-<%-- 									</c:when> --%>
-<%-- 								</c:choose> --%>
-<!-- 							</div> -->
-<!-- 							<button type="button" class="btn qnaBtnColor  btn-md mr-1">댓글 입력</button> -->
-<!-- 						</div> -->
-<!-- 					</form> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 			<label class="col-md-1"> </label> -->
-<!-- 		</div> -->
-		<!-- 댓글 목록 영역 -->
-<!-- 		<div class="row mt-3 justify-content-center"> -->
-<!-- 			<label class="col-md-1"> </label> -->
-<!-- 			<div class="col-md-10"> -->
-<!-- 				<ul class="list-group"> -->
+	<div class="container">
+		<div class="row">
+			<label class="col-md-1"> </label>
+			<div class="col-md-10">
+				<div class="card">
+					<form action="/reply/reply.do" method="post">
+						<div class="form-group card-header">
+							<label style="font-weight: bold">${login_nick }</label>
+						</div>
+						<div class="form-group ">
+							<input type="text" class="form-control" id="boardNo"
+								name="boardNo" value="${board.boardNo }" readonly=""
+								hidden="true">
+						</div>
+						<div class="card-body">
+							<div class="form-group">
+								<c:choose>
+									<c:when test="${login}">
+										<textarea rows="3" class="form-control" id="replyContent"
+											name="replyContent" placeholder="댓글을 입력해주세요."></textarea>
+									</c:when>
+									<c:when test="${!login || login eq null}">
+										<textarea rows="3" class="form-control" id="replyContent"
+											name="replyContent" placeholder="로그인 상태여야 입력 가능합니다."
+											readonly=""></textarea>
+									</c:when>
+								</c:choose>
+							</div>
+							<button type="button" class="btn qnaBtnColor btn-md mr-1">댓글 입력</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<label class="col-md-1"> </label>
+		</div>
+<!-- 		댓글 목록 영역 -->
+		<div class="row mt-3 justify-content-center">
+			<label class="col-md-1"> </label>
+			<div class="col-md-10">
+				<ul class="list-group">
 <%-- 					<c:foreach items="" var=""> --%>
-<!-- 						<li class="list-group-item"> -->
-<!-- 							<div class="d-flex w-100 justify-contents-between"> -->
-<!-- 								<p style="font-weight: bold">암욜맨</p> -->
-<!-- 								<small>&nbsp; 16:22 &nbsp; </small> -->
-<!-- 								<small> <a href="" style="color: blue">수정</a> </small> -->
-<!-- 								&nbsp; -->
-<!-- 								모든 댓글은 관리자가 삭제할 수 있게끔 설정 -->
-<!-- 								<small> <a href="" style="color: red">삭제</a> </small> -->
-<!-- 								&nbsp;  -->
-<!-- 								<small> <a href="" style="color: green">답댓글쓰기</a> </small> -->
-<!-- 							</div> -->
-<!-- 							<div> -->
-<!-- 								<p class="mb-1">댓글 내용!</p> -->
-<!-- 							</div> -->
-<!-- 						</li> -->
+						<li class="list-group-item">
+							<div class="d-flex w-100 justify-contents-between">
+								<p style="font-weight: bold">암욜맨</p>
+								<small>&nbsp; 16:22 &nbsp; </small>
+								<small> <a href="" style="color: blue">수정</a> </small>
+								&nbsp;
+								<small> <a href="" style="color: red">삭제</a> </small>
+								&nbsp; 
+								<small> <a href="" style="color: green">답댓글쓰기</a> </small>
+							</div>
+							<div>
+								<p class="mb-1">댓글 내용!</p>
+							</div>
+						</li>
 <%-- 					</c:foreach> --%>
-<!-- 				</ul> -->
-<!-- 			</div> -->
-<!-- 			<label class="col-md-1"> </label> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
+				</ul>
+			</div>
+			<label class="col-md-1"> </label>
+		</div>
+	</div>
 
 <!-- Modal -->
 <div class="modal fade" id="qnaViewModal" tabindex="-1" role="dialog">

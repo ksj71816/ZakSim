@@ -18,6 +18,7 @@
   	<result column="image" property="image"/>
   	<result column="written_date" property="written_date"/>
   	<result column="hit" property="hit"/>
+  	<result column="open" property="open"/>
   	
   </resultMap>
   
@@ -37,7 +38,7 @@
   
   <insert id="insertCitation" parameterType="zaksim.dto.Board">
   
-  	INSERT INTO BOARD VALUES (#{idx}, #{challenge_idx}, null, #{writer_idx}, #{title}, #{content}, #{image}, 1, #{certification}, sysdate, #{hit})
+  	INSERT INTO BOARD VALUES (#{idx}, #{challenge_idx}, null, #{writer_idx}, #{title}, #{content}, #{image}, #{open}, #{certification}, sysdate, #{hit})
   
   </insert>
   
@@ -57,7 +58,7 @@
   <select id="selectPagingCitation" parameterType="zaksim.util.Paging" resultMap="CitationList">
   
   	select * from ( select rownum rnum, B.* from 
-    		( select idx, challenge_idx, written_date, title, content, image, writer_idx, hit from board where certification=1 order by idx desc) B order by rnum) where rnum between #{startNo} and #{endNo}
+    		( select idx, challenge_idx, written_date, title, content, image, writer_idx, hit, open from board where certification=1 and open=1 order by idx desc) B order by rnum) where rnum between #{startNo} and #{endNo}
   
   </select>
   

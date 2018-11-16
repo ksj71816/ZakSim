@@ -37,35 +37,66 @@ public class CommunityJoinController {
 
 			// 그룹 idx 가져옴
 			String idx = request.getParameter("idx");
-
-			// 세션 가져오기
-			String login = (String)session.getAttribute("login_idx").toString();
-
-			// 그룹 정보 넘기기
-			model.addAttribute("groupInfo", communityListService.info(Integer.parseInt(idx)));
-
-			// 키워드 가져오기
-			model.addAttribute("keywordList", communityListService.keywordList());
 			
-			// 회원 리스트 가져오기
-			model.addAttribute("groupMember", communityMemberListService.members());
+			if(session.getAttribute("login_idx") != null ) {
+				
+				// 세션 가져오기
+				String login = (String)session.getAttribute("login_idx").toString();
 
-			// 게시글 정보
-			model.addAttribute("boardList", communityBoardService.informationBoard(Integer.parseInt(idx)));
-//			System.out.println("게시판 정보 : "+communityBoardService.informationBoard(Integer.parseInt(idx)));
+				// 그룹 정보 넘기기
+				model.addAttribute("groupInfo", communityListService.info(Integer.parseInt(idx)));
+
+				// 키워드 가져오기
+				model.addAttribute("keywordList", communityListService.keywordList());
+				
+				// 회원 리스트 가져오기
+				model.addAttribute("groupMember", communityMemberListService.members());
+
+				// 게시글 정보
+				model.addAttribute("boardList", communityBoardService.informationBoard(Integer.parseInt(idx)));
+//				System.out.println("게시판 정보 : "+communityBoardService.informationBoard(Integer.parseInt(idx)));
+			
+				// 그룹 좋아요
+				model.addAttribute("groupLike", communityListService.groupLike(Integer.parseInt(idx)));
+				
+				// 
+				
+				GroupLike groupLike = new GroupLike();
+				groupLike.setGroup_idx(Integer.parseInt(idx));
+				groupLike.setMember_idx(Integer.parseInt(login));
+				
+				
+				// 좋아요 눌렀는지 - 눌렀으면 true 안눌렀으면 false
+				model.addAttribute("like", communityEditService.like(groupLike));
+			
+			}
+			
+			else {
+				
+				// 그룹 정보 넘기기
+				model.addAttribute("groupInfo", communityListService.info(Integer.parseInt(idx)));
+
+
+				// 키워드 가져오기
+				model.addAttribute("keywordList", communityListService.keywordList());
+				
+				// 회원 리스트 가져오기
+				model.addAttribute("groupMember", communityMemberListService.members());
+
+
+				// 게시글 정보
+				model.addAttribute("boardList", communityBoardService.informationBoard(Integer.parseInt(idx)));
 		
-			// 그룹 좋아요
-			model.addAttribute("groupLike", communityListService.groupLike(Integer.parseInt(idx)));
-			
-			// 
-			
-			GroupLike groupLike = new GroupLike();
-			groupLike.setGroup_idx(Integer.parseInt(idx));
-			groupLike.setMember_idx(Integer.parseInt(login));
-			
-			
-			// 좋아요 눌렀는지 - 눌렀으면 true 안눌렀으면 false
-			model.addAttribute("like", communityEditService.like(groupLike));
+				// 그룹 좋아요
+				model.addAttribute("groupLike", communityListService.groupLike(Integer.parseInt(idx)));
+
+
+				
+				
+				
+			}
+
+
 			
 
 

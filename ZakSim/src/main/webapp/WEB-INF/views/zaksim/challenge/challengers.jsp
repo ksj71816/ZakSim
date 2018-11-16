@@ -38,14 +38,14 @@
         <div class="row mt-4">
         
         
-        <c:forEach var="citation" items="${citation}" begin="0" end="20" step="1">
+        <c:forEach var="citation" items="${citation}" begin="0" end="20" step="1" >
           <!--이미지 1개-->
           <div class="col-md-3 col-lg-3 col-sm-3 h-25">
             <div class="hovereffect text-center my-1" style="">
               <img class="img-responsive" src="${citation.image}">
               <div class="overlay">
                 <h2>${citation.title}</h2>
-                <a class="info" href="#">게시물 확인</a>
+                <a class="text-white info" onclick="viewCitation(${citation.rnum},'${citation.title}','${citation.image}','${citation.content}')" style="cursor:pointer;">게시물 확인</a>
               </div>
             </div>
           </div>
@@ -103,4 +103,42 @@
     
         <!-- footer include -->
 <%@include file="/WEB-INF/views/zaksim/main/footer.jsp" %>
+
+
+<!-- alert 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.28.12/sweetalert2.all.js"></script>
+
+
+<!-- 게시물 확인 viewer-->
+<script type="text/javascript"> 
+
+	function viewCitation(idx,title,image,content){
+		
+		console.log(idx);
+		console.log(title);
+		console.log(image);
+		
+		
+		
+		swal({
+			  title: title,
+			
+			  text: content,
+			  imageUrl:image,
+			  imageWidth: 800,
+			  imageHeight: 400,
+			  imageAlt: 'Custom image',
+			  confirmButtonText: '닫기'
+			})
+		
+		
+	}
+
+
+</script>
+
+
+
+
+
     

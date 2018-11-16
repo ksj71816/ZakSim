@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -16,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import zaksim.community.service.CommunityListService;
 import zaksim.dto.Board;
 import zaksim.dto.Challenge;
 import zaksim.dto.CommunityGroup;
+import zaksim.dto.GroupKeyword;
 import zaksim.dto.PStatistics;
 import zaksim.dto.QnA;
 import zaksim.dto.ZakSimMember;
@@ -32,6 +33,7 @@ public class MypageController {
 	private static final Logger logger = LoggerFactory.getLogger(MypageController.class);
 	
 	@Autowired MypageService mypageService;
+	@Autowired CommunityListService communityListService;
 	
 	
 	@RequestMapping(value="/main", method=RequestMethod.GET)
@@ -44,7 +46,9 @@ public class MypageController {
 	    	List<QnA> qnaList = mypageService.viewQnaList(idx);
 	    	List<Board> boardList = mypageService.viewBoard(idx);
 	    	List<CommunityGroup> groupList = mypageService.viewGroup(idx);
+	    	List<GroupKeyword> keywordList = communityListService.keywordList();
 	    	List<Challenge> endChalList = mypageService.viewEndChalList(idx);
+	    	
 	    	
 	        model.addAttribute("ingChal", ingChal);
 	        model.addAttribute("rate", rate);
@@ -52,6 +56,7 @@ public class MypageController {
 	        model.addAttribute("qnaList", qnaList);
 	        model.addAttribute("boardList", boardList);
 	        model.addAttribute("groupList", groupList);
+	        model.addAttribute("keywordList", keywordList);
 	        model.addAttribute("endChalList", endChalList);
 	}
 

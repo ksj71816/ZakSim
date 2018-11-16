@@ -1,5 +1,7 @@
 package zaksim.community.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -10,9 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import zaksim.community.service.CommunityListService;
-import zaksim.community.service.CommunityListServiceImpl;
+import zaksim.dto.CommunityGroup;
+import zaksim.dto.GroupLike;
+import zaksim.util.Paging;
 
 // 커뮤니티 분류 화면
 @Controller
@@ -40,14 +45,28 @@ public class CommunityClassificationController {
 		
 	// 인기있는 커뮤니티 화면 GET
 	@RequestMapping(value="/popularCommunity", method=RequestMethod.GET)
-	public void popularCommunity(Model model) {
+	public void popularCommunity(Model model, HttpSession session, @RequestParam(defaultValue="1", required=false)int curPage) {
 		
-		// 인기있는 그룹
-		model.addAttribute("popularGroupList", communityListService.popularGroupList());
+		int idx=0;
+		if(session.getAttribute("login_idx") != null ) {
+			idx =(Integer)session.getAttribute("login_idx");
+		}
+		
 		// 키워드 리스트
 		model.addAttribute("keywordList", communityListService.keywordList());
 		// 카테고리 리스트
 		model.addAttribute("categoryList", communityListService.categoryList2());
+		//
+		model.addAttribute("groupMemberExist", communityListService.existMember(idx));
+		
+		int totalCount = communityListService.popularCount();
+		Paging paging = new Paging(totalCount, curPage, 15);
+		
+		List<GroupLike> cList = communityListService.popularPage(paging);
+		
+		// 인기있는 그룹
+		model.addAttribute("popularGroupList", cList);
+		model.addAttribute("paging", paging);
 		
 	}
 	
@@ -55,6 +74,7 @@ public class CommunityClassificationController {
 	@RequestMapping(value="/newCommunity", method=RequestMethod.GET)
 	public void newCommunity(Model model) {
 		// 인기있는 그룹
+//		model.addAttribute("newGroupList", communityListService.newGroupList(null));	
 		model.addAttribute("newGroupList", communityListService.newGroupList());	
 		// 키워드 리스트
 		model.addAttribute("keywordList", communityListService.keywordList());

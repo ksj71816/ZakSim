@@ -46,7 +46,7 @@
           </div>
           
         </div>
-        <div class="col-md-1"> <img class="img-fluid d-block rounded-circle ml-3" src="/resources/image/challenge/exitBT.png" style="cursor:pointer;	height: 45px; width: 45px;"></div>
+        <div class="col-md-1"><a onclick="alert();"> <img class="img-fluid d-block rounded-circle ml-3" src="/resources/image/challenge/exitBT.png" style="cursor:pointer;	height: 45px; width: 45px;"> </a> </div>
       </div>
    
 
@@ -64,12 +64,19 @@
             <div class="col-md-12 mt-2 text-white">
                 <h3 class="text-center">${info.title}</h3>
                 <h5  class="mt-3 mb-0 p-0 d-flex">작성일 :&nbsp;&nbsp;<span class="m-0 " id="nowdate" style=" color: tan;"> </span></h5>
-            <!-- 
-                <div class="mt-3">
-                <a>공개 설정 : <img class="img-fluid d-block mt-2 rounded-circle justify-content-start" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" style="	height: 30px; width: 30px;" >
-                </a>
-                </div>
-            -->
+           
+            <h5 class="mt-3 radio-inline text-white"> 공개 여부 :
+	           
+	            <label class="mx-3 radio-inline" style="    font-size: 1rem;">
+	      			<input type="radio" name="open" value="1" checked>공개
+	    		</label>
+	    		<label class="mx-3 radio-inline" style="    font-size: 1rem;">
+	      			<input type="radio" name="open" value="0">비공개
+	    		</label>
+            
+            </h5>
+            
+            
             </div>
             
           </div>
@@ -80,7 +87,7 @@
          
             
           <div class="text-left text-center text-white">
-            <p class="mx-1 text-left" >이미지 </p>
+           
             <img id="blah" class="w-100 h-100 img-fluid d-block rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" style=" border-right-width: 3px;	border-top-width: 3px;	border-bottom-width: 3px;    border-left-width: 3px;	border-style: solid;	border-color: white; ">
           </div>
           
@@ -159,11 +166,43 @@
 <%@include file="/WEB-INF/views/zaksim/main/footer.jsp" %>
 
 
+<!-- alert 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.28.12/sweetalert2.all.js"></script>
 
+
+<!-- alert 스크립트-->
+<script type="text/javascript">
+
+
+function alert(){
+	
+	swal({
+		  title: '인증을 취소 하시겠습니까?',
+		  text: "작성중인 정보가 초기화 됩니다!",
+		  type: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#2E82CC',
+		  cancelButtonColor: '#FC3A3A',
+		  confirmButtonText: '확인',
+		  cancelButtonText: '취소'
+		}).then((result) => {
+		  if (result.value) {
+	
+			  document.location.href = "/zaksim/challenge/challengeInfo";
+			  
+		  }
+		})
+	
+	
+}
+		
+
+
+</script>
 
 
     
-<!-- 작성일 스크립트 -->
+<!-- 작성일 시간 스크립트 -->
 <script type="text/javascript">
 
 // 1초마다 재실행
@@ -314,6 +353,7 @@ function FileDragHover(e) {
 	
 }
 
+var file;
 
 //file selection
 function FileSelectHandler(e) {
@@ -323,7 +363,9 @@ function FileSelectHandler(e) {
 
 	// fetch FileList object
 	var files = e.target.files || e.dataTransfer.files;
-  		
+  	
+	file=files[0];
+	
     console.log("-------------------");
 //     console.log("files");
 //     console.log(files);
@@ -355,9 +397,11 @@ function FileSelectHandler(e) {
       reader.readAsDataURL(files[0]);
       
       
+//      $('#fileselect').val(files[0]);
+//       console.log($('#fileselect').val());
       //input 추가
 //    console.log('te');
-// 	  addFileFromLastInput(files);
+  addFileFromLastInput(files);
       
       
 }
@@ -384,23 +428,23 @@ function ParseFile(file) {
 
 
 //input 추가
-// function addFileFromLastInput(file){
-// 	console.log("인풋추가 실행")
-//     var a = $('input#fileselect.addFile');
-//     a[a.length-1].files;
+function addFileFromLastInput(files){
+	console.log("인풋추가 실행")
+    var a = $('input#fileselect.addFile');
+    a[a.length-1].files;
 
-//     try{
-//     	let new_input = '<input id="fileselect2" type="file" name="fileselect" multiple="multiple" class="addFile" />';
+    try{
+    	let new_input = '<input id="fileselect2" type="file" name="fileselect" multiple="multiple" class="addFile" />';
         
-//         $('.file').append(new_input);
-//         console.log("성공이다")
-//     }catch(err){
-// 		console.log("에러다")
-//     }
+        $('.file').append(new_input);
+        console.log("성공이다")
+    }catch(err){
+		console.log("에러다")
+    }
 
-// //         $('#fileselect').remove();
-//     return 0;
-// }
+//         $('#fileselect').remove();
+    return 0;
+}
 
 
 

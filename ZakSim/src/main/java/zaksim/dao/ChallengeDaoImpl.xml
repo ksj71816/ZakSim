@@ -65,6 +65,19 @@
   	
   	</select>
   	
+  	<update id="updateChallenge" parameterType="zaksim.dto.Challenge">
+  	
+	  	update challenge
+	    set status = #{status},
+	        result = #{result}
+	    where idx=#{idx} and member_idx=#{memberIdx}
+	  	
+  	
+  	</update>
+  	
+  	
+  	
+  	
   	
   	<select id="selectCStatisticsDetailData" parameterType="map" resultMap="CStatistics">
   		SELECT m.*, DECODE(c.chal_count, NULL, 0, c.chal_count) chal_count, DECODE(c.avg_money, NULL, 0, c.avg_money) avg_money
