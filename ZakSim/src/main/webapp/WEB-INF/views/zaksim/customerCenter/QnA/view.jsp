@@ -60,7 +60,7 @@
 									<th class="qnaColor">글 내용</th>
 									<td colspan="3">${view.content }</td>
 								</tr>
-								<c:if test="${fileList eq null || fileList eq '' }">
+								<c:if test="${fileList eq null || fileList eq '' || fileList eq '[]' }">
 								<tr>
 									<th class="table-info">파일</th>
 									<td colspan="3">파일 없음</td>
@@ -122,6 +122,18 @@
 									<th class="qnaColor">글 내용</th>
 									<td colspan="3">${view.content }</td>
 								</tr>
+								<c:if test="${fileList eq null || fileList eq '' || fileList eq '[]' }">
+								<tr>
+									<th class="table-info">파일</th>
+									<td colspan="3">파일 없음</td>
+								</tr>
+								</c:if>
+								<c:forEach var="file" items="${fileList }">
+								<tr>
+									<th class="table-info">파일</th>
+									<td colspan="3">${file.original }</td>
+								</tr>
+								</c:forEach>
 								<tr>
 									<td colspan="4" class="text-center">
 										<c:choose>

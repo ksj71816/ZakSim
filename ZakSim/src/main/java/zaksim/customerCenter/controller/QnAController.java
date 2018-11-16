@@ -136,10 +136,7 @@ public class QnAController {
 	@RequestMapping(value="/zaksim/customerCenter/QnA/write", method=RequestMethod.POST)
 	public String qnaWrite(HttpSession session, QnA qnaDto, MultipartFile file, @RequestParam(defaultValue="0") int upperIdx) {
 		
-		int qnaIdx = qnaService.getQnAIdx(); // 문의글 인덱스 미리 할당
-		
-		QnAFile qnaFile = qnafileService.getFilePath(file); // 파일 설정
-		qnaFile.setQnaIdx(qnaIdx); // 문의글 인덱스 저장
+		int qnaIdx = qnaService.getQnAIdx(); // 문의글 인덱스 미리 할당(파일 때문에...)
 		
 		qnaDto.setIdx(qnaIdx);
 		
@@ -163,8 +160,17 @@ public class QnAController {
 		logger.info("[QnAController] 작성한 문의글(혹은 답변) : " + qnaDto.toString());
 		qnaService.qnaWrite(qnaDto);
 		
-		logger.info("[QnAController] 작성한 문의글(혹은 답변)의 파일 : " + qnaFile.toString());
-		qnafileService.qnaFileUpload(qnaFile); // 파일 업로드
+		// ----- 파일 첨부 -----
+		logger.info("[QnAController] file : " + file);
+		if (file != null) {
+		QnAFile qnaFile = qnafileService.getFilePath(file); // 파일 설정
+			// 업로드할 파일이 있을 경우
+			qnaFile.setQnaIdx(qnaIdx); // 문의글 인덱스 저장
+
+			logger.info("[QnAController] 작성한 문의글(혹은 답변)의 파일 : " + qnaFile.toString());
+			qnafileService.qnaFileUpload(qnaFile); // 파일 업로드
+		}
+		// -----------------
 		
 		return "redirect:/zaksim/customerCenter/QnA/list";
 	}
@@ -185,13 +191,21 @@ public class QnAController {
 		
 		logger.info("[QnAController] 수정한 문의글(혹은 답변) : " + qnaDto.toString());
 		
-		QnAFile qnaFile = qnafileService.getFilePath(file); // 파일 설정
-		qnaFile.setQnaIdx(qnaDto.getIdx());
-		
-		logger.info("[QnAController] 수정한 문의글(혹은 답변)의 파일 : " + qnaFile.toString());
-		
 		qnaService.qnaUpdate(qnaDto);
-		qnafileService.qnaFileUpload(qnaFile);
+		
+		
+		// ----- 파일 첨부 -----
+		logger.info("[QnAController] file : " + file);
+		if (file != null) {
+		QnAFile qnaFile = qnafileService.getFilePath(file); // 파일 설정
+			// 업로드할 파일이 있을 경우
+			qnaFile.setQnaIdx(qnaDto.getIdx());
+			
+			logger.info("[QnAController] 수정한 문의글(혹은 답변)의 파일 : " + qnaFile.toString());
+			
+			qnafileService.qnaFileUpload(qnaFile);
+		}
+		// -----------------
 		
 		return "redirect:/zaksim/customerCenter/QnA/list";
 	}

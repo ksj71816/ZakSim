@@ -21,7 +21,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<form id="c_form-h" action="/zaksim/customerCenter/QnA/update" method="post">
+					<form id="c_form-h" action="/zaksim/customerCenter/QnA/update" method="post" enctype="multipart/form-data">
 						<div class="form-group row">
 							<label class="col-md-1"><input type="hidden" id="idx" name="idx" value="${old.idx }"></label>
 							<div class="col-md-8">
@@ -56,7 +56,7 @@
 						<div class="form-group row pb-4 border-bottom">
 							<label class="col-md-1"> </label>
 							<div class="form-group col-md-10">
-								<input id="fileInput" type="file"
+								<input id="fileInput" name="file" type="file"
 									data-class-button="btn btn-default"
 									data-class-input="form-control" data-button-text=""
 									data-icon-name="fa fa-upload" class="form-control"
@@ -128,7 +128,7 @@
 	console.log(fileList);
 	
 	// 파일첨부(UI)
-	if (fileList == null || fileList == "") {		
+	if (fileList == null || fileList == "" || fileList == "[]") {		
 		$("#userfile").val('파일 첨부');
 	} else {
 		var result = new Array();
@@ -186,6 +186,9 @@
 		
 		var content = $("#summernote").val();
 		console.log("content : " + content);
+		
+		var file = $('#fileInput').val();
+		console.log("file : " + file);
 		
 		if (title == "" || content == "") {
 			$('.modal-title').text("안내");
