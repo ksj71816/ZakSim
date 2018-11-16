@@ -38,14 +38,14 @@
         <div class="row mt-4">
         
         
-        <c:forEach items="${citation}" begin="0" end="20" step="1" varStatus="i">
+        <c:forEach var="citation" items="${citation}" begin="0" end="20" step="1" >
           <!--이미지 1개-->
           <div class="col-md-3 col-lg-3 col-sm-3 h-25">
             <div class="hovereffect text-center my-1" style="">
-              <img class="img-responsive" src="${citation[i.count-1].image}">
+              <img class="img-responsive" src="${citation.image}">
               <div class="overlay">
-                <h2>${citation[i.count-1].title}</h2>
-                <a class="text-white info" onclick="viewCitation(${citation[i.count-1].rnum},'${citation[i.count-1].image}')" style="cursor:pointer;">게시물 확인</a>
+                <h2>${citation.title}</h2>
+                <a class="text-white info" onclick="viewCitation(${citation.rnum},'${citation.title}','${citation.image}','${citation.content}')" style="cursor:pointer;">게시물 확인</a>
               </div>
             </div>
           </div>
@@ -112,20 +112,23 @@
 <!-- 게시물 확인 viewer-->
 <script type="text/javascript"> 
 
-	function viewCitation(idx,image){
+	function viewCitation(idx,title,image,content){
 		
 		console.log(idx);
-// 		console.log(i);
-// 		console.log('${citation['+i+'].image}');
+		console.log(title);
+		console.log(image);
+		
+		
 		
 		swal({
-			  title: 'Sweet!', 
-			  text: 'Modal with a custom image.',
-			  imageUrl: image,
-			  imageWidth: 400,
-			  imageHeight: 200,
+			  title: title,
+			
+			  text: content,
+			  imageUrl:image,
+			  imageWidth: 800,
+			  imageHeight: 400,
 			  imageAlt: 'Custom image',
-			  animation: false
+			  confirmButtonText: '닫기'
 			})
 		
 		
