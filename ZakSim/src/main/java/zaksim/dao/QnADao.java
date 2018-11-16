@@ -32,6 +32,7 @@ public interface QnADao {
 	 */
 	public List<QnA> qnaListDepth();
 	
+    /* ************ 내 문의보기 ************ */
 	/**
 	 * Q&A 리스트 조회 dao - 내 문의보기
 	 * @return List<QnA>
@@ -47,6 +48,7 @@ public interface QnADao {
 	 * @return List<QnA>
 	 */
 	public List<QnA> qnaMyListDepth(int memberIdx);
+	/* ************ 내 문의보기 ************ */
 	
 	/**
 	 * Q&A 상세보기 dao

@@ -7,6 +7,7 @@ import zaksim.dto.CommunityGroup;
 import zaksim.dto.GroupKeyword;
 import zaksim.dto.GroupLike;
 import zaksim.dto.GroupMember;
+import zaksim.util.Paging;
 
 public interface CommunityListService {
 
@@ -44,5 +45,15 @@ public interface CommunityListService {
 	
 	// 커뮤니티 비밀번호 일치여부
 	public boolean secretCommunityJoin(CommunityGroup communityGroup);
+	
+	// 인기그룹 갯수
+	public int popularCount();
+
+	/**
+	 * 인기그룹 리스트 가져오기 (페이징 적용)
+	 * @param paging
+	 * @return
+	 */
+	public List<GroupLike> popularPage(Paging paging);	
 	
 }

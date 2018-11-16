@@ -102,13 +102,24 @@
 <script type="text/javascript" src="/summernote/summernote-bs4.js" ></script>
 
 <script type="text/javascript">
-	// --- url로 통해 들어올시 로그인 상태가 아니면 막기 ---
+	// --- url로 통해 들어올시 로그인 상태가 아니면 막기 or 작성자가 아니면 막기 ---
 	var login = <%=session.getAttribute("login") %>;
+	var writer = <%=session.getAttribute("login_idx") %>;
 	
 	if ( login == null || !login || login == "") {			
-		$('#qnaListModal').modal({backdrop: 'static'});
+		$('#qnaListModal').modal({backdrop: 'static'}); // 모달 밖 영역 클릭할 수 없게 만듦.
 		$('#btnRedirectLogin').click(function(){
 			location.href = "/zaksim/login/login";
+		});
+	}
+	
+	if ( writer == null || writer == "" || writer != '${old.writerIdx }') {
+		$('#qnaListModal').modal({backdrop: 'static'}); // 모달 밖 영역 클릭할 수 없게 만듦.
+		$('.modal-title').text("경고");
+		$('.modal-body').text("작성자만 수정 가능합니다.");
+		
+		$('#btnRedirectLogin').click(function(){
+			location.href = "/zaksim/customerCenter/QnA/list";
 		});
 	}
 	// --------------------------------------

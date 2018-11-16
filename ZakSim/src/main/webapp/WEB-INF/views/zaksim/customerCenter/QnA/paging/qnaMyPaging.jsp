@@ -27,7 +27,7 @@
 					<c:if test="${p ne 0 }">					
 						<fmt:parseNumber var="prevPage" integerOnly="true" value="${(p-1)*paging.pageCount+1}"></fmt:parseNumber>
 					</c:if>
-					<a class="page-link" href="/zaksim/customerCenter/QnA/list?curPage=${prevPage }">
+					<a class="page-link" href="/zaksim/customerCenter/QnA/myList?curPage=${prevPage }">
 						<span>«</span> <span class="sr-only">Previous</span>
 					</a>
 				</li>
@@ -38,11 +38,11 @@
 			<c:forEach var="page" begin="${paging.startPage }" end="${paging.endPage }">
 				<c:if test="${paging.curPage eq page }">
 					<li class="page-item active">
-						<a class="page-link" href="/zaksim/customerCenter/QnA/list?curPage=${page }">${page }</a>
+						<a class="page-link" href="/zaksim/customerCenter/QnA/myList?curPage=${page }">${page }</a>
 					</li>
 				</c:if>
 				<c:if test="${paging.curPage ne page }">
-					<li><a class="page-link" href="/zaksim/customerCenter/QnA/list?curPage=${page }">${page }</a></li>
+					<li><a class="page-link" href="/zaksim/customerCenter/QnA/myList?curPage=${page }">${page }</a></li>
 				</c:if>
 			</c:forEach>
 			
@@ -66,7 +66,7 @@
 					<c:if test="${t ne p }">
 						<fmt:parseNumber var="nextPage" integerOnly="true" value="${(p+1)*paging.pageCount+1 }" />
 					</c:if>
-					<a class="page-link" href="/zaksim/customerCenter/QnA/list?curPage=${nextPage }">
+					<a class="page-link" href="/zaksim/customerCenter/QnA/myList?curPage=${nextPage }">
 						<span>»</span> <span class="sr-only">Next</span>
 					</a>
 				</li>

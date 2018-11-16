@@ -1,6 +1,7 @@
 package zaksim.customerCenter.service;
 
 import java.util.List;
+import java.util.Map;
 
 import zaksim.dto.QnA;
 import zaksim.dto.QnAComment;
@@ -30,6 +31,24 @@ public interface QnAService {
 	 * @return List<QnA>
 	 */
 	public List<QnA> qnaListDepth();
+	
+    /* ************ 내 문의보기 ************ */
+	/**
+	 * Q&A 리스트 조회 service - 내 문의보기
+	 * @return List<QnA>
+	 */
+	public List<QnA> qnaMyList(Map<String, Object> map);
+	/**
+	 * Q&A 리스트 조회 - 페이징 service - 내 문의보기
+	 * @return Paging
+	 */
+	public Paging getMyPaging(int curPage, int listCount, int pageCount, int memberIdx);
+	/**
+	 * Q&A 리스트 조회 - 답변 service - 내 문의보기
+	 * @return List<QnA>
+	 */
+	public List<QnA> qnaMyListDepth(int memberIdx);
+	/* ************ 내 문의보기 ************ */
 	
 	/**
 	 * Q&A 상세보기 service

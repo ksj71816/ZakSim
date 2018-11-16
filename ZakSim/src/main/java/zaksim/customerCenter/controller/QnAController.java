@@ -1,6 +1,8 @@
 package zaksim.customerCenter.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -69,28 +71,37 @@ public class QnAController {
 	
 	// Q&A 리스트 조회 - 내 문의보기
 	@RequestMapping(value="/zaksim/customerCenter/QnA/myList", method=RequestMethod.GET)
-	public void qnaMyList(Model model,
+	public void qnaMyList(Model model, HttpSession session,
 			@RequestParam(defaultValue="1") int curPage,
 			@RequestParam(defaultValue="10") int listCount,
-			@RequestParam(defaultValue="10") int pageCount) {
+			@RequestParam(defaultValue="10") int pageCount,
+			@RequestParam int memberIdx) {
 		logger.info("현재 페이지 : " + curPage);
 		logger.info("한 화면의 총 페이지 : " + pageCount);
+		logger.info("memberIdx : " + memberIdx);
 		
-		Paging paging = qnaService.getPaging(curPage, listCount, pageCount);
-		List<QnA> list = qnaService.qnaList(paging);
-		List<QnA> listDepth = qnaService.qnaListDepth();
+		Paging paging = qnaService.getMyPaging(curPage, listCount, pageCount, memberIdx);
+		
+		Map<String, Object> map = new HashMap<>(); // 페이징이랑 멤버 인덱스 넣을 맵
+		map.put("paging", paging);
+		map.put("memberIdx", memberIdx);
+		
+		List<QnA> list = qnaService.qnaMyList(map);
+		List<QnA> listDepth = qnaService.qnaMyListDepth(memberIdx);
 		
 		// Q&A 리스트 - 내 문의보기
-		/*		logger.info("Q&A 리스트 - 내 문의보기");
+		logger.info("Q&A 리스트 - 내 문의보기");
 		for(QnA qna : list) {
 			logger.info(qna.toString());
-		}*/
+		}
 		// Q&A 답변 리스트
-		/*		logger.info("Q&A 답변 리스트 - 내 문의보기");
+		logger.info("Q&A 답변 리스트 - 내 문의보기");
 		for(QnA qnaDepth : listDepth) {
 			logger.info(qnaDepth.toString());
-		}*/
+		}
 
+		session.setAttribute("curPage", curPage);
+		logger.info("[QnAController] curPage session : " + session.getAttribute("curPage"));
 		
 		model.addAttribute("paging", paging);
 		model.addAttribute("qnaList", list);

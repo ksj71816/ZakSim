@@ -353,6 +353,7 @@ function FileDragHover(e) {
 	
 }
 
+var file;
 
 //file selection
 function FileSelectHandler(e) {
@@ -362,7 +363,9 @@ function FileSelectHandler(e) {
 
 	// fetch FileList object
 	var files = e.target.files || e.dataTransfer.files;
-  		
+  	
+	file=files[0];
+	
     console.log("-------------------");
 //     console.log("files");
 //     console.log(files);
@@ -394,9 +397,11 @@ function FileSelectHandler(e) {
       reader.readAsDataURL(files[0]);
       
       
+//      $('#fileselect').val(files[0]);
+//       console.log($('#fileselect').val());
       //input 추가
 //    console.log('te');
-// 	  addFileFromLastInput(files);
+  addFileFromLastInput(files);
       
       
 }
@@ -423,23 +428,23 @@ function ParseFile(file) {
 
 
 //input 추가
-// function addFileFromLastInput(file){
-// 	console.log("인풋추가 실행")
-//     var a = $('input#fileselect.addFile');
-//     a[a.length-1].files;
+function addFileFromLastInput(files){
+	console.log("인풋추가 실행")
+    var a = $('input#fileselect.addFile');
+    a[a.length-1].files;
 
-//     try{
-//     	let new_input = '<input id="fileselect2" type="file" name="fileselect" multiple="multiple" class="addFile" />';
+    try{
+    	let new_input = '<input id="fileselect2" type="file" name="fileselect" multiple="multiple" class="addFile" />';
         
-//         $('.file').append(new_input);
-//         console.log("성공이다")
-//     }catch(err){
-// 		console.log("에러다")
-//     }
+        $('.file').append(new_input);
+        console.log("성공이다")
+    }catch(err){
+		console.log("에러다")
+    }
 
-// //         $('#fileselect').remove();
-//     return 0;
-// }
+//         $('#fileselect').remove();
+    return 0;
+}
 
 
 

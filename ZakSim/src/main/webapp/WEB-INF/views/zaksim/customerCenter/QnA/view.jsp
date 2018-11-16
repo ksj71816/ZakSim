@@ -66,9 +66,18 @@
 								</tr>
 								<tr>
 									<td colspan="4" class="text-center">
-										<input type="button" class="btn btn-secondary" id="btnQnaWrite" value="답글 쓰기" onclick="qnaWritePage()">
-										<input type="button" class="btn btn-secondary" id="btnQnaUpdate" value="수정하기" onclick="qnaUpdatePage()"> 
-										<input type="button" class="btn btn-danger" id="btnQnaDelete" value="삭제하기" onclick="qnaDeleteProcess()"> 
+										<c:if test="${login_idx eq 1 && view.status eq 'ready' }">
+										<!-- 관리자일 경우, 답변 쓰기 버튼 활성화 -->
+											<input type="button" class="btn btn-secondary" id="btnQnaWrite" value="답글 쓰기" onclick="qnaWritePage()">
+										</c:if>
+										<c:if test="${login_idx eq view.writerIdx }">
+										<!-- 작성자일 경우, 수정하기 버튼 활성화 -->
+											<input type="button" class="btn btn-secondary" id="btnQnaUpdate" value="수정하기" onclick="qnaUpdatePage()">
+										</c:if>
+										<c:if test="${login_idx eq view.writerIdx || login_idx eq 1 }">
+										<!-- 작성자나 관리자일 경우, 삭제하기 버튼 활성화 -->
+											<input type="button" class="btn btn-danger" id="btnQnaDelete" value="삭제하기" onclick="qnaDeleteProcess()"> 												
+										</c:if> 
 										<input type="button" class="btn qnaBtnColor" id = btnQnaList value="목록보기" onclick="qnaListPage()">
 									</td>
 								</tr>
@@ -107,9 +116,12 @@
 								</tr>
 								<tr>
 									<td colspan="4" class="text-center">
-										<input type="button" class="btn btn-secondary" id="btnQnaWrite" value="답글 쓰기" onclick="qnaWritePage()">
-										<input type="button" class="btn btn-secondary" id="btnQnaUpdate" value="수정하기" onclick="qnaUpdatePage()"> 
-										<input type="button" class="btn btn-danger" id="btnQnaDelete" value="삭제하기" onclick="qnaDeleteProcess()"> 
+										<c:choose>
+											<c:when test="${login_idx eq 1 }">
+											<!-- 관리자일 경우, 수정하기 버튼 활성화 -->
+												<input type="button" class="btn btn-secondary" id="btnQnaUpdate" value="수정하기" onclick="qnaUpdatePage()"> 
+											</c:when>
+										</c:choose>
 										<input type="button" class="btn qnaBtnColor" id = btnQnaList value="목록보기" onclick="qnaListPage()">
 									</td>
 								</tr>
@@ -206,14 +218,36 @@
 		
 	</div>
 
+<!-- Modal -->
+<div class="modal fade" id="qnaViewModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModal3Label">안내</h5>
+			</div>
+			<div class="modal-body">이 글은 비밀글입니다. 이 글을 읽을 권리가 없습니다.</div>
+			<div class="modal-footer">
+				<button type="button" class="btn qnaBtnColor" id="btnRedirectList">확인</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <%@ include file="../../main/footer.jsp" %>
 
 <script type="text/javascript">
-	document.getElementById("btnQnaList").onclick = function(){qnaListPage()};
-	document.getElementById("btnQnaWrite").onclick = function(){qnaWritePage()};
-	document.getElementById("btnQnaUpdate").onclick = function(){qnaUpdatePage()};
-
 	var qnaIdx = <%=request.getParameter("qnaIdx") %>;
+	var user = <%=session.getAttribute("login_idx") %>;
+
+	if ( "${view.secret }" == "private"  ){
+		// 비밀글일 경우, 작성자와 관리자만 읽을 수 있게끔
+		if ( user != 1 && user != '${view.writerIdx}' && user !='${view.upperIdx}' ) { 
+				$('#qnaViewModal').modal({backdrop: 'static'}); // 모달 밖 영역 클릭할 수 없게 만듦.
+				$('#btnRedirectList').click(function(){
+					location.href = "/zaksim/customerCenter/QnA/list";
+				});
+		}
+	}
 		
 	function qnaListPage(){
 		var curPage = <%=session.getAttribute("curPage") %>;
