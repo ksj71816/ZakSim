@@ -360,7 +360,6 @@ function FileSelectHandler(e) {
 
 	if(files.length < 1){
 		console.log("이미지 없음");
-		alert("이미지가 없습니다");
 		return;
 	}
 	
@@ -391,6 +390,15 @@ function FileSelectHandler(e) {
 }
 
 $('#auth').click(function(){
+	
+	if(files==null){
+		console.log("인증 사진이 없음.");
+		return;
+	}
+	if($('#content').val()==null||$('#content').val()==''){
+		console.log("메세지를 입력해주세요");
+	}
+	
 	
 	fileMultiUpload(files, $('#filedrag'));
 });
