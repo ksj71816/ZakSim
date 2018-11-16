@@ -6419,3 +6419,8 @@ td#qnaCommentTd {
   background-color: #de5457;
   color: white;
 }
+
+.mouseOver:hover {
+	cursor:pointer;
+	text-decoration: underline;
+}

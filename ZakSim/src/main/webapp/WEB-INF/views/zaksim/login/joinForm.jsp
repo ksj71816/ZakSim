@@ -17,7 +17,7 @@
 		<!-- 로고 이미지 - 메인 페이지로 이동 -->
 		<div class="text-center py-3">
 			<a href="/zaksim/main/home"> <img
-				src="/resources/image/main/logo.jpg" width="500">
+				src="/resources/image/main/logo.png" width="500">
 			</a>
 		</div>
 	</div>

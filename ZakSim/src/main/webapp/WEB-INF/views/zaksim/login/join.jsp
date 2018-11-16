@@ -16,7 +16,7 @@
 	<!-- 로고 이미지 - 메인 페이지로 이동 -->
 	<div class="text-center py-3">
 		<a href="/zaksim/main/home"> 
-			<img src="/resources/image/main/logo.jpg" width="500">
+			<img src="/resources/image/main/logo.png" width="500">
 		</a>
 	</div>
   </div>
@@ -26,8 +26,7 @@
       <div class="col-md-7 mx-auto">
         <div class="checkbox py-3">
           <label style="font-size: 1.5em" class="row boldP"> <input type="checkbox" id="allCheck" value="" > <span class="cr mt-2"><i class="cr-icon fa fa-check"></i></span>
-            <p class="mb-0">이용약관, 개인정보 수집 및 이용,</p>
-            <p class="marginP">프로모션 안내 메일 수신(선택)에 모두 동의합니다.</p>
+            <p class="mb-0">이용약관, 개인정보 수집 및 이용에 모두 동의합니다.</p>
           </label>
         </div>
         <div class="checkbox py-2">
@@ -197,11 +196,6 @@ ZakSim 및 ZakSim 관련 제반 서비스(모바일 웹/앱 포함)의 회원관
 - 통신비밀보호법 
 로그인 기록: 3개월</textarea>
         </div>
-        <div class="checkbox py-2">
-          <label class="row boldP"> <input type="checkbox" id="etcCheck" value=""> <span class="cr"><i class="cr-icon fa fa-check"></i></span>
-            <p class="mb-0">이벤트, 프로모션 안내 메일 수신(선택)</p>
-          </label>
-        </div>
         <div class="row justify-content-around pt-5">
           <button class="btn col-md-3 btn-info" id="btnDisagree">비동의</button>
           <button class="btn col-md-3 joinBtnColor" id="btnAgree">동의</button>
@@ -239,11 +233,10 @@ ZakSim 및 ZakSim 관련 제반 서비스(모바일 웹/앱 포함)의 회원관
 		}
 	});
 
-	$('#zaksimCheck, #infoCheck, #etcCheck').click(function() {
+	$('#zaksimCheck, #infoCheck').click(function() {
 		if ($('#zaksimCheck').prop("checked") 
-				&& $('#infoCheck').prop("checked") 
-				&& $('#etcCheck').prop("checked")) {
-			// 세가지 동의가 다 체크 되어있으면 전체 동의 체크하기
+				&& $('#infoCheck').prop("checked")) {
+			// 두가지 동의가 다 체크 되어있으면 전체 동의 체크하기
 			$('#allCheck').prop("checked", true);
 		} else {
 			// 아니면 체크 해제
@@ -259,7 +252,7 @@ ZakSim 및 ZakSim 관련 제반 서비스(모바일 웹/앱 포함)의 회원관
 			console.log("if문 확인했소이다.")
 			
 			$('.modal-title').text("오류");
-			$('.modal-body').html("동의하지 않은 약관이 있습니다.<br>필수 약관에 모두 동의해주세요.");
+			$('.modal-body').html("동의하지 않은 약관이 있습니다.<br>약관에 모두 동의해주세요.");
 			$('.modal-footer').html('<button type="button" class="btn joinBtnColor" data-dismiss="modal">확인</button>');
 			
 			$('#joinModal').modal();
