@@ -79,6 +79,11 @@ public class QnAServiceImpl implements QnAService {
 	}
 	
 	@Override
+	public int getQnAIdx() {
+		return qnaDao.getQnAIdx();
+	}
+	
+	@Override
 	public void qnaStatus(int upperIdx) {
 		qnaDao.qnaStatus(upperIdx);
 	}
@@ -97,4 +102,5 @@ public class QnAServiceImpl implements QnAService {
 	public List<QnAComment> viewComment(int qnaIdx) {
 		return qCommentDao.selectComment(qnaIdx);
 	}
+	
 }

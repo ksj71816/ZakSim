@@ -2,9 +2,8 @@ package zaksim.customerCenter.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
-import zaksim.dao.QnAFileDao;
 import zaksim.dto.QnAFile;
 
 /*
@@ -22,6 +21,13 @@ public interface QnAFileService {
 	 * @return List<QnAFile>
 	 */
 	public List<QnAFile> qnaFileList(int qnaIdx);
+	
+	/**
+	 * Q&A 파일 경로 처리 service
+	 * @param file
+	 * @return QnAFile
+	 */
+	public QnAFile getFilePath(MultipartFile file);
 	
 	/**
 	 * Q&A 파일 업로드(첨부) service

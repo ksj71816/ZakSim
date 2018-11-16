@@ -138,7 +138,7 @@ ORDER BY rnum
 <!--  Q&A 작성 dao -->
  <insert id="qnaWrite" parameterType="zaksim.dto.QnA">
  	INSERT INTO QnA(idx, writer_idx, title, content, hit, status, secret, upper_idx, depth) 
- 	VALUES(QnA_SEQ.nextval, #{writerIdx}, #{title}, #{content}, 0, #{status}, #{secret},
+ 	VALUES(#{idx}, #{writerIdx}, #{title}, #{content}, 0, #{status}, #{secret},
  		<if test="upperIdx == 0">
  		null,
  		0
@@ -149,6 +149,11 @@ ORDER BY rnum
  		</if>
  		)
  </insert>
+ 
+<!-- Q&A 작성 - Q&A 인덱스 dao -->
+ <select id="getQnAIdx" resultType="int">
+ 	SELECT QnA_SEQ.nextval FROM dual
+ </select>
  
 <!--  Q&A 작성 - 답변 완료 dao -->
  <update id="qnaStatus" parameterType="int">

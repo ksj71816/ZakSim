@@ -68,6 +68,11 @@ public interface QnAService {
 	 */
 	public void qnaWrite(QnA qnaDto);
 	/**
+	 * Q&A 작성 - Q&A 인덱스 service
+	 * @return int
+	 */
+	public int getQnAIdx();
+	/**
 	 * Q&A 작성 - 답변 완료 service
 	 * @param int upperIdx
 	 */

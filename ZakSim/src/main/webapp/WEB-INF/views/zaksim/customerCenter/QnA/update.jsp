@@ -95,7 +95,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div><c:out value="" />
 	
 <%@ include file="../../main/footer.jsp" %>
 <!-- summernote js -->
@@ -124,8 +124,27 @@
 	}
 	// --------------------------------------
 
+	var fileList = '${old_fileList}';
+	console.log(fileList);
+	
 	// 파일첨부(UI)
-	$("#userfile").val('파일 첨부');
+	if (fileList == null || fileList == "") {		
+		$("#userfile").val('파일 첨부');
+	} else {
+		var result = new Array();
+		
+		<c:forEach var="file" items="${old_fileList}">
+			var json = new Object();
+			json.idx = "${file.idx}"
+			json.qnaIdx = "${file.qnaIdx}"
+			json.original = "${file.original}"
+			result.push(json);
+		</c:forEach>
+		var file = result[0].original;
+		console.log(file);
+		
+		$("#userfile").val(file);
+	}
 	$("#fileInput").on('change', function() { // 값이 변경되면
 		if (window.FileReader) { // modern browser
 			var filename = $(this)[0].files[0].name;
