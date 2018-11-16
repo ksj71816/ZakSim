@@ -50,6 +50,10 @@
 	.menu .subItem:hover {
 		font-weight: bold;
 	}
+
+.point{
+	cursor:pointer;
+}
 </style>
 </head>
 
@@ -75,7 +79,7 @@
 		<div class="d-flex justify-content-between">
 			<div class="menu">
 				<div class="mainItem">
-					<span class="h5"><strong>챌린지</strong></span>
+					<span class="h5 point"><strong>챌린지</strong></span>
 				</div>
 				<div class="subItems">
 					<span class="subItem">
@@ -101,7 +105,7 @@
 			
 			<div class="menu">
 				<div class="mainItem">
-					<span class="h5"><strong>커뮤니티</strong></span>
+					<span class="h5 point"><strong>커뮤니티</strong></span>
 				</div>
 				<div class="subItems">
 					<span class="subItem">
@@ -115,7 +119,7 @@
 			
 			<div class="menu">
 				<div class="mainItem">
-					<span class="h5"><strong>고객센터</strong></span>
+					<span class="h5 point"><strong>고객센터</strong></span>
 				</div>
 				<div class="subItems">
 					<span class="subItem">
@@ -129,7 +133,7 @@
 			
 			<div class="menu">
 				<div class="mainItem">
-					<span class="h5"><strong>마이페이지</strong></span>
+					<span class="h5 point"><strong>마이페이지</strong></span>
 				</div>
 				<div class="subItems">
 					<span class="subItem">
