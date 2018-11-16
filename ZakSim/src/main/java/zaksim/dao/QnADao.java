@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import zaksim.dto.QnA;
-import zaksim.dto.QnAComment;
+import zaksim.dto.QnAFile;
 import zaksim.util.Paging;
 
 /*
@@ -89,6 +89,5 @@ public interface QnADao {
 	 * @param int qnaidx
 	 */
 	public void qnaDelete(int qnaIdx);
-	
 	
 }

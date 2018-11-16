@@ -6,6 +6,7 @@ import java.util.Map;
 import zaksim.dto.QnA;
 import zaksim.dto.QnAComment;
 import zaksim.dto.ZakSimMember;
+import zaksim.dto.QnAFile;
 import zaksim.util.Paging;
 
 /*
@@ -97,4 +98,10 @@ public interface QnAService {
 	// 모든 멤버 정보 가져오기
 	public List<ZakSimMember> getAllMember();
 	
+	/**
+	 * QnA 첨부파일 다운로드
+	 * @param qnaIdx
+	 * @return QnAFile
+	 */
+	public QnAFile download(int qnaIdx);
 }
