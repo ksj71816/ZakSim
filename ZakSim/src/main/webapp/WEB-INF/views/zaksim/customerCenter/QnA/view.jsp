@@ -249,7 +249,6 @@
       
       
    </div>
->>>>>>> branch '20181024' of https://github.com/ksj71816/ZakSim.git
 
 <!-- Modal -->
 <div class="modal fade" id="qnaViewModal" tabindex="-1" role="dialog">
