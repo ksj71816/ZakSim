@@ -105,6 +105,8 @@ body {
 .sidenav-a {
 	margin-bottom: 10px;
 }
+
+
 </style>
 
 
@@ -128,15 +130,41 @@ body {
 <body>
 
 <!-- navbar -->
-	<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #8A0303;">
-		<a href="" class="btn" style="font-size: xx-large; font-weight: bold; color: white;">ZakSim</a>
-		<div class="collapse navbar-collapse justify-content-end">
-			<a href="/zaksim/admin/logout" style="font-weight: bold; color: white;">LOGOUT</a>
+	<div class="navbar navbar-expand-lg fixed-top" style="background-color: #FFFFFF;border-bottom:1px solid indianred;">
+		<!-- logo -->
+	    <div class="col-sm-2">
+			<span>
+	        	<a href="/zaksim/admin/member">
+	        		<img src="/resources/image/main/logo.png" class="" alt="logo image" style="width: 220px;"/>
+				</a>
+	    	</span>
+		</div><!-- end of logo div -->
+
+		<div class="col-sm-1">Admin Page</div><!-- spacing -->
+		
+		<!-- menu -->
+		<div class="col-sm-8">
+		</div><!-- menu -->
+	
+		<!-- logout -->
+		<div class="col-sm-1">
+	    	<a href="/zaksim/admin/logout" style="text-decoration: none; color: black;">
+	    		<strong>로그아웃</strong>
+	    	</a>
 		</div>
-	</nav>
+	</div>
+<!-- navbar -->
+
+<!-- navbar -->
+<!-- 	<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #8A0303;"> -->
+<!-- 		<a href="" class="btn" style="font-size: xx-large; font-weight: bold; color: white;">ZakSim</a> -->
+<!-- 		<div class="collapse navbar-collapse justify-content-end"> -->
+<!-- 			<a href="/zaksim/admin/logout" style="font-weight: bold; color: white;">LOGOUT</a> -->
+<!-- 		</div> -->
+<!-- 	</nav> -->
 <!-- navbar -->
 	
-	
+
 
 
 <!-- sidenav -->

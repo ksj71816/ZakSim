@@ -8,16 +8,19 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>ZakSim</title>
-
-    
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ZakSim</title>
+   
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
 
-<style>
+<style type="text/css">
 @font-face {
 	font-family: Dohyeon;
 	src: url('/resources/fonts/BMDOHYEON_ttf.ttf');
@@ -26,168 +29,135 @@
 	font-family: HannaAir;
 	src: url('/resources/fonts/BMHANNAAir_ttf.ttf');
 }
-</style>
-
-
-<style type="text/css">
-
-
-
 
  #navbarToggle {  
-    position: relative;  
-   
+    position: relative;     
     transition: width 0.001s;
-
 	transition-timing-function: linear;  
-      
- }  
+}
 
-
+.menu {
+	height: 4em;
+	width: 20%;
+	margin-top: 25px;
+}  
+	.menu .subItems {
+	}
+	.menu .subItem{
+		display: inline-block;
+		margin-right: 2px;
+	}
+	.menu .subItem:hover {
+		font-weight: bold;
+	}
 </style>
-
-
 </head>
 
 <body>
- 
-    <!-- navbar -->
-    <div class="row navbar navbar-expand-lg mt-3">
-        <div class="col-sm-2">
-            <span>
-            	<a href="/zaksim/main/home">
-            		<img src="/resources/image/main/logo.png" class="" alt="logo image" style="width: 220px;"/>
-				</a>
-       		</span>
-          
-           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
- 
-        </div>
+<!-- navbar -->
+<div class="row navbar navbar-expand-lg" style="background-color: #FFFFFF;border-bottom:3px solid indianred;">
+    <!-- logo -->
+    <div class="col-sm-2">
+		<span>
+        	<a href="/zaksim/main/home">
+        		<img src="/resources/image/main/logo.png" class="" alt="logo image" style="width: 220px;"/>
+			</a>
+    	</span>
+        
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+		</button>
+	</div><!-- end of logo div -->
 
-		<div class="col-sm-3"></div>
-		
-        <div class="col-sm-6 collapse navbar-collapse text-center " id="navbarSupportedContent">
-            <ul class="navbar-nav ">
-
+	<div class="col-sm-1"></div>
+	<!-- menu -->
+	<div class="col-sm-8 px-5">
+		<div class="d-flex justify-content-between">
+			<div class="menu">
+				<div class="mainItem">
+					<span class="h5"><strong>챌린지</strong></span>
+				</div>
+				<div class="subItems">
+					<span class="subItem">
+				        <c:if test="${sessionScope.login}">
+							<!-- 도전중 일때 -->
+					        <c:if test="${ sessionScope.status eq 'ing' }">
+					        <a href="/zaksim/challenge/challengeInfo" style="text-decoration: none; color: black;" >나의 도전 </a>
+					        </c:if>
+					        <!-- 도전중이 아닐때 -->
+					        <c:if test="${sessionScope.status ne 'ing'}">
+					        <a href="/zaksim/challenge/doChallenge" style="text-decoration: none; color: black;" >나의 도전 </a>
+					        </c:if>
+				        </c:if>
+				        <c:if test="${not sessionScope.login}"> 
+				        	<a href="/zaksim/main/notLogin" style="text-decoration: none; color: black;" >나의 도전 </a>
+				        </c:if>
+					</span>
+					<span class="subItem">
+						<a href="/zaksim/challenge/challengers" style="text-decoration: none;  color: black;" >도전자 인증</a>
+					</span>
+				</div> <!-- end of 챌린지 subItems -->
+			</div><!-- end of 챌린지 menu -->
+			
+			<div class="menu">
+				<div class="mainItem">
+					<span class="h5"><strong>커뮤니티</strong></span>
+				</div>
+				<div class="subItems">
+					<span class="subItem">
+						<a href="/zaksim/community/communityMain" style="text-decoration: none;  color: black;" >커뮤니티</a>
+					</span>
+					<span class="subItem">
+						<a href="/zaksim/community/individualRanking" style="text-decoration: none;  color: black;">도전 통계</a>
+					</span>
+				</div>
+			</div>
+			
+			<div class="menu">
+				<div class="mainItem">
+					<span class="h5"><strong>고객센터</strong></span>
+				</div>
+				<div class="subItems">
+					<span class="subItem">
+						<a href="/zaksim/customerCenter/QnA/list" style="text-decoration: none; color: black; " >QnA</a>
+					</span>
+					<span class="subItem">
+						<a href="/zaksim/customerCenter/guidance/view" style="text-decoration: none; color: black; ">이용 안내</a>
+					</span>
+				</div>
+			</div>
+			
+			<div class="menu">
+				<div class="mainItem">
+					<span class="h5"><strong>마이페이지</strong></span>
+				</div>
+				<div class="subItems">
+					<span class="subItem">
+						<a href="/zaksim/mypage/main" style="text-decoration: none; color: black; " >회원 정보</a>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div><!-- menu -->
 	
-                <li class="nav-item" style="   font-size: 20px;"
-                   data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <a class="nav-link " style="cursor:pointer;"><b>챌린지</b></a>
-                </li>
-                
-                
- 		<li class="col " style="margin-left:2em; width:  14em;"> </li><!-- 공백용 col-->
-                <li class="nav-item " style="   font-size: 20px;"
-                   data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <a class="nav-link " style="cursor:pointer;"><b>커뮤니티</b></a>
-                </li>
+	<!-- logout -->
+	<div class="col-sm-1">
+    	<c:if test="${sessionScope.login ne null && sessionScope.login eq true }">
+    		<a href="/zaksim/login/logout" style="text-decoration: none; color: black;">
+    			<strong>로그아웃</strong>
+    		</a>
+    	</c:if>
+	</div>
 
- 		 
- 		   <li class="col " style="margin-left:2em; width: 14em;"> </li><!-- 공백용 col-->
-                <li class="nav-item "  style="  font-size: 20px;"
-                   data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <a class="nav-link " style="cursor:pointer;"><b>고객센터</b></a>
-                </li>
-                
-                  
-     	  <li class="col " style="margin-left:1em; width: 14em;"> </li><!-- 공백용 col-->
-                <li class="nav-item "  style="  font-size: 20px;" 
-                   data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <a class="nav-link " style="cursor:pointer;"><b>마이페이지</b></a>
-                </li>
-          
-            </ul>
-            
-        </div>
-        
-        <div class="col-sm-1 text-right pr-3">
-        	<c:if test="${sessionScope.login ne null && sessionScope.login eq true }">
-        		<a href="/zaksim/login/logout" style="color: black;">
-        			<b>logout</b>
-        		</a>
-        	</c:if>
-        </div>
-         
-    </div> <!-- end of navbar -->
-
-<!--나브바 토글-->
-<div class="row navbar navbar-expand-lg navbar-dark collapse m-0" style="height: 40px;" id="navbarToggle">
-    <div class="text-black " style="width: 25rem!important;">
-      <h5 class="my-0 ml-1"><b></b></h5>
-    </div>
-    
-    <div class="col-sm-5"></div>
-    <div class="col-sm-6 ">
-      <ul class="navbar-nav ">
-        
-        <li class="nav-item font-weight-bold text-black-50 mx-2" style="font-size: 15px;">
-        
-        
-        <c:if test="${sessionScope.login}">
-	        
-	        <!-- 도전중 일때 -->
-	        <c:if test="${ sessionScope.status eq 'ing' }">
-	        <a href="/zaksim/challenge/challengeInfo" style="text-decoration: none; color: black;" >나의 도전 </a>
-	        </c:if>
-	        
-	        <!-- 도전중이 아닐때 -->
-	        <c:if test="${sessionScope.status ne 'ing'}">
-	        <a href="/zaksim/challenge/doChallenge" style="text-decoration: none; color: black;" >나의 도전 </a>
-	        </c:if>
-       
-        </c:if>
-        
-        <c:if test="${not sessionScope.login}"> 
-        	<a href="/zaksim/main/notLogin" style="text-decoration: none; color: black;" >나의 도전 </a>
-        </c:if>
-        
-        
-        </li>
-        
-        
-        <li class="nav-item  font-weight-bold text-black-50 mx-2" style="font-size: 15px;">
-        <a href="/zaksim/challenge/challengers" style="text-decoration: none;  color: black;" >도전자 인증</a>
-        </li>
-        
-        
-        <li class="col "> </li><!-- 공백용 col-->
-        
-        <li class="nav-item font-weight-bold text-black-50 mx-2" style="font-size: 15px;">
-        <a href="/zaksim/community/communityMain" style="text-decoration: none;  color: black;" >커뮤니티</a>
-        </li>
-        <li class="nav-item  font-weight-bold text-black-50 mx-2" style="font-size: 15px;">
-        <a href="/zaksim/community/individualRanking" style="text-decoration: none;  color: black;">도전 통계</a>
-        </li>
-        
-        
-        
-        <li class="col "> </li><!-- 공백용 col-->
-       
-        <li class="nav-item  font-weight-bold text-black-50 mx-2" style="font-size: 15px;">
-        <a href="/zaksim/customerCenter/QnA/list" style="text-decoration: none; color: black; " >QnA</a>
-        </li>
-        <li class="nav-item   font-weight-bold text-black-50 mx-2" style="font-size: 15px;">
-        <a href="/zaksim/customerCenter/guidance/view" style="text-decoration: none; color: black; ">이용 안내</a>
-        </li>
-        
-        
-        
-        <li class="col "> </li><!-- 공백용 col-->
-        
-        <li class="nav-item  font-weight-bold text-black-50 mx-2" style="font-size: 15px;">
-        <a href="/zaksim/mypage/main" style="text-decoration: none; color: black; " >회원 정보</a>
-        </li>
-        
-        <li class="col "> </li><!-- 공백용 col-->
-      </ul>
-    </div>
-    
-    <div class="col-sm-1"></div>
-  </div>
-
-
-<hr style="border: 1px solid indianred;">
+</div><!-- end of navbar toggle -->
 
 <!-- 해더 끝 -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".subItems").hide();
+	
+	$(".mainItem").on('click', function(){
+		$(".subItems").fadeToggle();
+	});	
+})
+</script>
