@@ -13,10 +13,10 @@ import zaksim.util.Paging;
 public interface CommunityListDAO {
 
 	// 그룹 리스트
-	public List<GroupLike> joinedGroupList(int idx);
+	public List<CommunityGroup> joinedGroupList(int idx);
 	
 	// 인기그룹 리스트
-	public List<GroupLike> popularGroupList();
+	public List<CommunityGroup> popularGroupList();
 
 	// 새로 시작한 그룹 리스트
 	public List<CommunityGroup> newGroupList();

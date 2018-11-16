@@ -100,9 +100,7 @@
 						</c:if>
 		
 					</c:if>
-<script>
-console.log('${joinedGroupList }');
-</script>
+
 
 					<!-- 참여하고 있는 모임이 있을 시 -->
 					<c:if test="${joinedGroupList ne null }">
@@ -110,12 +108,12 @@ console.log('${joinedGroupList }');
 							<div class="card" style="width: 20rem; margin-right: 15px;">
 								<div class="hovereffect">
 									<img class="card-img-top"
-										src="${joinedGroupList.communityGroup.image }"
+										src="${joinedGroupList.image }"
 										alt="Card image cap">
 									<div class="card-body">
 										<span>
-											<h3 class="card-title">${joinedGroupList.communityGroup.title }
-												<c:if test="${joinedGroupList.communityGroup.secret==1 }">
+											<h3 class="card-title">${joinedGroupList.title }
+												<c:if test="${joinedGroupList.secret==1 }">
 													<img alt="" src="/resouces/image/community/자물쇠.png">
 												</c:if>
 											</h3>
@@ -126,7 +124,7 @@ console.log('${joinedGroupList }');
 										<p class="card-text">
 											키워드 :
 											<c:forEach items="${keywordList }" var="keyword">
-												<c:if test="${joinedGroupList.communityGroup.idx eq keyword.group_idx}">
+												<c:if test="${joinedGroupList.idx eq keyword.group_idx}">
 
 													#${keyword.keyword } 
 											</c:if>
@@ -136,7 +134,7 @@ console.log('${joinedGroupList }');
 
 									<div class="overlay">
 										<br> <br> <br> <a class="info" href="#">
-											<button type="button" class="btn btn-danger" onclick="moveURL(${joinedGroupList.communityGroup.idx }, 0)">상세보기</button>
+											<button type="button" class="btn btn-danger" onclick="moveURL(${joinedGroupList.idx }, 0)">상세보기</button>
 
 										</a>
 
@@ -166,15 +164,15 @@ console.log('${joinedGroupList }');
             <div class="form-inline" style="margin-bottom: 50px;">
                <c:forEach var="popularGroupList" items="${popularGroupList }">
                   <div class="card" style="width: 20rem; margin-right: 15px;">
-                  <input type="hidden" class="idxx" value="${popularGroupList.communityGroup.idx }">
-                  <input type="hidden" class= "memberIdxx" value="${popularGroupList.communityGroup.member_idx }">
+                  <input type="hidden" class="idxx" value="${popularGroupList.idx }">
+                  <input type="hidden" class= "memberIdxx" value="${popularGroupList.member_idx }">
                      <div class="hovereffect">
                         <img class="card-img-top"
-                           src="${popularGroupList.communityGroup.image }"
+                           src="${popularGroupList.image }"
                            alt="Card image cap">
                         <div class="card-body">
                            <span>
-                              <h3 class="card-title">${popularGroupList.communityGroup.title }
+                              <h3 class="card-title">${popularGroupList.title }
                            
                               </h3>
                            </span> <span class="form-inline"> <span style="color: red;">
@@ -186,7 +184,7 @@ console.log('${joinedGroupList }');
                               </c:if>
                               <c:forEach items="${keywordList }" var="keyword">
                                  <c:if
-                                    test="${popularGroupList.communityGroup.idx eq keyword.group_idx}">
+                                    test="${popularGroupList.idx eq keyword.group_idx}">
                                     #${keyword.keyword }
                                  </c:if>
                               </c:forEach>
@@ -198,7 +196,7 @@ console.log('${joinedGroupList }');
                               <% boolean groupFlag =  false; %>
                               <c:forEach var="groupMemberExist" items="${groupMemberExist }">
 
-                                    <c:if test="${groupMemberExist.group_idx eq popularGroupList.communityGroup.idx }">
+                                    <c:if test="${groupMemberExist.group_idx eq popularGroupList.idx }">
                                        <% groupFlag = true; %>
                                     </c:if>
                               </c:forEach>   
@@ -209,28 +207,28 @@ console.log('${joinedGroupList }');
                               <!-- 가입했을 때 -->
                                  <c:if test="<%=groupFlag  %>">
                                     <button type="button" class="btn btn-danger" 
-                                 onclick="moveURL(${popularGroupList.communityGroup.idx }, 0)">상세보기</button>
+                                 onclick="moveURL(${popularGroupList.idx }, 0)">상세보기</button>
                                  </c:if>
                                  
                                  <!-- 가입 안 했을 때 -->
                                  <c:if test="<%=!groupFlag  %>">
                                  
                                  <!-- 비공개일 떄 -->
-                                    <c:if test="${popularGroupList.communityGroup.secret == 1 }">
+                                    <c:if test="${popularGroupList.secret == 1 }">
                                     <button type="button"  class="btn btn-primary secretJoin">가입하기</button>
                                     <br>
                                     <br>
                                  </c:if>
                                  
                                  <!-- 공개일 때 -->
-                                   <c:if test="${popularGroupList.communityGroup.secret == 0 }"> 
+                                   <c:if test="${popularGroupList.secret == 0 }"> 
                                     <button type="button" class="btn btn-primary join" id ="noPassJoin">가입하기</button> 
                                     <br> 
                                     <br> 
                                   </c:if>    
                                     
                                     <button type="button" class="btn btn-danger" 
-                                 onclick="moveURL(${popularGroupList.communityGroup.idx }, ${popularGroupList.communityGroup.secret })">상세보기</button>
+                                 onclick="moveURL(${popularGroupList.idx }, ${popularGroupList.secret })">상세보기</button>
                                  
                               
                                  </c:if>
@@ -240,7 +238,7 @@ console.log('${joinedGroupList }');
                               <!-- 로그인 안했을 때 -->
                               <c:if test="${!sessionScope.login }">
                                      <button type="button" class="btn btn-danger" 
-                                 onclick="moveURL(${popularGroupList.communityGroup.idx }, ${popularGroupList.communityGroup.secret })">상세보기</button>
+                                 onclick="moveURL(${popularGroupList.idx }, ${popularGroupList.secret })">상세보기</button>
                               </c:if>
                               
                            </a>
