@@ -1,5 +1,8 @@
 package zaksim.customerCenter.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import zaksim.customerCenter.service.QnACommentService;
 import zaksim.dto.QnAComment;
@@ -57,9 +61,15 @@ public class QnACommentController {
 	}
 
 	// Q&A 댓글 삭제
-	@RequestMapping(value="/zaksim/customerCenter/QnA/comment_delete", method=RequestMethod.POST)
-	public void qnaCommentDelete(@RequestParam int qnaCommentIdx, HttpServletResponse response) {
+	@RequestMapping(value="/zaksim/customerCenter/QnA/comment_delete", method=RequestMethod.POST, produces="application/json; charset=utf-8")
+	@ResponseBody
+	public Map<String, String> qnaCommentDelete(@RequestParam int order) {
 		
+		System.out.println("order : " + order);
+		
+		Map<String, String> map = new HashMap<>();
+		
+		return map;
 	}
 	
 }

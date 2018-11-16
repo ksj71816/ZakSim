@@ -33,9 +33,19 @@
 		<beans:property name="defaultEncoding" value="utf-8" />
 		
 	</beans:bean>
-	
+		<interceptors>
+		<interceptor>
+		<mapping path="/zaksim/community/enrollCommunity"/>
+		<beans:bean class="zaksim.interceptor.CommunityInterceptor" />
+		</interceptor>
+		<interceptor>
+			<mapping path="/zaksim/mypage/main"/>
+			<mapping path="/zaksim/challenge/challengeInfo"/>
+			<beans:bean class="zaksim.interceptor.LoginInterceptor"/>
+		</interceptor>
+	</interceptors>
 	<context:component-scan base-package="zaksim" />
-	
+
 	
 	
 </beans:beans>
