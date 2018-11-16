@@ -41,5 +41,29 @@
  	VALUES (qnaComment_seq.nextval, #{qnaIdx}, null, 0, #{writerIdx}, #{content}, sysdate, (
  		SELECT MAX(c_order)+1 c_order FROM qnaComment))
  </insert>
+ 
+ <select id="selectUpperOrder" parameterType="zaksim.dto.QnAComment" resultType="int">
+	SELECT NVL(MIN(c_order), 0) c_order 
+	FROM qnaComment
+	WHERE depth=0 
+	AND c_order <![CDATA[ > ]]> (SELECT c_order FROM qnaComment where idx=#{upperIdx})
+ </select>
+ 
+ <update id="updateOrder" parameterType="int">
+ 	UPDATE qnaComment
+ 	SET c_order = c_order + 1
+ 	WHERE c_order <![CDATA[ > ]]>= #{order}
+ </update>
+ 
+ <insert id="qnaReCommentWrite" parameterType="zaksim.dto.QnAComment">
+ 	INSERT INTO qnaComment
+ 	VALUES (qnaComment_seq.nextval, #{qnaIdx}, #{upperIdx}, #{depth}+1, #{writerIdx}, #{content}, sysdate,
+ 	<if test="order != 0">
+	 	#{order})
+ 	</if>
+ 	<if test="order == 0">
+ 		(SELECT MAX(c_order)+1 c_order FROM qnaComment WHERE qna_idx=#{qnaIdx}))
+ 	</if>
+ </insert>
 
  </mapper>
