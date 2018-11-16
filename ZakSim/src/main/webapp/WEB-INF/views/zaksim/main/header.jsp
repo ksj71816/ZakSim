@@ -147,6 +147,12 @@
     			<strong>로그아웃</strong>
     		</a>
     	</c:if>
+    	<c:if test='${sessionScope.login_id eq "admin"}'>
+    		<br>
+    		<a href="/zaksim/admin/member" style="text-decoration: none; color: black;">
+    			<strong>관리자페이지</strong>
+    		</a>
+    	</c:if>
 	</div>
 
 </div><!-- end of navbar toggle -->

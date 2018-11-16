@@ -62,7 +62,7 @@
    <c:if test="${empty login }">
        
        <!-- 비로그인 상태 -->
-        <div class=" text-center  col-md-2 col-lg-2 m-2">
+        <div class=" text-center  col-md-2 col-lg-2 m-3">
           <div class="row my-1 mb-4">
           </div>
           <div class="border border-light rounded py-4 my-1">
@@ -82,7 +82,7 @@
           <h4 class="mt-5" style="margin-top: 80px!important;"> 로그인 후 이용해 주세요! </h4>
         </div>
        
-    </c:if>
+    </c:if><%-- 비로그인 --%>
        
        
    <c:if test="${login }">
@@ -101,7 +101,7 @@
       
         <!-- 비도전 중일때 -->
 		<div class="col-md-6 col-lg-6 rounded m-2 mx-5 text-center">
-          <h3 class="text-center my-2">도전 정보</h3>
+          <h3 class="text-center my-4">도전 정보</h3>
           <hr  style="border:2px white solid;">
           <h5 class="my-2 mt-5"> 아직 도전을 시작하지 않으셨군요.</h5>
           <h5 class="my-2">  멋진 도전을 시작해 보세요! </h5>
@@ -110,14 +110,13 @@
           
         </div>
        
-      </c:if>
-        
-        
+      </c:if> <%-- 비도전 --%>
+
         
        <c:if test="${ sessionScope.status eq 'ing' }">
         <!-- 도전중일때 -->
         <div class="col-md-6 col-lg-6 rounded m-2 mx-5 text-center">
-          <h4 class="text-center mt-2 mb-3">도전 정보</h4>
+          <h4 class="text-center mt-4 mb-3">도전 정보</h4>
            <hr  style="border:2px white solid;">
           
              <a class="my-2 d-flex justify-content-center align-items-end">  
@@ -130,27 +129,24 @@
         
           	<a class="btn btn-sm w-50 btn-info my-2 mt-4" href="/zaksim/challenge/challengeInfo"> 도전 정보 확인 </a>
         </div>
-      </c:if>
+      </c:if> <%-- 도전중 --%>
+          
+    </c:if> <%-- login 상태 --%>
+          
         
-        
-    </c:if>
-        
-        
-        
-        <div class="rounded col-md-2 col-lg-2 m-2">
-          <div class="border-secondary rounded">
-            <h5 class="text-center mt-2"><b>도전자 랭킹</b></h5>
-            <hr class="border border-light ">
-            <ol class="border rounded border-light mt-4">
-              <li class="my-2">One</li>
-              <li class="my-2">One</li>
-              <li class="my-2">One</li>
-              <li class="my-2">One</li>
-              <li class="my-2">One</li>
-            </ol>
-          </div>
+        <div class="rounded col-md-3 col-lg-3 m-2">
+<!--           <div class="border-secondary rounded"> -->
+<!--             <h5 class="text-center mt-2"><b>도전자 랭킹</b></h5> -->
+<!--             <hr class="border border-light "> -->
+<!--             <ol class="border rounded border-light mt-4"> -->
+<!--               <li class="my-2">One</li> -->
+<!--               <li class="my-2">One</li> -->
+<!--               <li class="my-2">One</li> -->
+<!--               <li class="my-2">One</li> -->
+<!--               <li class="my-2">One</li> -->
+<!--             </ol> -->
+<!--           </div> -->
         </div>
-        
         
       </div>
     </div>

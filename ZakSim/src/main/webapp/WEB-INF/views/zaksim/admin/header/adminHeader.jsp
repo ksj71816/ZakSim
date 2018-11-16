@@ -169,25 +169,27 @@ body {
 
 <!-- sidenav -->
 	<div class="sidenav" style="margin-top: 50px;">
-		<div class="row" style="margin-top: 50px;">
-			<div class="col-2"></div>
-				<div class="col-8">
-					<img class="img-fluid d-block rounded-circle" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" >
-				</div>
-				<div class="col-2"></div>		
-		</div>
-		<div class="row text-center" style="margin-top: 15px; margin-bottom: 80px;">
-			<div class="col-12"><p>ADMIN</p></div>
-		</div>
-		<a class="sidenav-a" href="/zaksim/admin/member">회원 관리</a>
-		<a class="sidenav-a" href="/zaksim/admin/payment">결제 관리</a>
-		<button class="dropdown-btn">
-			통계 / 그래프 <i class="fa fa-caret-down"></i>
-		</button>
-		<div class="dropdown-container">
-			<a href="/zaksim/admin/mStatistics">회원</a>
-			<a href="/zaksim/admin/cStatistics">도전</a>
-			<a href="/zaksim/admin/pStatistics">기부금</a>
+<!-- 		<div class="row" style="margin-top: 50px;"> -->
+<!-- 			<div class="col-2"></div> -->
+<!-- 				<div class="col-8"> -->
+<!-- 					<img class="img-fluid d-block rounded-circle" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" > -->
+<!-- 				</div> -->
+<!-- 				<div class="col-2"></div>		 -->
+<!-- 		</div> -->
+<!-- 		<div class="row text-center" style="margin-top: 65px; margin-bottom: 80px;"> -->
+<!-- 			<div class="col-12"><p>ADMIN</p></div> -->
+<!-- 		</div> -->
+		<div class="mt-5">
+			<a class="sidenav-a" href="/zaksim/admin/member">회원 관리</a>
+			<a class="sidenav-a" href="/zaksim/admin/payment">결제 관리</a>
+			<button class="dropdown-btn">
+				통계 / 그래프 <i class="fa fa-caret-down"></i>
+			</button>
+			<div class="dropdown-container">
+				<a href="/zaksim/admin/mStatistics">회원</a>
+				<a href="/zaksim/admin/cStatistics">도전</a>
+				<a href="/zaksim/admin/pStatistics">기부금</a>
+			</div>		
 		</div>
 	</div>
 <!-- sidenav -->
