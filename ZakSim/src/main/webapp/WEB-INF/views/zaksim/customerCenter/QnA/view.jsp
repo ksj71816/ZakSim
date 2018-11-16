@@ -129,11 +129,12 @@
 			<label class="col-md-1"> </label>
 			<div class="col-md-10">
 				<div class="card">
-					<form action="/reply/reply.do" method="post">
+					<form action="/zaksim/customerCenter/QnA/comment_write" method="post">
 						<div class="form-group card-header">
 							<label style="font-weight: bold">${login_nick }</label>
 						</div>
 						<div class="form-group ">
+							<input style="display: none;" name="qnaIdx" value="${view.idx}"/>
 							<input type="text" class="form-control" id="boardNo"
 								name="boardNo" value="${board.boardNo }" readonly=""
 								hidden="true">
@@ -152,38 +153,57 @@
 									</c:when>
 								</c:choose>
 							</div>
-							<button type="button" class="btn qnaBtnColor btn-md mr-1">댓글 입력</button>
+							<c:if test="${sessionScope.login}">
+								<button type="submit" class="btn qnaBtnColor btn-md mr-1">댓글 입력</button>
+							</c:if>
 						</div>
 					</form>
 				</div>
 			</div>
 			<label class="col-md-1"> </label>
 		</div>
+		
+		
+		
 <!-- 		댓글 목록 영역 -->
-		<div class="row mt-3 justify-content-center">
-			<label class="col-md-1"> </label>
-			<div class="col-md-10">
-				<ul class="list-group">
-<%-- 					<c:foreach items="" var=""> --%>
+		<div style="margin-bottom: 8rem;">
+			<c:forEach items="${commentList}" var="comment">
+			<div class="row mt-3 justify-content-center">
+				<label class="col-md-1"> </label>
+				<div class="col-md-10">
+					<ul class="list-group">
 						<li class="list-group-item">
-							<div class="d-flex w-100 justify-contents-between">
-								<p style="font-weight: bold">암욜맨</p>
-								<small>&nbsp; 16:22 &nbsp; </small>
-								<small> <a href="" style="color: blue">수정</a> </small>
-								&nbsp;
-								<small> <a href="" style="color: red">삭제</a> </small>
-								&nbsp; 
-								<small> <a href="" style="color: green">답댓글쓰기</a> </small>
+							<div class="d-flex w-100 justify-content-between">
+								<div>
+									<p style="display: none;">${comment.idx}</p>
+									<p style="display: none;">${comment.writerIdx}</p>
+									<strong style="font-weight: 700 !important;">${comment.zakSimMember.id}</strong>
+									<small class="ml-4"><fmt:formatDate pattern = "yyyy-MM-dd" value = "${comment.writtenDate}" /></small>
+									<small><fmt:formatDate type="time" timeStyle="short" value = "${comment.writtenDate}"/></small>
+								</div>
+								
+								<div>
+									<c:if test="${sessionScope.login_idx ne null }">
+										<c:if test="${sessionScope.login_idx eq comment.writerIdx}">
+											<small> <a href="" style="color: blue">수정</a> </small>
+											<small class="ml-1"> <a href="" style="color: red">삭제</a> </small>						
+										</c:if>
+										<small class="ml-1"> <a href="" style="color: green">답댓글쓰기</a> </small>
+									</c:if>
+								</div>
 							</div>
 							<div>
-								<p class="mb-1">댓글 내용!</p>
+								<p class="mb-1">${comment.content}</p>
 							</div>
 						</li>
-<%-- 					</c:foreach> --%>
-				</ul>
+					</ul>
+				</div>
+				<label class="col-md-1"> </label>
 			</div>
-			<label class="col-md-1"> </label>
+			</c:forEach>
 		</div>
+		
+		
 	</div>
 
 <%@ include file="../../main/footer.jsp" %>

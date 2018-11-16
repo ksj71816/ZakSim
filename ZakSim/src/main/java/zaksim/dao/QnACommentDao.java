@@ -37,5 +37,8 @@ public interface QnACommentDao {
 	 * @param QnAComment qnaCommentDto
 	 */
 	public void qnaCommentDelete(int qnaCommentIdx);
+
+	// 댓글 가져오기
+	public List<QnAComment> selectComment(int qnaIdx);
 	
 }

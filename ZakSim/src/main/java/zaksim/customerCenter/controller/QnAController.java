@@ -17,6 +17,7 @@ import zaksim.customerCenter.service.QnACommentService;
 import zaksim.customerCenter.service.QnAFileService;
 import zaksim.customerCenter.service.QnAService;
 import zaksim.dto.QnA;
+import zaksim.dto.QnAComment;
 import zaksim.util.Paging;
 
 /*
@@ -102,8 +103,10 @@ public class QnAController {
 		
 		qnaService.qnaViewRead(qnaIdx);
 		QnA qna = qnaService.qnaView(qnaIdx);
+		List<QnAComment> commentList = qnaService.viewComment(qnaIdx);
 		
 		model.addAttribute("view", qna);
+		model.addAttribute("commentList", commentList);
 		
 		return "zaksim/customerCenter/QnA/view";
 	}

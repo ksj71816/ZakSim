@@ -28,8 +28,7 @@ public class QnACommentServiceImpl implements QnACommentService {
 
 	@Override
 	public void qnaCommentWrite(QnAComment qnaCommentDto) {
-		// TODO Auto-generated method stub
-		
+		qnaCommentDao.qnaCommentWrite(qnaCommentDto);
 	}
 
 	@Override

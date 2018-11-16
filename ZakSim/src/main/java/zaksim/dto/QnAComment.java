@@ -18,11 +18,13 @@ public class QnAComment {
 	private int writerIdx; // 작성자 인덱스
 	private String content; // 내용
 	private Date writtenDate; // 작성 날짜
+	private int order;
 	
 	// DTO(JOIN으로 인한...)
-	private ZakSimMember memberDto; // 회원 DTO
-	private QnA qnaDto; // Q&A DTO
-	private QnAComment qnaCommentDto; // 상위 Q&A 댓글 DTO
+	private ZakSimMember zakSimMember; // 회원 DTO
+	private QnA qna; // Q&A DTO
+	
+	
 	
 	
 	public int getIdx() {
@@ -67,30 +69,28 @@ public class QnAComment {
 	public void setWrittenDate(Date writtenDate) {
 		this.writtenDate = writtenDate;
 	}
-	public ZakSimMember getMemberDto() {
-		return memberDto;
+	public int getOrder() {
+		return order;
 	}
-	public void setMemberDto(ZakSimMember memberDto) {
-		this.memberDto = memberDto;
+	public void setOrder(int order) {
+		this.order = order;
 	}
-	public QnA getQnaDto() {
-		return qnaDto;
+	public ZakSimMember getZakSimMember() {
+		return zakSimMember;
 	}
-	public void setQnaDto(QnA qnaDto) {
-		this.qnaDto = qnaDto;
+	public void setZakSimMember(ZakSimMember zakSimMember) {
+		this.zakSimMember = zakSimMember;
 	}
-	public QnAComment getQnaCommentDto() {
-		return qnaCommentDto;
+	public QnA getQna() {
+		return qna;
 	}
-	public void setQnaCommentDto(QnAComment qnaCommentDto) {
-		this.qnaCommentDto = qnaCommentDto;
+	public void setQna(QnA qna) {
+		this.qna = qna;
 	}
-	
 	@Override
 	public String toString() {
 		return "QnAComment [idx=" + idx + ", qnaIdx=" + qnaIdx + ", upperIdx=" + upperIdx + ", depth=" + depth
-				+ ", writerIdx=" + writerIdx + ", content=" + content + ", writtenDate=" + writtenDate + ", memberDto="
-				+ memberDto + ", qnaDto=" + qnaDto + ", qnaCommentDto=" + qnaCommentDto + "]";
+				+ ", writerIdx=" + writerIdx + ", content=" + content + ", writtenDate=" + writtenDate + ", order="
+				+ order + ", zakSimMember=" + zakSimMember + ", qna=" + qna + "]";
 	}
-	
 }

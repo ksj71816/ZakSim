@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import zaksim.dao.QnACommentDao;
 import zaksim.dao.QnADao;
 import zaksim.dto.QnA;
+import zaksim.dto.QnAComment;
 import zaksim.util.Paging;
 
 /*
@@ -20,6 +22,7 @@ import zaksim.util.Paging;
 public class QnAServiceImpl implements QnAService {
 	
 	@Autowired QnADao qnaDao;
+	@Autowired QnACommentDao qCommentDao;
 
 	@Override
 	public List<QnA> qnaList(Paging paging) {
@@ -68,6 +71,11 @@ public class QnAServiceImpl implements QnAService {
 	@Override
 	public void qnaDelete(int qnaIdx) {
 		qnaDao.qnaDelete(qnaIdx);
+	}
+
+	@Override
+	public List<QnAComment> viewComment(int qnaIdx) {
+		return qCommentDao.selectComment(qnaIdx);
 	}
 
 

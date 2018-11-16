@@ -3,6 +3,7 @@ package zaksim.customerCenter.service;
 import java.util.List;
 
 import zaksim.dto.QnA;
+import zaksim.dto.QnAComment;
 import zaksim.util.Paging;
 
 /*
@@ -64,5 +65,8 @@ public interface QnAService {
 	 * @param int qnaIdx
 	 */
 	public void qnaDelete(int qnaIdx);
+	
+	// 댓글 가져오기
+	public List<QnAComment> viewComment(int qnaIdx);
 	
 }

@@ -4,5 +4,42 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="zaksim.dao.QnACommentDao">
+ 
+   <resultMap type="zaksim.dto.QnAComment" id="QnAComment">
+  	<result property="idx" column="idx"/>
+  	<result property="qnaIdx" column="qna_idx"/>
+  	<result property="upperIdx" column="upper_idx"/>
+  	<result property="writerIdx" column="writer_idx"/>
+  	<result property="content" column="content"/>
+  	<result property="writtenDate" column="written_date"/>
+  	<result property="depth" column="depth"/>
+  	<result property="order" column="c_order"/>
+  	<collection property="zakSimMember" resultMap="ZakSimMember"/>
+  </resultMap>
+  
+  <resultMap type="zaksim.dto.ZakSimMember" id="ZakSimMember">
+  	<result property="idx" column="z_idx"/>
+  	<result property="id" column="z_id"/>
+  	<result property="memberType" column="member_type"/>
+  	<result property="joinDate" column="join_date"/>
+  	<result property="suspensionDate" column="suspension_date"/>
+  	<result property="suspendNum" column="suspend_num"/>
+  	<result property="leaveDate" column="leave_date"/>
+  </resultMap>
+  
+  
+ 
+ <select id="selectComment" parameterType="int" resultMap="QnAComment">
+ 	SELECT c.*, z.id z_id
+	FROM qnaComment c, zakSimMember z
+	WHERE qna_idx=#{qnaIdx} AND c.writer_idx=z.idx
+	ORDER BY c_order ASC
+ </select>
+ 
+ <insert id="qnaCommentWrite" parameterType="zaksim.dto.QnAComment">
+ 	INSERT INTO qnaComment
+ 	VALUES (qnaComment_seq.nextval, #{qnaIdx}, null, 0, #{writerIdx}, #{content}, sysdate, (
+ 		SELECT MAX(c_order)+1 c_order FROM qnaComment))
+ </insert>
 
  </mapper>

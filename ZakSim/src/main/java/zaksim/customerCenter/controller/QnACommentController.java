@@ -1,6 +1,7 @@
 package zaksim.customerCenter.controller;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,10 +24,17 @@ public class QnACommentController {
 	
 	@Autowired QnACommentService qnaCommentService;
 
-	// Q&A 댓글 작성
+	// Q&A depth 0 댓글 작성
 	@RequestMapping(value="/zaksim/customerCenter/QnA/comment_write", method=RequestMethod.POST)
-	public void qnaCommentWrite(QnAComment qnaCommentDto, HttpServletResponse response) {
+	public void qnaCommentWrite(QnAComment qnaCommentDto, String replyContent, HttpSession session) {
+
+		qnaCommentDto.setContent(replyContent);
+		qnaCommentDto.setWriterIdx((Integer)session.getAttribute("login_idx"));
 		
+		qnaCommentService.qnaCommentWrite(qnaCommentDto);
+		
+//		return "/zaksim/customerCenter/QnA/view?qnaIdx=" + qnaCommentDto.getQnaIdx();
+
 	}
 	
 	// Q&A 댓글 수정
