@@ -75,11 +75,11 @@
 <!-- 	public void insertBoard(Board board); -->
 
 <insert id="insertBoard" parameterType="zaksim.dto.Board">
-	INSERT INTO Board (idx, group_idx, writer_idx, title, content, image, open, certification, storedName)
-		VALUES (Board_SEQ.nextval, #{group_idx}, #{writer_idx}, 'none', #{content}, #{image}, 1, #{certification}, #{storedName} )
-		<selectKey  keyProperty="idx" resultType="int" order="AFTER">
-		SELECT Board_SEQ.currval form dual
-		</selectKey>
+	INSERT INTO Board (idx, group_idx, writer_idx, title, content, image, open, certification)
+		VALUES (Board_SEQ.nextval, #{group_idx}, #{writer_idx}, 'none', #{content}, #{image}, 1, #{certification} )
+<!-- 		<selectKey  keyProperty="idx" resultType="int" order="AFTER"> -->
+<!-- 		SELECT Board_SEQ.currval form dual -->
+<!-- 		</selectKey> -->
 </insert>
 
 

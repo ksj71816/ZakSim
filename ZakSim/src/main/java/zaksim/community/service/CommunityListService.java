@@ -1,6 +1,7 @@
 package zaksim.community.service;
 
 import java.util.List;
+import java.util.Map;
 
 import zaksim.dto.CommunityCategory;
 import zaksim.dto.CommunityGroup;
@@ -61,6 +62,21 @@ public interface CommunityListService {
 	 * @param paging
 	 * @return
 	 */
-	public List<GroupLike> newPage(Paging paging);	
+	public List<GroupLike> newPage(Paging paging);
+
+	
+	/**
+	 * 카테고리 별 갯수 출력
+	 * @param idx
+	 * @return
+	 */
+	public int categoryTotalCount(int idx);
+
+	/**
+	 * 카테고리 별 목록 가져오기
+	 * @param map
+	 * @return
+	 */
+	public List<CommunityGroup> categoryPage(Map<String, Object> map);	
 	
 }

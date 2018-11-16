@@ -1,6 +1,8 @@
 package zaksim.community.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -106,12 +108,30 @@ public class CommunityClassificationController {
 //	int idx,
 	// 카테고리 클릭 시 검색 화면 GET
    @RequestMapping(value="/clickCategoryCommunity", method=RequestMethod.GET)
-	public void clickCategory(Model model, HttpServletRequest request) {
+	public void clickCategory(Model model, HttpServletRequest request , @RequestParam(defaultValue="1", required=false)int curPage ) {
 		
-	   String idx = request.getParameter("category_idx");
+	   String temp = request.getParameter("category_idx");
+	   int idx = Integer.parseInt(temp);
 	   
+	   int totalCount = communityListService.categoryTotalCount(idx);
+	   
+	   Paging paging = new Paging(totalCount, curPage, 3);
+	   
+	   Map<String, Object> map = new HashMap<>();
+	   
+	   
+	   map.put("paging",paging);
+	   map.put("idx",idx);
+	   
+	   List<CommunityGroup> cList = communityListService.categoryPage(map);
+	   
+	   System.out.println("목록 가져오기 !!! : "+cList);
+	   
+//	   service.getPagination(map)
+//	   
+//	   select ******** where #{paging.startNo}
 		// 카테고리별 목록
-		model.addAttribute("category", communityListService.categoryGroup(Integer.parseInt(idx)));	
+//		model.addAttribute("category", communityListService.categoryGroup(Integer.parseInt(idx)));	
 		// 키워드 리스트
 		model.addAttribute("keywordList", communityListService.keywordList());
 	   

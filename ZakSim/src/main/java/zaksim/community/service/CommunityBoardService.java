@@ -21,5 +21,5 @@ public interface CommunityBoardService {
 	public void deleteBoard(Board board);
 	
 	// 파일 업로드
-	public void uploadFile(Board board, MultipartFile imgFile);
+//	public void uploadFile(Board board, MultipartFile imgFile);
 }
