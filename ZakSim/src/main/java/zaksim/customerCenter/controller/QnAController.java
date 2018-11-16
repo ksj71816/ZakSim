@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import zaksim.customerCenter.service.QnACommentService;
 import zaksim.customerCenter.service.QnAFileService;
@@ -218,6 +219,21 @@ public class QnAController {
 		qnaService.qnaDelete(qnaIdx);
 		
 		return "redirect:/zaksim/customerCenter/QnA/list";
+	}
+	
+	@RequestMapping(value="/zaksim/customerCenter/QnA/download")
+	public ModelAndView qnaDownload(ModelAndView m, @RequestParam int qnaIdx) {
+		
+		System.out.println(qnaIdx);
+		
+		QnAFile downfile = qnaService.download(qnaIdx);
+		
+		System.out.println(downfile);
+		
+		m.setViewName("download");
+		m.addObject("downFile", downfile);
+		
+		return m;
 	}
 	
 }

@@ -32,4 +32,6 @@ public interface QnAFileDao {
 	 */
 	public void qnaFileDelete(int qnaFileIdx);
 	
+
+	public QnAFile download(int qnaIdx);
 }

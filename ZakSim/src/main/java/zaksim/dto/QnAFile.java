@@ -2,6 +2,8 @@ package zaksim.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 /*
  * 작성일 : 2018.10.18
  * 작성자 : 권미현
@@ -15,6 +17,7 @@ public class QnAFile {
 	private int qnaIdx; // 문의글 인덱스
 	private String original; // 원본명
 	private String stored; // 저장명
+	@DateTimeFormat(pattern="yyyy/MM/dd")
 	private Date writtenDate; // 첨부 날짜
 	
 	// DTO(JOIN으로 인한...)
