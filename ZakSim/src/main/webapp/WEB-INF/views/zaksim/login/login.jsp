@@ -25,7 +25,7 @@
 	<!-- 로고 이미지 - 메인 페이지로 이동 -->
 	<div class="text-center pt-4">
 		<a href="/zaksim/main/home"> 
-			<img src="/resources/image/main/logo.jpg" width="400">
+			<img src="/resources/image/main/logo.png" width="400">
 		</a>
 	</div>
 	

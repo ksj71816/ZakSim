@@ -4,7 +4,7 @@
 <%@ include file="../../main/header.jsp" %>
 <link rel="stylesheet" type="text/css"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="/css/customerCenter/qna_view.css">
+<link rel="stylesheet" href="/css/customerCenter/qna_view.css?ver=1">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
 
 	<!-- body -->
@@ -179,7 +179,7 @@
 		
 <!-- 		댓글 목록 영역 -->
 		<div style="margin-bottom: 8rem;">
-			<c:forEach items="${commentList}" var="comment">
+<%-- 			<c:forEach items="${commentList}" var="comment"> --%>
 			<div class="row mt-3 justify-content-center">
 				<label class="col-md-1"> </label>
 				<div class="col-md-10">
@@ -187,32 +187,53 @@
 						<li class="list-group-item">
 							<div class="d-flex w-100 justify-content-between">
 								<div>
-									<p style="display: none;">${comment.idx}</p>
-									<p style="display: none;">${comment.writerIdx}</p>
-									<strong style="font-weight: 700 !important;">${comment.zakSimMember.id}</strong>
-									<small class="ml-4"><fmt:formatDate pattern = "yyyy-MM-dd" value = "${comment.writtenDate}" /></small>
-									<small><fmt:formatDate type="time" timeStyle="short" value = "${comment.writtenDate}"/></small>
+<%-- 									<p style="display: none;">${comment.idx}</p> --%>
+									<p style="display: none;">1</p>
+<%-- 									<p style="display: none;">${comment.writerIdx}</p> --%>
+									<p style="display: none;">2</p>
+<%-- 									<strong style="font-weight: 700 !important;">${comment.zakSimMember.id}</strong> --%>
+									<strong style="font-weight: 700 !important;">id1</strong>
+<%-- 									<small class="ml-4"><fmt:formatDate pattern = "yyyy-MM-dd" value = "${comment.writtenDate}" /></small> --%>
+									<small class="ml-4">2018-11-14</small>
+<%-- 									<small><fmt:formatDate type="time" timeStyle="short" value = "${comment.writtenDate}"/></small> --%>
+									<small>11:11</small>
 								</div>
 								
 								<div>
 									<c:if test="${sessionScope.login_idx ne null }">
-										<c:if test="${sessionScope.login_idx eq comment.writerIdx}">
+<%-- 										<c:if test="${sessionScope.login_idx eq comment.writerIdx}"> --%>
+										<c:if test="${sessionScope.login_idx eq 2}">
 											<small> <a href="" style="color: blue">수정</a> </small>
 											<small class="ml-1"> <a href="" style="color: red">삭제</a> </small>						
 										</c:if>
-										<small class="ml-1"> <a href="" style="color: green">답댓글쓰기</a> </small>
+										<small class="ml-1 mouseOver" onclick="reReplyLi()" style="color: green">답댓글쓰기</small>
 									</c:if>
 								</div>
 							</div>
 							<div>
-								<p class="mb-1">${comment.content}</p>
+<%-- 								<p class="mb-1">${comment.content}</p> --%>
+								<p class="mb-1">호오, 좋은 문의글이네요.</p>
+							</div>
+						</li>
+						<!-- 답댓글 -->
+						<li class="list-group-item" id="reReplyLi" hidden="">
+							<div style="margin-left: 20px; margin-right: 20px">
+								<div class="d-flex w-100 justify-content-between">
+									<p style="color: blue">@id1</p>
+									<small class="ml-1 mouseOver" onclick="reReplyLiClose()" style="color: gray">X</small>
+								</div>
+								<div class="form-group">
+									<textarea rows="2" class="form-control" id="reReplyContent"
+										name="reReplyContent"></textarea>
+								</div>
+									<button class="btn qnaBtnColor btn-md mr-1" id="btnReReply"><small>댓글 입력</small></button>
 							</div>
 						</li>
 					</ul>
 				</div>
 				<label class="col-md-1"> </label>
 			</div>
-			</c:forEach>
+<%-- 			</c:forEach> --%>
 		</div>
 		
 		
@@ -248,7 +269,8 @@
 				});
 		}
 	}
-		
+	
+	// ------- 버튼 이벤트 -------
 	function qnaListPage(){
 		var curPage = <%=session.getAttribute("curPage") %>;
 		if (curPage == "" || curPage == null) {
@@ -275,5 +297,13 @@
 		console.log("삭제할 문의글(답변) 인덱스 : " + qnaIdx);
 		
 		location.href = "/zaksim/customerCenter/QnA/delete?qnaIdx=" + qnaIdx;
+	}
+	
+	function reReplyLi() {
+		$('#reReplyLi').removeAttr("hidden"); // hidden 풀기(답댓글 창 보이기)
+	}
+	
+	function reReplyLiClose() {
+		$('#reReplyLi').attr("hidden", "hidden"); // hidden 속성추가(답댓글창 닫기(숨기기))
 	}
 </script>
