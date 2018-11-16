@@ -281,10 +281,19 @@
 	}
 	
 	function reReplyLi() {
-		$('#reReplyLi').removeAttr("hidden"); // hidden 풀기(답댓글 창 보이기)
+		var hidden = $('#reReplyLi').attr("hidden");
+		console.log("hidden 값 : " + hidden);
+		
+		if ( hidden == "hidden" ) {			
+			$('#reReplyLi').removeAttr("hidden"); // hidden 풀기(답댓글 창 보이기)
+		} else if ( hidden != "hidden" ) {
+			$('#reReplyLi').attr("hidden", "hidden"); // hidden 속성추가(답댓글창 닫기(숨기기))
+		}
 	}
 	
 	function reReplyLiClose() {
+		var hidden = $('#reReplyLi').attr("hidden");
+		console.log("hidden 값 : " + hidden);
 		$('#reReplyLi').attr("hidden", "hidden"); // hidden 속성추가(답댓글창 닫기(숨기기))
 	}
 </script>
