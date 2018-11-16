@@ -211,6 +211,7 @@
                         		<strong style="color: blue; font-weight: 700 !important;">@${comment.upperIdx}</strong><br>
                         	</c:if>
                            <input style="display: none;" name="upperIdx" value="${comment.idx}"/>
+                           <input style="display: none;" name="order" value="${comment.order}"/>
                            <input style="display: none;" value="${comment.writerIdx}">
                            <strong style="font-weight: 700 !important;">${comment.zakSimMember.id}</strong>
                            <small class="ml-4"><fmt:formatDate pattern = "yyyy-MM-dd" value = "${comment.writtenDate}" /></small>
@@ -221,7 +222,7 @@
                            <c:if test="${sessionScope.login_idx ne null }">
                               <c:if test="${sessionScope.login_idx eq comment.writerIdx}">
                                  <small> <a href="" style="color: blue">수정</a> </small>
-                                 <small class="ml-1"> <a href="" style="color: red">삭제</a> </small>                  
+                                 <small class="ml-1"> <a style="color: red" onclick="deleteComment(${comment.order})">삭제</a> </small>                  
                               </c:if>
                               <small class="ml-1 mouseOver" onclick="reReplyLi(${i.count-1})" style="color: green">답댓글쓰기</small>
                            </c:if>
@@ -231,6 +232,8 @@
                         <p class="mb-1">${comment.content}</p>
                      </div>
                   </li>
+                  
+                  
                   <!-- 답댓글 -->
                   
                   <li class="list-group-item" id="reReplyLi${i.count-1}" hidden="">
@@ -337,5 +340,28 @@
       var hidden = $('#reReplyLi'+i).attr("hidden");
       console.log("hidden 값 : " + hidden);
       $('#reReplyLi'+i).attr("hidden", "hidden"); // hidden 속성추가(답댓글창 닫기(숨기기))
+   }
+   
+   function deleteComment(order) {
+	   $.ajax({
+			type: "post"
+			, url : "/zaksim/customerCenter/QnA/comment_delete"
+			, data : {
+				order : order
+			}
+			, dataType: "json"
+			, success: function( data ) {
+				
+				console.log('success');
+				
+			}
+			, error: function( e ) {
+				console.log("--- error ---");
+				console.log( e.responseText );
+			}
+			, complete: function() {
+				//입력 창 초기화
+			}
+		});	
    }
 </script>

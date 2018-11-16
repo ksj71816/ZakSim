@@ -1,6 +1,7 @@
 package zaksim.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import zaksim.dto.CommunityCategory;
 import zaksim.dto.CommunityGroup;
@@ -54,4 +55,6 @@ public interface CommunityListDAO {
 	 * @return
 	 */
 	public List<GroupLike> popularPage(Paging paging);	
+	
+	public int isCommunityMember(Map<String,Integer> map);
 }
