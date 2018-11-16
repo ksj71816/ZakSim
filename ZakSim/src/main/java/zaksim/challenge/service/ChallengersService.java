@@ -16,4 +16,6 @@ public interface ChallengersService {
 	// 페이징해서 리스트 가져오기
 	public List<Board> pagingCitationList(Paging paging);
 	
+	// 인증글 삭제
+	public void dropCitation(int idx);
 }

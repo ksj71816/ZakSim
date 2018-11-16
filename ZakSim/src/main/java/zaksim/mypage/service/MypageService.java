@@ -62,6 +62,9 @@ public interface MypageService {
 
 	// 과거 도전 인증글
 	public List<Board> viewMyPastChalBoard(int endChalIdx);
+
+	// 진행중인 도전 갯수
+	public int countIngChal(int idx);
 	
 	
 	

@@ -85,10 +85,28 @@ public class Challengers {
 	
 	
 	@RequestMapping(value="/challengers", method=RequestMethod.POST)
-	public void challengersPost() {
+	public void challengersPost(Model model, String select, String search) {
+		
+		System.out.println(select);
+		System.out.println("---------------");
+		System.out.println(search);
 		
 		
 		
+	}
+	
+	// 본인 인증글 삭제
+	@RequestMapping(value="/challengers/delete", method=RequestMethod.GET)
+	public String deletePost(HttpServletRequest request) {
+		
+		// ajax로 삭제할 idx 받아와서 int타입으로 형변환
+		int idx=Integer.parseInt(request.getParameter("idx"));
+//		System.out.println(request.getParameter("idx"));
+		
+		// 인증글 삭제 서비스
+		challssv.dropCitation(idx);
+		 
+		return "redirect:/zaksim/challenge/challengers";
 	}
 	
 }

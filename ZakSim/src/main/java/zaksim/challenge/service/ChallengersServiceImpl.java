@@ -35,6 +35,12 @@ public class ChallengersServiceImpl implements ChallengersService{
 		return boardDao.selectPagingCitation(paging);
 	}
 
+	@Override
+	public void dropCitation(int idx) {
+		
+		boardDao.deleteCitation(idx);
+	}
+
 	
 	
 	

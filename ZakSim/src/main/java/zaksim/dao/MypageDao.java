@@ -71,5 +71,8 @@ public interface MypageDao {
 
 	// 과거 도전 인증글
 	public List<Board> selectEndChalBoard(int endChalIdx);
+
+	// 현재 진행중인 도전 갯수
+	public int selectCountIngChal(int idx);
 	
 }

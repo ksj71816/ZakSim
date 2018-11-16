@@ -18,7 +18,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		 if(request.getSession().getAttribute("login") == null) {
 			 response.sendRedirect("/zaksim/login/login");
 			 return false;
-		 }else {
+		 } else {
+			 System.out.println("------------------------------------login");
 			 return true;
 		 }
 		 

@@ -40,8 +40,19 @@ public class MypageController {
 	public void MypageMain(Model model, HttpSession session) {
 		
 	    	int idx = (Integer)session.getAttribute("login_idx");
-	    	Challenge ingChal = mypageService.viewChallenge(idx);
-	    	Challenge rate = mypageService.viewRate(ingChal.getIdx());
+	    	
+	    	int ingChalNum = mypageService.countIngChal(idx);
+	    	
+	    	if(ingChalNum > 0) {
+	    		Challenge ingChal = mypageService.viewChallenge(idx);
+	    		Challenge rate = mypageService.viewRate(ingChal.getIdx());	
+	    		
+	    		model.addAttribute("ingChal", ingChal);
+		        model.addAttribute("rate", rate);
+	    	} else {
+	    		model.addAttribute("ingChal", null);
+		        model.addAttribute("rate", null);
+	    	}
 	    	PStatistics chal = mypageService.viewChalChart(idx);
 	    	List<QnA> qnaList = mypageService.viewQnaList(idx);
 	    	List<Board> boardList = mypageService.viewBoard(idx);
@@ -49,9 +60,7 @@ public class MypageController {
 	    	List<GroupKeyword> keywordList = communityListService.keywordList();
 	    	List<Challenge> endChalList = mypageService.viewEndChalList(idx);
 	    	
-	    	
-	        model.addAttribute("ingChal", ingChal);
-	        model.addAttribute("rate", rate);
+	        
 	        model.addAttribute("chal", chal);
 	        model.addAttribute("qnaList", qnaList);
 	        model.addAttribute("boardList", boardList);

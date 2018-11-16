@@ -53,6 +53,9 @@ public class LoginController {
 			session.setAttribute("login_id", memberDto.getId());
 			session.setAttribute("login_nick", memberDto.getNick());
 			
+			// 방문수 증가
+			memberService.plusVisits();
+			
 			logger.info("로그인 완료!");
 			
 			return "redirect:/zaksim/main/home"; // 메인화면으로 리다이렉트

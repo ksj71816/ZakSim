@@ -95,4 +95,13 @@ public interface ZakSimMemberDao {
 
 	// 모든 회원 아이디 가져오기
 	public List<ZakSimMember> selectAllMember();
+
+	// 오늘 날짜의 컬럼 있는지 확인 (방문수)
+	public int checkVisits();
+
+	// 방문수 증가
+	public void updateVisits();
+
+	// 방문수 증가
+	public void insertVisits();
 }

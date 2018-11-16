@@ -62,6 +62,12 @@
   
   </select>
   
+    <delete id="deleteCitation" parameterType="int">
+  
+   	DELETE FROM board WHERE idx=#{idx}
+  
+  </delete>
+  
   
   
   

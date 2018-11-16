@@ -31,8 +31,8 @@
 		<div class="m-0">
 		<h6 class="mt-1"><b>도전 인증률</b></h6>
 		<div class="progress mb-2" style="height: 25px; border-right-width: 1px;	border-top-width: 1px;	border-bottom-width: 1px;    border-left-width: 1px;	border-style:solid;	border-color: white;"> 
-		    <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
-		      40%
+		    <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:${100*rate.boardNum/rate.dateNum}%">
+		       ${100*rate.boardNum/rate.dateNum}%
 		    </div>
 		</div>
 		</div>

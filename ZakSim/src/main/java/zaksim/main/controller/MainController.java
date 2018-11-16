@@ -1,5 +1,8 @@
 package zaksim.main.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -11,7 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import zaksim.challenge.service.ChallengeInfoService;
+import zaksim.challenge.service.ChallengersService;
+import zaksim.community.service.CommunityListService;
+import zaksim.dto.Board;
 import zaksim.dto.Challenge;
+import zaksim.dto.GroupKeyword;
+import zaksim.dto.GroupLike;
 
 @Controller
 @RequestMapping(value="/zaksim/main")
@@ -19,12 +27,30 @@ public class MainController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 	
+	@Autowired ChallengersService challssv;
 	@Autowired ChallengeInfoService chalinfosv;
+	@Autowired CommunityListService comssv;
 	
 	@RequestMapping(value="/home", method=RequestMethod.GET)
 	public void main(Model model, HttpSession session) {
 		
+		// 도전 인증글 리스트 가져오기
+		List<Board> citationList = new ArrayList<>();
+		citationList=challssv.getCitationList();
+		model.addAttribute("citation", citationList);
+
+		// 인기 그룹 리스트 가져오기
+		List<GroupLike> groupList = new ArrayList<>();
+		groupList = comssv.popularGroupList();
+		model.addAttribute("popularGroupList",groupList);
 		
+		// 키워드 리스트 가져오기
+		List<GroupKeyword> keywordList = new ArrayList<>();
+		keywordList = comssv.keywordList();
+		model.addAttribute("keywordList",keywordList);
+		
+		
+		//로그인이 아닐때
 		 if(session.getAttribute("login")!=null) {
 			 
 			 Challenge chal = new Challenge();
