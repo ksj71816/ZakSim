@@ -46,7 +46,7 @@
 			        </div>
 			        
 		       		<div class="progress mx-4">
-			  			<div class="progress-bar bg-danger" style="width:${100*rate.boardNum/rate.dateNum}%;"><fmt:formatNumber value="${100*rate.boardNum/rate.dateNum}" pattern=".00"/>%</div>
+			  			<div class="progress-bar bg-danger" style="width: ${100*rate.boardNum/rate.dateNum}%;"><fmt:formatNumber value="${100*rate.boardNum/rate.dateNum}" pattern=".00"/>%</div>
 					</div>
 	
 		          	<div class="mt-3 mb-3">
