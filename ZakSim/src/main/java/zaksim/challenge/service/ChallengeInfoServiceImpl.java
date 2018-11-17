@@ -1,18 +1,21 @@
 package zaksim.challenge.service;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import zaksim.dao.BoardDao;
 import zaksim.dao.ChallengeDao;
+import zaksim.dto.Board;
 import zaksim.dto.Challenge;
 
 @Service
 public class ChallengeInfoServiceImpl implements ChallengeInfoService {
 
 	@Autowired ChallengeDao chalDao;
+	@Autowired BoardDao boaDao;
 	
 	@Override
 	public Challenge getChallengeInfo(int memberIdx) {
@@ -74,6 +77,12 @@ public class ChallengeInfoServiceImpl implements ChallengeInfoService {
 		System.out.println("최종결과 : "+result);
 		
 		return result;
+	}
+
+	@Override
+	public Board dayCitation(Map info) {
+	
+		return boaDao.selectCitation(info);
 	}
 
 }
