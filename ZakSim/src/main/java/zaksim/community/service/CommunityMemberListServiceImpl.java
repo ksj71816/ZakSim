@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import zaksim.dao.CommunityMemberListDao;
 import zaksim.dto.GroupMember;
+import zaksim.dto.ZakSimMember;
 
 @Service
 public class CommunityMemberListServiceImpl implements CommunityMemberListService {
@@ -14,9 +15,13 @@ public class CommunityMemberListServiceImpl implements CommunityMemberListServic
 	@Autowired CommunityMemberListDao communityMemberListDao;
 
 	@Override
-	public List<GroupMember> members() {
-		// TODO Auto-generated method stub
-		return communityMemberListDao.members();
+	public List<ZakSimMember> members(int idx) {
+		return communityMemberListDao.members(idx);
+	}
+
+	@Override
+	public int cntMembers(int idx) {
+		return communityMemberListDao.cntMember(idx);
 	}
 
 

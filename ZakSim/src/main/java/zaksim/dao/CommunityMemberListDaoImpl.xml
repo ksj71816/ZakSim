@@ -43,11 +43,16 @@
 
 
 
-	<select id="members" resultMap="GroupMember" >
-		select distinct m.member_idx from groupmember m, zaksimmember z where
-		z.idx = m.member_idx
+	<select id="members" parameterType="int" resultType="zaksim.dto.ZakSimMember">
+		SELECT Z.name, Z.nick
+		FROM groupMember g, zaksimMember Z 
+		WHERE g.member_idx = z.idx
+		AND g.group_idx = ${value}
 	</select>
 
+	<select id="cntMember" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM groupMember WHERE idx =${value}
+	</select>
 
 
 </mapper>
