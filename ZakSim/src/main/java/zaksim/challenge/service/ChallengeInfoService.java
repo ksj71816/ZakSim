@@ -21,5 +21,7 @@ public interface ChallengeInfoService {
 	// 캘린더에서 선택한 날짜 인증 데이터 가져오기
 	public Board dayCitation(Map info);
 	
+	// 최근 인증 판별 데이터 가져오기
+	public Board getNewCitation(int idx);
 	
 }

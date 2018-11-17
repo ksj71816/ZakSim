@@ -74,6 +74,11 @@
   	
   </select>
   
+  <select id="selectNewInfo" parameterType="int" resultType="zaksim.dto.Board">
+  
+  	select * from (select * from board where challenge_idx=#{idx} order by idx desc) where rownum=1
+  
+  </select>
   
   
   
