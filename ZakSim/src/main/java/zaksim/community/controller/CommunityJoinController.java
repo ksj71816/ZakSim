@@ -17,6 +17,7 @@ import zaksim.community.service.CommunityEditService;
 import zaksim.community.service.CommunityListService;
 import zaksim.community.service.CommunityMemberListService;
 import zaksim.dto.GroupLike;
+import zaksim.dto.GroupMember;
 
 // 가입된 커뮤니티
 @Controller
@@ -97,9 +98,15 @@ public class CommunityJoinController {
 
 	// 커뮤니티 탈퇴 POST
 	@RequestMapping(value="/outCommunity", method=RequestMethod.POST)
-	public String exitCommunity(int idx, HttpSession session) {
-
-		return "";
+	public String exitCommunity(int group_idx, HttpSession session) {
+		
+		GroupMember groupMember = new GroupMember();
+		groupMember.setGroup_idx(group_idx);
+		groupMember.setMember_idx((Integer)session.getAttribute("login_idx"));
+		
+		communityMemberListService.withdrawMember(groupMember);
+		
+		return "redirect:/zaksim/community/communityMain";
 	}
 
 	// 커뮤니티 강퇴(AJAX)? POST 

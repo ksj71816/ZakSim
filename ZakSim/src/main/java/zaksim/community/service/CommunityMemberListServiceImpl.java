@@ -24,6 +24,12 @@ public class CommunityMemberListServiceImpl implements CommunityMemberListServic
 		return communityMemberListDao.cntMember(idx);
 	}
 
+	@Override
+	public void withdrawMember(GroupMember groupMember) {
+		communityMemberListDao.withdrawMember(groupMember);
+		
+	}
+
 
 	
 
