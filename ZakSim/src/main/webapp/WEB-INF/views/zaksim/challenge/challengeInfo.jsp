@@ -17,28 +17,51 @@
 
   <!--바디-->
    
-   <div class=" pt-5">
+   <div class=" pt-5" style="background-image: url(/resources/image/main/back.webp); 
+   background-color: rgba(240, 200, 240, 0.7);">
     <div class="container">
-    
-    <div class="row mt-5">
-	    	<h2 class="ml-3 pl-2 pt-1 title dohyeon">나의 도전</h2>
-	    </div>
-    
-    <div class="row  py-4">
-    	<div class="col-md-2" ></div> 
-        <div class="col-md-8 row" >
-          <div class="col-md-12 mt-2 mx-3 text-center dohyeon">
-            <h4>${sessionScope.login_nick }의
-	            <b class="text-danger">  
-					도전 n일차
-				</b>
-			</h4>
+      <div class="row  py-4">
+        <div class="col-md-4" >
+          <img class="img-fluid d-block my-2 rounded-circle float-right" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" style="	height: 140px; width: 140px;	border-right-width: 3px;	border-top-width: 3px;	border-bottom-width: 3px;    border-left-width: 3px;	border-style: solid;	border-color: white;">
+        </div>
+        <div class="col-md-6 row" >
+          <div class="col-md-12 mt-2 mx-3 text-center">
+     
+     	<c:if test="${byDayResult eq 'go'}">     
+          <h4>${sessionScope.login_nick }의 <b class="text-danger">도전 ${byDay}일차</b></h4>
+        </c:if> 
+        
+        <c:if test="${byDayResult eq 'ready'}">  
+          <h4>${sessionScope.login_nick }의 <b class="text-danger">도전 대기중</b></h4>
+        </c:if> 
+          
           </div>
-         </div>
-        <div class="col-md-2" ></div>   
+       <div class=" mx-3 col-md-12" style=" height:70px;"> 
+		
+		<div class="m-0">
+		<h6 class="mt-1"><b>도전 인증률</b></h6>
+		<div class="progress mb-2" style="height: 25px; border-right-width: 1px;	border-top-width: 1px;	border-bottom-width: 1px;    border-left-width: 1px;	border-style:solid;	border-color: white;"> 
+		    <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:${100*rate.boardNum/rate.dateNum}%">
+		       ${100*rate.boardNum/rate.dateNum}%
+		    </div>
+		</div>
+		</div>
+		
+	</div>
+        </div>
+        <div class="col-md-2" >
+        </div>     
+       </div>
     </div>
-    
-    <div class="row  py-3 dohyeon">
+  </div>
+  
+  
+  
+  <div class="py-1" style="background-image: url(/resources/image/main/back.webp); 
+   background-color: rgba(240, 200, 240, 0.7);">
+    <div class="container " >
+      <hr class="my-5">
+      <div class="row  py-3">
         <div class="col-md-2">
         </div>
         <div class="col-md-8 col-lg-8 rounded  text-center" style="background-color: blanchedalmond;    border-right-width: 5px;	border-top-width: 5px;	border-bottom-width: 5px;    border-left-width: 5px;	border-style: solid;	border-color: white;">
@@ -54,7 +77,19 @@
           
         	 <a class="my-2 d-flex justify-content-center align-items-end"><h5 class="mb-0 text-danger"><b>${info.title}</b></h5>&nbsp;도전중 </a>  
            
-          	 <a class="btn btn-sm w-25 my-4 text-white" href="/zaksim/challenge/citation" style="background-color: #962424"> 도전 인증 </a>
+           <c:if test="${setcit eq 'do'}">
+          	 <a class="btn btn-sm w-25 my-4 text-white" onclick="doSwal()" style="background-color: #962424"> 도전 인증 </a>
+        	</c:if>
+        
+        	<c:if test="${setcit eq 'wait'}">
+          	 <a class="btn btn-sm w-25 my-4 text-white" onclick="waitSwal()" style="background-color: #962424"> 도전 대기중 </a>
+        	</c:if>
+        
+        	<c:if test="${setcit eq 'stop'}">
+          	 <a class="btn btn-sm w-25 my-4 text-white" onclick="stopSwal()" style="background-color: #962424"> 도전 인증 </a>
+        	</c:if>
+        
+        
         
         
         </div>
@@ -62,36 +97,13 @@
   
         </div>
       </div>
-      
-      
-      <div class="row  py-4">
-      <div class="col-md-2" ></div> 
-        <div class="col-md-8 row" >
-          
-      	 <div class=" mx-3 col-md-12" style=" height:70px;"> 
-		
-			<div class="m-0">
-			<h6 class="mt-1"><b>도전 인증률</b></h6>
-			<div class="progress mb-2" style="height: 25px; border-right-width: 1px;	border-top-width: 1px;	border-bottom-width: 1px;    border-left-width: 1px;	border-style:solid;	border-color: white;"> 
-			    <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:${100*rate.boardNum/rate.dateNum}%">
-			       ${100*rate.boardNum/rate.dateNum}%
-			    </div>
-			</div>
-			</div>
-		
-			</div>
-			
-   	     </div>
-        <div class="col-md-2" ></div>     
-       </div>
-       
+      <hr class="my-5">
     </div>
   </div>
   
   
-
-  
-  <div class="py-3 pb-5 mt-5">
+  <div class="py-3 pb-5" style="background-image: url(/resources/image/main/back.webp); 
+   background-color: rgba(240, 200, 240, 0.7);">
     <div class="container mb-5 ">
       <div class="row mb-5">
       
@@ -101,7 +113,7 @@
 			<div id="pnlEventCalendar" style="width:100%; height: 334.667px; border-right-width: 5px;	border-top-width: 5px;	border-bottom-width: 5px;    border-left-width: 5px;	border-style: solid;	border-color: rgb(255, 0, 0);"></div>
 			
 			<!-- 제거 예정 테스트용 -->
-			 <p>(테스트)캘린더 입력 값: <b><span id="lblEventCalendar">[date]</span></b></p>
+			<!--  <p>(테스트)캘린더 입력 값: <b><span id="lblEventCalendar">[date]</span></b></p> -->
 		<!-- 캘린더 끝 -->  
         
         </div>
@@ -111,19 +123,21 @@
        
        
         <div class="col-md-6 h-100 p-0" style="border-right-width: 5px;	border-top-width: 5px;	border-bottom-width: 5px;    border-left-width: 5px;	border-style: solid;	border-color: white; ">
-         
+      
+        
          <!-- 인증 이미지 -->
-         	 <div class=" col-md-12 p-0">
+         	 <div class=" col-md-12 p-0" style="background-color: white">
     			<div class="hovereffect p-0">
-       	 			<img class="img-responsive" src="/resources/upload/citation/4ef918a81f40_20180416_150009.png" alt="">
-        		<div class="overlay">
-          			 <h2>${info.title}</h2>
-          			 <a class="info" href="#">link here</a>
-       		 </div>
+       	 			<img id="img" class="img-responsive" src="/resources/image/challenge/noImage.jpg" >
+        			<div class="overlay">
+          			 <h2 id="title">No Image</h2>
+          			 <input id="content" style="display: none;">
+          			 
+          			 <a id="btns" class="info text-white" style="display:none; cursor: pointer;">상세보기</a>
+       		 		</div>
     			</div>
 			</div>
-        
-         
+       
        
         </div>
       </div>
@@ -186,6 +200,92 @@
 
 <!-- alert 스크립트-->
 <script type="text/javascript">
+
+function doSwal(){
+	
+	swal({
+		  title: '도전 인증을 하시겠습니까?',
+		  text: '도전 인증은 당일 1회만 가능 합니다 ',
+		  showCancelButton: true,
+		  confirmButtonColor: '#2E82CC',
+		  cancelButtonColor: '#FC3A3A',
+		  confirmButtonText: '확인',
+		  cancelButtonText: '취소'
+		}).then((result) => {
+		  if (result.value) {
+	
+			  document.location.href = "/zaksim/challenge/citation";
+			  
+		  }
+		})
+	
+}
+
+
+function stopSwal(){
+	
+	swal({
+		  title: '알림',
+		  text: '이미 인증 처리가 완료되었습니다.',
+		  type: 'warning',
+		  confirmButtonColor: 'gray',
+		  confirmButtonText: '확인',
+		})
+	
+}
+
+
+function waitSwal(){
+	
+	swal({
+		  title: '알림',
+		  text: '아직 도전을 시작하지 않았습니다.',
+		  type: 'warning',
+		  confirmButtonColor: 'gray',
+		  confirmButtonText: '확인',
+		})
+	
+}
+
+
+
+
+function noImageAlert(){
+	
+	swal({
+		  title: '알림',
+		  text: '도전 정보가 없습니다.',
+		  type: 'warning',
+		  confirmButtonColor: 'gray',
+		  confirmButtonText: '확인',
+		})
+	
+}
+
+
+function viewImage(title,image,content){
+	
+//		console.log(idx);
+//		console.log(title);
+	
+// 	var image = $("#image"+index).attr("src");
+	
+//		console.log(image);
+	
+	swal({
+		  title: title,
+		  text: content,
+		  imageUrl:image,
+		  imageWidth: 800,
+		  imageHeight: 400,
+		  imageAlt: 'Custom image',
+		  confirmButtonText: '확인'
+		})
+	
+	
+}
+
+
 
 function doneAlert(){
 	
@@ -304,6 +404,8 @@ function haltAlert(){
 				
 				headerLabel.click();
 			}
+		
+		
 			
 			function selectMonth(next, options, month, year) {
 				var tmp = currentCalendar.find('.header-label').text().trim().split(' '), tmpYear = parseInt(tmp[1], 10);
@@ -325,6 +427,7 @@ function haltAlert(){
 					
 					
 					
+					
 					/* 캘린더 선택 날짜 년월일 : 2018/11/17 */
 					var citationData = currentYear+"/"+(currentMonth+1)+"/"+currentDay;
 
@@ -333,8 +436,43 @@ function haltAlert(){
 					      type: "post"
 					      , url : "/zaksim/challenge/challengeInfo"
 					      , data : {"date":citationData}
+					 	  , dataType : "JSON"
 					      , success: function( data ) {	
-					      		/* console.log('${info.title}'); */	 }	       					      
+// 					      		console.log(response);
+// 					    	  	console.log(data.content);
+// 					      		console.log(data.image);
+// 					    	 	console.log(data.title);
+
+					    	 	if(data.result=='success'){
+					    	 	
+					    	 
+					    	 		
+					    	 	$('#title').text(data.title);
+					    	 	$('#img').attr("src",data.image);
+					    	 	$('#btns').show();
+					    	 	$('#content').val(data.content);
+					    	 
+					    	 	
+// 					    	 	$('#btns').onclick(
+// 					    	 			viewImage(data.title, data.image, data.content)		
+// 					    	 	);
+					    	 	
+					    	 	return false;
+					    	 	
+					    	 	}else if(data.result=='fail'){
+					    	 	
+					    	 	$('#title').text("No Image");
+						    	$('#img').attr("src","/resources/image/challenge/noImage.jpg");			    	 		
+					    	 	$('#btns').hide();
+						    	$('#btns').attr("onclick",noImageAlert());	
+					    	 
+					    	 	return false;
+					    	 	}
+					    	 	
+					    	 	
+
+					      }
+					    	  
 					      , error: function( e ) {
 					         console.log( e.responseText );
 					      }
@@ -342,6 +480,8 @@ function haltAlert(){
 					
 				});
 			}	
+			
+			
 			
 			function createCalendar(month, year, options) {
 				var currentDay = 1, daysLeft = true,
@@ -422,6 +562,10 @@ function haltAlert(){
 
 		}(jQuery));
 		
+		$('#btns').click(function(){
+			console.log('sssss');
+	 			viewImage($('#title').text(), $('#img').attr("src"), $('#content').val());				
+		});
 		
 		</script>
 		

@@ -12,263 +12,157 @@
 ${commentList }
 
 <div class="container" id="zz">
+	<div class="row">
+		<div class="col"></div>
+		<c:forEach var="groupInfo" items="${groupInfo }">
+		
+			<input type="hidden" id ="idxx"value="${groupInfo.idx }">
 
-   <div class="row">
-      <div class="col"></div>
+			<div class="col-sm-11" style="margin-top: 50px; margin-right: 50px;" id="btnDiv">
+				<strong style="font-size: 150%">${groupInfo.title }</strong>
+				<c:if test="${groupInfo.member_idx eq sessionScope.login_idx }">
+				   <button type="button" class="btn btn-outline-info"
+				      style="float: right; color: red; border-color: red; margin-left: 30px;"
+				      data-toggle="modal" data-target="#updateCommunityModal">수정하기</button>
+				</c:if>
+				<c:if test="${ null ne sessionScope.login_idx}">
+					<c:if test="${groupInfo.member_idx ne sessionScope.login_idx }">
+						<button type="button" class="btn btn-outline-info" style="float: right; color: red; border-color: red; margin-left: 30px; margin-right: 30px;" data-toggle="modal" data-target="#updateCommunityModal">
+							가입하기
+						</button>
+					</c:if>               
+					<c:if test="${like }">
+						<button type="button" class="btn btn-outline-info noBtnRecommend" style="float: right; margin-right: 30px; margin-left: 30px;" id="recommendBtn">
+				          	좋아요 취소&nbsp; ${groupLike.likeNum }
+						</button>
+					</c:if>
+					<c:if test="${!like }">
+						<button type="button" class="btn btn-outline-success btnRecommend" style="float: right; margin-right: 30px; margin-left: 30px;" id="recommendBtn">
+							좋아요 &nbsp; ${groupLike.likeNum }
+						</button>
+					</c:if>					   
+				</c:if>
+				<div style="margin-top: 100px;">
 
-      <c:forEach var="groupInfo" items="${groupInfo }">
-      
-      <input type="hidden" id ="idxx"value="${groupInfo.idx }">
+					<div style="margin-left: 50px; margin-right: 50px;">
+						<c:if test="${groupInfo.storedName ne null && groupInfo.storedName ne ''}">
+				   			<img src="${groupInfo.storedName }" id="photo">               	
+						</c:if>
+					</div>
+					<div style="margin-top: 40px; margin-left: 190px; margin-right: 190px;">
+						<div style="margin-bottom: 20px; text-align:center;">
+							<strong style="font-size: 150%; margin-left: 30px; margin-right: 30px; cursor: pointer;"
+							   id="communityIntroduce">모임 소개</strong>    
+							<strong style="font-size: 150%; margin-left: 30px; margin-right: 30px; cursor: pointer;"
+							   id="communityJoinPeople">참여자 </strong> 
+							<strong style="font-size: 150%; margin-left: 30px; margin-right: 30px; cursor: pointer;"
+							   id="communityKeyword">키워드 </strong> 
+<!-- 							<strong style="font-size: 150%; margin-left: 30px; margin-right: 30px; cursor: pointer;" -->
+<!-- 							   id="communityAchievement">모임 달성도 </strong> -->
+                 		</div>
+                 
+						<div style="margin-left: 50px; margin-right: 50px; margin-bottom: 50px; display: none;" id="communityIntroduceComment">
+							${groupInfo.content }
+						</div>
+						<div style="margin-left: 50px; margin-right: 50px; margin-bottom: 50px; display: none;" id="communityJoinPeopleComment">
+							<span style="font-size: 150%;">${cntMember }명 </span> 
+							<span style="font-size: 150%;">/ 최대 ${groupInfo.max }명</span>
+							<br>
+							<c:forEach items="${groupMember }" var="member">
+							<span style="margin-right:3px;">${member.nick }</span>
+							</c:forEach>
+						</div>
 
-         <div class="col-sm-11" style="margin-top: 50px; margin-right: 50px;" id="btnDiv">
-            <strong style="font-size: 150%">${groupInfo.title }</strong>
-            <c:if
-               test="${groupInfo.member_idx eq sessionScope.login_idx }">
-               <button type="button" class="btn btn-outline-info"
-                  style="float: right; color: red; border-color: red; margin-left: 30px;"
-                  data-toggle="modal" data-target="#updateCommunityModal">수정하기</button>
-            </c:if>
-            
-   
+						<div style="margin-left: 50px; margin-right: 50px; margin-bottom: 50px; display: none;" id="communityKeywordComment">
+							<span style="font-size: 150%;"> 
+								<c:forEach var="keywordList" items="${keywordList }">
+							       	<c:if test="${groupInfo.idx eq keywordList.group_idx}">
+										#${keywordList.keyword } 
+									</c:if>
+								</c:forEach>
+							</span>
+						</div>
 
-            <c:if test="${ null ne sessionScope.login_idx}">
-            
-               <c:if test="${groupInfo.member_idx ne sessionScope.login_idx }">
-                  <button type="button" class="btn btn-outline-info"
-                     style="float: right; color: red; border-color: red; margin-left: 30px; margin-right: 30px;" 
-                     data-toggle="modal" data-target="#updateCommunityModal">가입하기</button>
-               </c:if>               
-            
-               <c:if test="${like }">
-                  <button type="button" class="btn btn-outline-info noBtnRecommend"
-                      style="float: right; margin-right: 30px; margin-left: 30px;" id="recommendBtn">좋아요 취소
-                     &nbsp; ${groupLike.likeNum }</button>
-               </c:if>
-               <c:if test="${!like }">
-                  <button type="button" class="btn btn-outline-success btnRecommend"
-                   style="float: right; margin-right: 30px; margin-left: 30px;" id="recommendBtn">좋아요 &nbsp; ${groupLike.likeNum }</button>
-               </c:if>
-               
-            </c:if>
+<!-- 						<div style="margin-left: 50px; margin-right: 50px; margin-bottom: 50px; display: none;" id="communityAchievementComment"> -->
+						
+<!-- 							<button type="button" class="btn btn-outline-danger" id="detailView">자세히 보기</button> -->
+<!-- 							<br><br> -->
+<!-- 							<div class="progress"> -->
+<!-- 								<div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="" aria-valuemin="0" aria-valuemax="100">25%</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+					</div>
+				</div>
+			</div><!-- end of col-11 -->
+       	</c:forEach>
+	</div><!-- end of row -->
 
+	<hr style="margin-top: 10px; margin-bottom: 30px; border-color: black;">
+	<div style="margin-bottom: 100px;">
+		<button type="button" class="btn btn-outline-secondary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="float: right; margin-right: 30px;">
+			작성하기
+		</button>
+	</div>
+	<br>
 
-
-            <div style="margin-top: 100px;">
-
-               <div style="margin-left: 50px; margin-right: 50px;">
-               	<c:if test="${groupInfo.storedName ne null && groupInfo.storedName ne ''}">
-                  <img src="${groupInfo.storedName }" id="photo">               	
-               	</c:if>
-               </div>
-
-               <div style="margin-top: 40px; margin-left: 190px; margin-right: 190px;">
-                  <div style="margin-bottom: 20px;">
-                     <strong
-                        style="font-size: 150%; margin-left: 30px; margin-right: 30px; cursor: pointer;"
-                        id="communityIntroduce">모임 소개</strong> <strong
-                        style="font-size: 150%; margin-left: 30px; margin-right: 30px; cursor: pointer;"
-                        id="communityJoinPeople">참여자 </strong> <strong
-                        style="font-size: 150%; margin-left: 30px; margin-right: 30px; cursor: pointer;"
-                        id="communityKeyword">키워드 </strong> <strong
-                        style="font-size: 150%; margin-left: 30px; margin-right: 30px; cursor: pointer;"
-                        id="communityAchievement">모임 달성도 </strong>
-                  </div>
-                  
-                  <div
-                     style="margin-left: 50px; margin-right: 50px; margin-bottom: 50px; display: none;"
-                     id="communityIntroduceComment">${groupInfo.content }</div>
-
-                  <div
-                     style="margin-left: 50px; margin-right: 50px; margin-bottom: 50px; display: none;"
-                     id="communityJoinPeopleComment">
-                     <span style="font-size: 150%;">n명 </span> <span
-                        style="font-size: 150%;">/ 최대
-                        ${groupInfo.max }명</span> &nbsp;&nbsp;&nbsp;
-                     <button type="button" class="btn btn-outline-secondary"
-                        onclick="joinMemberView(${groupInfo.idx })">참여자
-                        보기</button>
-                  </div>
-
-                  <div
-                     style="margin-left: 50px; margin-right: 50px; margin-bottom: 50px; display: none;"
-                     id="communityKeywordComment">
-                     <span style="font-size: 150%;"> <c:forEach
-                           var="keywordList" items="${keywordList }">
-                           <c:if
-                              test="${groupInfo.idx eq keywordList.group_idx}">
-                                       #${keywordList.keyword } 
-                                 </c:if>
-                        </c:forEach></span>
-                  </div>
-
-
-                  <div
-                     style="margin-left: 50px; margin-right: 50px; margin-bottom: 50px; display: none;"
-                     id="communityAchievementComment">
-
-                     <button type="button" class="btn btn-outline-danger"
-                        id="detailView">자세히 보기</button>
-                     <br> <br>
-                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 25%;"
-                           aria-valuenow="" aria-valuemin="0" aria-valuemax="100">25%</div>
-                     </div>
-                  </div>
-                 </div>
-                 </div>
-               </div>
-         </c:forEach>
-      </div>
-
-
-
-
-
-               <hr style="margin-top: 10px; margin-bottom: 30px; border-color: black;">
-                  
-                  
-               <div style="margin-bottom: 100px;">
-                  <button type="button" class="btn btn-outline-secondary"
-                     data-toggle="collapse" href="#collapseExample"
-                     aria-expanded="false" aria-controls="collapseExample"
-                     style="float: right; margin-right: 30px;">작성하기</button>
-               </div>
-               <br>
-
-               <div class="collapse" id="collapseExample"
-                  style="margin-left: 150px; margin-right: 150px; margin-bottom: 50px;">
-                  <div class="card card-body">
-                        <form id="boardForm" action="/zaksim/community/enrollBoard" method="post" enctype="multipart/form-data">
-                     <div>
-                           <div class="form-group">
-                           <input type="hidden" class="idxxx" name ="group_idx">
-                              <label for="recipient-name" class="form-control-label"><strong>
-                                    게시글을 작성하세요</strong></label> <br>
-                              <div class="form-inline"
-                                 style="margin-left: auto; margin-right: auto;">
-                                 <div class="radio"
-                                    style="margin-left: 200px; margin-right: 100px;">
-                                    <label> <input type="radio" name="certification"
-                                       class="textKind" value=0 checked> 일반 글
-                                    </label>
-                                 </div>
-                                 <div class="radio">
-                                    <label> <input type="radio" name="certification"
-                                       class="textKind" value=1> 인증 글
-                                    </label>
-                                 </div>
-                                 <br> <br>
-                                 <div>
-                                    <br> <input type="file" name="file" id="filee"
-                                       style="margin-left: 200px;" />
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="form-group">
-                              <label for="board-text1" class="form-control-label" ><strong>Content:</strong></label>
-                              <textarea class="form-control" id="board-text1" name="content"
-                                 onkeydown="boardCommnet(this)" onkeyup="boardCommnet(this)"></textarea>
-                           </div>
-                        
-                     </div>
-                     <div style="float: right;">
-                        <button type="submit" class="btn btn-danger" id ="enrollBoardBtn">등록</button>
-                        <button type="reset" class="btn btn-secondary"
-                           data-dismiss="modal">초기화</button>
-                     </div>
-                     </form>
-                  </div>
-               </div>
-
+	<div class="collapse" id="collapseExample" style="margin-left: 150px; margin-right: 150px; margin-bottom: 50px;">
+		<div class="card card-body">
+			<form id="boardForm" action="/zaksim/community/enrollBoard" method="post" enctype="multipart/form-data">
+				<div>
+					<div class="form-group">
+						<input type="hidden" class="idxxx" name ="group_idx">
+						<label for="recipient-name" class="form-control-label"><strong>게시글을 작성하세요</strong></label>
+						<br>
+						<div class="form-inline" style="margin-left: auto; margin-right: auto;">
+							<div class="radio" style="margin-left: 200px; margin-right: 100px;">
+								<label>
+									<input type="radio" name="certification" class="textKind" value=0 checked> 일반 글
+                                   </label>
+							</div>
+							<div class="radio">
+								<label>
+									<input type="radio" name="certification" class="textKind" value=1> 인증 글
+								</label>
+							</div>
+							<br><br>
+							<div>
+								<br>
+								<input type="file" name="file" id="filee" style="margin-left: 200px;" />
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="board-text1" class="form-control-label" ><strong>Content:</strong></label>
+						<textarea class="form-control" id="board-text1" name="content" onkeydown="boardCommnet(this)" onkeyup="boardCommnet(this)"></textarea>
+					</div>
+				</div><!-- end of form-group -->
+				<div style="float: right;">
+					<button type="submit" class="btn btn-danger" id="enrollBoardBtn">등록</button>
+                       <button type="reset" class="btn btn-secondary" data-dismiss="modal">초기화</button>
+				</div>
+			</form><!-- end of form -->
+		</div><!-- end of card body -->
+	</div><!-- end of collapse  -->
 
 <!-- 게시글 -->
-         <c:forEach items="${boardList}" var="board">
-               <div class="card mb-5" style="margin-left: 150px; margin-right: 150px;">
-                  <div class="ml-4 mr-4">
-                     <h4 class="card-title mt-4" style="font-family: Dohyeon;">${board.zakSimMember.nick}</h4>
-                     <hr>
-                     <p class="card-text mt-4">${board.content}</p>
-                     <p class="card-text mb-3">
-                        <small class="text-muted"><fmt:formatDate pattern = "yyyy-MM-dd" value = "${board.written_date}" /></small>
-                     </p>
-                  </div>
-                  
-                  <!-- 인증 사진 -->
-                  <c:if test="${board.storedName ne null && board.storedName ne ''}">
-	                  <img class="card-img-bottom" src="${board.storedName}" alt="Image...">                  
-                  </c:if>
-                  
-<!--                 <div class="row"> -->
-<!--                      <div class="col" -->
-<!--                         style="background-color: lightgray; margin-left: 15px; text-align: center;"> -->
-
-<%--                         <strong id="comment" style="cursor: pointer;">댓글 ${board.commentNum}개</strong> --%>
-
-<!--                      </div> -->
-<!--                      <div class="col" -->
-<!--                         style="background-color: lightgray; margin-right: 15px; text-align: center; "> -->
-<%--                         <strong style="cursor: pointer;"> ♡ 좋아요 ${board.likeNum}개</strong> --%>
-<!--                      </div> -->
-<!--                   </div> -->
-<!--                   <div class="row justify-content-center" -->
-<!--                      style="cursor: pointer; background-color: lightgray; margin-left: 1px; margin-right: 1px; border-color: white; -->
-<!--                      border-top: 1px solid; border-bottom: 1px solid; border-color: white;" > -->
-<!--                      <strong id="commentWrite">댓글 쓰기</strong> -->
-<!--                   </div> -->
-
-<!--                   댓글 쓰기 -->
-<!--                   <div id="writeComment" -->
-<!--                      style="border: 1px solid; background-color: write; display: none; border-color: lightgray; border-radius: 100px; margin-top: 20px; margin-bottom: 20px;"> -->
-<!--                      <div class="mx-5"> -->
-<!--                         <div> -->
-<!--                            <img src="/resources/image/community/sample.png" -->
-<!--                               class="mx-3 my-3" id="commentPhoto"> <span -->
-<%--                               style="font-size: 20px;"><strong>${sessionScope.login_nick}</strong></span> --%>
-
-<!--                         </div> -->
-<!--                         <div class="mx-5"> -->
-<!--                            <textarea class="form-control col-sm-112" rows="3" -->
-<!--                               placeholder="댓글 입력 "></textarea> -->
-
-
-<!--                            <br> -->
-<!--                         </div> -->
-
-<!--                         <div class="mx-5"> -->
-<!--                            <button type="button" class="btn btn-outline-secondary" -->
-<!--                               style="float: right; margin-right: 10px;">취소</button> -->
-<!--                            <button type="button" class="btn btn-outline-danger" -->
-<!--                               style="float: right; margin-right: 10px;">입력</button> -->
-<!--                            <br> -->
-<!--                         </div> -->
-
-<!--                      </div> -->
-<!--                      <br> -->
-<!--                   </div> -->
-
-<!--                   <div class="row justify-content-center" style="cursor: pointer; background-color: lightgray; margin-left: 1px; margin-right: 1px;"> -->
-<!--                      <div style="display: none;" ></div> -->
-<!--                      <strong id="commentOpen" class="commentOpen">댓글 더 보기</strong> -->
-<!--                   </div> -->
-<!--                </div> -->
-
-
-<!--             댓글 -->
-<!--                <div id="openComment" -->
-<!--                   style="background-color: lightgray; margin-left: 150px; margin-right: 150px;/*  display: none; */"> -->
-<!--                   <div id="recommendDiv"> -->
-<%-- 					<%@include file="./boardComment.jsp" %> --%>
-<!-- 				</div> -->
-<!--      		 </div> -->
-
-               
-               </c:forEach>
-
-      <div class="col" style="margin-bottom: 300px;"></div>
-   </div>
-   
-
-
+	<c:forEach items="${boardList}" var="board">
+		<div class="card mb-5" style="margin-left: 150px; margin-right: 150px;">
+			<div class="ml-4 mr-4">
+				<h4 class="card-title mt-4" style="font-family: Dohyeon;">${board.zakSimMember.nick}</h4>
+				<hr>
+				<p class="card-text mt-4">${board.content}</p>
+				<p class="card-text mb-3">
+				   <small class="text-muted"><fmt:formatDate pattern = "yyyy-MM-dd" value = "${board.written_date}" /></small>
+				</p>
+			</div>      
+			<!-- 인증 사진 -->
+			<c:if test="${board.storedName ne null && board.storedName ne ''}">
+			    <img class="card-img-bottom" src="${board.storedName}" alt="Image...">                  
+			</c:if>
+		</div>
+	</c:forEach>
+	<div class="col" style="margin-bottom: 300px;"></div>
+</div><!-- end of zz -->
 
 <!-- 위로가기 버튼 -->
 <div class="top-button">
@@ -277,10 +171,6 @@ ${commentList }
 
 <!-- footer include -->
 <%@include file="/WEB-INF/views/zaksim/main/footer.jsp"%>
-
-
-
-
 
 <!-- 신고 모달 -->
 <div class="modal fade" id="reportModal" tabindex="-1" role="dialog"
@@ -338,202 +228,137 @@ ${commentList }
 
 
 <!-- 커뮤니티 수정 모달 -->
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
-   id="updateCommunityModal" aria-labelledby="myLargeModalLabel"
-   aria-hidden="true">
-   <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-         <form id="form1" action="/zaksim/community/updateCommunity"
-            method="post" runat="server" enctype="multipart/form-data"
-            onsubmit="return update();">
-            <c:forEach var="groupInfo" items="${groupInfo }">
-               <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"
-                     style="font-size: 30px;">
-                     <strong>모임 만들기</strong>
-                  </h5>
-                  <button type="button" class="close" data-dismiss="modal"
-                     aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                  </button>
-               </div>
-               <!-- 모달 바디-->
-               <div class="modal-body">
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="updateCommunityModal" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<form id="form1" action="/zaksim/community/updateCommunity" method="post" runat="server" enctype="multipart/form-data" onsubmit="return update();">
+				<c:forEach var="groupInfo" items="${groupInfo }">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel" style="font-size: 30px;">
+							<strong>모임 만들기</strong>
+						</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div><!-- end of modal header -->
+					<!-- 모달 바디-->
+					<div class="modal-body">
+						<div class="container">
+							<div class="row">
+                        		<div class="col-sm-2"></div>
+                        		<div class="">
+									<div class="form-inline">
+                           				<div>
+											<input type="hidden" name="idx" value="${groupInfo.idx }" /> 
+											<img id="image" src="${groupInfo.storedName }" alt="..." class="img-thumbnail" style="width: 200px; height: 150px; margin-bottom: 10px;">
+											<br>
+											<div class="imgInp btn btn-primary" style="position: relative; overflow: hidden; padding-right: 17px; margin-left: 40px;">
+												<b>이미지 변경</b> 
+												<input type="file" id="imgInp" name="file" value="${groupInfo.storedName }" style="align-content: center; margin-left: 40px; position: absolute; font-size: 0px; opacity: 0; right: 0; top: 0; cursor: pointer; height: 36px; width: 100px;"/>
+											</div>
+											<input type="hidden" name="image" value="${groupInfo.storedName }" />
+										</div>
+										<div style="padding-bottom: 0px; margin-left: 50px;">
+											<span style="font-size: 20px;">
+											<strong>모임명 :</strong></span> 
+											<input class="form-control" type="text" style="height: 30px;" name="title" maxlength="20" id="commName" value="${groupInfo.title }"/>
+											<br> <br>
+											<span style="font-size: 20px;"><strong>최대 모임 인원 : </strong></span> 
+											<input class="form-control" type="number" style="width: 80px; height: 30px;" value="${groupInfo.max }" min="1" id="commMax" max="100" name="max"/>
+											<strong>명</strong>
+											<br>
+											<span style="margin-left: 50px; font-size: 15px; color: gray;">※ 최대 100명까지 가능</span>
+										</div>
+									</div><!-- end of form-inline -->
+									<div style="margin-top: 30px;">
+										<span style="margin-left: 50px; margin-right: 102px;"><strong>공개</strong></span>
+										<input type="radio" name="secret" id="screctRadio1" value=0 <c:if test="${groupInfo.secret==0}">checked="checked"</c:if> />
+										<label> 공개</label>
+										<input type="radio" style="margin-left: 100px;" id="screctRadio2" name="secret" value=1 <c:if test="${groupInfo.secret==1}">checked="checked"</c:if> />
+										<label> 비공개</label>
+										<br> <br>
+										
+										<!-- 기존 비밀번호가 존재 시 -->
+										<c:if test="${groupInfo.secret==1}">
+											<div style="margin-left: 30px; margin-right: 30px;">
+												<div class="screctRadio" style="vertical-align: top;">
+													<div class="card-body">
+														<div class="form-inline">
+															<span><strong>기존 비밀번호</strong></span> 
+															<input type="password" class="form-control" style="margin-left: 37px;" id="pass">
+														</div>
+														<span style="margin-left: 140px; display: none;" id="passComment" onkeypress="isSame(${groupInfo.idx})"></span>
+													</div>
+												</div>
+											</div>
+										</c:if>
 
-                  <div class="container">
+										<div style="margin-left: 30px; margin-right: 30px;">
+											<div class="screctRadio" style="vertical-align: top;">
+												<div class="card-body">
+													<div class="form-inline">
+														<span><strong>새로운 비밀번호</strong></span> 
+														<input type="password" class="form-control" style="margin-left: 22px;" id="password1" name="password1">
+													</div>
+													<span style="margin-left: 140px; display: none;" id="pass1Comment"></span>
+												</div>
+											</div>
+										</div>
 
-                     <div class="row">
-                        <div class="col-sm-2"></div>
-                        <div class="">
-                        
-                        
-                        
-                           <div class="form-inline">
-                           
-                           
-                              <div>
-                                 <input type="hidden" name="idx"
-                                    value="${groupInfo.idx }" /> <img id="image"
-                                    src="${groupInfo.storedName }" alt="..."
-                                    class="img-thumbnail"
-                                    style="width: 200px; height: 150px; margin-bottom: 10px;"><br>
+										<div style="margin-left: 30px; margin-right: 30px;">
+											<div class="screctRadio" style="vertical-align: top;">
+												<div class="card-body">
+													<div class="form-inline">
+														<span><strong>비밀번호 확인</strong></span> 
+														<input type="password" name="password2" class="form-control" id="password2" style="margin-left: 37px;">
+													</div>
+													<span style="margin-left: 140px; display: none;" id="pass2Comment"></span> 
+													<br>
+												</div>
+											</div>
+										</div>
 
-                                 <div class="imgInp btn btn-primary"
-                                    style="position: relative; overflow: hidden; padding-right: 17px; margin-left: 40px;">
+										<span style="margin-left: 50px; margin-right: 70px;"><strong>카테고리</strong></span>
+										<select name="category_idx" class="custom-select mb-2 mr-sm-2 mb-sm-0" style="height: 40px; width: 150px;">
+											<c:set var="catego" value="${groupInfo.idx}" />
+											<option value=1>운동</option>
+											<option value=2 <c:if test="${catego eq 2}">selected</c:if>>금연</option>
+											<option value=3 <c:if test="${catego eq 3}">selected</c:if>>다이어트</option>
+											<option value=4 <c:if test="${catego eq 4}">selected</c:if>>스터디</option>
+											<option value=5 <c:if test="${catego eq 5}">selected</c:if>>도서</option>
+										</select> 
+										<br> <br>
+										<div class="form-inline">
+										   <span style="margin-left: 50px; margin-right: 90px;"><strong>키워드</strong></span>
+										
+										   <input type="text" class="form-control" style="width: 300px;" name="keyword" id="keyword" placeholder="ex) #키워드1#키워드2" onkeyup="this.value=this.value.replace(/[^#0-9가-힣a-zA-Z]/g,'')"/>
+										</div>
+										<br>
+										<div class="form-inline">
+											<span style="margin-left: 50px; margin-right: 90px;"><strong>소개글</strong></span>
+											<br>
+											<textarea class="form-control" name="content" id="contentText" onkeydown="boardCommnet(this)" style="width: 300px; margin-bottom: 20px;"
+										      onkeyup="boardCommnet(this)" placeholder="내용을 입력하세요">
+												${groupInfo.content}
+											</textarea>
+										</div>
+									</div>
+									<div class="col-sm-1"></div> 
+								</div><!-- end of class="" -->
+							</div><!-- end of row -->
+						</div><!-- end of container  -->
+					</div><!-- modal body -->
 
-                                    <b>이미지 변경</b> <input type="file" id="imgInp" name="file"
-                                       value="${groupInfo.storedName }"
-                                       style="align-content: center; margin-left: 40px; position: absolute; font-size: 0px; opacity: 0; right: 0; top: 0; cursor: pointer; height: 36px; width: 100px;">
-                                 </div>
-                                 
-                                 <input type="hidden" name="image"
-                                    value="${groupInfo.storedName }" />
-                              </div>
-                              
-                              
-                              <div style="padding-bottom: 0px; margin-left: 50px;">
-                                 <span style="font-size: 20px;"><strong>모임명 :
-                                 </strong></span> <input class="form-control" type="text"
-                                    style="height: 30px;" name="title" maxlength="20"
-                                    id="commName" value="${groupInfo.title }">
-                                 <br> <br> <span style="font-size: 20px;"><strong>최대
-                                       모임 인원 : </strong></span> <input class="form-control" type="number"
-                                    style="width: 80px; height: 30px;"
-                                    value="${groupInfo.max }" min="1"
-                                    id="commMax" max="100" name="max"><strong>명</strong>
-                                 <br> <span
-                                    style="margin-left: 50px; font-size: 15px; color: gray;">※
-                                    최대 100명까지 가능</span>
-
-                              </div>
-                              
-                           </div>
-                           
-                           
-
-                           <div style="margin-top: 30px;">
-                              <span style="margin-left: 50px; margin-right: 102px;"><strong>공개</strong></span>
-                              <input type="radio" name="secret" id="screctRadio1" value=0
-                                 <c:if test="${groupInfo.secret==0}">checked="checked"</c:if> />
-
-                              <label> 공개</label> <input type="radio"
-                                 style="margin-left: 100px;" id="screctRadio2" name="secret"
-                                 value=1
-                                 <c:if test="${groupInfo.secret==1}">checked="checked"</c:if> />
-                              <label> 비공개</label> <br> <br>
-
-                              <!-- 기존 비밀번호가 존재 시 -->
-                              <c:if test="${groupInfo.secret==1}">
-                                 <div style="margin-left: 30px; margin-right: 30px;">
-                                    <div class="screctRadio" style="vertical-align: top;">
-                                       <div class="card-body">
-                                          <div class="form-inline">
-                                             <span><strong>기존 비밀번호</strong></span> <input
-                                                type="password" class="form-control"
-                                                style="margin-left: 37px;" id="pass">
-                                          </div>
-
-                                          <span style="margin-left: 140px; display: none;"
-                                             id="passComment"
-                                             onkeypress="isSame(${groupInfo.idx})"></span>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </c:if>
-
-                              <div style="margin-left: 30px; margin-right: 30px;">
-                                 <div class="screctRadio" style="vertical-align: top;">
-                                    <div class="card-body">
-                                       <div class="form-inline">
-                                          <span><strong>새로운 비밀번호</strong></span> <input
-                                             type="password" class="form-control"
-                                             style="margin-left: 22px;" id="password1" name="password1">
-                                       </div>
-                                       <span style="margin-left: 140px; display: none;"
-                                          id="pass1Comment"></span>
-                                    </div>
-                                 </div>
-                              </div>
-
-
-                              <div style="margin-left: 30px; margin-right: 30px;">
-                                 <div class="screctRadio" style="vertical-align: top;">
-                                    <div class="card-body">
-                                       <div class="form-inline">
-                                          <span><strong>비밀번호 확인</strong></span> <input
-                                             type="password" name="password2" class="form-control"
-                                             id="password2" style="margin-left: 37px;">
-                                       </div>
-                                       <span style="margin-left: 140px; display: none;"
-                                          id="pass2Comment"></span> <br>
-                                    </div>
-                                 </div>
-                              </div>
-
-
-                              <span style="margin-left: 50px; margin-right: 70px;"><strong>카테고리</strong></span>
-                              <select name="category_idx"
-                                 class="custom-select mb-2 mr-sm-2 mb-sm-0"
-                                 style="height: 40px; width: 150px;">
-
-
-                                 <c:set var="catego"
-                                    value="${groupInfo.idx}" />
-                                 <option value=1>운동</option>
-                                 <option value=2 <c:if test="${catego eq 2}">selected</c:if>>금연</option>
-                                 <option value=3 <c:if test="${catego eq 3}">selected</c:if>>다이어트</option>
-                                 <option value=4 <c:if test="${catego eq 4}">selected</c:if>>스터디</option>
-                                 <option value=5 <c:if test="${catego eq 5}">selected</c:if>>도서</option>
-                              </select> <br> <br>
-                              <div class="form-inline">
-                                 <span style="margin-left: 50px; margin-right: 90px;"><strong>키워드</strong></span>
-
-                                 <input type="text" class="form-control" style="width: 300px;"
-                                    name="keyword" id="keyword" placeholder="ex) #키워드1#키워드2"
-                                    onkeyup="this.value=this.value.replace(/[^#0-9가-힣a-zA-Z]/g,'')">
-                              </div>
-                              <br>
-                              <div class="form-inline">
-                                 <span style="margin-left: 50px; margin-right: 90px;"><strong>소개글</strong></span>
-
-                                 <br>
-                                 <textarea class="form-control" name="content"
-                                    id="contentText" onkeydown="boardCommnet(this)"
-                                    style="width: 300px; margin-bottom: 20px;"
-                                    onkeyup="boardCommnet(this)" placeholder="내용을 입력하세요">${groupInfo.content}</textarea>
-
-                              </div>
-                           </div>
-                           <div class="col-sm-1"></div>
-                        
-                     </div>
-                  </div>
-            </div><!-- modal body -->
-
-                  <div class="modal-footer">
-                     <input type="submit" class="btn btn-danger" id="update"
-                        value="수정" />
-                     <button type="reset" class="btn btn-secondary"
-                        onclick="updateCancel()">취소</button>
-                     <button type="button" class="btn btn-success"
-                        onclick="deleteCommnunity(${groupInfo.idx})">삭제</button>
-                  </div>
-                  
-            </c:forEach>
-         </form>
-      </div>
-   </div>
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-danger" id="update" value="수정" />
+						<button type="reset" class="btn btn-secondary" onclick="updateCancel()">취소</button>
+						<button type="button" class="btn btn-success" onclick="deleteCommnunity(${groupInfo.idx})">삭제</button>
+					</div><!-- end of modal-footer -->
+				</c:forEach>
+			</form>
+		</div>
+	</div>
 </div>
-
-
-
-
-
-
-
-
-</body>
-
 
 <!-- <script type="text/javascript" -->
 <!--    src="http://code.jquery.com/jquery-3.3.1.min.js"></script> -->
@@ -717,7 +542,7 @@ $(document).ready(function() {
 
       // 댓글 더 보기
       $(".commentOpen").click(function() {
-    	  var i = $(this).
+    	 //var i = $(this).
          if($("#openComment").css("display")=="none"){
         	 ajaxBoardComment();
         	 
@@ -810,9 +635,6 @@ $(document).ready(function() {
 </script>
 
 <script type="text/javascript">
-
-
-
 // 추천 버튼 클릭 이벤트 처리
 $("#btnDiv").on("click", ".btnRecommend", function() {
    var idxx = $('#idxx').val();

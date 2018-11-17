@@ -1,7 +1,5 @@
 package zaksim.community.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -18,7 +16,6 @@ import zaksim.community.service.CommunityBoardService;
 import zaksim.community.service.CommunityEditService;
 import zaksim.community.service.CommunityListService;
 import zaksim.community.service.CommunityMemberListService;
-import zaksim.dto.Comment;
 import zaksim.dto.GroupLike;
 
 // 가입된 커뮤니티
@@ -38,8 +35,7 @@ public class CommunityJoinController {
 	public void joinCommunity(Model model, HttpSession session, HttpServletRequest request) {
 
 			// 그룹 idx 가져옴
-			String idx = request.getParameter("idx");	
-			
+			String idx = request.getParameter("idx");			
 			if(session.getAttribute("login_idx") != null ) {
 				// 세션 가져오기
 				String login = (String)session.getAttribute("login_idx").toString();
@@ -47,16 +43,21 @@ public class CommunityJoinController {
 				model.addAttribute("groupInfo", communityListService.info(Integer.parseInt(idx)));
 				// 키워드 가져오기
 				model.addAttribute("keywordList", communityListService.keywordList());
-					
+				
+				// 회원 수 가져오기 (by JH) 
+				model.addAttribute("cntMember", communityMemberListService.cntMembers(Integer.parseInt(idx)));
+				
 				// 회원 리스트 가져오기
-				model.addAttribute("groupMember", communityMemberListService.members());
+				model.addAttribute("groupMember", communityMemberListService.members(Integer.parseInt(idx)));
 
 				// 게시글 정보
 				model.addAttribute("boardList", communityBoardService.informationBoard(Integer.parseInt(idx)));
+//				System.out.println("게시판 정보 : "+communityBoardService.informationBoard(Integer.parseInt(idx)));
 			
 				// 그룹 좋아요
 				model.addAttribute("groupLike", communityListService.groupLike(Integer.parseInt(idx)));
 				
+				// 
 				
 				GroupLike groupLike = new GroupLike();
 				groupLike.setGroup_idx(Integer.parseInt(idx));
@@ -78,7 +79,7 @@ public class CommunityJoinController {
 				model.addAttribute("keywordList", communityListService.keywordList());
 				
 				// 회원 리스트 가져오기
-				model.addAttribute("groupMember", communityMemberListService.members());
+				model.addAttribute("groupMember", communityMemberListService.members(Integer.parseInt(idx)));
 
 
 				// 게시글 정보
@@ -86,14 +87,12 @@ public class CommunityJoinController {
 		
 				// 그룹 좋아요
 				model.addAttribute("groupLike", communityListService.groupLike(Integer.parseInt(idx)));
-
+		
+				
 			}
-			
-			List<Comment> commentList = communityBoardService.viewBoardComment(Integer.parseInt(idx));
-			
-			model.addAttribute("commentList", commentList);
 
 	}
+
 
 
 	// 커뮤니티 탈퇴 POST

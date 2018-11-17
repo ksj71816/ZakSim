@@ -63,6 +63,7 @@
 
 <body>
 <!-- navbar -->
+<div class="container-fluid">
 <div class="row navbar navbar-expand-lg" style="background-color: #FFFFFF;border-bottom:3px solid indianred;">
     <!-- logo -->
     <div class="col-sm-2">
@@ -169,7 +170,7 @@
 	</div>
 
 </div><!-- end of navbar toggle -->
-
+</div><!-- end of container -->
 <!-- 해더 끝 -->
 <script type="text/javascript">
 $(document).ready(function(){
