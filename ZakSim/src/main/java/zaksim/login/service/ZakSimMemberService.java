@@ -68,5 +68,8 @@ public interface ZakSimMemberService {
 	 * @return String
 	 */
 	public String authEmail(String email);
+
+	// 방문수 증가
+	public void plusVisits();
 	
 }

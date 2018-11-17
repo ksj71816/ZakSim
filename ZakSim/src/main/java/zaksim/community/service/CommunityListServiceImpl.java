@@ -1,6 +1,7 @@
 package zaksim.community.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,13 +21,13 @@ public class CommunityListServiceImpl  implements CommunityListService{
 
 	// 가입한 그룹 리스트
 	@Override
-	public List<GroupLike> joinedGroupList(int idx) {
+	public List<CommunityGroup> joinedGroupList(int idx) {
 		return communityListDAO.joinedGroupList(idx);
 	}
 	
 	// 인기 모임 리스트
 	@Override
-	public List<GroupLike> popularGroupList() {
+	public List<CommunityGroup> popularGroupList() {
 		return communityListDAO.popularGroupList();
 	}
 	
@@ -108,5 +109,17 @@ public class CommunityListServiceImpl  implements CommunityListService{
 	public List<GroupLike> newPage(Paging paging) {
 		// TODO Auto-generated method stub
 		return communityListDAO.newPage(paging);
+	}
+
+	@Override
+	public int categoryTotalCount(int idx) {
+		// TODO Auto-generated method stub
+		return communityListDAO.categoryTotalCount(idx);
+	}
+
+	@Override
+	public List<CommunityGroup> categoryPage(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return communityListDAO.categoryPage(map);
 	}
 }

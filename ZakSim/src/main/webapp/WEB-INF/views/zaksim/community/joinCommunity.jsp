@@ -72,21 +72,21 @@
 						<div class="card bg-dark text-white">
 							<div class="hovereffect">
 								<img class="card-img"
-									src="${joinedGroupList.communityGroup.image }"
+									src="${joinedGroupList.image }"
 									alt="Card image">
 								<div class="card-img-overlay">
-									<h4 class="card-title">${joinedGroupList.communityGroup.title }</h4>
+									<h4 class="card-title">${joinedGroupList.title }</h4>
 
 									<c:forEach items="${categoryList }" var="categoryList">
 										<c:if
-  											test="${joinedGroupList.communityGroup.category_idx eq categoryList.idx}"> 
+  											test="${joinedGroupList.category_idx eq categoryList.idx}"> 
  											<p class="card-text">${categoryList }</p> 
   										</c:if>  									
   										</c:forEach> 
 
 									<c:forEach items="${keywordList }" var="keyword">
 										<c:if
-											test="${joinedGroupList.communityGroup.idx eq keyword.group_idx}">
+											test="${joinedGroupList.idx eq keyword.group_idx}">
 											<p class="card-text">#${keyword.keyword }</p>
 										</c:if>
 									</c:forEach>
@@ -101,7 +101,7 @@
 									<br><br>
 										<a class="info" href="#">
 											<button type="button" class="btn btn-danger"
-											onclick="moveURL(${joinedGroupList.communityGroup.idx })">상세보기</button>
+											onclick="moveURL(${joinedGroupList.idx })">상세보기</button>
 										</a> <br> <br> <br>
 									</div>
 								</div>

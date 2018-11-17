@@ -182,5 +182,17 @@
  <select id="selectAllMember" resultMap="ZakSimMember">
  	SELECT * FROM zakSimMember
  </select>
+ 
+ <select id="checkVisits" resultType="int">
+ 	SELECT COUNT(*) FROM Visits WHERE VISIT_DATE=sysdate
+ </select>
+ 
+ <update id="updateVisits">
+ 	UPDATE Visits SET visits=visits+1
+ </update>
+ 
+ <insert id="insertVisits">
+ 	INSERT INTO Visits VALUES (sysdate, 1)
+ </insert>
   
   </mapper>

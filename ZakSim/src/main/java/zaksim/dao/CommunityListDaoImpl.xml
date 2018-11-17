@@ -75,18 +75,17 @@
 		<result column="image" property="image" />
 	</resultMap>
 
-	<select id="joinedGroupList" resultMap="GroupLike" parameterType="int">
-         select g.*, l.like_num from
-      (select
-      c.idx g_idx,
-      c.title, c.content, c.image, c.max, c.open_date, c.secret,
-      c.password
-      from communitygroup c where c.member_idx=#{idx}
-      ) g
-      left join (select count(*) like_num, group_idx
-      l_group_idx from grouplike
-      GROUP BY group_idx) l on
-      l.l_group_idx=g.g_idx
+	<select id="joinedGroupList" resultMap="CommunityGroup" parameterType="int">
+      select c.idx g_idx, c.title, c.content, c.image, c.max, c.open_date, c.secret, c.password, l.like_num g_like_num
+      from (
+		select distinct group_idx from groupMember where member_idx=#{idx}) gm
+		left join communityGroup c
+		on gm.group_idx=c.idx
+		left join (select count(*) like_num, group_idx l_group_idx 
+		            from grouplike
+		            GROUP BY group_idx
+		            ) l 
+		on l.l_group_idx=c.idx
 	</select>
 
 <!-- 	<select id="joinedGroupList" resultMap="GroupLike"> -->
@@ -137,7 +136,7 @@
 	<!-- GROUP BY group_idx order by like_num desc, null desc) l on l.l_group_idx=gk.g_idx -->
 	<!-- </select> -->
 
-	<select id="popularGroupList" resultMap="GroupLike">
+	<select id="popularGroupList" resultMap="CommunityGroup">
 	SELECT * from (
 	    SELECT rownum rnum, gl.*
 			FROM (
@@ -150,10 +149,10 @@
 				g.password,g.member_idx
 				FROM CommunityGroup g order by g_idx asc) gk
 				left join (select count(*) as
-				like_num, group_idx as l_group_idx from
+				g_like_num, group_idx as l_group_idx from
 				grouplike
 				GROUP BY group_idx
-				order by like_num desc nulls last) l on l.l_group_idx=gk.g_idx
+				order by g_like_num desc nulls last) l on l.l_group_idx=gk.g_idx
 			) gl
 	    ) rgl
 	    WHERE rgl.rnum <![CDATA[ < ]]>=3
@@ -353,12 +352,15 @@
 	</select>
 
 
-	<select id="categoryCount" resultType="int" parameterType="int">
-		select count(*) from communityGroup where category_idx = #{category_idx } 
+	<select id="categoryTotalCount" resultType="int" parameterType="int">
+		    SELECT count(*) FROM (SELECT g.idx g_idx, g.title ,g.content , g.image ,g.max , g.open_date , g.secret 
+			, g.password,c.category FROM CommunityGroup g, CommunityCategory c WHERE g.category_idx = c.idx 
+			and c.idx=#{idx } ) gk left join (select count(*) as like_num, group_idx as l_group_idx from grouplike 
+			GROUP BY group_idx order by like_num desc, null desc) l on l.l_group_idx=gk.g_idx 
 	</select>
 	
 <!-- 		public List<GroupLike> categoryPage(Paging paging); -->
-	<select id="categoryPage" parameterType="map" resultType="zaksim.dto.CommunityGroup">
+	<select id="categoryPage" parameterType="map" resultMap="CommunityGroup">
 		SELECT * FROM (
         SELECT rownum rnum, R.* FROM (
         SELECT
@@ -371,11 +373,11 @@
 		FROM CommunityGroup g,
 		CommunityCategory c
 		WHERE g.category_idx = c.idx and c.idx=#{idx } ) gk
-		left join (select count(*) as like_num,
+		left join (select count(*) as g_like_num,
 		group_idx as l_group_idx from
 		grouplike
 		GROUP BY group_idx order by
-		like_num desc, null desc) l on l.l_group_idx=gk.g_idx
+		g_like_num desc, null desc) l on l.l_group_idx=gk.g_idx
         ) R
         ) P
         WHERE rnum between #{paging.startNo } and #{paging.endNo }

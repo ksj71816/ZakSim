@@ -69,7 +69,8 @@
   	
 	  	update challenge
 	    set status = #{status},
-	        result = #{result}
+	        result = #{result},
+	        end_date=sysdate
 	    where idx=#{idx} and member_idx=#{memberIdx}
 	  	
   	
