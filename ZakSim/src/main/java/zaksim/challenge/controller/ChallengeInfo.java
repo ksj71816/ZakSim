@@ -33,29 +33,29 @@ private static final Logger logger = LoggerFactory.getLogger(DoChallenge.class);
 	@RequestMapping(value="/challengeInfo", method=RequestMethod.GET)
 	public void challengeInfoGet(Model model, HttpSession session) {
 		
-		Challenge chal = new Challenge();
+		Challenge chal = new Challenge();	//도전정보 dto
 		
 		// memberidx 세션에서 가져오기 
 		int idx = (int) session.getAttribute("login_idx");
 		
-		logger.info("memberIdx : " + idx);
+//		logger.info("memberIdx : " + idx);
 				
 //도전 정보 가져오기
 		chal=chalinfosv.getChallengeInfo(idx);
 		
 		model.addAttribute("info",chal);
 		
-		logger.info("chalInfo model: "+model);
+//		logger.info("chalInfo model: "+model);
 		
 		
 		
-//도전 시작일, 현재일 비교 
+//도전 시작일, 현재일 비교  (도전 취소, 도전 중도포기)
 		
 		Date startDate = chal.getStartDate();	//도전 시작일
 		
-		// 현재 날짜
-		Date nowDate = new Date();
-		System.out.println(nowDate);
+		Date nowDate = new Date();				// 현재 날짜
+
+//		System.out.println(nowDate);
 
 		// long type으로 비교
 		long diff = nowDate.getTime() - startDate.getTime();
@@ -71,7 +71,7 @@ private static final Logger logger = LoggerFactory.getLogger(DoChallenge.class);
 
 
 		
-// 도전 경과 날짜 판별		// 차이에+1 = 도전일 경과 차수
+// 도전 경과 날짜 계산		// 차이에+1 = 도전일 경과 차수
 		if(resultDate>=0) {
 			resultDate+=1;
 			model.addAttribute("byDay", resultDate );	
@@ -92,6 +92,8 @@ private static final Logger logger = LoggerFactory.getLogger(DoChallenge.class);
 			model.addAttribute("status", "done");
 		}
 		
+//-------------------------------------------------------		
+		
 		
 // 인증률 구하기
 		Challenge rate =mysv.viewRate(chal.getIdx());
@@ -101,58 +103,88 @@ private static final Logger logger = LoggerFactory.getLogger(DoChallenge.class);
 		model.addAttribute("rate", rate);
 
 
+//-------------------------------------------------------------
 		
-// 당일 인증 판별
+		
+// 인증 페이지 접근 판별 (대기중,당일인증o,당일인증x,최초인증)
+		
 		int chalIdx=chal.getIdx();	// 도전 idx
-//		logger.info("도전 idx"+chal.getIdx());
-		
-		//인증 날짜
+
+		//최근 인증 날짜
 		Board citnew=chalinfosv.getNewCitation(chalIdx);
-		logger.info("최신 인증 정보:"+citnew);
+
 		System.out.println(citnew);
-//		Date daaa = new Date();
-//		long dodo=50483300;
-//		daaa.setTime(dodo);
+
 		
-		Date writeDate= new Date();
-		int citDate= -1;	// 기본값=1 (0=도전인증했을대,-값=대기중일때, +값=도전인증 안했을대)
+		Date writeDate= new Date();// 날짜 비교 서비스 매개변수
 		
-		//인증 정보가 있을때
+		int citDate=0;	// 인증값 (0=당일인증,  0> 미인증)	// 비교값= 최근 인증날짜
+		int chalDate=0; // 도전시작값 (0<= 도전자, 0> 대기자) // 비교값= 도전 시작날짜
+		
+		// 도전자 or 대기자 판별
+		//인증 정보가 있을때 =board가 null이 아닐때		//null이면 에러
 		if (citnew!=null){
+			
+			System.out.println("인증 정보 있음");
 			
 			//board 테이블에서 최근 인증 날짜 가져오기
 			writeDate=citnew.getWritten_date();
 		
-		// 날짜 비교 서비스
-		citDate=chalinfosv.dateColculation(writeDate);
+			// 날짜 비교 서비스 - 현재날짜와 최근 인증 날짜 비교
+			citDate=chalinfosv.dateColculation(writeDate);
 
-		//		System.out.println(citDate);
-	
-		}
-		// 인증날짜와 현재시각 비교가 0일때
-		if(citDate==0) {	
-
-			// 인증 했을때
-			model.addAttribute("setcit", "stop");
-			System.out.println("인증 비교 0"+citDate);
+			//당일 인증자 or 미인증자 판별
+			if(citDate==0) {		//당일 인증자
 			
-		}else if(citDate>0) {
-			// 도전 대기중 
-			model.addAttribute("setcit", "wait");
-			System.out.println("인증 비교 w"+citDate);
-		}else {
+				System.out.println("당일 인증자");
 			
-			// 인증 안했을때
-			model.addAttribute("setcit", "do");
-			System.out.println("인증 비교 d"+citDate);
+				// 도전자- 당일인증자 (인증 페이지 접근x)
+				model.addAttribute("setcit", "stop");
+				System.out.println("인증 비교 0 : "+citDate);
+				
+			}else if(citDate>0) {	//당일 미인증자
+			
+				System.out.println("당일 미인증자");
+			
+				// 도전자-미인증자,최초인증자 (인증 페이지 접근ok)
+				model.addAttribute("setcit", "do");
+				System.out.println("인증 비교 + : "+citDate);
+			}
+				
+				
+				
+		}else {		// 도전대기자 or 최초 인증자
+			
+			System.out.println("인증 정보 없음");
+			
+			
+			System.out.println("도전 시작일 : "+startDate);
+			
+			
+			// 날짜 비교 - 현재 날짜와 도전 시작일 비교 ( 0> : 대기자, 0=< 최초인증자)
+			chalDate=chalinfosv.dateColculation(startDate);
+			
+			if(chalDate==0) {
+			
+				System.out.println("도전 대기자");
+			
+				// 도전 대기자 (인증 페이지 접근x)
+				model.addAttribute("setcit", "wait");
+				
+			}else{
+				
+				System.out.println("최초 인증 대상자");
+				
+				// 도전자-미인증자,최초인증자 (인증 페이지 접근ok)
+				model.addAttribute("setcit", "do");
+				System.out.println("인증 비교 + : "+citDate);
+			}
+			
+			
 		}
-
-		
-
+				
 	}
 
-	
-	
 	
 	
 	
