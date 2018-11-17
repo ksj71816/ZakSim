@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import zaksim.dto.Board;
+import zaksim.dto.Comment;
 
 public interface CommunityBoardService {
 
@@ -18,5 +19,8 @@ public interface CommunityBoardService {
 	public void deleteBoard(Board board);
 	
 	// 게시글 작성
-	public void insertBoard(Board board, MultipartFile imgFile);
+	public void insertBoard(Board board);
+
+	// 댓글 리스트
+	public List<Comment> viewBoardComment(int parseInt);
 }

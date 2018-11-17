@@ -1,13 +1,14 @@
 package zaksim.community.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,40 +27,51 @@ import zaksim.dto.Board;
 public class CommmunityBoardController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CommunityMainController.class);
-		@Autowired CommunityBoardService communityBoardService;
-	
+	@Autowired CommunityBoardService communityBoardService;
+	@Autowired ServletContext context;
+
 	// 게시물 등록 POST
 	@RequestMapping(value="/enrollBoard", method=RequestMethod.POST)
-	public String writeBoard(Board board, MultipartFile imgFile, HttpSession session) {
-		
-		System.out.println("------------------------------");
-		System.out.println(imgFile);
-		
-		int login_idx = (Integer)session.getAttribute("login_idx");
-		
-		board.setWriter_idx(login_idx);
-		System.out.println(board);
-		
-		//1. 보드 DB에 등록 
-		//3 파일 업로드 
-		communityBoardService.insertBoard(board, imgFile);
+	public String writeBoard(Board board, MultipartFile file, HttpSession session) {
 
-		return "zaksim/community/enrollCommunity?idx=" + board.getGroup_idx();
+
+		int login_idx = (Integer)session.getAttribute("login_idx");
+		board.setWriter_idx(login_idx);
+
+		
+		String path = "/resources/upload/community/";
+		String realpath = context.getRealPath(path);
+		String uid = UUID.randomUUID().toString().split("-")[4];
+		String stored = uid+"_"+file.getOriginalFilename();
+		File dest = new File(realpath, stored);
+		try {
+			file.transferTo(dest);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}			
+		board.setImage(file.getOriginalFilename());
+		board.setStoredName("/resources/upload/community/"+stored);		
+			
+		communityBoardService.insertBoard(board);
+
+		return "redirect:/zaksim/community/enrollCommunity?idx="+board.getGroup_idx();
 	}
-	
+
 	// 게시글 삭제 POST
 	@RequestMapping(value="/deleteBoard", method=RequestMethod.POST)
 	public ModelAndView deleteBoard(Board board) {
 		ModelAndView modelAndView = new ModelAndView();
 		return modelAndView;
 	}
-	
+
 	// 게시글 삭제 POST
 	@RequestMapping(value="/updateBoard", method=RequestMethod.POST)
 	public ModelAndView updateBoard(Board board) {
 		ModelAndView modelAndView = new ModelAndView();
 		return modelAndView;
 	}
-	
-	
+
+
 }

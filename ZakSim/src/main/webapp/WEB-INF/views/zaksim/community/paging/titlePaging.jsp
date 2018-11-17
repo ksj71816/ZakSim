@@ -13,14 +13,14 @@
 		
 		<c:if test="${map.paging.curPage eq 1 }" > <!-- 첫 페이지 일 때 -->
 			<li class="page-item disabled">
-		   		<a class="page-link" href="/zaksim/community/clickCategoryCommunity" aria-label="Previous">
+		   		<a class="page-link" href="/zaksim/community/searchCommunity" aria-label="Previous">
 		   			<span aria-hidden="true">&laquo;</span>
 		   		</a>
 		   	</li>
 		</c:if>
 		<c:if test="${map.paging.curPage ne 1 }" > <!-- 첫 페이지가 아닐 때 -->
 			<li class="page-item">
-		   		<a class="page-link" href="/zaksim/community/clickCategoryCommunity?category_idx=${map.idx }&curPage=${map.paging.curPage-1 }" aria-label="Previous">
+		   		<a class="page-link" href="/zaksim/community/searchCommunity?curPage=${map.paging.curPage-1 }&selectSearch=${selectSearch}&searchContent=${searchContent}" aria-label="Previous">
 		   			<span aria-hidden="true">&laquo;</span>
 		   		</a>
 		   	</li>
@@ -36,7 +36,7 @@
 		    <c:if test="${map.paging.curPage ne page }">
 		    	<li class="page-item">
 		    </c:if>
-		    		<a class="page-link" href="/zaksim/community/clickCategoryCommunity?category_idx=${map.idx }&curPage=${page }">
+		    		<a class="page-link" href="/zaksim/community/searchCommunity?curPage=${page }&selectSearch=${selectSearch}&searchContent=${searchContent}">
 		    			${page }
 		    		</a>
 		    	
@@ -46,14 +46,14 @@
 		   	
 		 <c:if test="${map.paging.curPage eq map.paging.totalPage }" > <!-- 마지막 페이지 일 때 -->
 		   	<li class="page-item disabled">
-		   		<a class="page-link" href="/zaksim/community/clickCategoryCommunity?category_idx=${map.idx }&curPage=${map.paging.totalPage }" aria-label="Next">
+		   		<a class="page-link" href="/zaksim/community/searchCommunity?curPage=${map.paging.totalPage }&selectSearch=${selectSearch}&searchContent=${searchContent}" aria-label="Next">
 		   			<span aria-hidden="true">&raquo;</span>
 		   		</a>
 		   	</li>
 		 </c:if>
 		 <c:if test="${map.paging.curPage ne map.paging.totalPage }" > <!-- 마지막 페이지가 아닐 때 -->
 		   	<li class="page-item">
-		   		<a class="page-link" href="/zaksim/community/clickCategoryCommunity?category_idx=${map.idx }&curPage=${map.paging.curPage+1 }" aria-label="Next">
+		   		<a class="page-link" href="/zaksim/community/searchCommunity?curPage=${map.paging.curPage+1 }&selectSearch=${selectSearch}&searchContent=${searchContent}" aria-label="Next">
 		   			<span aria-hidden="true">&raquo;</span>
 		   		</a>
 		   	</li>

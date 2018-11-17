@@ -11,7 +11,9 @@
 
 <!-- 캘린더 스타일 추가 -->
 <link rel="stylesheet" href="/css/challenge/calendar.css">
-
+<!-- 이미지 스타일 추가 -->
+<link rel="stylesheet" type="text/css" href="/css/challenge/image_hov.css">
+  
 
   <!--바디-->
    
@@ -28,13 +30,7 @@
           <div class="col-md-12 mt-2 mx-3 text-center dohyeon">
             <h4>${sessionScope.login_nick }의
 	            <b class="text-danger">  
-<%-- 		            <fmt:parseDate value="${info.startDate }" var="strPlanDate" pattern="yyyy-MM-dd"/> --%>
-<%-- 		            <fmt:formatDate value="strPlanDate" pattern="yyyy-MM-dd"/> --%>
-<%-- 					<fmt:parseDate value="${info.endDate }" var="endPlanDate" pattern="yyyy-MM-dd"/> --%>
-<%-- 					<fmt:formatDate value="endPlanDate" pattern="yyyy-MM-dd"/> --%>
-<%-- 					<fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="sDate" scope="request"/> --%>
-<%-- 					<fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="eDate" scope="request"/> --%>
-					도전 ${eDate - sDate }일차
+					도전 n일차
 				</b>
 			</h4>
           </div>
@@ -102,7 +98,7 @@
         <div class="col-md-5 px-0">
      
       	<!-- 캘린더 추가 -->
-			<div class="m-1" id="pnlEventCalendar" style="width:100%; height: 334.667px; border-right-width: 5px;	border-top-width: 5px;	border-bottom-width: 5px;    border-left-width: 5px;	border-style: solid;	border-color: firebrick;"></div>
+			<div id="pnlEventCalendar" style="width:100%; height: 334.667px; border-right-width: 5px;	border-top-width: 5px;	border-bottom-width: 5px;    border-left-width: 5px;	border-style: solid;	border-color: rgb(255, 0, 0);"></div>
 			
 			<!-- 제거 예정 테스트용 -->
 			 <p>(테스트)캘린더 입력 값: <b><span id="lblEventCalendar">[date]</span></b></p>
@@ -112,34 +108,23 @@
         
         <div class="col-md-1">
         </div>
-        <div class="col-md-6 h-50 p-0" style="border-right-width: 5px;	border-top-width: 5px;	border-bottom-width: 5px;    border-left-width: 5px;	border-style: solid;	border-color: white; ">
-          <div id="myCarousel" class="carousel slide rounded border" data-ride="carousel" style="height: 337px;">
-            <!-- Indicators -->
-            <ul class="carousel-indicators">
-              <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-              <li data-target="#myCarousel" data-slide-to="1" class=""></li>
-              <li data-target="#myCarousel" data-slide-to="2" class=""></li>
-            </ul>
-            <!-- The slideshow -->
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="https://picsum.photos/500/300/?image=135" alt="Los Angeles" style="width: 100%; height: 100%;">
-              </div>
-              <div class="carousel-item">
-                <img src="https://picsum.photos/500/300/?image=136" alt="Chicago" style="width: 100%; height: 100%;">
-              </div>
-              <div class="carousel-item">
-                <img src="https://picsum.photos/500/300/?image=137" alt="New York" style="width: 100%; height: 100%;">
-              </div>
-            </div>
-            <!-- Left and right controls -->
-            <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#myCarousel" data-slide="next">
-              <span class="carousel-control-next-icon"></span>
-            </a>
-          </div>
+       
+       
+        <div class="col-md-6 h-100 p-0" style="border-right-width: 5px;	border-top-width: 5px;	border-bottom-width: 5px;    border-left-width: 5px;	border-style: solid;	border-color: white; ">
+         
+         <!-- 인증 이미지 -->
+         	 <div class=" col-md-12 p-0">
+    			<div class="hovereffect p-0">
+       	 			<img class="img-responsive" src="/resources/upload/citation/4ef918a81f40_20180416_150009.png" alt="">
+        		<div class="overlay">
+          			 <h2>${info.title}</h2>
+          			 <a class="info" href="#">link here</a>
+       		 </div>
+    			</div>
+			</div>
+        
+         
+       
         </div>
       </div>
       
@@ -337,6 +322,24 @@ function haltAlert(){
 					
 					currentDay = $(this).text();
 					triggerSelectEvent(options.onSelect);
+					
+					
+					
+					/* 캘린더 선택 날짜 년월일 : 2018/11/17 */
+					var citationData = currentYear+"/"+(currentMonth+1)+"/"+currentDay;
+
+					/* ajax로 인증 정보 요청 */
+					 $.ajax({
+					      type: "post"
+					      , url : "/zaksim/challenge/challengeInfo"
+					      , data : {"date":citationData}
+					      , success: function( data ) {	
+					      		/* console.log('${info.title}'); */	 }	       					      
+					      , error: function( e ) {
+					         console.log( e.responseText );
+					      }
+					   });  
+					
 				});
 			}	
 			
@@ -433,5 +436,14 @@ function haltAlert(){
 					$('#lblEventCalendar').text(event.label);
 				}});
 			});
+			</script>
+			
+			<script>
+
+				function nowCitation(citationData){
+
+				}
+
+				
 			</script>
 			

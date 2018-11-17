@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="/css/community/button.css">
 <link rel="stylesheet" type="text/css" href="/css/community/enrollCommunity.css">
 
-
+${commentList }
 
 <div class="container" id="zz">
 
@@ -56,7 +56,9 @@
             <div style="margin-top: 100px;">
 
                <div style="margin-left: 50px; margin-right: 50px;">
-                  <img src="${groupInfo.storedName }" id="photo">
+               	<c:if test="${groupInfo.storedName ne null && groupInfo.storedName ne ''}">
+                  <img src="${groupInfo.storedName }" id="photo">               	
+               	</c:if>
                </div>
 
                <div style="margin-top: 40px; margin-left: 190px; margin-right: 190px;">
@@ -192,134 +194,79 @@
                   </div>
                   
                   <!-- 인증 사진 -->
-                  <img class="card-img-bottom" src="${board.storedName}" alt="인증">
+                  <c:if test="${board.storedName ne null && board.storedName ne ''}">
+	                  <img class="card-img-bottom" src="${board.storedName}" alt="Image...">                  
+                  </c:if>
                   
-                <div class="row">
-                     <div class="col"
-                        style="background-color: lightgray; margin-left: 15px; text-align: center;">
+<!--                 <div class="row"> -->
+<!--                      <div class="col" -->
+<!--                         style="background-color: lightgray; margin-left: 15px; text-align: center;"> -->
 
-                        <strong id="comment" style="cursor: pointer;">댓글 ${board.commentNum}개</strong>
+<%--                         <strong id="comment" style="cursor: pointer;">댓글 ${board.commentNum}개</strong> --%>
 
-                     </div>
-                     <div class="col"
-                        style="background-color: lightgray; margin-right: 15px; text-align: center; ">
-                        <strong style="cursor: pointer;"> ♡ 좋아요 ${board.likeNum}개</strong>
-                     </div>
-                  </div>
-                  <div class="row justify-content-center"
-                     style="cursor: pointer; background-color: lightgray; margin-left: 1px; margin-right: 1px; border-color: white;
-                     border-top: 1px solid; border-bottom: 1px solid; border-color: white;" >
-                     <strong id="commentWrite">댓글 쓰기</strong>
-                  </div>
+<!--                      </div> -->
+<!--                      <div class="col" -->
+<!--                         style="background-color: lightgray; margin-right: 15px; text-align: center; "> -->
+<%--                         <strong style="cursor: pointer;"> ♡ 좋아요 ${board.likeNum}개</strong> --%>
+<!--                      </div> -->
+<!--                   </div> -->
+<!--                   <div class="row justify-content-center" -->
+<!--                      style="cursor: pointer; background-color: lightgray; margin-left: 1px; margin-right: 1px; border-color: white; -->
+<!--                      border-top: 1px solid; border-bottom: 1px solid; border-color: white;" > -->
+<!--                      <strong id="commentWrite">댓글 쓰기</strong> -->
+<!--                   </div> -->
 
-                  <!-- 댓글 쓰기 -->
-                  <div id="writeComment"
-                     style="border: 1px solid; background-color: write; display: none; border-color: lightgray; border-radius: 100px; margin-top: 20px; margin-bottom: 20px;">
-                     <div class="mx-5">
-                        <div>
-                           <img src="/resources/image/community/sample.png"
-                              class="mx-3 my-3" id="commentPhoto"> <span
-                              style="font-size: 20px;"><strong>${sessionScope.login_nick}</strong></span>
+<!--                   댓글 쓰기 -->
+<!--                   <div id="writeComment" -->
+<!--                      style="border: 1px solid; background-color: write; display: none; border-color: lightgray; border-radius: 100px; margin-top: 20px; margin-bottom: 20px;"> -->
+<!--                      <div class="mx-5"> -->
+<!--                         <div> -->
+<!--                            <img src="/resources/image/community/sample.png" -->
+<!--                               class="mx-3 my-3" id="commentPhoto"> <span -->
+<%--                               style="font-size: 20px;"><strong>${sessionScope.login_nick}</strong></span> --%>
 
-                        </div>
-                        <div class="mx-5">
-                           <textarea class="form-control col-sm-112" rows="3"
-                              placeholder="댓글 입력 "></textarea>
-
-
-                           <br>
-                        </div>
-
-                        <div class="mx-5">
-                           <button type="button" class="btn btn-outline-secondary"
-                              style="float: right; margin-right: 10px;">취소</button>
-                           <button type="button" class="btn btn-outline-danger"
-                              style="float: right; margin-right: 10px;">입력</button>
-                           <br>
-                        </div>
-
-                     </div>
-                     <br>
-                  </div>
-
-                  <div class="row justify-content-center" style="cursor: pointer; background-color: lightgray; margin-left: 1px; margin-right: 1px;">
-                     <strong id="commentOpen">댓글 더 보기</strong>
-                  </div>
-               </div>
+<!--                         </div> -->
+<!--                         <div class="mx-5"> -->
+<!--                            <textarea class="form-control col-sm-112" rows="3" -->
+<!--                               placeholder="댓글 입력 "></textarea> -->
 
 
-            <!-- 댓글 -->
-               <div id="openComment"
-                  style="background-color: lightgray; margin-left: 150px; margin-right: 150px; display: none;">
-                  <div class="card-body mx-3 ">
-                     <div
-                        style="border: 1px solid; background-color: white; border-color: lightgray; border-radius: 100px;">
-                        <div class="mx-5">
-                           <div>
-                              <img src="/resources/image/community/sample.png"
-                                 class="mx-3 my-3" id="commentPhoto"> <span
-                                 style="font-size: 20px;"><strong>닉네임a</strong></span>
-                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span
-                                 style="color: lightgray; cursor: pointer;" id="comment2Open"> 댓글 달기 </span> <span
-                                 style="color: lightgray; cursor: pointer;"
-                                 data-toggle="modal" data-target="#reportModal"> 신고 하기
-                              </span> <span style="color: lightgray; cursor: pointer;"> 삭제
-                                 하기 </span>
-                           </div>
-                           <div class="mx-5">
-                              世솅〮宗조ᇰ御ᅌᅥᆼ〮製졩〮訓훈〮民민正져ᇰ〮音ᅙᅳᆷ 나랏〮말〯ᄊᆞ미〮 中듀ᇰ國귁〮에〮달아〮
-                              文문字ᄍᆞᆼ〮와〮로〮서르ᄉᆞᄆᆞᆺ디〮아니〮ᄒᆞᆯᄊᆡ〮
-                              이〮런젼ᄎᆞ〮로〮어린〮百ᄇᆡᆨ〮姓셔ᇰ〮이〮니르고〮져〮호ᇙ〮배〮이셔〮도〮
-                              ᄆᆞᄎᆞᆷ〮내〯제ᄠᅳ〮들〮시러〮펴디〮몯〯ᄒᆞᇙ노〮미〮하니〮라〮 내〮이〮ᄅᆞᆯ〮為윙〮ᄒᆞ〮야〮어〯엿비〮너겨〮
-                              새〮로〮스〮믈〮여듧〮字ᄍᆞᆼ〮ᄅᆞᆯ〮ᄆᆡᇰᄀᆞ〮노니〮 사〯ᄅᆞᆷ마〯다〮ᄒᆡ〯ᅇᅧ〮수〯ᄫᅵ〮니겨〮날〮로〮ᄡᅮ〮메〮
-                              便뼌安ᅙᅡᆫ킈〮ᄒᆞ고〮져〮ᄒᆞᇙᄯᆞᄅᆞ미〮니라〮 <br> <br> <a href="">더
-                                 보기</a> <br> <br>
-                           </div>
-                        </div>
-                     </div>
+<!--                            <br> -->
+<!--                         </div> -->
 
-                     <!-- 대댓글 -->
-                     <div id="open2Comment" 
-                        style="border: 1px solid; background-color: white; border-color: lightgray; display: none;
-                           border-radius: 100px; margin-left: 100px;">
-                        <div class="mx-5">
-                           <div>
-                              <img src="/resources/image/community/sample.png"
-                                 class="mx-3 my-3" id="commentPhoto"> <span
-                                 style="font-size: 20px;"><strong>닉네임a</strong></span>
+<!--                         <div class="mx-5"> -->
+<!--                            <button type="button" class="btn btn-outline-secondary" -->
+<!--                               style="float: right; margin-right: 10px;">취소</button> -->
+<!--                            <button type="button" class="btn btn-outline-danger" -->
+<!--                               style="float: right; margin-right: 10px;">입력</button> -->
+<!--                            <br> -->
+<!--                         </div> -->
 
-                           </div>
-                           <div class="mx-5">
-                              <textarea class="form-control col-sm-112" rows="3"
-                                 placeholder="댓글 입력 "></textarea>
+<!--                      </div> -->
+<!--                      <br> -->
+<!--                   </div> -->
+
+<!--                   <div class="row justify-content-center" style="cursor: pointer; background-color: lightgray; margin-left: 1px; margin-right: 1px;"> -->
+<!--                      <div style="display: none;" ></div> -->
+<!--                      <strong id="commentOpen" class="commentOpen">댓글 더 보기</strong> -->
+<!--                   </div> -->
+<!--                </div> -->
 
 
-                              <br>
-                           </div>
+<!--             댓글 -->
+<!--                <div id="openComment" -->
+<!--                   style="background-color: lightgray; margin-left: 150px; margin-right: 150px;/*  display: none; */"> -->
+<!--                   <div id="recommendDiv"> -->
+<%-- 					<%@include file="./boardComment.jsp" %> --%>
+<!-- 				</div> -->
+<!--      		 </div> -->
 
-                           <div class="mx-5">
-                              <button type="button" class="btn btn-outline-secondary"
-                                 style="float: right; margin-right: 10px;">취소</button>
-                              <button type="button" class="btn btn-outline-danger"
-                                 style="float: right; margin-right: 10px;">입력</button>
-
-                           </div>
-                           <br> <br>
-
-                        </div>
-                     </div>
-
-
-                     <br> <br> <br>
-
-
-                  </div>
-               </div>
                
                </c:forEach>
 
       <div class="col" style="margin-bottom: 300px;"></div>
    </div>
+   
 
 
 
@@ -352,7 +299,7 @@
          <div class="modal-body">
             <div class="mx-3">
                <div>
-                  <span><strong>작성자 : </strong></span> <span> 닉네임1</span>
+                  <span><strong>작성자 : </strong></span> <span> ${sessionScope.login_nick }</span>
                </div>
 
 
@@ -370,6 +317,9 @@
                   <input type="radio" name="report"> 명예회손 / 사생활 침해 저작권침해 등 <br>
                   <input type="radio" name="report"> 기타
 
+               </div>
+               <div>
+               	<textarea rows="5" cols="" name="reason"></textarea>
                </div>
             </div>
          </div>
@@ -618,74 +568,143 @@
 <script type="text/javascript">
 $(document).ready(function() {
    
-   $("#enrollBoardBtn").click(function() {
-      var radioVal = $('input[name="certification"]:checked').val();
-      var file = $("#filee").val();
-      var boardContent = $("#board-text1").val();
+//    $("#enrollBoardBtn").click(function() {
+//       var radioVal = $('input[name="certification"]:checked').val();
+//       var file = $("#filee").val();
+//       var boardContent = $("#board-text1").val();
       
-      var idx = $("#idxx").val();
+//       var idx = $("#idxx").val();
       
       
-      console.log('라디오 값 : ' + radioVal);
-      console.log('파일 : '+ file);
-      console.log("게시 글  : "+ boardContent);
+//       console.log('라디오 값 : ' + radioVal);
+//       console.log('파일 : '+ file);
+//       console.log("게시 글  : "+ boardContent);
       
-      $(".idxxx").attr({
-         value : idx
-      });
+//       $(".idxxx").attr({
+//          value : idx
+//       });
       
-      if(radioVal == 1){
-         if(file == null || file ==''){
-               swal({
-                     type: 'error',
-                     title: 'Oops...',
-                     text: '사진을 등록하세요.'
-               });
-               return false;
-         }
-         else    if(boardContent == null || boardContent ==''){
-               swal({
-                     type: 'error',
-                     title: 'Oops...',
-                     text: '게시글을 등록하세요.'
-               });
-               return false;
-         }
-      }
-      else{
-            if(boardContent == null || boardContent ==''){
-               swal({
-                     type: 'error',
-                     title: 'Oops...',
-                     text: '게시글을 등록하세요.'
-               });
-               return false;
-         }
-      }
-      
-   });
-   
-   
-   
-   
-   
-//    $("#boardForm").ajaxForm({
-// //       type: "post" //form에 설정한 값이 기본값 
-// //       , url: "/zaksim/community/enrollBoard" //form에 설정한 값이 기본값
-//       data: {
-         
+//       if(radioVal == 1){
+//          if(file == null || file ==''){
+//                swal({
+//                      type: 'error',
+//                      title: 'Oops...',
+//                      text: '사진을 등록하세요.'
+//                });
+//                return false;
+//          }
+//          else    if(boardContent == null || boardContent ==''){
+//                swal({
+//                      type: 'error',
+//                      title: 'Oops...',
+//                      text: '게시글을 등록하세요.'
+//                });
+//                return false;
+//          }
 //       }
-//       , dataType: "json"
-//       , success: function( res ) {
-//          console.log("성공");
-//          console.log(res);
+//       else{
+//             if(boardContent == null || boardContent ==''){
+//                swal({
+//                      type: 'error',
+//                      title: 'Oops...',
+//                      text: '게시글을 등록하세요.'
+//                });
+//                return false;
+//          }
 //       }
-//       , error: function() {
-//          console.log("실패");
-//       }
-      
       
 //    });
+   
+   
+   
+   
+   
+// //    $("#boardForm").ajaxForm({
+// // //       type: "post" //form에 설정한 값이 기본값 
+// // //       , url: "/zaksim/community/enrollBoard" //form에 설정한 값이 기본값
+// //       data: {
+         
+// //       }
+// //       , dataType: "json"
+// //       , success: function( res ) {
+// //          console.log("성공");
+// //          console.log(res);
+// //       }
+// //       , error: function() {
+// //          console.log("실패");
+// //       }
+      
+      
+// //    });
+	
+	$("#enrollBoardBtn").click(function() {
+		var radioVal = $('input[name="certification"]:checked').val();
+		var file = $("#filee").val();
+		var boardContent = $("#board-text1").val();
+		
+		var idx = $("#idxx").val();
+		
+		
+		console.log('라디오 값 : ' + radioVal);
+		console.log('파일 : '+ file);
+		console.log("게시 글  : "+ boardContent);
+		
+		$(".idxxx").attr({
+			value : idx
+		});
+		
+		if(radioVal == 1){
+			if(file == null || file ==''){
+	            swal({
+	                  type: 'error',
+	                  title: 'Oops...',
+	                  text: '사진을 등록하세요.'
+	            });
+	            return false;
+			}
+			else 	if(boardContent == null || boardContent ==''){
+	            swal({
+	                  type: 'error',
+	                  title: 'Oops...',
+	                  text: '게시글을 등록하세요.'
+	            });
+	            return false;
+			}
+		}
+		else{
+				if(boardContent == null || boardContent ==''){
+	            swal({
+	                  type: 'error',
+	                  title: 'Oops...',
+	                  text: '게시글을 등록하세요.'
+	            });
+	            return false;
+			}
+		}
+		
+	});
+	
+	
+	
+	
+	
+// 	$("#boardForm").ajaxForm({
+// // 		type: "post" //form에 설정한 값이 기본값 
+// // 		, url: "/zaksim/community/enrollBoard" //form에 설정한 값이 기본값
+// 		data: {
+			
+// 		}
+// 		, dataType: "json"
+// 		, success: function( res ) {
+// 			console.log("성공");
+// 			console.log(res);
+// 		}
+// 		, error: function() {
+// 			console.log("실패");
+// 		}
+		
+		
+// 	});
 });
 </script>
 
@@ -697,8 +716,11 @@ $(document).ready(function() {
    $(document).ready(function() {
 
       // 댓글 더 보기
-      $("#commentOpen").click(function() {
+      $(".commentOpen").click(function() {
+    	  var i = $(this).
          if($("#openComment").css("display")=="none"){
+        	 ajaxBoardComment();
+        	 
             $("#openComment").fadeIn();
          }
          else {
@@ -1068,6 +1090,152 @@ $("#btnDiv").on("click", ".noBtnRecommend", function() {
    }
    
 
+   
+   
+   
+   
+// 댓글
+
+   function reReplyLi(i) {
+      var hidden = $('#reReplyLi'+i).attr("hidden");
+      console.log("hidden 값 : " + hidden);
+      
+      if ( hidden == "hidden" ) {         
+         $('#reReplyLi'+i).removeAttr("hidden"); // hidden 풀기(답댓글 창 보이기)
+      } else if ( hidden != "hidden" ) {
+         $('#reReplyLi'+i).attr("hidden", "hidden"); // hidden 속성추가(답댓글창 닫기(숨기기))
+      }
+   }
+   
+   function reReplyLiClose(i) {
+      var hidden = $('#reReplyLi'+i).attr("hidden");
+      console.log("hidden 값 : " + hidden);
+      $('#reReplyLi'+i).attr("hidden", "hidden"); // hidden 속성추가(답댓글창 닫기(숨기기))
+   }
+   
+   function reReplyUpdate(i) {
+	      var hidden = $('#reReplyUpdate'+i).attr("hidden");
+	      console.log("hidden 값 : " + hidden);
+	      
+	      if ( hidden == "hidden" ) {         
+	         $('#reReplyUpdate'+i).removeAttr("hidden"); // hidden 풀기(답댓글 창 보이기)
+	      } else if ( hidden != "hidden" ) {
+	         $('#reReplyUpdate'+i).attr("hidden", "hidden"); // hidden 속성추가(답댓글창 닫기(숨기기))
+	      }
+	   }
+	   
+	   function reReplyUpdateClose(i) {
+	      var hidden = $('#reReplyUpdate'+i).attr("hidden");
+	      console.log("hidden 값 : " + hidden);
+	      $('#reReplyUpdate'+i).attr("hidden", "hidden"); // hidden 속성추가(답댓글창 닫기(숨기기))
+	   }
+   
+   function deleteComment(qnaIdx, order) {
+	   console.log('aaaaa');
+	   $.ajax({
+			type: "post"
+			, url : "/zaksim/customerCenter/QnA/comment_delete"
+			, data : {
+				qnaIdx : qnaIdx,
+				order : order
+			}
+			, dataType: "html"
+			, success: function( data ) {
+				
+				$("#recommendDiv").html(data);
+				
+			}
+			, error: function( e ) {
+				console.log("--- error ---");
+				console.log( e.responseText );
+			}
+			, complete: function() {
+				//입력 창 초기화
+			}
+		});	
+   }
+   
+	$("#recommendDiv").on("click", ".write", function() {
+	   
+	   var formData = $(this).parent().parent().serialize();
+	   
+	   console.log(formData);
+	  
+	   $.ajax({
+			type: "post"
+			, url : "/zaksim/customerCenter/QnA/comment_write"
+			, data : formData
+			, dataType: "html"
+			, success: function( data ) {
+				console.log(data);
+				
+				$("#recommendDiv").html(data);
+				
+			}
+			, error: function( e ) {
+				console.log("--- error ---");
+				console.log( e.responseText );
+			}
+			, complete: function() {
+				//입력 창 초기화
+			}
+		});	
+   });
+   
+   
+   $("#recommendDiv").on("click", ".writeRe", function() {
+	   
+	   var formData = $(this).parent().parent().serialize();
+	   
+	   console.log(formData);
+	  
+	   $.ajax({
+			type: "post"
+			, url : "/zaksim/customerCenter/QnA/re_comment_write"
+			, data : formData
+			, dataType: "html"
+			, success: function( data ) {
+				console.log(data);
+				
+				$("#recommendDiv").html(data);
+				
+			}
+			, error: function( e ) {
+				console.log("--- error ---");
+				console.log( e.responseText );
+			}
+			, complete: function() {
+				//입력 창 초기화
+			}
+		});	
+   });
+   
+   $("#recommendDiv").on("click", ".updateRe", function() {
+	   
+	   var formData = $(this).parent().parent().serialize();
+	   
+	   console.log(formData);
+	  
+	   $.ajax({
+			type: "post"
+			, url : "/zaksim/customerCenter/QnA/comment_update"
+			, data : formData
+			, dataType: "html"
+			, success: function( data ) {
+				console.log(data);
+				
+				$("#recommendDiv").html(data);
+				
+			}
+			, error: function( e ) {
+				console.log("--- error ---");
+				console.log( e.responseText );
+			}
+			, complete: function() {
+				//입력 창 초기화
+			}
+		});	
+   });
 
 </script>
 

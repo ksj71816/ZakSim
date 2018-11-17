@@ -1,7 +1,9 @@
 package zaksim.challenge.service;
 
 import java.util.Date;
+import java.util.Map;
 
+import zaksim.dto.Board;
 import zaksim.dto.Challenge;
 
 public interface ChallengeInfoService {
@@ -15,5 +17,9 @@ public interface ChallengeInfoService {
 	
 	// 도전 시작일과 현재날짜 계산 (날짜 비교)
 	public int dateColculation(Date nDate);
+	
+	// 캘린더에서 선택한 날짜 인증 데이터 가져오기
+	public Board dayCitation(Map info);
+	
 	
 }

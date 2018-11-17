@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 
 <!-- header include -->
 <%@include file="/WEB-INF/views/zaksim/main/header.jsp"%>
@@ -55,10 +55,12 @@
 
 
 			<c:if test="${!empty joinedGroupList}">
+
+			<c:if test="${fn:length(joinedGroupList) > 3}">	 
 				<button type="button" class="btn btn-outline-primary"
 					style="float: right; margin-top: 30px;" id="joinedGroupViewMore">+
 					더보기</button>
-
+			</c:if>
 
 				<button type="button" class="btn btn-outline-danger"
 					style="float: right; margin-top: 30px; margin-left: 30px; margin-right: 30px;"

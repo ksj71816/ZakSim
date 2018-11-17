@@ -74,8 +74,7 @@
     
 <!-- 페이징 버튼-->
 
-<div class="pb-4" style="background-image: url(/resources/image/main/back.webp); 
-   background-color: rgba(197, 155, 60, 0.3);">
+<div class="pb-4" >
 	<jsp:include page="/WEB-INF/views/zaksim/challenge/include/pagingBtn.jsp" />
 </div> 
     

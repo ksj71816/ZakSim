@@ -89,14 +89,17 @@
 
 						<div class="card bg-dark text-white">
 							<div class="hovereffect">
-								<img class="card-img" src="${category.communityGroup.storedName }"
+<%-- 								<img class="card-img" src="${category.communityGroup.storedName }" --%>
+								<img class="card-img" src="${category.image }"
 									alt="Card image">
 								<div class="card-img-overlay">
-									<h4 class="card-title">${category.communityGroup.title }</h4>
-
+									<h4 class="card-title">${category.title }</h4>
+									
 									<c:forEach items="${keywordList }" var="keyword">
+
+									
 										<c:if
-											test="${category.communityGroup.idx eq keyword.group_idx}">
+											test="${category.idx eq keyword.group_idx}">
 											<p class="card-text">#${keyword.keyword }</p>
 										</c:if>
 									</c:forEach>
@@ -112,7 +115,7 @@
 											<button type="button" class="btn btn-primary">가입하기</button> <br>
 											<br>
 											<button type="button" class="btn btn-danger"
-												onclick="moveURL(${category.communityGroup.idx })">상세보기</button>
+												onclick="moveURL(${category.idx })">상세보기</button>
 										</a> <br> <br> <br>
 									</div>
 								</div>
@@ -129,7 +132,9 @@
 
 </div>
 
-
+	<div style="margin-left: 0px; margin-top: 50px;">
+			<jsp:include page="/WEB-INF/views/zaksim/community/paging/clickCategoryPaging.jsp" />
+	</div>
 
 
 

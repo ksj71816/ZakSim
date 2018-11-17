@@ -163,8 +163,8 @@ public class QnAController {
 		qnaService.qnaWrite(qnaDto);
 		
 		// ----- 파일 첨부 -----
-		logger.info("[QnAController] file : " + file);
-		if (file != null) {
+		logger.info("[QnAController] file : " + file.getOriginalFilename());
+		if (file != null && file.getOriginalFilename() != null) { // 파일이 있을 경우
 		QnAFile qnaFile = qnafileService.getFilePath(file); // 파일 설정
 			// 업로드할 파일이 있을 경우
 			qnaFile.setQnaIdx(qnaIdx); // 문의글 인덱스 저장
@@ -191,21 +191,28 @@ public class QnAController {
 	@RequestMapping(value="/zaksim/customerCenter/QnA/update", method=RequestMethod.POST)
 	public String qnaUpdate(QnA qnaDto, MultipartFile file) {
 		
-		logger.info("[QnAController] 수정한 문의글(혹은 답변) : " + qnaDto.toString());
-		
-		qnaService.qnaUpdate(qnaDto);
+//		logger.info("[QnAController] 수정한 문의글(혹은 답변) : " + qnaDto.toString());
+//		
+//		qnaService.qnaUpdate(qnaDto);
 		
 		
 		// ----- 파일 첨부 -----
-		logger.info("[QnAController] file : " + file);
+		logger.info("[QnAController] file : " + file.getOriginalFilename());
 		if (file != null) {
-		QnAFile qnaFile = qnafileService.getFilePath(file); // 파일 설정
-			// 업로드할 파일이 있을 경우
-			qnaFile.setQnaIdx(qnaDto.getIdx());
-			
-			logger.info("[QnAController] 수정한 문의글(혹은 답변)의 파일 : " + qnaFile.toString());
-			
-			qnafileService.qnaFileUpload(qnaFile);
+			if (file.getOriginalFilename() != null && file.getOriginalFilename() != "") {
+				// 파일이 있을 경우
+				List<QnAFile> fileList = qnafileService.qnaFileList(qnaDto.getIdx());
+				QnAFile qnaFile = qnafileService.getFilePath(file); // 파일 설정
+				
+				for (QnAFile fileIdx : fileList) {
+					qnaFile.setIdx(fileIdx.getIdx()); // 원래 파일 인덱스(파일 덮어씌우기 위함)
+				}
+				qnaFile.setQnaIdx(qnaDto.getIdx());
+
+				logger.info("[QnAController] 수정한 문의글(혹은 답변)의 파일 : " + qnaFile.toString());
+
+				qnafileService.qnaFileUpload(qnaFile);
+			}
 		}
 		// -----------------
 		
@@ -222,6 +229,7 @@ public class QnAController {
 		return "redirect:/zaksim/customerCenter/QnA/list";
 	}
 	
+	// Q&A 첨부파일 다운로드
 	@RequestMapping(value="/zaksim/customerCenter/QnA/download")
 	public ModelAndView qnaDownload(ModelAndView m, @RequestParam int qnaIdx) {
 		

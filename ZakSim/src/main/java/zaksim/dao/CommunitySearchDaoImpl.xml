@@ -131,8 +131,90 @@
 	</select>
 
 
+	<select id="titleTotalCount" resultType="int" parameterType="String">
+				SELECT
+				count(*)
+				FROM
+				(SELECT g.idx
+				g_idx, g.title ,g.content , g.image ,g.max ,
+				g.open_date , g.secret
+				,g.password, c.category group_category, c.image group_image
+				FROM CommunityGroup g, 
+				CommunityCategory c
+				WHERE  g.category_idx =
+				c.idx
+				order by g.idx desc) gk
+				left
+				join (select count(*) as like_num,
+				group_idx as l_group_idx from
+				grouplike
+				GROUP BY group_idx) l on
+				l.l_group_idx=gk.g_idx where
+				title LIKE '%' || #{search} || '%'
+	</select>
 
 
+
+	<select id="categoryTotalCount" resultType="int" parameterType="String">
+		SELECT
+		count(*)
+		FROM
+		(SELECT g.idx
+		g_idx, g.title ,g.content , g.image ,g.max ,
+		g.open_date , g.secret
+		,g.password, c.category group_category, c.image group_image
+		FROM CommunityGroup g,
+		CommunityCategory c
+		WHERE  g.category_idx =
+		c.idx
+		order by g.idx desc) gk
+		left
+		join (select count(*) as like_num,
+		group_idx as l_group_idx from
+		grouplike
+		GROUP BY group_idx) l on
+		l.l_group_idx=gk.g_idx where
+		group_category LIKE '%' || #{search} || '%'
+	</select>
+
+	<select id="titlePage" parameterType="map" resultMap="CommunityGroup">
+				        		SELECT * from (
+	    SELECT rownum rnum, gl.*
+			FROM (
+        SELECT
+		*
+		FROM
+		(SELECT g.idx
+		g_idx, g.title ,g.content , g.image ,g.max ,
+		g.open_date , g.secret
+		,g.password, c.category group_category, c.image group_image
+		FROM CommunityGroup g, 
+		CommunityCategory c
+		WHERE  g.category_idx =
+		c.idx
+		order by g.idx desc) gk
+		left join (
+            select count(*) as like_num,
+            group_idx as l_group_idx from
+            grouplike
+            GROUP BY group_idx ) l 
+        on
+		l.l_group_idx=gk.g_idx
+		<if test="selectSearch == 'communutyName'" >
+	        where title LIKE '%' || #{searchContent} || '%'	
+		</if>
+		<if test="selectSearch == 'communutyCategory'" >
+		where
+		group_category LIKE '%' || #{searchContent} || '%'
+		</if>
+		<if test="selectSearch == 'communutyKeyword'" >
+			where
+      		group_keyword LIKE '%' || #{searchContent} || '%'
+		</if>
+        ) gl
+	    ) rgl
+	    where rgl.rnum between #{paging.startNo } and #{paging.endNo }
+	</select>
 
 
 

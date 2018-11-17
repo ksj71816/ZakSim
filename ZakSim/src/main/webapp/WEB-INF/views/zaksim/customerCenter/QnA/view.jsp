@@ -69,12 +69,7 @@
 								<c:forEach var="file" items="${fileList }">
 								<tr>
 									<th class="table-info">파일</th>
-									<td colspan="3"><span onclick="downFile();" style="cursor:pointer;">${file.original }</span></td>
-									<script>
-										function downFile(){
-											location.href="/zaksim/customerCenter/QnA/download?qnaIdx="+${view.idx}
-										}
-									</script>
+									<td colspan="3"><span onclick="downFile()" style="cursor:pointer">${file.original }</span></td>
 								</tr>
 								</c:forEach>
 								<tr>
@@ -136,7 +131,7 @@
 								<c:forEach var="file" items="${fileList }">
 								<tr>
 									<th class="table-info">파일</th>
-									<td colspan="3">${file.original }</td>
+									<td colspan="3"><span onclick="downFile()" style="cursor:pointer">${file.original }</span></td>
 								</tr>
 								</c:forEach>
 								<tr>
@@ -202,7 +197,7 @@
       }
    }
    
-   // ------- 버튼 이벤트 -------
+   // ------- 버튼 이벤트(목록보기, 답변쓰기, 수정하기, 삭제하기) -------
    function qnaListPage(){
       var curPage = <%=session.getAttribute("curPage") %>;
       if (curPage == "" || curPage == null) {
@@ -230,6 +225,12 @@
       
       location.href = "/zaksim/customerCenter/QnA/delete?qnaIdx=" + qnaIdx;
    }
+   
+   // --- 첨부파일 다운로드 ---
+	function downFile(){
+		location.href="/zaksim/customerCenter/QnA/download?qnaIdx="+${view.idx}
+	}
+   // -------------------
    
    function reReplyLi(i) {
       var hidden = $('#reReplyLi'+i).attr("hidden");

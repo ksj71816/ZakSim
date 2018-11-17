@@ -19,11 +19,21 @@
  
  <!-- Q&A 파일 업로드(첨부) dao -->
  <insert id="qnaFileUpload" parameterType="zaksim.dto.QnAFile">
- 	INSERT INTO QnAFile(idx, qna_idx, original, stored)
- 	VALUES(<if test="idx==0">QnAFile_SEQ.nextval</if><if test="idx!=0">#{idx}</if>, 
- 		#{qnaIdx}, #{original}, #{stored})
+ 	<if test="idx==0">
+	 	INSERT INTO QnAFile(idx, qna_idx, original, stored)
+	 	VALUES(QnAFile_SEQ.nextval, 
+	 		#{qnaIdx}, #{original}, #{stored})
+ 	</if>
+ 		
+ 	<if test="idx!=0">
+ 		UPDATE QnAFile
+ 		SET original = #{original},
+ 			stored = #{stored}
+ 		WHERE idx = #{idx}
+ 	</if>
  </insert>
  
+ <!-- QnA 첨부파일 다운로드 -->
  <select id="download" parameterType="int" resultMap="QnAFile">
 	SELECT * FROM qnafile where qna_idx=#{qnaIdx}
  </select>

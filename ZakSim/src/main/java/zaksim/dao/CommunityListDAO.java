@@ -75,8 +75,15 @@ public interface CommunityListDAO {
 	
 	/**
 	 * 카테고리 리스트 가져요기 (페이징 ) 
-	 * @param pMap
+	 * @param map
 	 * @return
 	 */
-	public List<CommunityGroup> categoryPage(Map<String, Object> pMap);
+	public List<CommunityGroup> categoryPage(Map<String, Object> map);
+
+	/**
+	 * 카테고리별 갯수 가져오기 (페이징)
+	 * @param idx
+	 * @return
+	 */
+	public int categoryTotalCount(int idx);
 }

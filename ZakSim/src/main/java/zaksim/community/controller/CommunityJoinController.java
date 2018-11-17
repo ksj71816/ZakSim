@@ -1,5 +1,7 @@
 package zaksim.community.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +18,7 @@ import zaksim.community.service.CommunityBoardService;
 import zaksim.community.service.CommunityEditService;
 import zaksim.community.service.CommunityListService;
 import zaksim.community.service.CommunityMemberListService;
+import zaksim.dto.Comment;
 import zaksim.dto.GroupLike;
 
 // 가입된 커뮤니티
@@ -85,6 +88,10 @@ public class CommunityJoinController {
 				model.addAttribute("groupLike", communityListService.groupLike(Integer.parseInt(idx)));
 
 			}
+			
+			List<Comment> commentList = communityBoardService.viewBoardComment(Integer.parseInt(idx));
+			
+			model.addAttribute("commentList", commentList);
 
 	}
 

@@ -40,11 +40,31 @@
 		<collection property="zakSimMember" resultMap="ZakSimMember" />
 	</resultMap>
 	
+	   <resultMap type="zaksim.dto.Comment" id="Comment">
+  	<result property="idx" column="idx"/>
+  	<result property="writer_idx" column="writer_idx"/>
+  	<result property="content" column="content"/>
+  	<result property="board_idx" column="board_idx"/>
+  	<result property="written_date" column="written_date"/>
+  	<result property="depth" column="depth"/>
+  	<result property="upper_idx" column="upper_idx"/>
+  	<result property="order" column="order"/>
+  	<result property="upperId" column="upper_id"/>
+  	<collection property="zakSimMember" resultMap="ZakSimMember"/>
+  </resultMap>
+  
   <resultMap type="zaksim.dto.ZakSimMember" id="ZakSimMember">
-  	<result property="idx" column="m_idx" />
+  	<result property="idx" column="m_idx"/>
   	<result property="nick" column="m_nick"/>
+  	<result property="id" column="m_id"/>
+  	<result property="memberType" column="member_type"/>
+  	<result property="joinDate" column="join_date"/>
+  	<result property="suspensionDate" column="suspension_date"/>
+  	<result property="suspendNum" column="suspend_num"/>
+  	<result property="leaveDate" column="leave_date"/>
   	<collection property="communityGroup" resultMap="CommunityGroup" />
   </resultMap>
+
   
   
   
@@ -78,19 +98,18 @@
   </select>
   
 <!--   	// 게시글 작성 -->
-<!-- 	public void insertBoard(Board board); -->
-
-<insert id="insertCertificationBoard" parameterType="zaksim.dto.Board">
-	INSERT INTO Board (idx, group_idx, writer_idx, title, content, image, storedName, open, certification)
-		VALUES (Board_SEQ.nextval, #{group_idx}, #{writer_idx}, 'none', #{content}, #{image}, #{storedName}, 1, #{certification})
+<insert id="insertBoard" parameterType="zaksim.dto.Board">
+	<if test="image == '' or image == null">
+		INSERT INTO Board (idx, group_idx, writer_idx, title, content, open, certification)
+		VALUES (Board_SEQ.nextval, #{group_idx}, #{writer_idx}, 'none', #{content}, 1, #{certification} )
+	</if>
+	<if test="image != null and image != ''">
+		INSERT INTO Board (idx, group_idx, writer_idx, title, content, image, storedName, open, certification)
+		VALUES (Board_SEQ.nextval, #{group_idx}, #{writer_idx}, 'none', #{content}, #{image}, #{storedName}, 1, #{certification} )
+	</if>
 <!-- 		<selectKey  keyProperty="idx" resultType="int" order="AFTER"> -->
 <!-- 		SELECT Board_SEQ.currval form dual -->
 <!-- 		</selectKey> -->
-</insert>
-
-<insert id="insertNormalBoard" parameterType="zaksim.dto.Board">
-	INSERT INTO Board (idx, group_idx, writer_idx, title, content, open, certification)
-		VALUES (Board_SEQ.nextval, #{group_idx}, #{writer_idx}, 'none', #{content}, 1, #{certification})
 </insert>
 
 
@@ -110,5 +129,30 @@
 <!--   	SET storedName=#{storedName} -->
 <!--   	WHERE idx -->
 <!--   </update> -->
+  
+  
+  
+  <select id="selectBoardComment" parameterType="int" resultMap="Comment">
+ 	select a.*, zqc.upper_id, zqc.m_nick
+	from
+	 	(SELECT c.*, z.id m_id
+		FROM boardComment c, zakSimMember z
+		WHERE c.board_idx=47 AND c.writer_idx=z.idx
+	) a
+    left join (
+    	SELECT qc.upper_idx, z.id upper_id, z.nick m_nick
+    	from zaksimMember z, (
+			SELECT distinct c.upper_idx, uc.writer_idx
+			FROM boardComment c, boardComment uc 
+			WHERE c.upper_idx= uc.idx
+		) qc
+		where z.idx=qc.writer_idx
+	) zqc
+	on zqc.upper_idx=a.upper_idx
+	order by a.c_order asc
+  </select>
+  
+  
+  
   
   </mapper>

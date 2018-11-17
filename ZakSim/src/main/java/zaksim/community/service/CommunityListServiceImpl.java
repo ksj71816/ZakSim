@@ -1,6 +1,7 @@
 package zaksim.community.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -108,5 +109,17 @@ public class CommunityListServiceImpl  implements CommunityListService{
 	public List<GroupLike> newPage(Paging paging) {
 		// TODO Auto-generated method stub
 		return communityListDAO.newPage(paging);
+	}
+
+	@Override
+	public int categoryTotalCount(int idx) {
+		// TODO Auto-generated method stub
+		return communityListDAO.categoryTotalCount(idx);
+	}
+
+	@Override
+	public List<CommunityGroup> categoryPage(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return communityListDAO.categoryPage(map);
 	}
 }
