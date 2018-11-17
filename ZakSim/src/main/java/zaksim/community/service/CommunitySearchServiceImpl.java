@@ -67,6 +67,12 @@ public class CommunitySearchServiceImpl implements CommunitySearchService {
 		return communitySearchDao.titlePage(map);
 	}
 
+	@Override
+	public List<CommunityGroup> categoryPage(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 
