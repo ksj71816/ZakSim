@@ -174,4 +174,9 @@ public class ZakSimMemberServiceImpl implements ZakSimMemberService {
 		}
 	}
 
+	@Override
+	public void updateStatusToNormal(ZakSimMember memberDto) {
+		memberDao.updateMemberStatusToNormal(memberDto);
+	}
+
 }

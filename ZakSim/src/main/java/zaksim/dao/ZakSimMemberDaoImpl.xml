@@ -194,5 +194,11 @@
  <insert id="insertVisits">
  	INSERT INTO Visits VALUES (sysdate, 1)
  </insert>
+ 
+ <update id="updateMemberStatusToNormal" parameterType="zaksim.dto.ZakSimMember">
+ 	UPDATE zakSimMember
+ 	SET status='normal'
+ 	WHERE id=#{id}
+ </update>
   
   </mapper>

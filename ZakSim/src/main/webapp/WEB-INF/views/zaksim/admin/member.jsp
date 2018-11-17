@@ -342,7 +342,7 @@ $("#suspendBtn").click(function() {
 	var suspendMemberId = [];
 
 	checkList.each(function(i) {
-		if(checkList.parent().parent().eq(i).children("td").eq(12).text() >= 10){
+		if(checkList.parent().parent().eq(i).children("td").eq(11).text() >= 10){
 			suspendMemberIdx.push(checkList.parent().parent().eq(i).children("td").eq(0).text());
 			suspendMemberId.push(checkList.parent().parent().eq(i).children("td").eq(3).text());
 		}
@@ -399,7 +399,7 @@ $("#blockBtn").click(function() {
 	var blockMemberId = [];
 
 	checkList.each(function(i) {
-		if(checkList.parent().parent().eq(i).children("td").eq(11).text() >= 4){
+		if(checkList.parent().parent().eq(i).children("td").eq(10).text() >= 4){
 			blockMemberIdx.push(checkList.parent().parent().eq(i).children("td").eq(0).text());
 			blockMemberId.push(checkList.parent().parent().eq(i).children("td").eq(3).text());
 		}

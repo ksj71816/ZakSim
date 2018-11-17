@@ -104,4 +104,7 @@ public interface ZakSimMemberDao {
 
 	// 방문수 증가
 	public void insertVisits();
+
+	// 계정 정지 풀기
+	public void updateMemberStatusToNormal(ZakSimMember memberDto);
 }
