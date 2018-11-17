@@ -16,15 +16,12 @@
   	<result column="title" property="title"/>
   	<result column="content" property="content"/>
   	<result column="image" property="image"/>
+  	<result column="storedName" property="storedName"/>
   	<result column="written_date" property="written_date"/>
   	<result column="hit" property="hit"/>
   	<result column="open" property="open"/>
   	
   </resultMap>
-  
-  
-  
-  
   
   
   
@@ -38,14 +35,14 @@
   
   <insert id="insertCitation" parameterType="zaksim.dto.Board">
   
-  	INSERT INTO BOARD VALUES (#{idx}, #{challenge_idx}, null, #{writer_idx}, #{title}, #{content}, #{image}, #{open}, #{certification}, sysdate, #{hit})
+  	INSERT INTO BOARD VALUES (#{idx}, #{challenge_idx}, null, #{writer_idx}, #{title}, #{content}, #{image}, #{storedName}, #{open}, #{certification}, sysdate, #{hit})
   
   </insert>
   
   
   <select id="selectTotalCitation" resultMap="CitationList">
   
-  	select idx, challenge_idx, writer_idx, title, content, image, written_date, hit  from board where certification=1 ORDER BY idx desc
+  	select idx, challenge_idx, writer_idx, title, content, image, storedName, written_date, hit  from board where certification=1 ORDER BY idx desc
   
   </select>
   
@@ -58,7 +55,7 @@
   <select id="selectPagingCitation" parameterType="zaksim.util.Paging" resultMap="CitationList">
   
   	select * from ( select rownum rnum, B.* from 
-    		( select idx, challenge_idx, written_date, title, content, image, writer_idx, hit, open from board where certification=1 and open=1 order by idx desc) B order by rnum) where rnum between #{startNo} and #{endNo}
+    		( select idx, challenge_idx, written_date, title, content, image, storedName, writer_idx, hit, open from board where certification=1 and open=1 order by idx desc) B order by rnum) where rnum between #{startNo} and #{endNo}
   
   </select>
   
@@ -74,6 +71,11 @@
   	
   </select>
   
+  <select id="selectNewInfo" parameterType="int" resultType="zaksim.dto.Board">
+  
+  	select * from (select * from board where challenge_idx=#{idx} order by idx desc) where rownum=1
+  
+  </select>
   
   
   

@@ -31,10 +31,7 @@
   
  
  <select id="selectComment" parameterType="int" resultMap="QnAComment">
-<!--  	SELECT c.*, z.id z_id -->
-<!-- 	FROM qnaComment c, zakSimMember z -->
-<!-- 	WHERE qna_idx=#{qnaIdx} AND c.writer_idx=z.idx -->
-<!-- 	ORDER BY c_order ASC -->
+
 	select a.*, zqc.upper_id 
 	from
 	 	(SELECT c.*, z.id z_id

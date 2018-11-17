@@ -29,5 +29,7 @@ public interface BoardDao {
 	// 캘린더 클릭시 정보 select
 	public Board selectCitation(Map info);
 	
+	// 최근 인증 정보 select
+	public Board selectNewInfo(int idx);
 	
 }

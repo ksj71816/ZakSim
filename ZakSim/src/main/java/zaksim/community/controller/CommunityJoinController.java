@@ -17,6 +17,7 @@ import zaksim.community.service.CommunityEditService;
 import zaksim.community.service.CommunityListService;
 import zaksim.community.service.CommunityMemberListService;
 import zaksim.dto.GroupLike;
+import zaksim.dto.GroupMember;
 
 // 가입된 커뮤니티
 @Controller
@@ -43,9 +44,12 @@ public class CommunityJoinController {
 				model.addAttribute("groupInfo", communityListService.info(Integer.parseInt(idx)));
 				// 키워드 가져오기
 				model.addAttribute("keywordList", communityListService.keywordList());
-					
+				
+				// 회원 수 가져오기 (by JH) 
+				model.addAttribute("cntMember", communityMemberListService.cntMembers(Integer.parseInt(idx)));
+				
 				// 회원 리스트 가져오기
-				model.addAttribute("groupMember", communityMemberListService.members());
+				model.addAttribute("groupMember", communityMemberListService.members(Integer.parseInt(idx)));
 
 				// 게시글 정보
 				model.addAttribute("boardList", communityBoardService.informationBoard(Integer.parseInt(idx)));
@@ -76,7 +80,7 @@ public class CommunityJoinController {
 				model.addAttribute("keywordList", communityListService.keywordList());
 				
 				// 회원 리스트 가져오기
-				model.addAttribute("groupMember", communityMemberListService.members());
+				model.addAttribute("groupMember", communityMemberListService.members(Integer.parseInt(idx)));
 
 
 				// 게시글 정보
@@ -84,22 +88,9 @@ public class CommunityJoinController {
 		
 				// 그룹 좋아요
 				model.addAttribute("groupLike", communityListService.groupLike(Integer.parseInt(idx)));
-
-
-				
-				
+		
 				
 			}
-
-
-			
-
-
-		
-
-
-
-
 
 	}
 
@@ -107,9 +98,15 @@ public class CommunityJoinController {
 
 	// 커뮤니티 탈퇴 POST
 	@RequestMapping(value="/outCommunity", method=RequestMethod.POST)
-	public String exitCommunity(int idx, HttpSession session) {
-
-		return "";
+	public String exitCommunity(int group_idx, HttpSession session) {
+		
+		GroupMember groupMember = new GroupMember();
+		groupMember.setGroup_idx(group_idx);
+		groupMember.setMember_idx((Integer)session.getAttribute("login_idx"));
+		
+		communityMemberListService.withdrawMember(groupMember);
+		
+		return "redirect:/zaksim/community/communityMain";
 	}
 
 	// 커뮤니티 강퇴(AJAX)? POST 

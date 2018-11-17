@@ -36,11 +36,9 @@ public class CommmunityBoardController {
 
 
 		int login_idx = (Integer)session.getAttribute("login_idx");
-
-			
 		board.setWriter_idx(login_idx);
 
-
+		
 		String path = "/resources/upload/community/";
 		String realpath = context.getRealPath(path);
 		String uid = UUID.randomUUID().toString().split("-")[4];
@@ -53,22 +51,10 @@ public class CommmunityBoardController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}			
-		board.setImage("/resources/upload/community/"+stored);
-		
-		System.out.println("/resources/upload/community/"+stored);
-		
-		
+		board.setImage(file.getOriginalFilename());
+		board.setStoredName("/resources/upload/community/"+stored);		
+			
 		communityBoardService.insertBoard(board);
-
-		//1. 보드 DB에 등록 
-		//2 보드정보 가져옴
-		//		Board bd = communityBoardService.insertBoard(board);
-
-		//3 파일 업로드 
-		//		communityBoardService.uploadFile(bd, imgFile);
-
-		// 결과 map에 담아 리턴
-		//		map.put("result", 1);
 
 		return "redirect:/zaksim/community/enrollCommunity?idx="+board.getGroup_idx();
 	}

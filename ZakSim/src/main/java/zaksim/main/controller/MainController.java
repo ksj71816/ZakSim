@@ -20,7 +20,6 @@ import zaksim.dto.Board;
 import zaksim.dto.Challenge;
 import zaksim.dto.CommunityGroup;
 import zaksim.dto.GroupKeyword;
-import zaksim.dto.GroupLike;
 
 @Controller
 @RequestMapping(value="/zaksim/main")

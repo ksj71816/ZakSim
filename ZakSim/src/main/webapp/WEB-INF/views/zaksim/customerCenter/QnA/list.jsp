@@ -10,11 +10,9 @@
 	<!-- body -->
 	<div class="py-3">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<h1>Q&amp;A</h1>
-				</div>
-			</div>
+			<div class="row mt-5">
+		    	<h2 class="ml-3 pl-2 pt-1 title dohyeon">Q&amp;A</h2>
+		    </div>
 		</div>
 	</div>
 	<div class="container">
@@ -54,7 +52,7 @@
 										<c:set var="idx" value="${listDepth.idx }" />
 										<c:set var="secret" value="${listDepth.secret }" />
 										<c:set var="title" value="${listDepth.title }" />
-										<c:set var="writer" value="${listDepth.writerIdx }" />
+										<c:set var="writer" value="${listDepth.nick }" />
 										<c:set var="date" value="${listDepth.writtenDate }" />
 										<c:set var="hit" value="${listDepth.hit }" />
 									</c:if>
@@ -73,9 +71,12 @@
 									<!-- 제목 -->
 									<c:if test="${list.secret eq 'private' }">
 										<td class="text-left">
-											<a href="/zaksim/customerCenter/QnA/view?qnaIdx=${list.idx }"
-												id="aSecret">${list.title } <i class="fas fa-lock"></i>
-											</a>
+										<c:if test="${login && list.writerIdx eq sessionScope.login_idx }">
+											<a href="/zaksim/customerCenter/QnA/view?qnaIdx=${list.idx }" id="aSecret" class="privateQnA">${list.title } <i class="fas fa-lock"></i></a>										
+										</c:if>
+										<c:if test="${!login || list.writerIdx ne sessionScope.login_idx }">
+											${list.title } <i class="fas fa-lock"></i>									
+										</c:if>
 										</td>
 									</c:if>
 									<c:if test="${list.secret eq 'public' }">
@@ -93,7 +94,7 @@
 									</c:if>
 	
 									<!-- 작성자 -->
-									<td>${list.writerIdx }</td>
+									<td>${list.nick }</td>
 	
 									<!-- 작성일 -->
 									<c:if test="${writtenDate eq toDay }">
@@ -119,15 +120,18 @@
 										<!-- 제목 -->
 										<c:if test="${secret eq 'private' }">
 											<td class="text-left">
-												<a href="/zaksim/customerCenter/QnA/view?qnaIdx=${idx }" 
-													id="aSecretDepth" style="margin-left: 10px">→ ${title } <i class="fas fa-lock"></i>
-												</a>
+												<c:if test="${login && list.writerIdx eq sessionScope.login_idx }">
+													<a href="/zaksim/customerCenter/QnA/view?qnaIdx=${list.idx }" id="aSecret" class="privateQnA"style="margin-left: 10px">→ ${title } <i class="fas fa-lock"></i></a>										
+												</c:if>
+												<c:if test="${!login || list.writerIdx ne sessionScope.login_idx }">
+													${title } <i class="fas fa-lock"></i>									
+												</c:if>
 											</td>
 										</c:if>
 										<c:if test="${secret eq 'public' }">
 											<td class="text-left">
 												<a href="/zaksim/customerCenter/QnA/view?qnaIdx=${idx }"
-													style="margin-left: 10px">→ ${title }
+													style="margin-left: 10px; ">→ ${title }
 												</a>
 											</td>
 										</c:if>
@@ -179,6 +183,26 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	<!-- 비밀글 Modal -->
+	<div class="modal fade" id="privateModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModal3Label">비밀 문의글</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">비공개로 작성된 글입니다.</div>
+				<div class="modal-footer">
+					<button type="button" class="btn qnaBtnColor" data-dismiss="modal">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 <%@ include file="../../main/footer.jsp" %>
 
@@ -226,4 +250,7 @@
 // 			$('#qnaListModal').modal();
 // 		}
 // 	});
+
+
+
 </script>

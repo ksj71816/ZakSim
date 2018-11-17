@@ -162,10 +162,10 @@
 	       	<c:forEach items="${boardList}" var="board" begin="0" end="3" step="1">
 		       	<div class="col-md-3 col-lg-3 col-sm-3">
 		         <div class="hovereffect text-center my-1">
-		           <img class="img-responsive" src="${board.image}" >
+		           <img class="img-responsive" src="${board.storedName}" >
 		           <div class="overlay">
 		             <h2>${board.title}</h2>
-		             <a class="info" onclick="viewCitation(${board.idx}, '${board.image}','${board.content}')" style="cursor:pointer;">상세 보기</a>
+		             <a class="info" onclick="viewCitation(${board.idx}, '${board.storedName}','${board.content}')" style="cursor:pointer;">상세 보기</a>
 		           </div>
 		         </div>
 		       </div>    
@@ -211,7 +211,7 @@
 	       	 <c:forEach items="${groupList}" var="group" begin="0" end="3" step="1">
 		       	<div class="col-md-3 col-lg-3 col-sm-3">
 		         <div class="hovereffect text-center my-1">
-		           <img class="img-responsive" src="${group.image}" >
+		           <img class="img-responsive" src="${group.storedName}" >
 		           <div class="overlay">
 		             <h2>${group.title}
 		             	<c:if test="${group.secret==1 }">

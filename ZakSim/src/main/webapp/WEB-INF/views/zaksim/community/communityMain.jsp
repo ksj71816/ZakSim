@@ -9,6 +9,7 @@
 
 
 
+
 <div class="container" id="zz">
 
 	<div class="row" style="margin-bottom: 30px;">
@@ -110,7 +111,7 @@
 							<div class="card" style="width: 20rem; margin-right: 15px;">
 								<div class="hovereffect">
 									<img class="card-img-top"
-										src="${joinedGroupList.image }"
+										src="${joinedGroupList.storedName }"
 										alt="Card image cap">
 									<div class="card-body">
 										<span>
@@ -170,7 +171,7 @@
                   <input type="hidden" class= "memberIdxx" value="${popularGroupList.member_idx }">
                      <div class="hovereffect">
                         <img class="card-img-top"
-                           src="${popularGroupList.image }"
+                           src="${popularGroupList.storedName }"
                            alt="Card image cap">
                         <div class="card-body">
                            <span>
@@ -280,7 +281,7 @@
 						<input type="hidden" class="memberIdxx" value="${newGroupList.member_idx }">
 							<div class="hovereffect">
 								<img class="card-img-top"
-									src="${newGroupList.image }"
+									src="${newGroupList.storedName }"
 									alt="Card image cap">
 								<div class="card-body">
 									<span>

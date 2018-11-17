@@ -43,8 +43,6 @@ public class CommunityMainController {
 
 			model.addAttribute("joinedGroupList", communityListService.joinedGroupList(idx));
 			
-
-			
 		}	// 로그인 안했을 때
 		
 

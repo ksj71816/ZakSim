@@ -24,12 +24,12 @@ public class Comment {
 
     // 상위 댓글 인덱스 
     private int upper_idx;
+    
+    private int order;
+    
+    private String upperId;
 
-	@Override
-	public String toString() {
-		return "Comment [idx=" + idx + ", writer_idx=" + writer_idx + ", content=" + content + ", board_idx="
-				+ board_idx + ", written_date=" + written_date + ", depth=" + depth + ", upper_idx=" + upper_idx + "]";
-	}
+	private ZakSimMember zakSimMember;
 
 	public int getIdx() {
 		return idx;
@@ -85,6 +85,37 @@ public class Comment {
 
 	public void setUpper_idx(int upper_idx) {
 		this.upper_idx = upper_idx;
+	}
+
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
+	public String getUpperId() {
+		return upperId;
+	}
+
+	public void setUpperId(String upperId) {
+		this.upperId = upperId;
+	}
+
+	public ZakSimMember getZakSimMember() {
+		return zakSimMember;
+	}
+
+	public void setZakSimMember(ZakSimMember zakSimMember) {
+		this.zakSimMember = zakSimMember;
+	}
+
+	@Override
+	public String toString() {
+		return "Comment [idx=" + idx + ", writer_idx=" + writer_idx + ", content=" + content + ", board_idx="
+				+ board_idx + ", written_date=" + written_date + ", depth=" + depth + ", upper_idx=" + upper_idx
+				+ ", order=" + order + ", upperId=" + upperId + ", zakSimMember=" + zakSimMember + "]";
 	}
 
 

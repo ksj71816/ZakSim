@@ -85,4 +85,10 @@ public class ChallengeInfoServiceImpl implements ChallengeInfoService {
 		return boaDao.selectCitation(info);
 	}
 
+	@Override
+	public Board getNewCitation(int idx) {
+		
+		return boaDao.selectNewInfo(idx);
+	}
+
 }
