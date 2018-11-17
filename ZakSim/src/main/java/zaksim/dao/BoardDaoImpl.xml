@@ -68,7 +68,11 @@
   
   </delete>
   
+  <select id="selectCitation" parameterType="Map" resultType="zaksim.dto.Board">
   
+  	select * from (select * from board where TO_char(Written_Date,'YYYY/MM/DD') = #{day} AND Writer_idx =#{idx} order by idx desc) where rownum=1
+  	
+  </select>
   
   
   

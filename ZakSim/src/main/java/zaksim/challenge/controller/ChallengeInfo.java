@@ -2,6 +2,8 @@ package zaksim.challenge.controller;
 
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,15 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import zaksim.challenge.service.ChallengeInfoService;
+import zaksim.dto.Board;
 import zaksim.dto.Challenge;
+import zaksim.mypage.service.MypageService;
 
 @Controller
 @RequestMapping(value="/zaksim/challenge")
 public class ChallengeInfo {
 
-	private static final Logger logger = LoggerFactory.getLogger(DoChallenge.class);
+private static final Logger logger = LoggerFactory.getLogger(DoChallenge.class);
 	
 	@Autowired ChallengeInfoService chalinfosv;
+	@Autowired MypageService mysv;
 	
 	@RequestMapping(value="/challengeInfo", method=RequestMethod.GET)
 	public void challengeInfoGet(Model model, HttpSession session) {
@@ -59,14 +64,57 @@ public class ChallengeInfo {
 		}
 		
 		
-//유저 정보 가져오기 (프로필)
+// 인증률 구하기
+		Challenge rate =mysv.viewRate(chal.getIdx());
 		
-	
+		logger.info(rate.toString());
 		
-		//
-		
+		model.addAttribute("rate", rate);
 	}
 	
+	// 캘린더 연동 이미지 뷰어 - ajax 처리
+	@RequestMapping(value="/challengeInfo", method=RequestMethod.POST)
+	public Map<String,String> challengeInfoPost(String date, HttpSession session){
+		
+//		캘린더에서 선택된 날짜
+		System.out.println(date);
+//		 2018/11/17
+		
+//		로그인 세션 idx
+		int idx=(int)session.getAttribute("login_idx");
+		Map<String, String> info = new HashMap<>();
+		
+		
+		info.put("day", date);
+		info.put("idx", String.valueOf(idx));
+		
+		
+		// 날짜, 회원 idx로 인증글 정보 가져오기
+		Board citation=chalinfosv.dayCitation(info);
+		
+		System.out.println(citation.getIdx());
+		
+		// 도전 정보가 일을때만 실행
+		if(citation.getTitle()!=null) {
+		System.out.println( "조건문 실행됨");
+			// 맵에 값 넣기
+		info.put("title", citation.getTitle());		// 도전명
+		info.put("content", citation.getContent()); // 내용
+		info.put("image", citation.getImage());		// 이미지 경로
+		info.put("open", String.valueOf(citation.getOpen()));	// 공개, 비공개
+		
+		info.put("result","success");
+		logger.info(info.toString());
+		
+		return info;
+		}else{
+			
+//			도전 정도 없으면 null
+			info.put("result","fail");
+			return info;
+		}
+		
+	}
 	
 	// 도전 포기 : 도전 시작후 3일 이후 취소
 	@RequestMapping(value="/discard", method=RequestMethod.GET)
