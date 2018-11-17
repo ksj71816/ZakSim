@@ -23,6 +23,8 @@ public class QnA {
 	private int upperIdx; // 상위 문의글 인덱스
 	private int depth; // 깊이
 	
+	private String nick;
+	
 	// DTO(JOIN으로 인한...)
 	private ZakSimMember memberDto; // 회원 DTO
 	private QnA qnaDto; // 상위 Q&A DTO
@@ -101,11 +103,18 @@ public class QnA {
 		this.qnaDto = qnaDto;
 	}
 	
+	public String getNick() {
+		return nick;
+	}
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
 	@Override
 	public String toString() {
 		return "QnA [idx=" + idx + ", writerIdx=" + writerIdx + ", title=" + title + ", content=" + content + ", hit="
 				+ hit + ", status=" + status + ", secret=" + secret + ", writtenDate=" + writtenDate + ", upperIdx="
-				+ upperIdx + ", depth=" + depth + ", memberDto=" + memberDto + ", qnaDto=" + qnaDto + "]";
+				+ upperIdx + ", depth=" + depth + ", nick=" + nick + ", memberDto=" + memberDto + ", qnaDto=" + qnaDto
+				+ "]";
 	}
-	
+
 }

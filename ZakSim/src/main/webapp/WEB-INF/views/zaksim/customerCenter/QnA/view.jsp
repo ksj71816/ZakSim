@@ -36,7 +36,7 @@
 								</tr>
 								<tr>
 									<th class="qnaColor">작성자</th>
-									<td>${view.writerIdx }</td>
+									<td>${view.nick }</td>
 									<th class="qnaColor">작성일</th>
 									<td><fmt:formatDate value="${view.writtenDate }" pattern="yyyy-MM-dd HH:mm"/></td>
 								</tr>
