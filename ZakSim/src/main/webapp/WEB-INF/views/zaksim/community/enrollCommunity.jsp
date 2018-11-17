@@ -542,7 +542,7 @@ $(document).ready(function() {
 
       // 댓글 더 보기
       $(".commentOpen").click(function() {
-    	  var i = $(this).
+    	 //var i = $(this).
          if($("#openComment").css("display")=="none"){
         	 ajaxBoardComment();
         	 
