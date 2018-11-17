@@ -31,6 +31,7 @@ public class ChallengeInfoServiceImpl implements ChallengeInfoService {
 		
 	}
 
+	// 현재날짜와 비교 서비스
 	@Override
 	public int dateColculation(Date nDate) {
 		
@@ -59,23 +60,23 @@ public class ChallengeInfoServiceImpl implements ChallengeInfoService {
 //		24(시간) * 60(분) * 60(초) * 1000(1000 분의 1) 곱한값을 나눕니다.
 
 		
-		
-		
-		
-		
 		// 현재 날짜
 		Date nowDate = new Date();
-		System.out.println(nowDate);
+//		System.out.println(nowDate);
 		
+		//long 타입으로 현재날짜 - 매개변수 날짜
 		long diff = nowDate.getTime() - nDate.getTime();
-		System.out.println("날짜 비교 long타입 : "+diff);
+//		System.out.println("날짜 비교 long타입 : "+diff);
 		
+		//시간*분*초*밀리초 = 1일
 		long diffDays = diff / (24 * 60 * 60 * 1000);
-		System.out.println("날짜 차이 : " + diffDays);
+//		System.out.println("날짜 차이 : " + diffDays);
 		
+		// 1보다 낮은 소수점일경우 = 0, 높을경우 정수로 변환 
 		int result = (int)diffDays;
-		System.out.println("최종결과 : "+result);
+//		System.out.println("최종결과 : "+result);
 		
+		//결과값 리턴
 		return result;
 	}
 

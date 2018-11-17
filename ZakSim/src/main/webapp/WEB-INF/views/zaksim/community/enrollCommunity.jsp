@@ -18,13 +18,15 @@ ${commentList }
 		
 			<input type="hidden" id ="idxx"value="${groupInfo.idx }">
 
-			<div class="col-sm-11" style="margin-top: 50px; margin-right: 50px;" id="btnDiv">
+			<div class="col-sm-11 clearfix" style="margin-top: 50px; margin-right: 50px;" id="btnDiv">
 				<strong style="font-size: 150%">${groupInfo.title }</strong>
-				<c:if test="${groupInfo.member_idx eq sessionScope.login_idx }">
-				   <button type="button" class="btn btn-outline-info"
-				      style="float: right; color: red; border-color: red; margin-left: 30px;"
-				      data-toggle="modal" data-target="#updateCommunityModal">수정하기</button>
-				</c:if>
+				<div style="float:right;">
+					<c:if test="${groupInfo.member_idx eq sessionScope.login_idx }">
+						<button type="button" class="btn btn-outline-danger" style="margin-left: 30px;" data-toggle="modal" data-target="#updateCommunityModal">수정하기</button>
+						<button type="button" class="btn btn-link" id="withdraw"><small style="vertical-align: -webkit-baseline-middle;color:gray;">&gt;탈퇴하기</small></button>
+					</c:if>
+				
+				</div>
 				<c:if test="${ null ne sessionScope.login_idx}">
 					<c:if test="${groupInfo.member_idx ne sessionScope.login_idx }">
 						<button type="button" class="btn btn-outline-info" style="float: right; color: red; border-color: red; margin-left: 30px; margin-right: 30px;" data-toggle="modal" data-target="#updateCommunityModal">
@@ -41,7 +43,7 @@ ${commentList }
 							좋아요 &nbsp; ${groupLike.likeNum }
 						</button>
 					</c:if>					   
-				</c:if>
+				</c:if>				
 				<div style="margin-top: 100px;">
 
 					<div style="margin-left: 50px; margin-right: 50px;">
@@ -392,7 +394,14 @@ ${commentList }
 
 <script type="text/javascript">
 $(document).ready(function() {
-   
+	$("button#withdraw").on('click', function(){
+		if(confirm("정말로 커뮤티티를 탈퇴 하시겠습니까?")){
+			var $withdraw = $("<form>").attr("id","withdrawForm").attr("action","/zaksim/community/outCommunity").attr("method", "post");
+			$withdraw.append("<input type='text' name='group_idx' value='"+${param.idx}+"'/>");
+			$("body").append($withdraw);
+			$('#withdrawForm').submit();
+		}
+	}); 
 //    $("#enrollBoardBtn").click(function() {
 //       var radioVal = $('input[name="certification"]:checked').val();
 //       var file = $("#filee").val();

@@ -54,5 +54,8 @@
 		SELECT COUNT(*) FROM groupMember WHERE idx =${value}
 	</select>
 
-
+	<delete id="withdrawMember" parameterType="zaksim.dto.GroupMember">
+		DELETE FROM groupMember 
+		WHERE group_idx=#{group_idx} AND member_idx=#{member_idx}
+	</delete>
 </mapper>
