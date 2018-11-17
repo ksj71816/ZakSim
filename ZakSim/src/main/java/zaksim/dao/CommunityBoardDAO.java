@@ -9,9 +9,11 @@ public interface CommunityBoardDAO {
 	// 게시글 불러오기
 	public List<Board> informationBoard(int group_idx);
 	
+	// 일반 게시글 작성
+	public void insertNormalBoard(Board board);
 	
-	// 게시글 작성
-	public void insertBoard(Board board);
+	// 인증 게시글 작성
+	public void insertCertificationBoard(Board board);
 	
 	// 게시글 수정
 	public void updateBoard(Board board);

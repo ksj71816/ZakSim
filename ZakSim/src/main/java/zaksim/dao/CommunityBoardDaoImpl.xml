@@ -14,6 +14,7 @@
 		<result column="g_title" property="title" />
 		<result column="g_content" property="content" />
 		<result column="g_image" property="image" />
+		<result column="g_storedName" property="storedName" />
 		<result column="g_max" property="max" />
 		<result column="g_open_date" property="open_date" />
 		<result column="g_secret" property="secret" />
@@ -28,6 +29,7 @@
 		<result column="title" property="title" />
 		<result column="content" property="content" />
 		<result column="image" property="image" />
+		<result column="storedName" property="storedName" />
 		<result column="open" property="open" />
 		<result column="certification" property="certification" />
 		<result column="written_date" property="written_date" />
@@ -43,6 +45,10 @@
   	<result property="nick" column="m_nick"/>
   	<collection property="communityGroup" resultMap="CommunityGroup" />
   </resultMap>
+  
+  
+  
+  
   
   <select id="informationBoard" resultMap="Board" parameterType="int">
 	SELECT b.*, z.nick m_nick, c.commentNum, l.likeNum
@@ -74,12 +80,17 @@
 <!--   	// 게시글 작성 -->
 <!-- 	public void insertBoard(Board board); -->
 
-<insert id="insertBoard" parameterType="zaksim.dto.Board">
-	INSERT INTO Board (idx, group_idx, writer_idx, title, content, image, open, certification, storedName)
-		VALUES (Board_SEQ.nextval, #{group_idx}, #{writer_idx}, 'none', #{content}, #{image}, 1, #{certification}, #{storedName} )
-		<selectKey  keyProperty="idx" resultType="int" order="AFTER">
-		SELECT Board_SEQ.currval form dual
-		</selectKey>
+<insert id="insertCertificationBoard" parameterType="zaksim.dto.Board">
+	INSERT INTO Board (idx, group_idx, writer_idx, title, content, image, storedName, open, certification)
+		VALUES (Board_SEQ.nextval, #{group_idx}, #{writer_idx}, 'none', #{content}, #{image}, #{storedName}, 1, #{certification})
+<!-- 		<selectKey  keyProperty="idx" resultType="int" order="AFTER"> -->
+<!-- 		SELECT Board_SEQ.currval form dual -->
+<!-- 		</selectKey> -->
+</insert>
+
+<insert id="insertNormalBoard" parameterType="zaksim.dto.Board">
+	INSERT INTO Board (idx, group_idx, writer_idx, title, content, open, certification)
+		VALUES (Board_SEQ.nextval, #{group_idx}, #{writer_idx}, 'none', #{content}, 1, #{certification})
 </insert>
 
 
@@ -94,5 +105,10 @@
 <!--    		on q.b_writer_idx = p.m_idx -->
 <!-- </select> -->
   
+<!--   <update id="updateBoard" parameterType="zaksim.dto.Board"> -->
+<!--   	UPDATE Board -->
+<!--   	SET storedName=#{storedName} -->
+<!--   	WHERE idx -->
+<!--   </update> -->
   
   </mapper>

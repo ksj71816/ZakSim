@@ -30,25 +30,21 @@ public class CommmunityBoardController {
 	
 	// 게시물 등록 POST
 	@RequestMapping(value="/enrollBoard", method=RequestMethod.POST)
-	public Map<String, Integer> writeBoard(Board board, MultipartFile imgFile, HttpSession session) {
+	public String writeBoard(Board board, MultipartFile imgFile, HttpSession session) {
 		
+		System.out.println("------------------------------");
+		System.out.println(imgFile);
 		
 		int login_idx = (Integer)session.getAttribute("login_idx");
-		Map<String, Integer> map = new HashMap<>();
 		
 		board.setWriter_idx(login_idx);
+		System.out.println(board);
 		
 		//1. 보드 DB에 등록 
-		//2 보드정보 가져옴
-		Board bd = communityBoardService.insertBoard(board);
-				
 		//3 파일 업로드 
-		communityBoardService.uploadFile(bd, imgFile);
+		communityBoardService.insertBoard(board, imgFile);
 
-		// 결과 map에 담아 리턴
-		map.put("result", 1);
-		
-		return map;
+		return "zaksim/community/enrollCommunity?idx=" + board.getGroup_idx();
 	}
 	
 	// 게시글 삭제 POST

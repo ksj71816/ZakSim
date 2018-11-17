@@ -41,7 +41,7 @@
          <!--이미지 1개-->
           <div class="col-md-3 col-lg-3 col-sm-3 h-25">
             <div class="hovereffect text-center my-1" > 
-              <img class="img-responsive" src="${citation.image}" id="image${i.count}">
+              <img class="img-responsive" src="${citation.storedName}" id="image${i.count}">
               <div class="overlay">
                 <h2>${citation.title}</h2>
                 

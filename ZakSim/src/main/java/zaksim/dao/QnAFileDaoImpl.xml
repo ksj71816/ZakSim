@@ -9,6 +9,8 @@
  	<result property="writtenDate" column="written_date" />
  </resultMap>
  
+ 
+ 
  <!-- Q&A 파일 리스트 조회 dao -->
  <select id="qnaFileList" resultMap="QnAFile" parameterType="int">
  	SELECT * FROM QnAFile

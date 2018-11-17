@@ -7,17 +7,6 @@
 <mapper namespace="zaksim.dao.CommunityListDAO">
 
 
-
-	<select id="categoryList"
-		resultType="zaksim.dto.CommunityCategory">
-		select * from CommunityCategory order by idx asc
-	</select>
-
-	<!-- <select id="newGroupList" resultType="zaksim.dto.CommunityGroup"> -->
-	<!-- select * from -->
-	<!-- CommunityGroup order by idx desc -->
-	<!-- </select> -->
-
 	<resultMap type="zaksim.dto.CommunityGroup"
 		id="CommunityGroup">
 		<result column="g_idx" property="idx" />
@@ -26,13 +15,12 @@
 		<result column="title" property="title" />
 		<result column="content" property="content" />
 		<result column="image" property="image" />
+		<result column="storedName" property="storedName" />
 		<result column="max" property="max" />
 		<result column="open_date" property="open_date" />
 		<result column="secret" property="secret" />
 		<result column="password" property="password" />
 		<result column="g_like_num" property="likeNum" />
-		<collection property="communityCategory"
-			resultMap="CommunityCategory" />
 
 	</resultMap>
 
@@ -51,22 +39,6 @@
 			resultMap="CommunityGroup" />
 	</resultMap>
 	
-<!-- 	idx, member_type, id, password, nick, name, email, phone, join_date, status, suspension_date -->
-<!-- 		<resultMap type="zaksim.dto.ZakSimMember" id="ZaksimMember"> -->
-<!-- 		<result column="idx" property="idx" /> -->
-<!-- 		<result column="memberType" property="member_type" /> -->
-<!-- 		<result column="id" property="id" /> -->
-<!-- 		<result column="password" property="password" /> -->
-<!-- 		<result column="nick" property="nick" /> -->
-<!-- 		<result column="name" property="name" /> -->
-<!-- 		<result column="email" property="email" /> -->
-<!-- 		<result column="phone" property="phone" /> -->
-<!-- 		<result column="joinDate" property="join_date" /> -->
-<!-- 		<result column="status" property="status" /> -->
-<!-- 		<result column="suspensionDate" property="suspension_date" /> -->
-<!-- 				<collection property="communityGroup" -->
-<!-- 			resultMap="CommunityGroup" /> -->
-<!-- 	</resultMap> -->
 
 	<resultMap type="zaksim.dto.CommunityCategory"
 		id="CommunityCategory">
@@ -74,9 +46,17 @@
 		<result column="category" property="category" />
 		<result column="image" property="image" />
 	</resultMap>
+	
+	
+	
+
+	<select id="categoryList" resultMap="CommunityCategory">
+		select * from CommunityCategory order by idx asc
+	</select>
+	
 
 	<select id="joinedGroupList" resultMap="CommunityGroup" parameterType="int">
-      select c.idx g_idx, c.title, c.content, c.image, c.max, c.open_date, c.secret, c.password, l.like_num g_like_num
+      select c.idx g_idx, c.title, c.content, c.image, c.storedName, c.max, c.open_date, c.secret, c.password, l.like_num g_like_num
       from (
 		select distinct group_idx from groupMember where member_idx=#{idx}) gm
 		left join communityGroup c
@@ -142,17 +122,21 @@
 			FROM (
 				SELECT
 				*
-				FROM
-				(SELECT g.idx
-				g_idx, g.title ,g.content , g.image ,g.max , g.open_date , g.secret
-				,
-				g.password,g.member_idx
-				FROM CommunityGroup g order by g_idx asc) gk
-				left join (select count(*) as
-				g_like_num, group_idx as l_group_idx from
-				grouplike
-				GROUP BY group_idx
-				order by g_like_num desc nulls last) l on l.l_group_idx=gk.g_idx
+				FROM (
+					SELECT g.idx
+					g_idx, g.title ,g.content , g.image, g.storedName ,g.max , g.open_date , g.secret
+					, g.password, g.member_idx
+					FROM CommunityGroup 
+					g order by g_idx asc
+				) gk
+				left join (
+					select count(*) as
+					g_like_num, group_idx as l_group_idx 
+					from
+					grouplike
+					GROUP BY group_idx
+					order by g_like_num desc nulls last
+				) l on l.l_group_idx=gk.g_idx
 			) gl
 	    ) rgl
 	    WHERE rgl.rnum <![CDATA[ < ]]>=3
@@ -170,6 +154,7 @@
 			          g.title,
 			          g.content,
 			          g.image,
+			          g.storedName,
 			       	  g.max,
 			          g.open_date,
 			          g.secret,
@@ -221,19 +206,19 @@
 	
 
 	
-		<select id="info" resultMap="GroupLike">
+		<select id="info" resultMap="CommunityGroup">
 		SELECT
 		*
 		FROM
-		(SELECT g.idx g_idx, g.title ,g.content , g.image ,g.max ,
-		g.open_date , g.secret
-		, g.password, c.idx,g.member_idx
-		FROM CommunityGroup g, CommunityCategory c
-		WHERE g.category_idx = c.idx and g.idx=#{idx }) gk
+			(SELECT g.idx g_idx, g.title ,g.content , g.image , g.storedName, g.max ,
+			g.open_date , g.secret
+			, g.password, c.idx,g.member_idx
+			FROM CommunityGroup g, CommunityCategory c
+			WHERE g.category_idx = c.idx and g.idx=#{idx }) gk
 		left join
-		(select count(*) as like_num, group_idx as l_group_idx from
-		grouplike
-		GROUP BY group_idx order by like_num desc, null desc) l on
+			(select count(*) as g_like_num, group_idx as l_group_idx from
+			grouplike
+			GROUP BY group_idx order by g_like_num desc, null desc) l on
 		l.l_group_idx=gk.g_idx
 
 	</select>
@@ -265,7 +250,7 @@
 		*
 		FROM
 		(SELECT g.idx
-		g_idx, g.title ,g.content , g.image ,g.max , g.open_date , g.secret
+		g_idx, g.title ,g.content , g.image ,g.storedName, g.max , g.open_date , g.secret
 		,
 		g.password,c.category
 		FROM CommunityGroup g,
@@ -306,7 +291,7 @@
 				*
 				FROM
 				(SELECT g.idx
-				g_idx, g.title ,g.content , g.image ,g.max , g.open_date , g.secret
+				g_idx, g.title ,g.content , g.image ,g.storedName, g.max , g.open_date , g.secret
 				,	
 				g.password,g.member_idx
 				FROM CommunityGroup g order by g_idx asc) gk
@@ -333,6 +318,7 @@
 			          g.title,
 			          g.content,
 			          g.image,
+			          g.storedName,
 			       	  g.max,
 			          g.open_date,
 			          g.secret,
@@ -364,7 +350,7 @@
 		*
 		FROM
 		(SELECT g.idx
-		g_idx, g.title ,g.content , g.image ,g.max , g.open_date , g.secret
+		g_idx, g.title ,g.content , g.image ,g.storedName, g.max , g.open_date , g.secret
 		,
 		g.password,c.category
 		FROM CommunityGroup g,

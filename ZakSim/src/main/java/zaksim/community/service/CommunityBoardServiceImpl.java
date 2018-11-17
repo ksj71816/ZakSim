@@ -25,13 +25,6 @@ public class CommunityBoardServiceImpl implements CommunityBoardService{
 		return communityBoardDAO.informationBoard(group_idx);
 	}
 	
-	// 게시글 작성
-	public Board insertBoard(Board board) {
-		
-		communityBoardDAO.insertBoard(board);
-		
-		return board;
-	}
 	
 	// 게시글 수정
 	public void updateBoard(Board board) {
@@ -49,29 +42,34 @@ public class CommunityBoardServiceImpl implements CommunityBoardService{
 	 * 파일 업로드 (글구 db에 저장된 값 업데이트)
 	 */
 	@Override
-	public void uploadFile(Board board, MultipartFile imgFile) {
-		String realpath = context.getRealPath("upload");
+	public void insertBoard(Board board, MultipartFile imgFile) {
 		
-		String uid = UUID.randomUUID().toString().split("-")[4];
-		
-		System.out.println(uid);
-		
-		String stored = imgFile.getOriginalFilename()+"_"+uid;
-		
-		File dest = new File(realpath, stored);
-		
-		try {
-			imgFile.transferTo(dest);
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(imgFile == null) {
+			communityBoardDAO.insertNormalBoard(board);
+		} else {
+			String realpath = context.getRealPath("upload");
+			
+			String uid = UUID.randomUUID().toString().split("-")[4];
+			
+			System.out.println(uid);
+			
+			String stored = imgFile.getOriginalFilename()+"_"+uid;
+			
+			File dest = new File(realpath, stored);
+			
+			try {
+				imgFile.transferTo(dest);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			board.setImage(imgFile.getOriginalFilename());
+			board.setStoredName(stored);			
+
+			communityBoardDAO.insertCertificationBoard(board);
 		}
-		
-		board.setImage(imgFile.getOriginalFilename());
-		board.setStoredName(stored);
-		
-		communityBoardDAO.updateBoard(board);
 		
 	}
 	

@@ -89,7 +89,7 @@
 
 						<div class="card bg-dark text-white">
 							<div class="hovereffect">
-								<img class="card-img" src="${category.communityGroup.image }"
+								<img class="card-img" src="${category.communityGroup.storedName }"
 									alt="Card image">
 								<div class="card-img-overlay">
 									<h4 class="card-title">${category.communityGroup.title }</h4>

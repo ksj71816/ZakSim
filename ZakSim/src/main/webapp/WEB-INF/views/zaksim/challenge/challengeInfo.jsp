@@ -11,47 +11,38 @@
 
 <!-- 캘린더 스타일 추가 -->
 <link rel="stylesheet" href="/css/challenge/calendar.css">
-  
+
 
   <!--바디-->
    
-   <div class=" pt-5" style="background-image: url(/resources/image/main/back.webp); 
-   background-color: rgba(240, 200, 240, 0.7);">
+   <div class=" pt-5">
     <div class="container">
-      <div class="row  py-4">
-        <div class="col-md-4" >
-          <img class="img-fluid d-block my-2 rounded-circle float-right" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" style="	height: 140px; width: 140px;	border-right-width: 3px;	border-top-width: 3px;	border-bottom-width: 3px;    border-left-width: 3px;	border-style: solid;	border-color: white;">
-        </div>
-        <div class="col-md-6 row" >
-          <div class="col-md-12 mt-2 mx-3 text-center">
-            <h4>${sessionScope.login_nick }의 <b class="text-danger">도전 24일차</b></h4>
+    
+    <div class="row mt-5">
+	    	<h2 class="ml-3 pl-2 pt-1 title dohyeon">나의 도전</h2>
+	    </div>
+    
+    <div class="row  py-4">
+    	<div class="col-md-2" ></div> 
+        <div class="col-md-8 row" >
+          <div class="col-md-12 mt-2 mx-3 text-center dohyeon">
+            <h4>${sessionScope.login_nick }의
+	            <b class="text-danger">  
+<%-- 		            <fmt:parseDate value="${info.startDate }" var="strPlanDate" pattern="yyyy-MM-dd"/> --%>
+<%-- 		            <fmt:formatDate value="strPlanDate" pattern="yyyy-MM-dd"/> --%>
+<%-- 					<fmt:parseDate value="${info.endDate }" var="endPlanDate" pattern="yyyy-MM-dd"/> --%>
+<%-- 					<fmt:formatDate value="endPlanDate" pattern="yyyy-MM-dd"/> --%>
+<%-- 					<fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="sDate" scope="request"/> --%>
+<%-- 					<fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="eDate" scope="request"/> --%>
+					도전 ${eDate - sDate }일차
+				</b>
+			</h4>
           </div>
-       <div class=" mx-3 col-md-12" style=" height:70px;"> 
-		
-		<div class="m-0">
-		<h6 class="mt-1"><b>도전 인증률</b></h6>
-		<div class="progress mb-2" style="height: 25px; border-right-width: 1px;	border-top-width: 1px;	border-bottom-width: 1px;    border-left-width: 1px;	border-style:solid;	border-color: white;"> 
-		    <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:${100*rate.boardNum/rate.dateNum}%">
-		       ${100*rate.boardNum/rate.dateNum}%
-		    </div>
-		</div>
-		</div>
-		
-	</div>
-        </div>
-        <div class="col-md-2" >
-        </div>     
-       </div>
+         </div>
+        <div class="col-md-2" ></div>   
     </div>
-  </div>
-  
-  
-  
-  <div class="py-1" style="background-image: url(/resources/image/main/back.webp); 
-   background-color: rgba(240, 200, 240, 0.7);">
-    <div class="container " >
-      <hr class="my-5">
-      <div class="row  py-3">
+    
+    <div class="row  py-3 dohyeon">
         <div class="col-md-2">
         </div>
         <div class="col-md-8 col-lg-8 rounded  text-center" style="background-color: blanchedalmond;    border-right-width: 5px;	border-top-width: 5px;	border-bottom-width: 5px;    border-left-width: 5px;	border-style: solid;	border-color: white;">
@@ -75,13 +66,36 @@
   
         </div>
       </div>
-      <hr class="my-5">
+      
+      
+      <div class="row  py-4">
+      <div class="col-md-2" ></div> 
+        <div class="col-md-8 row" >
+          
+      	 <div class=" mx-3 col-md-12" style=" height:70px;"> 
+		
+			<div class="m-0">
+			<h6 class="mt-1"><b>도전 인증률</b></h6>
+			<div class="progress mb-2" style="height: 25px; border-right-width: 1px;	border-top-width: 1px;	border-bottom-width: 1px;    border-left-width: 1px;	border-style:solid;	border-color: white;"> 
+			    <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:${100*rate.boardNum/rate.dateNum}%">
+			       ${100*rate.boardNum/rate.dateNum}%
+			    </div>
+			</div>
+			</div>
+		
+			</div>
+			
+   	     </div>
+        <div class="col-md-2" ></div>     
+       </div>
+       
     </div>
   </div>
   
   
-  <div class="py-3 pb-5" style="background-image: url(/resources/image/main/back.webp); 
-   background-color: rgba(240, 200, 240, 0.7);">
+
+  
+  <div class="py-3 pb-5 mt-5">
     <div class="container mb-5 ">
       <div class="row mb-5">
       
@@ -187,7 +201,6 @@
 
 <!-- alert 스크립트-->
 <script type="text/javascript">
-
 
 function doneAlert(){
 	

@@ -170,129 +170,99 @@
     </div>
     <div class="container">
      
-     <!--이미지 반복문 1행-->
-      <div class="row mt-4">
-       
-       
-        
-        
-        <!--이미지 1개-->
-        <div class="col-md-3 col-lg-3 col-sm-3">
-          <div class="hovereffect text-center my-1" style="">
-            <img class="img-responsive" src="https://picsum.photos/1200/350/?image=123" >
-            <div class="overlay">
-              <h2>게시물 이름</h2>
-              <a class="info" href="#">게시물 이동</a>
+          <!-- 인기모임 -->
+         <div class="text-center">
+            
+            <hr
+               style="margin-top: 40px; border-color: gray; margin-bottom: 40px;">
+            <div class="form-inline" style="margin-bottom: 50px;">
+               <c:forEach var="popularGroupList" items="${popularGroupList }">
+                  <div class="card" style="width: 20rem; margin-right: 15px;">
+                  <input type="hidden" class="idxx" value="${popularGroupList.idx }">
+                  <input type="hidden" class= "memberIdxx" value="${popularGroupList.member_idx }">
+                     <div class="hovereffect">
+                        <img class="card-img-top"
+                           src="${popularGroupList.storedName }"
+                           alt="Card image cap">
+                        <div class="card-body">
+                           <span>
+                              <h3 class="card-title">${popularGroupList.title }
+                           
+                              </h3>
+                           </span> <span class="form-inline"> <span style="color: red;">
+                                 <h4 class="text-center">♥ &nbsp;${popularGroupList.likeNum }</h4>
+                           </span>
+                           </span>
+                           <p class="card-text">
+                              <c:if test="${empty keywordList }">키워드 : 
+                              </c:if>
+                              <c:forEach items="${keywordList }" var="keyword">
+                                 <c:if
+                                    test="${popularGroupList.idx eq keyword.group_idx}">
+                                    #${keyword.keyword }
+                                 </c:if>
+                              </c:forEach>
+                           </p>
+                        </div>
+               <div class="overlay">
+                           <br> <br> 
+                           <a class="info">
+                              <% boolean groupFlag =  false; %>
+                              <c:forEach var="groupMemberExist" items="${groupMemberExist }">
+
+                                    <c:if test="${groupMemberExist.group_idx eq popularGroupList.idx }">
+                                       <% groupFlag = true; %>
+                                    </c:if>
+                              </c:forEach>   
+                              
+                              <!-- 로그인 했을 때 -->
+                              <c:if test="${sessionScope.login }">
+                                 
+                              <!-- 가입했을 때 -->
+                                 <c:if test="<%=groupFlag  %>">
+                                    <button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${popularGroupList.idx }, 0)">상세보기</button>
+                                 </c:if>
+                                 
+                                 <!-- 가입 안 했을 때 -->
+                                 <c:if test="<%=!groupFlag  %>">
+                                 
+                                 <!-- 비공개일 떄 -->
+                                    <c:if test="${popularGroupList.secret == 1 }">
+                                    <button type="button"  class="btn btn-primary secretJoin">가입하기</button>
+                                    <br>
+                                    <br>
+                                 </c:if>
+                                 
+                                 <!-- 공개일 때 -->
+                                   <c:if test="${popularGroupList.secret == 0 }"> 
+                                    <button type="button" class="btn btn-primary join" id ="noPassJoin">가입하기</button> 
+                                    <br> 
+                                    <br> 
+                                  </c:if>    
+                                    
+                                    <button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${popularGroupList.idx }, ${popularGroupList.secret })">상세보기</button>
+                                 
+                              
+                                 </c:if>
+                              
+                              </c:if>
+                              
+                              <!-- 로그인 안했을 때 -->
+                              <c:if test="${!sessionScope.login }">
+                                     <button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${popularGroupList.idx }, ${popularGroupList.secret })">상세보기</button>
+                              </c:if>
+                              
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+               </c:forEach>
             </div>
-          </div>
-        </div>
-        <!--이미지 끝-->
-        
-       <!--이미지 1개-->
-        <div class="col-md-3 col-lg-3 col-sm-3">
-          <div class="hovereffect text-center my-1" style="">
-            <img class="img-responsive" src="https://picsum.photos/1200/350/?image=124" >
-            <div class="overlay">
-              <h2>Hover effect 1v2</h2>
-              <a class="info" href="#">link here</a>
-              
-             
-            </div>
-          </div>
-        </div>
-        <!--이미지 끝-->
-        
-        <!--이미지 1개-->
-        <div class="col-md-3 col-lg-3 col-sm-3">
-          <div class="hovereffect text-center my-1" style="">
-            <img class="img-responsive" src="https://picsum.photos/1200/350/?image=125" >
-            <div class="overlay">
-              <h2>Hover effect 1v2</h2>
-              <a class="info" href="#">link here</a>
-            </div>
-          </div>
-        </div>
-        <!--이미지 끝-->
-        
-        <!--이미지 1개-->
-        <div class="col-md-3 col-lg-3 col-sm-3">
-          <div class="hovereffect text-center my-1" style="">
-            <img class="img-responsive" src="https://picsum.photos/1200/350/?image=126" >
-            <div class="overlay">
-              <h2>Hover effect 1v2</h2>
-              <a class="info" href="#">link here</a>
-            </div>
-          </div>
-        </div>
-        <!--이미지 끝-->
-        
-   
-      
-      </div><!--1행 끝-->
-      
-     
-     
-       <!--이미지 반복문 1행-->
-      <div class="row mt-4">
-       
-       
-        
-        
-        <!--이미지 1개-->
-        <div class="col-md-3 col-lg-3 col-sm-3">
-          <div class="hovereffect text-center my-1" style="">
-            <img class="img-responsive" src="https://picsum.photos/1200/350/?image=127" >
-            <div class="overlay">
-              <h2>Hover effect 1v2</h2>
-              <a class="info" href="#">link here</a>
-            </div>
-          </div>
-        </div>
-        <!--이미지 끝-->
-        
-       <!--이미지 1개-->
-        <div class="col-md-3 col-lg-3 col-sm-3">
-          <div class="hovereffect text-center my-1" style="">
-            <img class="img-responsive" src="https://picsum.photos/1200/350/?image=128" >
-            <div class="overlay">
-              <h2>Hover effect 1v2</h2>
-              <a class="info" href="#">link here</a>
-            </div>
-          </div>
-        </div>
-        <!--이미지 끝-->
-        
-        <!--이미지 1개-->
-        <div class="col-md-3 col-lg-3 col-sm-3">
-          <div class="hovereffect text-center my-1" style="">
-            <img class="img-responsive" src="https://picsum.photos/1200/350/?image=129" >
-            <div class="overlay">
-              <h2>Hover effect 1v2</h2>
-              <a class="info" href="#">link here</a>
-            </div>
-          </div>
-        </div>
-        <!--이미지 끝-->
-        
-        <!--이미지 1개-->
-        <div class="col-md-3 col-lg-3 col-sm-3">
-          <div class="hovereffect text-center my-1" style="">
-            <img class="img-responsive" src="https://picsum.photos/1200/350/?image=130" >
-            <div class="overlay">
-              <h2>Hover effect 1v2</h2>
-              <a class="info" href="#">link here</a>
-            </div>
-          </div>
-        </div>
-        <!--이미지 끝-->
-        
-   
-      
-      </div><!--1행 끝-->
-      
-      
-    </div>
-  </div><!--인기 그룹 세션 끝-->
+            <hr style="border-color: gray; margin-bottom: 100px;">
+         </div>
   
   
  

@@ -122,7 +122,7 @@
 
 						<div class="card bg-dark text-white">
 							<div class="hovereffect">
-								<img class="card-img" src="${searchGroup.communityGroup.image }"
+								<img class="card-img" src="${searchGroup.communityGroup.storedName }"
 									alt="Card image">
 								<div class="card-img-overlay">
 									<h4 class="card-title">${searchGroup.communityGroup.title }</h4>
@@ -168,7 +168,7 @@
 						<div class="card bg-dark text-white">
 							<div class="hovereffect">
 								<img class="card-img"
-									src="${searchCategoryGroup.communityGroup.image }"
+									src="${searchCategoryGroup.communityGroup.storedName }"
 									alt="Card image">
 								<div class="card-img-overlay">
 									<h4 class="card-title">${searchCategoryGroup.communityGroup.title }</h4>
@@ -213,7 +213,7 @@
 						<div class="card bg-dark text-white">
 							<div class="hovereffect">
 								<img class="card-img"
-									src="${searchKeywordGroup.communityGroup.image }"
+									src="${searchKeywordGroup.communityGroup.storedName }"
 									alt="Card image">
 								<div class="card-img-overlay">
 									<h4 class="card-title">${searchKeywordGroup.communityGroup.title }</h4>

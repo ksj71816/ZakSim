@@ -228,15 +228,8 @@ public class Board {
 				+ ", open=" + open + ", certification=" + certification + ", written_date=" + written_date + ", hit="
 				+ hit + ", comment=" + comment + ", boardLike=" + boardLike + ", report=" + report + ", communityGroup="
 				+ communityGroup + ", zakSimMember=" + zakSimMember + ", commentNum=" + commentNum + ", likeNum="
-				+ likeNum + ", storedName=" + storedName + ", getRnum()=" + getRnum() + ", getIdx()=" + getIdx()
-				+ ", getChallenge_idx()=" + getChallenge_idx() + ", getGroup_idx()=" + getGroup_idx()
-				+ ", getWriter_idx()=" + getWriter_idx() + ", getTitle()=" + getTitle() + ", getContent()="
-				+ getContent() + ", getImage()=" + getImage() + ", getOpen()=" + getOpen() + ", getCertification()="
-				+ getCertification() + ", getWritten_date()=" + getWritten_date() + ", getHit()=" + getHit()
-				+ ", getComment()=" + getComment() + ", getBoardLike()=" + getBoardLike() + ", getReport()="
-				+ getReport() + ", getCommunityGroup()=" + getCommunityGroup() + ", getZakSimMember()="
-				+ getZakSimMember() + ", getCommentNum()=" + getCommentNum() + ", getLikeNum()=" + getLikeNum()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
-				+ "]";
+				+ likeNum + ", storedName=" + storedName + "]";
 	}
+
+
 }

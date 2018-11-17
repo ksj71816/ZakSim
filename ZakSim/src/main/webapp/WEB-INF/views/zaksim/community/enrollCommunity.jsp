@@ -18,12 +18,12 @@
 
       <c:forEach var="groupInfo" items="${groupInfo }">
       
-      <input type="hidden" id ="idxx"value="${groupInfo.communityGroup.idx }">
+      <input type="hidden" id ="idxx"value="${groupInfo.idx }">
 
          <div class="col-sm-11" style="margin-top: 50px; margin-right: 50px;" id="btnDiv">
-            <strong style="font-size: 150%">${groupInfo.communityGroup.title }</strong>
+            <strong style="font-size: 150%">${groupInfo.title }</strong>
             <c:if
-               test="${groupInfo.communityGroup.member_idx eq sessionScope.login_idx }">
+               test="${groupInfo.member_idx eq sessionScope.login_idx }">
                <button type="button" class="btn btn-outline-info"
                   style="float: right; color: red; border-color: red; margin-left: 30px;"
                   data-toggle="modal" data-target="#updateCommunityModal">수정하기</button>
@@ -33,7 +33,7 @@
 
             <c:if test="${ null ne sessionScope.login_idx}">
             
-               <c:if test="${groupInfo.communityGroup.member_idx ne sessionScope.login_idx }">
+               <c:if test="${groupInfo.member_idx ne sessionScope.login_idx }">
                   <button type="button" class="btn btn-outline-info"
                      style="float: right; color: red; border-color: red; margin-left: 30px; margin-right: 30px;" 
                      data-toggle="modal" data-target="#updateCommunityModal">가입하기</button>
@@ -56,7 +56,7 @@
             <div style="margin-top: 100px;">
 
                <div style="margin-left: 50px; margin-right: 50px;">
-                  <img src="${groupInfo.communityGroup.image }" id="photo">
+                  <img src="${groupInfo.storedName }" id="photo">
                </div>
 
                <div style="margin-top: 40px; margin-left: 190px; margin-right: 190px;">
@@ -74,16 +74,16 @@
                   
                   <div
                      style="margin-left: 50px; margin-right: 50px; margin-bottom: 50px; display: none;"
-                     id="communityIntroduceComment">${groupInfo.communityGroup.content }</div>
+                     id="communityIntroduceComment">${groupInfo.content }</div>
 
                   <div
                      style="margin-left: 50px; margin-right: 50px; margin-bottom: 50px; display: none;"
                      id="communityJoinPeopleComment">
                      <span style="font-size: 150%;">n명 </span> <span
                         style="font-size: 150%;">/ 최대
-                        ${groupInfo.communityGroup.max }명</span> &nbsp;&nbsp;&nbsp;
+                        ${groupInfo.max }명</span> &nbsp;&nbsp;&nbsp;
                      <button type="button" class="btn btn-outline-secondary"
-                        onclick="joinMemberView(${groupInfo.communityGroup.idx })">참여자
+                        onclick="joinMemberView(${groupInfo.idx })">참여자
                         보기</button>
                   </div>
 
@@ -93,7 +93,7 @@
                      <span style="font-size: 150%;"> <c:forEach
                            var="keywordList" items="${keywordList }">
                            <c:if
-                              test="${groupInfo.communityGroup.idx eq keywordList.group_idx}">
+                              test="${groupInfo.idx eq keywordList.group_idx}">
                                        #${keywordList.keyword } 
                                  </c:if>
                         </c:forEach></span>
@@ -115,8 +115,8 @@
                  </div>
                  </div>
                </div>
-			</c:forEach>
-		</div>
+         </c:forEach>
+      </div>
 
 
 
@@ -139,6 +139,7 @@
                         <form id="boardForm" action="/zaksim/community/enrollBoard" method="post" enctype="multipart/form-data">
                      <div>
                            <div class="form-group">
+                           <input type="hidden" class="idxxx" name ="group_idx">
                               <label for="recipient-name" class="form-control-label"><strong>
                                     게시글을 작성하세요</strong></label> <br>
                               <div class="form-inline"
@@ -156,7 +157,7 @@
                                  </div>
                                  <br> <br>
                                  <div>
-                                    <br> <input type="file" name="imgFile" id="filee"
+                                    <br> <input type="file" name="file" id="filee"
                                        style="margin-left: 200px;" />
                                  </div>
                               </div>
@@ -179,7 +180,7 @@
 
 
 <!-- 게시글 -->
-			<c:forEach items="${boardList}" var="board">
+         <c:forEach items="${boardList}" var="board">
                <div class="card mb-5" style="margin-left: 150px; margin-right: 150px;">
                   <div class="ml-4 mr-4">
                      <h4 class="card-title mt-4" style="font-family: Dohyeon;">${board.zakSimMember.nick}</h4>
@@ -191,9 +192,9 @@
                   </div>
                   
                   <!-- 인증 사진 -->
-                  <img class="card-img-bottom" src="${board.image}" alt="인증">
+                  <img class="card-img-bottom" src="${board.storedName}" alt="인증">
                   
- 					<div class="row">
+                <div class="row">
                      <div class="col"
                         style="background-color: lightgray; margin-left: 15px; text-align: center;">
 
@@ -247,7 +248,7 @@
                </div>
 
 
-				<!-- 댓글 -->
+            <!-- 댓글 -->
                <div id="openComment"
                   style="background-color: lightgray; margin-left: 150px; margin-right: 150px; display: none;">
                   <div class="card-body mx-3 ">
@@ -330,57 +331,7 @@
 <!-- footer include -->
 <%@include file="/WEB-INF/views/zaksim/main/footer.jsp"%>
 
-<!-- 게시글 등록 모달 -->
-<div class="modal fade" id="boardWrite" tabindex="-1" role="dialog"
-   aria-labelledby="boardWriteLabel" aria-hidden="true">
-   <div class="modal-dialog" role="document">
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-               <strong>게시판 - 글쓰기</strong>
-            </h5>
-            <button type="button" class="close" data-dismiss="modal"
-               aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
-         <div class="modal-body">
-            <form>
-               <div class="form-group">
-                  <label for="recipient-name" class="form-control-label"><strong>글
-                        종류</strong></label> <br>
-                  <div class="form-inline"
-                     style="margin-left: auto; margin-right: auto;">
-                     <div class="radio"
-                        style="margin-left: 100px; margin-right: 100px;">
-                        <label> <input type="radio" name="optionsRadios"
-                           class="textKind" value="nomalText" checked> 일반 글
-                        </label>
-                     </div>
-                     <div class="radio">
-                        <label> <input type="radio" name="optionsRadios"
-                           class="textKind" value="certificationText"> 인증 글
-                        </label>
-                     </div>
-                     <div>
-                        <input type="file" name="image" />
-                     </div>
-                  </div>
-               </div>
-               <div class="form-group">
-                  <label for="message-text" class="form-control-label"><strong>Content:</strong></label>
-                  <textarea class="form-control" id="board-text2"
-                     onkeydown="boardCommnet(this)" onkeyup="boardCommnet(this)"></textarea>
-               </div>
-            </form>
-         </div>
-         <div class="modal-footer">
-            <button type="button" class="btn btn-danger">등록</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-         </div>
-      </div>
-   </div>
-</div>
+
 
 
 
@@ -472,8 +423,8 @@
                            
                               <div>
                                  <input type="hidden" name="idx"
-                                    value="${groupInfo.communityGroup.idx }" /> <img id="image"
-                                    src="${groupInfo.communityGroup.image }" alt="..."
+                                    value="${groupInfo.idx }" /> <img id="image"
+                                    src="${groupInfo.storedName }" alt="..."
                                     class="img-thumbnail"
                                     style="width: 200px; height: 150px; margin-bottom: 10px;"><br>
 
@@ -481,12 +432,12 @@
                                     style="position: relative; overflow: hidden; padding-right: 17px; margin-left: 40px;">
 
                                     <b>이미지 변경</b> <input type="file" id="imgInp" name="file"
-                                       value="${groupInfo.communityGroup.image }"
+                                       value="${groupInfo.storedName }"
                                        style="align-content: center; margin-left: 40px; position: absolute; font-size: 0px; opacity: 0; right: 0; top: 0; cursor: pointer; height: 36px; width: 100px;">
                                  </div>
                                  
                                  <input type="hidden" name="image"
-                                    value="${groupInfo.communityGroup.image }" />
+                                    value="${groupInfo.storedName }" />
                               </div>
                               
                               
@@ -494,11 +445,11 @@
                                  <span style="font-size: 20px;"><strong>모임명 :
                                  </strong></span> <input class="form-control" type="text"
                                     style="height: 30px;" name="title" maxlength="20"
-                                    id="commName" value="${groupInfo.communityGroup.title }">
+                                    id="commName" value="${groupInfo.title }">
                                  <br> <br> <span style="font-size: 20px;"><strong>최대
                                        모임 인원 : </strong></span> <input class="form-control" type="number"
                                     style="width: 80px; height: 30px;"
-                                    value="${groupInfo.communityGroup.max }" min="1"
+                                    value="${groupInfo.max }" min="1"
                                     id="commMax" max="100" name="max"><strong>명</strong>
                                  <br> <span
                                     style="margin-left: 50px; font-size: 15px; color: gray;">※
@@ -513,16 +464,16 @@
                            <div style="margin-top: 30px;">
                               <span style="margin-left: 50px; margin-right: 102px;"><strong>공개</strong></span>
                               <input type="radio" name="secret" id="screctRadio1" value=0
-                                 <c:if test="${groupInfo.communityGroup.secret==0}">checked="checked"</c:if> />
+                                 <c:if test="${groupInfo.secret==0}">checked="checked"</c:if> />
 
                               <label> 공개</label> <input type="radio"
                                  style="margin-left: 100px;" id="screctRadio2" name="secret"
                                  value=1
-                                 <c:if test="${groupInfo.communityGroup.secret==1}">checked="checked"</c:if> />
+                                 <c:if test="${groupInfo.secret==1}">checked="checked"</c:if> />
                               <label> 비공개</label> <br> <br>
 
                               <!-- 기존 비밀번호가 존재 시 -->
-                              <c:if test="${groupInfo.communityGroup.secret==1}">
+                              <c:if test="${groupInfo.secret==1}">
                                  <div style="margin-left: 30px; margin-right: 30px;">
                                     <div class="screctRadio" style="vertical-align: top;">
                                        <div class="card-body">
@@ -534,7 +485,7 @@
 
                                           <span style="margin-left: 140px; display: none;"
                                              id="passComment"
-                                             onkeypress="isSame(${groupInfo.communityGroup.idx})"></span>
+                                             onkeypress="isSame(${groupInfo.idx})"></span>
                                        </div>
                                     </div>
                                  </div>
@@ -577,7 +528,7 @@
 
 
                                  <c:set var="catego"
-                                    value="${groupInfo.communityCategory.idx}" />
+                                    value="${groupInfo.idx}" />
                                  <option value=1>운동</option>
                                  <option value=2 <c:if test="${catego eq 2}">selected</c:if>>금연</option>
                                  <option value=3 <c:if test="${catego eq 3}">selected</c:if>>다이어트</option>
@@ -599,7 +550,7 @@
                                  <textarea class="form-control" name="content"
                                     id="contentText" onkeydown="boardCommnet(this)"
                                     style="width: 300px; margin-bottom: 20px;"
-                                    onkeyup="boardCommnet(this)" placeholder="내용을 입력하세요">${groupInfo.communityGroup.content}</textarea>
+                                    onkeyup="boardCommnet(this)" placeholder="내용을 입력하세요">${groupInfo.content}</textarea>
 
                               </div>
                            </div>
@@ -607,7 +558,7 @@
                         
                      </div>
                   </div>
-				</div><!-- modal body -->
+            </div><!-- modal body -->
 
                   <div class="modal-footer">
                      <input type="submit" class="btn btn-danger" id="update"
@@ -615,7 +566,7 @@
                      <button type="reset" class="btn btn-secondary"
                         onclick="updateCancel()">취소</button>
                      <button type="button" class="btn btn-success"
-                        onclick="deleteCommnunity(${groupInfo.communityGroup.idx})">삭제</button>
+                        onclick="deleteCommnunity(${groupInfo.idx})">삭제</button>
                   </div>
                   
             </c:forEach>
@@ -666,68 +617,75 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
-	$("#enrollBoardBtn").click(function() {
-		var radioVal = $('input[name="optionsRadios"]:checked').val();
-		var file = $("#filee").val();
-		var boardContent = $("#board-text1").val();
-		
-		console.log('라디오 값 : ' + radioVal);
-		console.log('파일 : '+ file);
-		console.log("게시 글  : "+ boardContent);
-		
-		if(radioVal == 1){
-			if(file == null || file ==''){
-	            swal({
-	                  type: 'error',
-	                  title: 'Oops...',
-	                  text: '사진을 등록하세요.'
-	            });
-	            return false;
-			}
-			else 	if(boardContent == null || boardContent ==''){
-	            swal({
-	                  type: 'error',
-	                  title: 'Oops...',
-	                  text: '게시글을 등록하세요.'
-	            });
-	            return false;
-			}
-		}
-		else{
-				if(boardContent == null || boardContent ==''){
-	            swal({
-	                  type: 'error',
-	                  title: 'Oops...',
-	                  text: '게시글을 등록하세요.'
-	            });
-	            return false;
-			}
-		}
-		
-	});
-	
-	
-	
-	
-	
-	$("#boardForm").ajaxForm({
-// 		type: "post" //form에 설정한 값이 기본값 
-// 		, url: "/zaksim/community/enrollBoard" //form에 설정한 값이 기본값
-		data: {
-			
-		}
-		, dataType: "json"
-		, success: function( res ) {
-			console.log("성공");
-			console.log(res);
-		}
-		, error: function() {
-			console.log("실패");
-		}
-		
-		
-	});
+   
+   $("#enrollBoardBtn").click(function() {
+      var radioVal = $('input[name="certification"]:checked').val();
+      var file = $("#filee").val();
+      var boardContent = $("#board-text1").val();
+      
+      var idx = $("#idxx").val();
+      
+      
+      console.log('라디오 값 : ' + radioVal);
+      console.log('파일 : '+ file);
+      console.log("게시 글  : "+ boardContent);
+      
+      $(".idxxx").attr({
+         value : idx
+      });
+      
+      if(radioVal == 1){
+         if(file == null || file ==''){
+               swal({
+                     type: 'error',
+                     title: 'Oops...',
+                     text: '사진을 등록하세요.'
+               });
+               return false;
+         }
+         else    if(boardContent == null || boardContent ==''){
+               swal({
+                     type: 'error',
+                     title: 'Oops...',
+                     text: '게시글을 등록하세요.'
+               });
+               return false;
+         }
+      }
+      else{
+            if(boardContent == null || boardContent ==''){
+               swal({
+                     type: 'error',
+                     title: 'Oops...',
+                     text: '게시글을 등록하세요.'
+               });
+               return false;
+         }
+      }
+      
+   });
+   
+   
+   
+   
+   
+//    $("#boardForm").ajaxForm({
+// //       type: "post" //form에 설정한 값이 기본값 
+// //       , url: "/zaksim/community/enrollBoard" //form에 설정한 값이 기본값
+//       data: {
+         
+//       }
+//       , dataType: "json"
+//       , success: function( res ) {
+//          console.log("성공");
+//          console.log(res);
+//       }
+//       , error: function() {
+//          console.log("실패");
+//       }
+      
+      
+//    });
 });
 </script>
 

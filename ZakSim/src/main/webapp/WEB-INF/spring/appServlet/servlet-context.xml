@@ -41,17 +41,21 @@
 		
 	</beans:bean>
 	
-		<interceptors>
+	<interceptors>
+	
 		<interceptor>
-		<mapping path="/zaksim/community/enrollCommunity"/>
-		<beans:bean class="zaksim.interceptor.CommunityInterceptor" />
+			<mapping path="/zaksim/community/enrollCommunity"/>
+			<beans:bean class="zaksim.interceptor.CommunityInterceptor" />
 		</interceptor>
+		
 		<interceptor>
 			<mapping path="/zaksim/mypage/main"/>
 			<mapping path="/zaksim/challenge/challengeInfo"/>
 			<beans:bean class="zaksim.interceptor.LoginInterceptor"/>
 		</interceptor>
+		
 	</interceptors>
+
 	<context:component-scan base-package="zaksim" />
 
 	
