@@ -54,9 +54,10 @@ public class AdminLoginController {
 	
 	@RequestMapping(value="/logout")
 	public String logout(HttpSession session) {
-		logger.info("로그아웃");
-		session.setAttribute("adminLogin", false);
-		return "redirect:/zaksim/admin/login";
+//		logger.info("로그아웃");
+//		session.setAttribute("adminLogin", false);
+		session.invalidate();
+		return "redirect:/zaksim/main/home";
 	}
 	
 }

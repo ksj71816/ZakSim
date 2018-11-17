@@ -9,6 +9,7 @@
  	<result property="writerIdx" column="writer_idx" />
  	<result property="writtenDate" column="written_date" />
  	<result property="upperIdx" column="upper_idx" />
+ 	<result property="nick" column="nick" />
  </resultMap>
  
  
@@ -128,8 +129,24 @@ ORDER BY rnum
  
 <!--  Q&A 상세보기 dao -->
  <select id="qnaView" parameterType="int" resultMap="QnA">
- 	SELECT * FROM QnA
- 	WHERE idx = #{qnaIdx}
+<!--  	SELECT * FROM QnA -->
+<!--  	WHERE idx = #{qnaIdx} -->
+
+		SELECT Q.idx,
+            Q.writer_idx,
+            Q.title,
+            Q.content,
+            Q.hit,
+            Q.status,
+            Q.secret,
+            TO_CHAR(written_date, 'yyyy-mm-dd hh24:mi:ss') AS written_date,
+            Q.upper_idx,
+            Q.depth,
+            Z.nick,
+            Z.member_type
+        FROM QnA Q, ZakSimMember Z
+        WHERE Q.writer_idx = Z.idx
+        AND Q.idx = #{qnaIdx}
  </select>
 
 <!--  Q&A 상세보기 - 조회수 증가 dao -->

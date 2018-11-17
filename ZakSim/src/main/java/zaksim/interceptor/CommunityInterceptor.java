@@ -17,13 +17,21 @@ public class CommunityInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		Map<String,Integer> map = new HashMap<String,Integer>();
-		map.put("memberIdx", (int)request.getSession().getAttribute("login_idx"));
-		map.put("groupIdx", Integer.parseInt(request.getParameter("idx")));
-		int result = cd.isCommunityMember(map);
-		if(result > 0) {
-			return true;
-		}else {
+		
+		if((boolean)request.getSession().getAttribute("login")) {	// 로그인 했을 경우
+
+			Map<String,Integer> map = new HashMap<String,Integer>();
+			map.put("memberIdx", (int)request.getSession().getAttribute("login_idx"));
+			map.put("groupIdx", Integer.parseInt(request.getParameter("idx")));
+			
+			int result = cd.isCommunityMember(map);
+			
+			if(result > 0) {	// 참여멤버라면
+				return true;
+			}else {
+				return false;
+			}
+		} else {	// 로그인 안 했을 경우
 			return false;
 		}
 	}

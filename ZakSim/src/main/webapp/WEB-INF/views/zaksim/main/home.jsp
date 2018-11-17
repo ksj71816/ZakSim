@@ -9,7 +9,7 @@
 <!-- css include -->
 <link rel="stylesheet" type="text/css" href="/css/main/image_hover.css">
 
-${citation }
+
 <!-- 바디 -->
 
     <!-- 슬라이드 이미지 carousel slide--> 
