@@ -66,7 +66,7 @@
                   <input type="hidden" class= "memberIdxx" value="${newGroupList.member_idx }">
                      <div class="hovereffect">
                         <img class="card-img-top"
-                           src="${newGroupList.image }"
+                           src="${newGroupList.storedName }"
                            alt="Card image cap">
                         <div class="card-body">
                            <span>

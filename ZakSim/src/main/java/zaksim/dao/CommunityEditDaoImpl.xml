@@ -6,18 +6,18 @@
 
 <mapper namespace="zaksim.dao.CommunityEditDAO">
 
+
+
 	<select id="getCategoryIdx" resultType="int" parameterType="int">
-	
 		select * from CommunityCategory where idx=#{idx}
-	
 	</select>
 
 
 	<insert id="createGroup"
 		parameterType="zaksim.dto.CommunityGroup">
 		INSERT INTO CommunityGroup (idx, member_idx, category_idx, title, content,
-		image, max, open_date, secret, password)
-		VALUES (#{idx}, #{member_idx}, #{category_idx}, #{title}, #{content}, #{image},
+		image, storedName, max, open_date, secret, password)
+		VALUES (#{idx}, #{member_idx}, #{category_idx}, #{title}, #{content}, #{image}, #{storedName}
 		#{max}, default, #{secret}, #{password})
 	</insert>
 	
@@ -45,7 +45,7 @@
 		<if test="secret == 0">
 			password = null,
 		</if>
-		image=#{image }, max=#{max }  where idx=#{idx }
+		image=#{image }, storedName=#{storedName}, max=#{max }  where idx=#{idx }
 	</update>
 	
 	<delete id="deleteKeyword" parameterType="int">

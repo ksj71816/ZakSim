@@ -1,6 +1,7 @@
 package zaksim.community.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,5 +35,45 @@ public class CommunitySearchServiceImpl implements CommunitySearchService {
 		return communitySearchDao.searchKeywordGroup(Keyword);
 	}
 
+
+
+	/**
+	 * 검색 - 타이틀 검색 시 총 갯수
+	 * @return
+	 */
+	@Override
+	public int titleTotalCount(String searchContent) {
+		// TODO Auto-generated method stub
+		return communitySearchDao.titleTotalCount(searchContent);
+	}
+
+	/**
+	 * 검색 - 카테고리 검색 시 총 갯수
+	 * @param searchContent
+	 * @return
+	 */
+	@Override
+	public int categoryTotalCount(String searchContent) {
+		// TODO Auto-generated method stub
+		return communitySearchDao.categoryTotalCount(searchContent);
+	}
+	
+	/**
+	 * 그룹 검색 (페이징)
+	 */
+	@Override
+	public List<CommunityGroup> titlePage(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return communitySearchDao.titlePage(map);
+	}
+
+	@Override
+	public List<CommunityGroup> categoryPage(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
 
 }

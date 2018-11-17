@@ -2,10 +2,11 @@
 	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 
 <!-- header include -->
 <%@include file="/WEB-INF/views/zaksim/main/header.jsp"%>
+
 
 
 
@@ -54,10 +55,12 @@
 
 
 			<c:if test="${!empty joinedGroupList}">
+
+			<c:if test="${fn:length(joinedGroupList) > 3}">	 
 				<button type="button" class="btn btn-outline-primary"
 					style="float: right; margin-top: 30px;" id="joinedGroupViewMore">+
 					더보기</button>
-
+			</c:if>
 
 				<button type="button" class="btn btn-outline-danger"
 					style="float: right; margin-top: 30px; margin-left: 30px; margin-right: 30px;"
@@ -108,7 +111,7 @@
 							<div class="card" style="width: 20rem; margin-right: 15px;">
 								<div class="hovereffect">
 									<img class="card-img-top"
-										src="${joinedGroupList.image }"
+										src="${joinedGroupList.storedName }"
 										alt="Card image cap">
 									<div class="card-body">
 										<span>
@@ -168,7 +171,7 @@
                   <input type="hidden" class= "memberIdxx" value="${popularGroupList.member_idx }">
                      <div class="hovereffect">
                         <img class="card-img-top"
-                           src="${popularGroupList.image }"
+                           src="${popularGroupList.storedName }"
                            alt="Card image cap">
                         <div class="card-body">
                            <span>
@@ -278,7 +281,7 @@
 						<input type="hidden" class="memberIdxx" value="${newGroupList.member_idx }">
 							<div class="hovereffect">
 								<img class="card-img-top"
-									src="${newGroupList.image }"
+									src="${newGroupList.storedName }"
 									alt="Card image cap">
 								<div class="card-body">
 									<span>

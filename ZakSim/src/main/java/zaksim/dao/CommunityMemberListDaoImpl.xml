@@ -14,6 +14,7 @@
 		<result column="title" property="title" />
 		<result column="content" property="content" />
 		<result column="image" property="image" />
+		<result column="storedName" property="storedName" />
 		<result column="max" property="max" />
 		<result column="open_date" property="open_date" />
 		<result column="secret" property="secret" />
@@ -40,10 +41,7 @@
 	</resultMap>
 
 
-<!-- 	<select id="members" resultMap="GroupMember" parameterType="int"> -->
-<!-- 		select * from groupmember m, communitygroup g where m.group_idx = -->
-<!-- 		g.idx -->
-<!-- 	</select> -->
+
 
 	<select id="members" resultMap="GroupMember" >
 		select distinct m.member_idx from groupmember m, zaksimmember z where

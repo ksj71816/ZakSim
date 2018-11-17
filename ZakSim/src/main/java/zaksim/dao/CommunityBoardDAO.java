@@ -3,6 +3,7 @@ package zaksim.dao;
 import java.util.List;
 
 import zaksim.dto.Board;
+import zaksim.dto.Comment;
 
 public interface CommunityBoardDAO {
 
@@ -18,5 +19,8 @@ public interface CommunityBoardDAO {
 	
 	// 게시글 삭제
 	public void deleteBoard(Board board);
+
+	// 댓글 리스트
+	public List<Comment> selectBoardComment(int groupIdx);
 	
 }

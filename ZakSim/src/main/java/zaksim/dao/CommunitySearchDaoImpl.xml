@@ -16,6 +16,7 @@
 		<result column="title" property="title" />
 		<result column="content" property="content" />
 		<result column="image" property="image" />
+		<result column="storedName" property="storedName" />
 		<result column="max" property="max" />
 		<result column="open_date" property="open_date" />
 		<result column="secret" property="secret" />
@@ -46,12 +47,16 @@
 		<collection property="communityGroup" resultMap="CommunityGroup" />
 	</resultMap>
 
+
+
+
+
 	<select id="searchGroup" resultMap="GroupLike">
 		SELECT
 		*
 		FROM
 		(SELECT g.idx
-		g_idx, g.title ,g.content , g.image ,g.max ,
+		g_idx, g.title ,g.content , g.image ,g.storedName, g.max ,
 		g.open_date , g.secret
 		,g.password, c.category group_category, c.image group_image
 		FROM CommunityGroup g, 
@@ -81,7 +86,7 @@
 		*
 		FROM
 		(SELECT g.idx
-		g_idx, g.title ,g.content , g.image ,g.max ,
+		g_idx, g.title ,g.content , g.image ,g.storedName, g.max ,
 		g.open_date , g.secret
 		,g.password, c.category group_category, c.image group_image
 		FROM CommunityGroup g,
@@ -101,10 +106,10 @@
 	<select id="searchKeywordGroup" resultMap="GroupLike">
 		
 		SELECT
-        distinct gk.g_idx, gk.title, gk.content, gk.image, gk.max, gk.open_date, gk.secret, gk.password,  gk.group_category, gk.group_image, l.like_num, l.l_group_idx
+        distinct gk.g_idx, gk.title, gk.content, gk.image, gk.storedName, gk.max, gk.open_date, gk.secret, gk.password,  gk.group_category, gk.group_image, l.like_num, l.l_group_idx
       FROM
       (SELECT g.idx
-      g_idx, g.title ,g.content , g.image ,g.max ,
+      g_idx, g.title ,g.content , g.image, g.storedName, g.max ,
       g.open_date , g.secret
       ,g.password, k.keyword group_keyword, c.category group_category, c.image group_image
       FROM CommunityGroup g, GroupKeyword
@@ -126,8 +131,90 @@
 	</select>
 
 
+	<select id="titleTotalCount" resultType="int" parameterType="String">
+				SELECT
+				count(*)
+				FROM
+				(SELECT g.idx
+				g_idx, g.title ,g.content , g.image ,g.max ,
+				g.open_date , g.secret
+				,g.password, c.category group_category, c.image group_image
+				FROM CommunityGroup g, 
+				CommunityCategory c
+				WHERE  g.category_idx =
+				c.idx
+				order by g.idx desc) gk
+				left
+				join (select count(*) as like_num,
+				group_idx as l_group_idx from
+				grouplike
+				GROUP BY group_idx) l on
+				l.l_group_idx=gk.g_idx where
+				title LIKE '%' || #{search} || '%'
+	</select>
 
 
+
+	<select id="categoryTotalCount" resultType="int" parameterType="String">
+		SELECT
+		count(*)
+		FROM
+		(SELECT g.idx
+		g_idx, g.title ,g.content , g.image ,g.max ,
+		g.open_date , g.secret
+		,g.password, c.category group_category, c.image group_image
+		FROM CommunityGroup g,
+		CommunityCategory c
+		WHERE  g.category_idx =
+		c.idx
+		order by g.idx desc) gk
+		left
+		join (select count(*) as like_num,
+		group_idx as l_group_idx from
+		grouplike
+		GROUP BY group_idx) l on
+		l.l_group_idx=gk.g_idx where
+		group_category LIKE '%' || #{search} || '%'
+	</select>
+
+	<select id="titlePage" parameterType="map" resultMap="CommunityGroup">
+				        		SELECT * from (
+	    SELECT rownum rnum, gl.*
+			FROM (
+        SELECT
+		*
+		FROM
+		(SELECT g.idx
+		g_idx, g.title ,g.content , g.image ,g.max ,
+		g.open_date , g.secret
+		,g.password, c.category group_category, c.image group_image
+		FROM CommunityGroup g, 
+		CommunityCategory c
+		WHERE  g.category_idx =
+		c.idx
+		order by g.idx desc) gk
+		left join (
+            select count(*) as like_num,
+            group_idx as l_group_idx from
+            grouplike
+            GROUP BY group_idx ) l 
+        on
+		l.l_group_idx=gk.g_idx
+		<if test="selectSearch == 'communutyName'" >
+	        where title LIKE '%' || #{searchContent} || '%'	
+		</if>
+		<if test="selectSearch == 'communutyCategory'" >
+		where
+		group_category LIKE '%' || #{searchContent} || '%'
+		</if>
+		<if test="selectSearch == 'communutyKeyword'" >
+			where
+      		group_keyword LIKE '%' || #{searchContent} || '%'
+		</if>
+        ) gl
+	    ) rgl
+	    where rgl.rnum between #{paging.startNo } and #{paging.endNo }
+	</select>
 
 
 

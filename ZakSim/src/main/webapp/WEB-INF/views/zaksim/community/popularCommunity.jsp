@@ -73,7 +73,7 @@
                   <input type="hidden" class= "memberIdxx" value="${popularGroupList.communityGroup.member_idx }">
                      <div class="hovereffect">
                         <img class="card-img-top"
-                           src="${popularGroupList.communityGroup.image }"
+                           src="${popularGroupList.communityGroup.storedName }"
                            alt="Card image cap">
                         <div class="card-body">
                            <span>

@@ -52,16 +52,16 @@
 		</div>
 		<br><br>
 		<div class="container">
-			<div class="row">
+			<div class="row" hidden="hidden">
 				<!-- 네이버아이디로로그인 버튼 노출 영역 -->
 				<div class="col-md-3 mx-auto text-center" id="naverIdLogin"></div>
 			</div>
 			<br>
-			<div class="row">
+<%--			<div class="row">
 				<div class="col-md-3 mx-auto">
 					<button class="btn btn-secondary col">Google 로그인</button>
 				</div>
-			</div>
+			</div>	--%>
 			<br><br><br><br>
 			<div class="row">
 				<div class="col-md-7 mx-auto">

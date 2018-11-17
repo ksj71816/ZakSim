@@ -72,6 +72,7 @@
 						<div class="card bg-dark text-white">
 							<div class="hovereffect">
 								<img class="card-img"
+<%-- 									src="${joinedGroupList.communityGroup.storedName }" --%>
 									src="${joinedGroupList.image }"
 									alt="Card image">
 								<div class="card-img-overlay">

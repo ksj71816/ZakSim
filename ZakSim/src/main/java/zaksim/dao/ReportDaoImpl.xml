@@ -21,6 +21,9 @@
   	<collection property="reporterMember" resultMap="ZakSimMember"/>
   </resultMap>
   
+  
+  
+  
   <!-- 신고 정보와 신고자 아이디 반환 -->
   <select id="selectReport" parameterType="zaksim.dto.ZakSimMember" resultMap="Report">
  	SELECT rz.*, m.id
