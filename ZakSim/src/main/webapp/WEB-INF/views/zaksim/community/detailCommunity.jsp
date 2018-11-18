@@ -12,36 +12,21 @@
 
     <div class="container" id="zz">
         <div class="row">
-            <div class="col"></div>
-
-
-            <div class="col-sm-11" style="margin-top: 60px; margin-right: 50px;">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10" style="margin-top: 60px; margin-right: 50px;">
                 <strong style="font-size: 150%">참여하고 있는 모임1</strong>
                 <span style="color: gray;">자세히 보기</span>
-
                 <button type="button" style="float: right;" class="btn btn-secondary" id="enrollView">모임 상세보기</button>
-
                 <hr style="margin-top: 40px; border-color: red; margin-bottom: 40px;">
-
-
                 <div id="bar_chart_div"></div>
-
-
-
-                <div class="col"></div>
             </div>
-
+			<div class="col-sm-1"></div>
         </div>
 
 
         <div class="row">
-            <div class="col"></div>
-
-
-
-            <div class="col-sm-11" style="margin-top: 60px; margin-right: 50px;">
-
-
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10" style="margin-top: 60px; margin-right: 50px;">
 
                 <div id="Line_Controls_Chart">
                     <!-- 라인 차트 생성할 영역 -->
@@ -138,16 +123,8 @@
                     </div>
                     <br>
                 </div>
-
-
-
-
-
-
-
-                <div class="col" style="margin-bottom: 300px;"></div>
             </div>
-
+			<div class="col-sm-1"  style="margin-bottom: 300px;"></div>
         </div>
     </div>
 
