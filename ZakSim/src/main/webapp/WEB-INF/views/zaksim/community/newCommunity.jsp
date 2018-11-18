@@ -42,7 +42,7 @@
 	<div class="row">
 		<div class="col-sm-1"></div>
 
-		<div class="col-sm-11" style="margin-top: 50px; margin-right: 50px;">
+		<div class="col-sm-10" style="margin-top: 50px; margin-right: 50px;">
 			<strong style="font-size: 150%">새로 시작한 모임</strong>
 				<c:if test="${sessionScope.login_idx ne null }">
 				<button type="button" class="btn btn-outline-danger"
@@ -55,7 +55,7 @@
 			<div style="margin-left: 22px;">
 				<div class="form-inline">
              <c:forEach var="newGroupList" items="${newGroupList }">
-                  <div class="card mb-4" style="width: 20rem; margin-right: 10px;">
+                  <div class="card mb-4" style="width: 19rem; margin-right: 10px;">
                   <input type="hidden" class="idxx" value="${newGroupList.idx }">
                   <input type="hidden" class= "memberIdxx" value="${newGroupList.member_idx }">
                      <div class="hovereffect">

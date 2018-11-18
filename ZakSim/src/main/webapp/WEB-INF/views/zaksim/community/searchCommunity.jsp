@@ -8,20 +8,16 @@
 
 
 
-
-<div class="container" id="zz">
-
-
-
-	<div class="row" style="margin-bottom: 30px;">
-		<div class="col"></div>
-		<div class="col-10">
-			<strong>
-				<h1 style="vertical-align: 100%">커뮤니티</h1>
-			</strong>
-		</div>
-		<div class="col"></div>
+<div class="py-3">
+	<div class="container">
+		<div class="row mt-5">
+	    	<h2 class="ml-3 pl-2 pt-1 zaksim-title dohyeon">커뮤니티</h2>
+	    </div>
 	</div>
+</div>
+
+<div class="container">
+
 	
 	<div class="row">
 		<div class="col"></div>
@@ -117,7 +113,7 @@
 
 				<div class="form-inline">
            <c:forEach var="searchGroup" items="${searchGroup }">
-                  <div class="card mb-4" style="width: 19rem;" margin-right: 10px;">
+                  <div class="card mb-4" style="width: 19rem; margin-right: 10px;">
                   <input type="hidden" class="idxx" value="${searchGroup.idx }">
                   <input type="hidden" class= "memberIdxx" value="${searchGroup.member_idx }">
                      <div class="hovereffect">

@@ -197,7 +197,7 @@ public class ExcelWriter {
 
 	    
 	    // 입력된 내용 파일로 쓰기
-        File file = new File("D:\\회원통계_" + format.format(new Date()) +".xlsx");
+        File file = new File("C:\\zaksim_admin\\회원통계_" + format.format(new Date()) +".xlsx");
         FileOutputStream fos = null;
         
         try {
@@ -365,7 +365,7 @@ public class ExcelWriter {
 
 	    
 	    // 입력된 내용 파일로 쓰기
-       File file = new File("D:\\도전통계_" + format.format(new Date()) +".xlsx");
+       File file = new File("C:\\zaksim_admin\\도전통계_" + format.format(new Date()) +".xlsx");
        FileOutputStream fos = null;
        
        try {
@@ -534,7 +534,7 @@ public class ExcelWriter {
 
 	    
 	    // 입력된 내용 파일로 쓰기
-       File file = new File("D:\\기부현황통계_" + format.format(new Date()) +".xlsx");
+       File file = new File("C:\\zaksim_admin\\기부현황통계_" + format.format(new Date()) +".xlsx");
        FileOutputStream fos = null;
        
        try {
