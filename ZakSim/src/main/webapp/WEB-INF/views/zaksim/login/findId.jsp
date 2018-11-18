@@ -103,6 +103,8 @@
 		</div>
 	</div>
 
+<!-- (2018.11.18) jquery 추가 -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <%@ include file="../main/footer.jsp" %>
 <script type="text/javascript">
 	/* ID 찾기 */

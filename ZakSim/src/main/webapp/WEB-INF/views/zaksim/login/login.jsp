@@ -75,6 +75,8 @@
 		</div>
 	</div>
 
+<!-- (2018.11.18) jquery 추가 -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <%@ include file="../main/footer.jsp" %>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <script type="text/javascript">
