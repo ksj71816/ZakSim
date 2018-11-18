@@ -9,7 +9,6 @@
 <link rel="stylesheet" type="text/css" href="/css/community/button.css">
 <link rel="stylesheet" type="text/css" href="/css/community/enrollCommunity.css">
 
-${commentList }
 
 <div class="container" id="zz">
 	<div class="row">
@@ -18,8 +17,8 @@ ${commentList }
 		
 			<input type="hidden" id ="idxx"value="${groupInfo.idx }">
 
-			<div class="col-sm-11 clearfix" style="margin-top: 50px; margin-right: 50px;" id="btnDiv">
-				<strong style="font-size: 150%">${groupInfo.title }</strong>
+			<div class="col-sm-11 clearfix" style="margin-right: 50px;" id="btnDiv">
+				<strong class="zaksim-title pl-2" style="font-size: 2em;">${groupInfo.title }</strong>
 				<div style="float:right;">
 					<c:if test="${ groupInfo.member_idx eq sessionScope.login_idx}">
 						<button type="button" class="btn btn-outline-danger ml-1" style="" data-toggle="modal" data-target="#updateCommunityModal">수정하기</button>
@@ -50,7 +49,7 @@ ${commentList }
 						</button>
 					</c:if>					   
 				</c:if>				
-				<div style="margin-top: 100px;">
+				<div class="dohyeon" style="margin-top: 100px;">
 
 					<div style="margin-left: 50px; margin-right: 50px;">
 						<c:if test="${groupInfo.storedName ne null && groupInfo.storedName ne ''}">
@@ -73,8 +72,8 @@ ${commentList }
 							${groupInfo.content }
 						</div>
 						<div style="margin-left: 50px; margin-right: 50px; margin-bottom: 50px; display: none;" id="communityJoinPeopleComment">
-							<span style="font-size: 150%;">${cntMember }명 </span> 
-							<span style="font-size: 150%;">/ 최대 ${groupInfo.max }명</span>
+							<span style="font-size: 150%;">${cntMember}명 </span> 
+							<span style="font-size: 150%;">/ ${groupInfo.max}명</span>
 							<br>
 							<c:forEach items="${groupMember }" var="member">
 								<span style="margin-right:3px;">${member.nick }</span>
@@ -82,7 +81,7 @@ ${commentList }
 						</div>
 
 						<div style="margin-left: 50px; margin-right: 50px; margin-bottom: 50px; display: none;" id="communityKeywordComment">
-							<span style="font-size: 150%;"> 
+							<span> 
 								<c:forEach var="keywordList" items="${keywordList }">
 							       	<c:if test="${groupInfo.idx eq keywordList.group_idx}">
 										#${keywordList.keyword } 
@@ -164,8 +163,12 @@ ${commentList }
 						<h4 class="card-title mt-4" style="font-family: Dohyeon;">${board.zakSimMember.nick}</h4>
 					</div>
 					<div class="col-md-2 align-self-center" style="text-align: right;">
-						<small style="color: red; cursor:pointer; text-decoration: underline;" onclick="deleteBoard(${board.idx});">삭제</small>
-						<small style="color: blue; cursor:pointer; text-decoration: underline;" onclick="report(${board.idx});">신고</small>
+						<c:if test="${sessionScope.login_idx eq board.writer_idx }">
+							<small style="text-decoration: underline;">
+								<a style="color: red !important;" href="/zaksim/community/deleteBoard?group_idx=${groupInfo[0].idx}&idx=${board.idx}">삭제</a>
+							</small>
+						</c:if>
+						<small style="color: blue; cursor:pointer; text-decoration: underline;" onclick="report(${board.idx}, ${board.writer_idx});">신고</small>
 					</div>
 				</div>
 				<hr class="m-0">
@@ -213,6 +216,10 @@ ${commentList }
 
 
                <hr>
+               
+               <div>
+               	<strong style="color: red;" id="reportError"></strong>
+               </div>
 
                <div>
                   <span><strong>사유선택 : </strong></span> <span
@@ -221,23 +228,24 @@ ${commentList }
                </div>
                <br>
                <div class="radio" style="margin-left: 80px;">
-                  <input type="radio" name="category"> 부적절한 홍보 게시글 <br> <input
-                     type="radio" name="category"> 음란성 또는 청소년에게 부적합한 내용 <br>
-                  <input type="radio" name="category"> 명예회손 / 사생활 침해 저작권침해 등 <br>
-                  <input type="radio" name="category"> 기타
+                  <input type="radio" name="category" value="부적절한 홍보 게시글" checked="checked"> 부적절한 홍보 게시글 <br> <input
+                     type="radio" name="category" value="음란성 또는 청소년에게 부적합한 내용"> 음란성 또는 청소년에게 부적합한 내용 <br>
+                  <input type="radio" name="category" value="명예회손 / 사생활 침해 저작권침해 등"> 명예회손 / 사생활 침해 저작권침해 등 <br>
+                  <input type="radio" name="category" value="기타"> 기타
 
                </div>
-               <div>
-               	<textarea rows="5" cols="" name="reason"></textarea>
+               <div class="mt-4">
+               	<textarea rows="5" cols="65" id="reason"></textarea>
                </div>
-               <div style="display: none;">
-               	<input type="text" name="boardIdx"/>
+               <div>
+               	<input type="text" id="boardIdx" style="display: none;"/>
+               	<input type="text" id="memberIdx" style="display: none;"/>
                </div>
             </div>
          </div>
          <div class="modal-footer">
             <div>
-               <button type="button" class="btn btn-danger">신고하기</button>
+               <button type="button" class="btn btn-danger" id="reportBtn">신고하기</button>
                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
             </div>
          </div>
@@ -1087,12 +1095,51 @@ $("#btnDiv").on("click", ".noBtnRecommend", function() {
    });
    
 
-   function report(boardIdx) {
+   function report(boardIdx, memberIdx) {
+	   $("#boardIdx").val(boardIdx);
+	   $("#memberIdx").val(memberIdx);
 	   $("#reportModal").modal('show');
    }
    
-   function deleteBoard(boardIdx) {
+   $("#reportBtn").click(function() {
 	   
-   }
+	   var boardIdx = $("#boardIdx").val();
+	   var category = $("[name=category]:checked").val();
+	   var reason = $("#reason").val();
+	   var memberIdx = $("#memberIdx").val();
+	   
+// 	   console.log(boardIdx + ", " + category + ", " + reason);
+	   
+	   
+	   $.ajax({
+			type: "post"
+			, url : "/zaksim/community/report"
+			, data : {
+				boardIdx : boardIdx,
+				reporterIdx : '${sessionScope.login_idx}',
+				category : category,
+				reason : reason,
+				memberIdx : memberIdx
+			}
+			, dataType: "text"
+			, success: function( data ) {
+				
+				if(data.result == true) {
+					var reason = $("#reason").val("");
+					$("#reportModal").modal('hide');
+// 					alert("신고됨");
+				}
+				
+			}
+			, error: function( e ) {
+				console.log("--- error ---");
+				console.log( e.responseText );
+			}
+			, complete: function() {
+				//입력 창 초기화
+			}
+		});	
+   });
+
 </script>
 

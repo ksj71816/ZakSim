@@ -137,7 +137,7 @@
 // 		console.log(image);
 		
 		swal({
-			  title: title,
+			  title: "",
 			  text: content,
 			  imageUrl:image,
 			  imageWidth: 800,

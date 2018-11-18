@@ -69,10 +69,10 @@
 	</div>
 
 	<div class="row">
-		<div class="col"></div>
+		<div class="col-sm-1"></div>
 
 		
-		<div class="col-sm-11" style="margin-top: 50px; margin-right: 50px;">
+		<div class="col-sm-10" style="margin-top: 50px; margin-right: 50px;">
 			<strong style="font-size: 150%">검색 결과</strong>
 				<button type="button" class="btn btn-outline-danger"
 					style="float: right; margin-top: 30px; margin-left: 30px; margin-right: 30px;"
@@ -87,7 +87,7 @@
 				<div class="form-inline">
 					<c:forEach var="category" items="${category }">
 
-						<div class="card bg-dark text-white">
+						<div class="card bg-dark text-white mb-4">
 							<div class="hovereffect">
 <%-- 								<img class="card-img" src="${category.communityGroup.storedName }" --%>
 								<img class="card-img" src="${category.image }"
@@ -128,6 +128,7 @@
 
 
 			</div>
+			<div class="col-sm-1"></div>
 	</div>
 
 </div>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import zaksim.dao.ReportDao;
 import zaksim.dao.ZakSimMemberDao;
+import zaksim.dto.Board;
 import zaksim.dto.Report;
 import zaksim.dto.ZakSimMember;
 import zaksim.util.Paging;
@@ -58,6 +59,11 @@ public class MemberServiceImpl implements MemberService {
 		}
 		// 디비에서 자동으로 상태변경되게 만들거나 메소드 생성하기
 		
+	}
+
+	@Override
+	public Board getReportBoard(int boardIdx) {
+		return reportDao.selectReportBoard(boardIdx);
 	}
 
 

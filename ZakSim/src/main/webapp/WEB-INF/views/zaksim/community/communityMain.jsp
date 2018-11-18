@@ -9,26 +9,23 @@
 
 
 
-
-<div class="container" id="zz">
-
-	<div class="row" style="margin-bottom: 30px;">
-		<div class="col"></div>
-		<div class="col-9">
-			<strong>
-				<h1>커뮤니티</h1>
-			</strong>
+<div class="py-3">
+		<div class="container">
+			<div class="row mt-5">
+		    	<h2 class="ml-3 pl-2 pt-1 zaksim-title dohyeon">커뮤니티</h2>
+		    </div>
 		</div>
-		<div class="col"></div>
 	</div>
-	<div class="row">
+
+<div class="container">
+	<div class="row mt-5">
 		<div class="col"></div>
 		<div class="col-9">
 			<form action="/zaksim/community/searchCommunity" method="post">
 				<div class="form-inline">
 					<select name="selectSearch" class="custom-select d-block my-3"
 						required>
-						<option value="communutyName" selected="selected">모임 명</option>
+						<option value="communutyName" selected="selected">그룹명</option>
 						<option value="communutyCategory">카테고리</option>
 						<option value="communutyKeyword">키워드</option>
 					</select> <input type="text" class="form-control mx-3" style="width: 600px;"
@@ -45,8 +42,8 @@
 
 
 	<div class="row">
-		<div class="col"></div>
-		<div class="col-sm-11" style="margin-top: 60px; margin-right: 50px;">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-10" style="margin-top: 60px; margin-right: 50px;">
 
 			<!-- 참여하고 있는 모임-->
 			<strong style="font-size: 150%">참여하고 있는 그룹</strong>
@@ -55,12 +52,12 @@
 
 
 			<c:if test="${!empty joinedGroupList}">
-
-			<c:if test="${fn:length(joinedGroupList) > 3}">	 
-				<button type="button" class="btn btn-outline-primary"
-					style="float: right; margin-top: 30px;" id="joinedGroupViewMore">+
-					더보기</button>
-			</c:if>
+	
+				<c:if test="${fn:length(joinedGroupList) > 3}">	 
+					<button type="button" class="btn btn-outline-primary"
+						style="float: right; margin-top: 30px;" id="joinedGroupViewMore">+
+						더보기</button>
+				</c:if>
 
 				<button type="button" class="btn btn-outline-danger"
 					style="float: right; margin-top: 30px; margin-left: 30px; margin-right: 30px;"
@@ -70,8 +67,7 @@
 
 
 
-			<hr
-				style="margin-top: 40px; border-color: gray; margin-bottom: 40px;">
+			<hr style="margin-top: 40px; border-color: gray; margin-bottom: 40px;">
 
 
 			<div class="form-inline" style="margin-bottom: 50px;">
@@ -81,25 +77,27 @@
 					<c:if test="${empty joinedGroupList}">
 						<c:if test="${sessionScope.login_idx eq null}">
 						
-						<div
-							style="text-align: center; color: gray; font-size: 20px; font-style: italic; margin-left: 400px;">
-							<p>로그인 후 이용 하세요.</p>
-							<button type="button" class="btn btn-danger"
-								style="width: 200px;" data-toggle="modal" disabled="disabled"
-								data-target=".bd-example-modal-lg">모임 만들기</button>
+						<div class="d-flex justify-content-center" style="color: gray; font-size: 20px; font-style: italic;">
+							<div>
+								<p>로그인 후 이용 하세요.</p>
+								<button type="button" class="btn btn-danger"
+									style="width: 200px;" data-toggle="modal" disabled="disabled"
+									data-target=".bd-example-modal-lg">모임 만들기</button>
+							</div>
 						</div>
 						
 						</c:if>
 						
 						<c:if test="${sessionScope.login_idx ne null}">
-						<div
-							style="text-align: center; color: gray; font-size: 20px; font-style: italic; margin-left: 400px;">
-							<p>참여하고 있는 모임이 없습니다.</p>
-							<p>- 모임을 만드세요. -</p>
-							<button type="button" class="btn btn-danger"
-								style="width: 200px;" data-toggle="modal"
-								data-target=".bd-example-modal-lg">모임 만들기</button>
-						</div>
+							<div class="d-flex justify-content-center" style="color: gray; font-size: 20px; font-style: italic;">
+								<div>
+									<p>참여하고 있는 모임이 없습니다.</p>
+									<p>- 모임을 만드세요. -</p>
+									<button type="button" class="btn btn-danger"
+										style="width: 200px;" data-toggle="modal"
+										data-target=".bd-example-modal-lg">모임 만들기</button>
+								</div>
+							</div>
 						</c:if>
 		
 					</c:if>
@@ -158,7 +156,7 @@
 
          <!-- 인기모임 -->
          <div>
-            <strong style="font-size: 150%">인기모임</strong>
+            <strong style="font-size: 150%">인기 그룹</strong>
             <button type="button" class="btn btn-outline-primary"
                style="float: right; margin-top: 30px;" id="popularGroupViewMore">+
                더보기</button>
@@ -262,7 +260,7 @@
 
 			<!-- 새로 시작하는 모임 -->
 			<div>
-				<strong style="font-size: 150%">새로 시작한 모임</strong>
+				<strong style="font-size: 150%">새로 시작한 그룹</strong>
 				<button type="button" class="btn btn-outline-primary"
 					style="float: right; margin-top: 30px;" id="newGroupViewMore">+
 					더보기</button>
@@ -399,8 +397,8 @@
 				<hr style="border-color: gray; margin-bottom: 300px;">
 			</div>
 		</div>
+		<div class="col-sm-1"></div>
 	</div>
-	<div class="col"></div>
 </div>
 
 

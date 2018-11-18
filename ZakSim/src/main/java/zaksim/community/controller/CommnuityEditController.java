@@ -174,7 +174,7 @@ public class CommnuityEditController {
 		}
 		
 		
-		System.out.println("11111111111111111111111 : "+ communityGroup);
+//		System.out.println("11111111111111111111111 : "+ communityGroup);
 
 		
 //		CommunityGroup [currval=0, idx=38, member_idx=0, category_idx=3, title=111, content=123, 

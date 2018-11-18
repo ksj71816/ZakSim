@@ -58,6 +58,10 @@
 .dohyeon {
 	font-family: Dohyeon !important;
 }
+
+.zaksim-title {
+	border-left: 5px solid indianred;
+}
 </style>
 </head>
 
@@ -89,15 +93,19 @@
 				<div class="subItems">
 					<span class="subItem">
 				        <c:if test="${sessionScope.login}">
-							<!-- 도전중 일때 -->
-					        <c:if test="${ sessionScope.status eq 'ing' }">
-					        <a href="/zaksim/challenge/challengeInfo" style="text-decoration: none; color: black;" >나의 도전 </a>
-					        </c:if>
-					        <!-- 도전중이 아닐때 -->
-					        <c:if test="${sessionScope.status ne 'ing'}">
-					        <a href="/zaksim/challenge/doChallenge" style="text-decoration: none; color: black;" >나의 도전 </a>
-					        </c:if>
+				        	<!-- 관리자가 아닌 경우 -->
+				        	<c:if test="${sessionScope.login_idx ne 1 }">
+								<!-- 도전중 일때 -->
+						        <c:if test="${ sessionScope.status eq 'ing' }">
+						        <a href="/zaksim/challenge/challengeInfo" style="text-decoration: none; color: black;" >나의 도전 </a>
+						        </c:if>
+						        <!-- 도전중이 아닐때 -->
+						        <c:if test="${sessionScope.status ne 'ing'}">
+						        <a href="/zaksim/challenge/doChallenge" style="text-decoration: none; color: black;" >나의 도전 </a>
+						        </c:if>
+						    </c:if>
 				        </c:if>
+				        
 				        <c:if test="${not sessionScope.login}"> 
 				        	<a href="/zaksim/main/notLogin" style="text-decoration: none; color: black;" >나의 도전 </a>
 				        </c:if>
@@ -142,7 +150,10 @@
 				</div>
 				<div class="subItems">
 					<span class="subItem">
-						<a href="/zaksim/mypage/main" style="text-decoration: none; color: black; " >회원 정보</a>
+						<!-- 관리자가 아닌 경우 -->
+			        	<c:if test="${sessionScope.login_idx ne 1 }">
+							<a href="/zaksim/mypage/main" style="text-decoration: none; color: black; " >회원 정보</a>
+						</c:if>
 					</span>
 				</div>
 			</div>

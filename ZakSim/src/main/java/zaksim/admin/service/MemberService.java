@@ -2,6 +2,7 @@ package zaksim.admin.service;
 
 import java.util.List;
 
+import zaksim.dto.Board;
 import zaksim.dto.Report;
 import zaksim.dto.ZakSimMember;
 import zaksim.util.Paging;
@@ -22,6 +23,9 @@ public interface MemberService {
 	
 	// 계정 정지하기
 	public void suspend(List<String> idx);
+
+	// 신고 게시글 가져오기
+	public Board getReportBoard(int boardIdx);
 
 
 }

@@ -152,7 +152,9 @@
 	order by a.c_order asc
   </select>
   
-  
+  <delete id="deleteBoard" parameterType="zaksim.dto.Board">
+  	DELETE FROM Board WHERE idx=#{idx}
+  </delete>
   
   
   </mapper>
