@@ -54,11 +54,16 @@
 .point{
 	cursor:pointer;
 }
+
+.dohyeon {
+	font-family: Dohyeon !important;
+}
 </style>
 </head>
 
 <body>
 <!-- navbar -->
+<div class="container-fluid">
 <div class="row navbar navbar-expand-lg" style="background-color: #FFFFFF;border-bottom:3px solid indianred;">
     <!-- logo -->
     <div class="col-sm-2">
@@ -98,7 +103,7 @@
 				        </c:if>
 					</span>
 					<span class="subItem">
-						<a href="/zaksim/challenge/challengers" style="text-decoration: none;  color: black;" >도전자 인증</a>
+						<a href="/zaksim/challenge/challengers" style="text-decoration: none;  color: black;" > 도전자 인증</a>
 					</span>
 				</div> <!-- end of 챌린지 subItems -->
 			</div><!-- end of 챌린지 menu -->
@@ -111,9 +116,9 @@
 					<span class="subItem">
 						<a href="/zaksim/community/communityMain" style="text-decoration: none;  color: black;" >커뮤니티</a>
 					</span>
-					<span class="subItem">
-						<a href="/zaksim/community/individualRanking" style="text-decoration: none;  color: black;">도전 통계</a>
-					</span>
+<!-- 					<span class="subItem"> -->
+<!-- 						<a href="/zaksim/community/individualRanking" style="text-decoration: none;  color: black;">도전 통계</a> -->
+<!-- 					</span> -->
 				</div>
 			</div>
 			
@@ -126,7 +131,7 @@
 						<a href="/zaksim/customerCenter/QnA/list" style="text-decoration: none; color: black; " >QnA</a>
 					</span>
 					<span class="subItem">
-						<a href="/zaksim/customerCenter/guidance/view" style="text-decoration: none; color: black; ">이용 안내</a>
+						<a href="/zaksim/customerCenter/guidance/view" style="text-decoration: none; color: black; "> 이용 안내</a>
 					</span>
 				</div>
 			</div>
@@ -165,7 +170,7 @@
 	</div>
 
 </div><!-- end of navbar toggle -->
-
+</div><!-- end of container -->
 <!-- 해더 끝 -->
 <script type="text/javascript">
 $(document).ready(function(){

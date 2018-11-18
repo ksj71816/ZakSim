@@ -35,7 +35,7 @@
 				<div class="col-5">
 					<div class="row justify-content-start">
 						<button id="suspendBtn" class="btn btn-zaksim rounded" type="button" style="margin-left: 15px; margin-right: 5px;">계정 정지</button>
-						<button id="blockBtn" class="btn btn-zaksim rounded" type="button">영구 정지</button>
+<!-- 						<button id="blockBtn" class="btn btn-zaksim rounded" type="button">영구 정지</button> -->
 					</div>
 				</div>
 				<div class="col-5">
@@ -87,13 +87,11 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="row border ml-1 mr-1" style="height: 150px;">
-        	<div class="col-4 bg-warning">
-        		<img class="img-fluid d-block rounded-circle" id="memberProfile" src="">
-        	</div>
-        	<div class="col-8">
+        <div class="row ml-1 mr-1">
+        	
+        	<div class="col-12">
         		<div class="row">
-        			<table class="table table-sm table-striped" style="font-size: 0.8em;">
+        			<table class="table table-sm table-striped border" style="font-size: 0.9em;">
 					    <tbody>
 					        <tr>
 					          <th>아이디</th>
@@ -115,16 +113,16 @@
 					          <th>계정 정지 횟수</th>
 					            <td id="memberSuspendNum"></td>
 					        </tr>
-					        <tr>
-					          <th>블락 상태</th>
-					            <td id="memberBlockStatus"></td>
-					        </tr>
+<!-- 					        <tr> -->
+<!-- 					          <th>블락 상태</th> -->
+<!-- 					            <td id="memberBlockStatus"></td> -->
+<!-- 					        </tr> -->
 					    </tbody>
 					 </table>
         		</div>
         	</div>
         </div>
-        <div class="row ml-1 mr-1 mt-2" style="max-height: 300px;">
+        <div class="row ml-1 mr-1 mt-1" style="max-height: 300px;">
         	<div class="col-12" style="overflow: auto;">
         	
         	<div id="reportDiv"></div>
@@ -275,7 +273,7 @@ $("#pagingDiv").on("click", ".data-span-modal", function() {
 			$("#memberEmail").text(data.memberData.email);
 			$("#memberSuspendDate").text(data.memberData.suspensionDate);
 			$("#memberSuspendNum").text(data.memberData.suspendNum);
-			$("#memberBlockStatus").text(data.memberData.status);
+// 			$("#memberBlockStatus").text(data.memberData.status);
 			
 			var text = "";
 			
@@ -344,7 +342,7 @@ $("#suspendBtn").click(function() {
 	var suspendMemberId = [];
 
 	checkList.each(function(i) {
-		if(checkList.parent().parent().eq(i).children("td").eq(12).text() >= 10){
+		if(checkList.parent().parent().eq(i).children("td").eq(11).text() >= 10){
 			suspendMemberIdx.push(checkList.parent().parent().eq(i).children("td").eq(0).text());
 			suspendMemberId.push(checkList.parent().parent().eq(i).children("td").eq(3).text());
 		}
@@ -401,7 +399,7 @@ $("#blockBtn").click(function() {
 	var blockMemberId = [];
 
 	checkList.each(function(i) {
-		if(checkList.parent().parent().eq(i).children("td").eq(11).text() >= 4){
+		if(checkList.parent().parent().eq(i).children("td").eq(10).text() >= 4){
 			blockMemberIdx.push(checkList.parent().parent().eq(i).children("td").eq(0).text());
 			blockMemberId.push(checkList.parent().parent().eq(i).children("td").eq(3).text());
 		}

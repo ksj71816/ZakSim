@@ -18,8 +18,8 @@ import zaksim.challenge.service.ChallengersService;
 import zaksim.community.service.CommunityListService;
 import zaksim.dto.Board;
 import zaksim.dto.Challenge;
+import zaksim.dto.CommunityGroup;
 import zaksim.dto.GroupKeyword;
-import zaksim.dto.GroupLike;
 
 @Controller
 @RequestMapping(value="/zaksim/main")
@@ -40,7 +40,7 @@ public class MainController {
 		model.addAttribute("citation", citationList);
 
 		// 인기 그룹 리스트 가져오기
-		List<GroupLike> groupList = new ArrayList<>();
+		List<CommunityGroup> groupList = new ArrayList<>();
 		groupList = comssv.popularGroupList();
 		model.addAttribute("popularGroupList",groupList);
 		

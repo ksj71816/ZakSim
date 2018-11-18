@@ -1,24 +1,24 @@
 package zaksim.community.service;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import zaksim.dao.CommunityBoardDAO;
 import zaksim.dto.Board;
+import zaksim.dto.Comment;
 
 @Service
 public class CommunityBoardServiceImpl implements CommunityBoardService{
 
 	@Autowired CommunityBoardDAO communityBoardDAO;
 	@Autowired ServletContext context;
+	
+	
+	
 	// 게시글 불러오기
 	public List<Board> informationBoard(int group_idx) {
 		
@@ -26,11 +26,9 @@ public class CommunityBoardServiceImpl implements CommunityBoardService{
 	}
 	
 	// 게시글 작성
-	public Board insertBoard(Board board) {
+	public void insertBoard(Board board) {
 		
 		communityBoardDAO.insertBoard(board);
-		
-		return board;
 	}
 	
 	// 게시글 수정
@@ -45,9 +43,14 @@ public class CommunityBoardServiceImpl implements CommunityBoardService{
 		communityBoardDAO.deleteBoard(board);
 	}
 
-	/**
-	 * 파일 업로드 (글구 db에 저장된 값 업데이트)
-	 */
+	@Override
+	public List<Comment> viewBoardComment(int groupIdx) {
+		return communityBoardDAO.selectBoardComment(groupIdx);
+	}
+
+//	/**
+//	 * 파일 업로드 (글구 db에 저장된 값 업데이트)
+//	 */
 //	@Override
 //	public void uploadFile(Board board, MultipartFile imgFile) {
 //		String realpath = context.getRealPath("upload");
@@ -71,7 +74,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService{
 //		board.setImage(imgFile.getOriginalFilename());
 //		board.setStoredName(stored);
 //		
-//		communityBoardDAO.updateBoard(board);
+////		communityBoardDAO.updateBoard(board);
 //		
 //	}
 	

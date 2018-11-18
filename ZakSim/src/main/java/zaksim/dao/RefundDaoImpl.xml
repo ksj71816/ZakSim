@@ -13,6 +13,8 @@
   	<result property="refundDate" column="refund_date"/>
   </resultMap>
   
+  
+  
   <update id="refund" parameterType="zaksim.dto.Payment">
   	UPDATE REFUND
   	SET refund_date = sysdate

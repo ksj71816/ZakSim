@@ -98,7 +98,7 @@
 
 							<div
 								style="text-align: center; color: gray; font-size: 40px; font-style: italic;">
-								<p>참여하고 있는 모임이 없습니다.</p>
+								<p>검색 결과가 없습니다.</p>
 								<p>- 모임을 만드세요. -</p>
 								<button type="button" class="btn btn-danger"
 									style="width: 200px;" data-toggle="modal"
@@ -122,14 +122,15 @@
 
 						<div class="card bg-dark text-white">
 							<div class="hovereffect">
-								<img class="card-img" src="${searchGroup.communityGroup.image }"
+<%-- 								<img class="card-img" src="${searchGroup.communityGroup.storedName }" --%>
+								<img class="card-img" src="${searchGroup.image }"
 									alt="Card image">
 								<div class="card-img-overlay">
-									<h4 class="card-title">${searchGroup.communityGroup.title }</h4>
+									<h4 class="card-title">${searchGroup.title }</h4>
 
 									<c:forEach items="${keywordList }" var="keyword">
 										<c:if
-											test="${searchGroup.communityGroup.idx eq keyword.group_idx}">
+											test="${searchGroup.idx eq keyword.group_idx}">
 											<p class="card-text">#${keyword.keyword }</p>
 										</c:if>
 									</c:forEach>
@@ -145,7 +146,7 @@
 											<button type="button" class="btn btn-primary">가입하기</button> <br>
 											<br>
 											<button type="button" class="btn btn-danger"
-												onclick="moveURL(${searchGroup.communityGroup.idx })">상세보기</button>
+												onclick="moveURL(${searchGroup.idx })">상세보기</button>
 										</a> <br> <br> <br>
 									</div>
 								</div>
@@ -168,7 +169,7 @@
 						<div class="card bg-dark text-white">
 							<div class="hovereffect">
 								<img class="card-img"
-									src="${searchCategoryGroup.communityGroup.image }"
+									src="${searchCategoryGroup.communityGroup.storedName }"
 									alt="Card image">
 								<div class="card-img-overlay">
 									<h4 class="card-title">${searchCategoryGroup.communityGroup.title }</h4>
@@ -213,7 +214,7 @@
 						<div class="card bg-dark text-white">
 							<div class="hovereffect">
 								<img class="card-img"
-									src="${searchKeywordGroup.communityGroup.image }"
+									src="${searchKeywordGroup.communityGroup.storedName }"
 									alt="Card image">
 								<div class="card-img-overlay">
 									<h4 class="card-title">${searchKeywordGroup.communityGroup.title }</h4>
@@ -252,7 +253,11 @@
 	</div>
 </div>
 
-
+			<c:if test="${empty searchCategoryGroup && !empty searchGroup && empty searchKeywordGroup  }">
+   				<div style="margin-left: 0px; margin-top: 50px;">
+				<jsp:include page="/WEB-INF/views/zaksim/community/paging/titlePaging.jsp" />
+			</div>
+			</c:if>
 
 
 <div class="col" style="margin-bottom: 300px;"></div>

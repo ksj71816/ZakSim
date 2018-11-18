@@ -87,10 +87,6 @@ public class Challengers {
 	@RequestMapping(value="/challengers", method=RequestMethod.POST)
 	public void challengersPost(Model model, String select, String search) {
 		
-		System.out.println(select);
-		System.out.println("---------------");
-		System.out.println(search);
-		
 		
 		
 	}

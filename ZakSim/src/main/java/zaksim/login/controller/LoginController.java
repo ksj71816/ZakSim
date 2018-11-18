@@ -1,5 +1,6 @@
 package zaksim.login.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,10 +43,21 @@ public class LoginController {
 		if ( memberService.login(memberDto) ) {
 			memberDto = memberService.memberInfo(memberDto);
 			
-//          로그인 후, 회원정보 가져오기 테스트 - 완료
-//			logger.info(memberDto.getId().toString());
-//			logger.info(memberDto.getNick().toString());
-//			logger.info(memberDto.getMemberType());
+			Date before15 = new Date();
+			before15.setTime(new Date().getTime()-(long)1000*60*60*24*15);
+			
+			if(memberDto.getSuspensionDate() != null 
+					&& memberDto.getSuspensionDate().before(before15)) {
+				
+				memberService.updateStatusToNormal(memberDto);
+			
+			} else if(memberDto.getSuspensionDate() != null 
+					&& !memberDto.getSuspensionDate().before(before15)) {	// 계정 정지 기간 - 로그인 안됨
+			
+				session.setAttribute("login", false);
+				return "redirect:/zaksim/login/login"; // 로그인 실패시 로그인 화면으로 리다이렉트
+			
+			}
 			
 			session.setAttribute("login", true);
 			session.setAttribute("login_idx", memberDto.getIdx());
@@ -78,12 +90,12 @@ public class LoginController {
 	@RequestMapping(value="/zaksim/login/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session) {
 		
-		if((Boolean)session.getAttribute("adminLogin") != null && (Boolean)session.getAttribute("adminLogin")) {
+//		if((Boolean)session.getAttribute("adminLogin") != null && (Boolean)session.getAttribute("adminLogin")) {
 			session.invalidate();
-			session.setAttribute("adminLogin", true);
-		} else {
-			session.invalidate();
-		}
+//			session.setAttribute("adminLogin", true);
+//		} else {
+//			session.invalidate();
+//		}
 		
 		return "redirect:/zaksim/main/home"; // 메인화면으로 리다이렉트
 	}

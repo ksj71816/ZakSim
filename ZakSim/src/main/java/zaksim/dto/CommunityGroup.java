@@ -24,6 +24,8 @@ public class CommunityGroup {
 
     // 그룹 이미지 
     private String image;
+    
+    private String storedName;
 
     // 설정 인원 ~100
     private int max;
@@ -157,11 +159,22 @@ public class CommunityGroup {
 		this.likeNum = likeNum;
 	}
 
+	public String getStoredName() {
+		return storedName;
+	}
+
+	public void setStoredName(String storedName) {
+		this.storedName = storedName;
+	}
+
 	@Override
 	public String toString() {
 		return "CommunityGroup [currval=" + currval + ", idx=" + idx + ", member_idx=" + member_idx + ", category_idx="
-				+ category_idx + ", title=" + title + ", content=" + content + ", image=" + image + ", max=" + max
-				+ ", open_date=" + open_date + ", secret=" + secret + ", password=" + password + ", communityCategory="
-				+ communityCategory + ", zakSimMember=" + zakSimMember + ", likeNum=" + likeNum + "]";
+				+ category_idx + ", title=" + title + ", content=" + content + ", image=" + image + ", storedName="
+				+ storedName + ", max=" + max + ", open_date=" + open_date + ", secret=" + secret + ", password="
+				+ password + ", communityCategory=" + communityCategory + ", zakSimMember=" + zakSimMember
+				+ ", likeNum=" + likeNum + "]";
 	}
+
+
 }

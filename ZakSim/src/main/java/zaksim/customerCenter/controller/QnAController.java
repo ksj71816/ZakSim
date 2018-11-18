@@ -164,7 +164,7 @@ public class QnAController {
 		
 		// ----- 파일 첨부 -----
 		logger.info("[QnAController] file : " + file.getOriginalFilename());
-		if (file != null && file.getOriginalFilename() != null) { // 파일이 있을 경우
+		if (file != null && file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) { // 파일이 있을 경우
 		QnAFile qnaFile = qnafileService.getFilePath(file); // 파일 설정
 			// 업로드할 파일이 있을 경우
 			qnaFile.setQnaIdx(qnaIdx); // 문의글 인덱스 저장

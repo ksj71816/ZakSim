@@ -71,5 +71,8 @@ public interface ZakSimMemberService {
 
 	// 방문수 증가
 	public void plusVisits();
+
+	// 계정 정지 풀기
+	public void updateStatusToNormal(ZakSimMember memberDto);
 	
 }

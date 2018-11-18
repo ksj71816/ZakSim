@@ -8,16 +8,14 @@
 	<!-- body -->
 	<div class="py-3">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<h1>이용안내</h1>
-				</div>
-			</div>
+			<div class="row mt-5">
+		    	<h2 class="ml-3 pl-2 pt-1 menuTitle dohyeon">이용안내</h2>
+		    </div>
 		</div>
 	</div>
 	<div>
 		<div class="container">
-			<div class="row redRow">
+			<div class="row redRow mt-5">
 				<div class="col-md-5">
 					<img class="d-block mx-auto img-fluid" id="img-guid"
 						src="/resources/image/이용안내_도전.PNG">
@@ -69,8 +67,8 @@
 		</div>
 	</div>
 	<div>
-		<div class="container">
-			<div class="row">
+		<div class="container mb-5">
+			<div class="row mb-5">
 				<div class="col-md-7 p-2">
 					<p class="title">4. 랭킹</p>
 					<p class="content">

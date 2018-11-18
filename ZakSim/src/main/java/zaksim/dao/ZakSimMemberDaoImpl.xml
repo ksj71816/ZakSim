@@ -184,7 +184,7 @@
  </select>
  
  <select id="checkVisits" resultType="int">
- 	SELECT COUNT(*) FROM Visits WHERE VISIT_DATE=sysdate
+ 	SELECT COUNT(*) FROM Visits WHERE to_date(visit_date, 'yyyy-mm-dd') = to_date(sysdate, 'yyyy-mm-dd')
  </select>
  
  <update id="updateVisits">
@@ -194,5 +194,11 @@
  <insert id="insertVisits">
  	INSERT INTO Visits VALUES (sysdate, 1)
  </insert>
+ 
+ <update id="updateMemberStatusToNormal" parameterType="zaksim.dto.ZakSimMember">
+ 	UPDATE zakSimMember
+ 	SET status='normal'
+ 	WHERE id=#{id}
+ </update>
   
   </mapper>

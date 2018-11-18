@@ -14,6 +14,7 @@
 		<result column="title" property="title" />
 		<result column="content" property="content" />
 		<result column="image" property="image" />
+		<result column="storedName" property="storedName" />
 		<result column="max" property="max" />
 		<result column="open_date" property="open_date" />
 		<result column="secret" property="secret" />
@@ -40,16 +41,22 @@
 	</resultMap>
 
 
-<!-- 	<select id="members" resultMap="GroupMember" parameterType="int"> -->
-<!-- 		select * from groupmember m, communitygroup g where m.group_idx = -->
-<!-- 		g.idx -->
-<!-- 	</select> -->
 
-	<select id="members" resultMap="GroupMember" >
-		select distinct m.member_idx from groupmember m, zaksimmember z where
-		z.idx = m.member_idx
+
+	<select id="members" parameterType="int" resultType="zaksim.dto.ZakSimMember">
+		SELECT Z.name, Z.nick, Z.idx
+		FROM groupMember g, zaksimMember Z 
+		WHERE g.member_idx = z.idx
+		AND g.group_idx = ${value}
 	</select>
 
+	<select id="cntMember" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM groupMember WHERE idx =${value}
+	</select>
 
-
+	<delete id="withdrawMember" parameterType="zaksim.dto.GroupMember">
+		DELETE FROM groupMember 
+		WHERE group_idx=#{group_idx} AND member_idx=#{member_idx}
+	</delete>
+	
 </mapper>
