@@ -62,7 +62,7 @@
                     <c:forEach var="categoryList" items="${categoryList }">
                             <div class="card bg-dark text-white">
                             <div class="hovereffect" style="cursor: pointer;" onclick="categoryClick(${categoryList.idx})">
-                                <img class="card-img" src="${categoryList.storedName }" alt="Card image">
+                                <img class="card-img" src="${categoryList.image }" alt="Card image">
                                 <div class="card-img-overlay">
                                     <h4 class="card-title">${categoryList.category }</h4>
                                 </div>

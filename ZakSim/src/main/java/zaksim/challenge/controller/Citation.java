@@ -1,5 +1,10 @@
 package zaksim.challenge.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -24,6 +29,8 @@ public class Citation {
 	
 	@Autowired ChallengeInfoService chalinfosv;
 	@Autowired CitationService citationsv;
+	
+	
 	
 	@RequestMapping(value="/citation", method=RequestMethod.GET)
 	public void citationGet(Model model, HttpSession session) {
@@ -75,11 +82,14 @@ public class Citation {
 		
 		Board citation = new Board();
 		
+
+		
 		// 멀티파트 이미지 파일 경로 처리
 		citationsv.getImagePath(fileselect);
 		logger.info("이미지 경로 확인 : "+citationsv.getImagePath(fileselect));
 		
-		citation.setImage(citationsv.getImagePath(fileselect));
+		citation.setImage(fileselect.getOriginalFilename());
+		citation.setStoredName(citationsv.getImagePath(fileselect));
 		
 		// 인증 시퀀스 가져오기
 		int idx=citationsv.getSeqNextval();

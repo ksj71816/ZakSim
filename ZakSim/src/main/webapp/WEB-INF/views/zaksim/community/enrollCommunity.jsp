@@ -21,25 +21,31 @@ ${commentList }
 			<div class="col-sm-11 clearfix" style="margin-top: 50px; margin-right: 50px;" id="btnDiv">
 				<strong style="font-size: 150%">${groupInfo.title }</strong>
 				<div style="float:right;">
-					<c:if test="${groupInfo.member_idx eq sessionScope.login_idx }">
-						<button type="button" class="btn btn-outline-danger" style="margin-left: 30px;" data-toggle="modal" data-target="#updateCommunityModal">수정하기</button>
-						<button type="button" class="btn btn-link" id="withdraw"><small style="vertical-align: -webkit-baseline-middle;color:gray;">&gt;탈퇴하기</small></button>
+					<c:if test="${ groupInfo.member_idx eq sessionScope.login_idx}">
+						<button type="button" class="btn btn-outline-danger ml-1" style="" data-toggle="modal" data-target="#updateCommunityModal">수정하기</button>
 					</c:if>
+					<% boolean memberFlag = false; %>
+					<c:forEach items="${groupMember }" var="member">
+						<c:if test="${member.idx eq sessionScope.login_idx }">
+							<% memberFlag = true; %>
+							<button type="button" class="btn btn-link" id="withdraw"><small style="vertical-align: -webkit-baseline-middle; color:gray;">&gt;탈퇴하기</small></button>
+						</c:if>
+					</c:forEach>
 				
 				</div>
 				<c:if test="${ null ne sessionScope.login_idx}">
-					<c:if test="${groupInfo.member_idx ne sessionScope.login_idx }">
-						<button type="button" class="btn btn-outline-info" style="float: right; color: red; border-color: red; margin-left: 30px; margin-right: 30px;" data-toggle="modal" data-target="#updateCommunityModal">
+					<c:if test="<%=!memberFlag%>">
+						<button type="button" class="btn btn-outline-info ml-2" style="float: right; color: red; border-color: red;" data-toggle="modal" data-target="#updateCommunityModal">
 							가입하기
 						</button>
-					</c:if>               
+					</c:if>
 					<c:if test="${like }">
-						<button type="button" class="btn btn-outline-info noBtnRecommend" style="float: right; margin-right: 30px; margin-left: 30px;" id="recommendBtn">
+						<button type="button" class="btn btn-outline-info noBtnRecommend ml-1" style="float: right;" id="recommendBtn">
 				          	좋아요 취소&nbsp; ${groupLike.likeNum }
 						</button>
 					</c:if>
 					<c:if test="${!like }">
-						<button type="button" class="btn btn-outline-success btnRecommend" style="float: right; margin-right: 30px; margin-left: 30px;" id="recommendBtn">
+						<button type="button" class="btn btn-outline-success btnRecommend ml-1" style="float: right;" id="recommendBtn">
 							좋아요 &nbsp; ${groupLike.likeNum }
 						</button>
 					</c:if>					   
@@ -71,7 +77,7 @@ ${commentList }
 							<span style="font-size: 150%;">/ 최대 ${groupInfo.max }명</span>
 							<br>
 							<c:forEach items="${groupMember }" var="member">
-							<span style="margin-right:3px;">${member.nick }</span>
+								<span style="margin-right:3px;">${member.nick }</span>
 							</c:forEach>
 						</div>
 
@@ -99,11 +105,15 @@ ${commentList }
        	</c:forEach>
 	</div><!-- end of row -->
 
-	<hr style="margin-top: 10px; margin-bottom: 30px; border-color: black;">
+	<hr style="margin-top: 10px; margin-bottom: 30px; border-color: indianred;">
 	<div style="margin-bottom: 100px;">
-		<button type="button" class="btn btn-outline-secondary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="float: right; margin-right: 30px;">
-			작성하기
-		</button>
+		<c:forEach items="${groupMember }" var="member">
+			<c:if test="${member.idx eq sessionScope.login_idx }">
+				<button type="button" class="btn btn-outline-secondary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="float: right; margin-right: 30px;">
+					작성하기
+				</button>
+			</c:if>
+		</c:forEach>
 	</div>
 	<br>
 
@@ -116,20 +126,19 @@ ${commentList }
 						<label for="recipient-name" class="form-control-label"><strong>게시글을 작성하세요</strong></label>
 						<br>
 						<div class="form-inline" style="margin-left: auto; margin-right: auto;">
-							<div class="radio" style="margin-left: 200px; margin-right: 100px;">
+							<div class="radio" style="margin-left: 200px; margin-right: 100px; display: none;">
 								<label>
 									<input type="radio" name="certification" class="textKind" value=0 checked> 일반 글
                                    </label>
 							</div>
-							<div class="radio">
-								<label>
-									<input type="radio" name="certification" class="textKind" value=1> 인증 글
-								</label>
-							</div>
-							<br><br>
-							<div>
-								<br>
-								<input type="file" name="file" id="filee" style="margin-left: 200px;" />
+<!-- 							<div class="radio"> -->
+<!-- 								<label> -->
+<!-- 									<input type="radio" name="certification" class="textKind" value=1> 인증 글 -->
+<!-- 								</label> -->
+<!-- 							</div> -->
+							<div class="custom-file" style="text-align: left;">
+								<input class="custom-file-input" type="file" name="file" id="filee"/>
+								<label class="custom-file-label" for="customFile">Choose file</label>
 							</div>
 						</div>
 					</div>
@@ -150,8 +159,16 @@ ${commentList }
 	<c:forEach items="${boardList}" var="board">
 		<div class="card mb-5" style="margin-left: 150px; margin-right: 150px;">
 			<div class="ml-4 mr-4">
-				<h4 class="card-title mt-4" style="font-family: Dohyeon;">${board.zakSimMember.nick}</h4>
-				<hr>
+				<div class="row">
+					<div class="col-md-10">
+						<h4 class="card-title mt-4" style="font-family: Dohyeon;">${board.zakSimMember.nick}</h4>
+					</div>
+					<div class="col-md-2 align-self-center" style="text-align: right;">
+						<small style="color: red; cursor:pointer; text-decoration: underline;" onclick="deleteBoard(${board.idx});">삭제</small>
+						<small style="color: blue; cursor:pointer; text-decoration: underline;" onclick="report(${board.idx});">신고</small>
+					</div>
+				</div>
+				<hr class="m-0">
 				<p class="card-text mt-4">${board.content}</p>
 				<p class="card-text mb-3">
 				   <small class="text-muted"><fmt:formatDate pattern = "yyyy-MM-dd" value = "${board.written_date}" /></small>
@@ -199,28 +216,29 @@ ${commentList }
 
                <div>
                   <span><strong>사유선택 : </strong></span> <span
-                     style="color: lightgray; font-size: 12px;">여러 사유에 해당하는 경우,
-                     대표적인 사유 1개를 선택해주세요</span>
+                     style="color: lightgray; font-size: 12px;">
+                     여러 사유에 해당하는 경우, 대표적인 사유 1개를 선택해주세요</span>
                </div>
                <br>
                <div class="radio" style="margin-left: 80px;">
-                  <input type="radio" name="report"> 부적절한 홍보 게시글 <br> <input
-                     type="radio" name="report"> 음란성 또는 청소년에게 부적합한 내용 <br>
-                  <input type="radio" name="report"> 명예회손 / 사생활 침해 저작권침해 등 <br>
-                  <input type="radio" name="report"> 기타
+                  <input type="radio" name="category"> 부적절한 홍보 게시글 <br> <input
+                     type="radio" name="category"> 음란성 또는 청소년에게 부적합한 내용 <br>
+                  <input type="radio" name="category"> 명예회손 / 사생활 침해 저작권침해 등 <br>
+                  <input type="radio" name="category"> 기타
 
                </div>
                <div>
                	<textarea rows="5" cols="" name="reason"></textarea>
+               </div>
+               <div style="display: none;">
+               	<input type="text" name="boardIdx"/>
                </div>
             </div>
          </div>
          <div class="modal-footer">
             <div>
                <button type="button" class="btn btn-danger">신고하기</button>
-               <button type="button" class="btn btn-secondary"
-                  data-dismiss="modal">취소</button>
-
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
             </div>
          </div>
       </div>
@@ -395,7 +413,7 @@ ${commentList }
 <script type="text/javascript">
 $(document).ready(function() {
 	$("button#withdraw").on('click', function(){
-		if(confirm("정말로 커뮤티티를 탈퇴 하시겠습니까?")){
+		if(confirm("정말로 그룹을 탈퇴 하시겠습니까?")){
 			var $withdraw = $("<form>").attr("id","withdrawForm").attr("action","/zaksim/community/outCommunity").attr("method", "post");
 			$withdraw.append("<input type='text' name='group_idx' value='"+${param.idx}+"'/>");
 			$("body").append($withdraw);
@@ -550,7 +568,7 @@ $(document).ready(function() {
    $(document).ready(function() {
 
       // 댓글 더 보기
-      $(".commentOpen").click(function() {
+      $("#commentOpen").click(function() {
     	 //var i = $(this).
          if($("#openComment").css("display")=="none"){
         	 ajaxBoardComment();
@@ -1067,6 +1085,14 @@ $("#btnDiv").on("click", ".noBtnRecommend", function() {
 			}
 		});	
    });
+   
 
+   function report(boardIdx) {
+	   $("#reportModal").modal('show');
+   }
+   
+   function deleteBoard(boardIdx) {
+	   
+   }
 </script>
 

@@ -44,7 +44,7 @@
 
 
 	<select id="members" parameterType="int" resultType="zaksim.dto.ZakSimMember">
-		SELECT Z.name, Z.nick
+		SELECT Z.name, Z.nick, Z.idx
 		FROM groupMember g, zaksimMember Z 
 		WHERE g.member_idx = z.idx
 		AND g.group_idx = ${value}
@@ -58,4 +58,5 @@
 		DELETE FROM groupMember 
 		WHERE group_idx=#{group_idx} AND member_idx=#{member_idx}
 	</delete>
+	
 </mapper>

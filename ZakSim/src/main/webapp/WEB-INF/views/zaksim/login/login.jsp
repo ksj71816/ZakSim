@@ -29,9 +29,9 @@
 		</a>
 	</div>
 	
-	<div class="py-5">
+	<div class="py-5 mt-5">
 		<div class="container">
-			<p class="col-md-5 mx-auto" id="loginFailMessage"></p>
+			<p class="col-md-5 mx-auto text-center" id="loginFailMessage"></p>
 			<div class="row">
 				<div class="col-md-5 mx-auto py-2 shadow-sm" id="login_form">
 					<form action="/zaksim/login/login" method="post">
@@ -76,26 +76,28 @@
 	</div>
 
 <%@ include file="../main/footer.jsp" %>
-<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+<!-- <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script> -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	var session = <%=session.getAttribute("login")%>;
 	console.log("LOGIN 세션 : " + session);
 	
 	if(session == false) {
-		$('#loginFailMessage').text('※ 아이디랑 비밀번호를 확인해주세요.');
+		$('#loginFailMessage').html('※ 아이디와 비밀번호를 확인해주세요.<br>(계정 정지 기간인 경우 로그인이 불가합니다.)');
 		
 	}
 	
 	/* 네이버아디디로로그인 초기화 Script */
-	var naverLogin = new naver.LoginWithNaverId(
-			{
-				clientId: "3Tfw74iqoE6anSkM99vS",
-				callbackUrl: "http://localhost:8088/zaksim/login/naverLogin",
-				isPopup: true, /* 팝업을 통한 연동처리 여부 */
-				loginButton: {color: "green", type: 3, height: 55} /* 로그인 버튼의 타입을 지정 */
-			}
-		);
+// 	var naverLogin = new naver.LoginWithNaverId(
+// 			{
+// 				clientId: "3Tfw74iqoE6anSkM99vS",
+// 				callbackUrl: "http://localhost:8088/zaksim/login/naverLogin",
+// 				isPopup: true, /* 팝업을 통한 연동처리 여부 */
+// 				loginButton: {color: "green", type: 3, height: 55} /* 로그인 버튼의 타입을 지정 */
+// 			}
+// 		);
 		
-	/* 설정정보를 초기화하고 연동을 준비 */
-	naverLogin.init();
+// 	/* 설정정보를 초기화하고 연동을 준비 */
+// 	naverLogin.init();
 </script>
