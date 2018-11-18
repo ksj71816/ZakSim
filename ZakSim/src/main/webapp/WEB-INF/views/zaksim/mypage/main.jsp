@@ -50,7 +50,20 @@
 					</div>
 	
 		          	<div class="mt-3 mb-3">
-		          		<a href="/zaksim/challenge/citation" class="btn btn-sm btn-outline-danger"><i class="fas fa-check" style="color: #ff3d00;"></i> 인증하기</a>
+<!-- 		          		<a href="/zaksim/challenge/citation" class="btn btn-sm btn-outline-danger"><i class="fas fa-check" style="color: #ff3d00;"></i> 인증하기</a> -->
+		          	
+		          	<c:if test="${setcit eq 'do'}">
+		          	 	<a class="btn btn-sm btn-outline-danger" onclick="doSwal()"><i class="fas fa-check" style="color: #ff3d00;"></i> 인증하기</a>
+		        	</c:if>
+		        
+		        	<c:if test="${setcit eq 'wait'}">
+		          		 <a class="btn btn-sm btn-outline-danger" onclick="waitSwal()"><i class="fas fa-check" style="color: #ff3d00;"></i> 도전 대기중</a>
+		        	</c:if>
+		        
+		        	<c:if test="${setcit eq 'stop'}">
+		          	 	<a class="btn btn-sm btn-outline-danger" onclick="stopSwal()"><i class="fas fa-check" style="color: #ff3d00;"></i> 도전 인증</a>
+		        	</c:if>
+		          	
 		          	</div>
 		        </c:if>
 		        
@@ -456,6 +469,52 @@ function viewCitation(idx,image,content) {
 		  imageAlt: 'Custom image',
 		  confirmButtonText: '닫기'
 		});
+}
+
+function doSwal(){
+	
+	swal({
+		  title: '도전 인증을 하시겠습니까?',
+		  text: '도전 인증은 당일 1회만 가능 합니다 ',
+		  showCancelButton: true,
+		  confirmButtonColor: '#2E82CC',
+		  cancelButtonColor: '#FC3A3A',
+		  confirmButtonText: '확인',
+		  cancelButtonText: '취소'
+		}).then((result) => {
+		  if (result.value) {
+	
+			  document.location.href = "/zaksim/challenge/citation";
+			  
+		  }
+		})
+	
+}
+
+
+function stopSwal(){
+	
+	swal({
+		  title: '알림',
+		  text: '이미 인증 처리가 완료되었습니다.',
+		  type: 'warning',
+		  confirmButtonColor: 'gray',
+		  confirmButtonText: '확인',
+		})
+	
+}
+
+
+function waitSwal(){
+	
+	swal({
+		  title: '알림',
+		  text: '아직 도전을 시작하지 않았습니다.',
+		  type: 'warning',
+		  confirmButtonColor: 'gray',
+		  confirmButtonText: '확인',
+		})
+	
 }
 
 </script>

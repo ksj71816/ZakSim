@@ -117,7 +117,7 @@
 
 				<div class="form-inline">
 					<c:forEach var="searchGroup" items="${searchGroup }">
-
+						<input style="display: none;" value="${searchGroup.idx}">
 						<div class="card bg-dark text-white mb-4">
 							<div class="hovereffect">
 <%-- 								<img class="card-img" src="${searchGroup.communityGroup.storedName }" --%>
@@ -140,12 +140,56 @@
 <!-- 											aria-valuemax="100">100%</div> -->
 <!-- 									</div> -->
 									<div class="overlay">
-										<a class="info" href="#">
-											<button type="button" class="btn btn-primary">가입하기</button> <br>
-											<br>
-											<button type="button" class="btn btn-danger"
-												onclick="moveURL(${searchGroup.idx })">상세보기</button>
-										</a> <br> <br> <br>
+										<a class="info">
+                              <% boolean groupFlag =  false; %>
+                              <c:forEach var="groupMemberExist" items="${groupMemberExist }">
+
+                                    <c:if test="${groupMemberExist.group_idx eq searchGroup.idx }">
+                                       <% groupFlag = true; %>
+                                    </c:if>
+                              </c:forEach>   
+                              
+                              <!-- 로그인 했을 때 -->
+                              <c:if test="${sessionScope.login }">
+                                 
+                              <!-- 가입했을 때 -->
+                                 <c:if test="<%=groupFlag  %>">
+                                    <button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${searchGroup.idx }, 0)">상세보기</button>
+                                 </c:if>
+                                 
+                                 <!-- 가입 안 했을 때 -->
+                                 <c:if test="<%=!groupFlag  %>">
+                                 
+                                 <!-- 비공개일 떄 -->
+                                    <c:if test="${searchGroup.secret == 1 }">
+                                    <button type="button"  class="btn btn-primary secretJoin">가입하기</button>
+                                    <br>
+                                    <br>
+                                 </c:if>
+                                 
+                                 <!-- 공개일 때 -->
+                                   <c:if test="${searchGroup.secret == 0 }"> 
+                                    <button type="button" class="btn btn-primary join" id ="noPassJoin">가입하기</button> 
+                                    <br> 
+                                    <br> 
+                                  </c:if>    
+                                    
+                                    <button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${searchGroup.idx }, ${searchGroup.secret })">상세보기</button>
+                                 
+                              
+                                 </c:if>
+                              
+                              </c:if>
+                              
+                              <!-- 로그인 안했을 때 -->
+                              <c:if test="${!sessionScope.login }">
+                                     <button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${searchGroup.idx }, ${searchGroup.secret })">상세보기</button>
+                              </c:if>
+                              
+                           </a>
 									</div>
 								</div>
 							</div>
@@ -437,65 +481,310 @@
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 
 <script type="text/javascript">
-	$(function() {
-		$("#imgInp").on('change', function() {
-			readURL(this);
-		});
+$(document).ready(function() {
+
+	$(window).scroll(function() {
+		if ($(this).scrollTop() > 200) {
+			$('.top-button').fadeIn();
+		} else {
+			$('.top-button').fadeOut();
+		}
 	});
 
-	function readURL(input) {
-		if (input.files && input.files[0]) {
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				$('#image').attr('src', e.target.result);
-			}
-			reader.readAsDataURL(input.files[0]);
-		}
-	}
 
-	function content(obj) {
-		obj.style.height = "1px";
-		obj.style.height = (12 + obj.scrollHeight) + "px";
-	}
-</script>
 
-<script type="text/javascript">
-	$(document).ready(function() {
 
-		$(window).scroll(function() {
-			if ($(this).scrollTop() > 200) {
-				$('.top-button').fadeIn();
-			} else {
-				$('.top-button').fadeOut();
-			}
+
+	
+	/* 가입한 모임 더 보기 */
+	$("#joinedGroupViewMore").click(function() {
+		location.href = "/zaksim/community/joinCommunity";
+	});
+
+	/* 인기모임 더 보기 */
+	$("#popularGroupViewMore").click(function() {
+		location.href = "/zaksim/community/popularCommunity";
+	});
+
+	/* 새로운모임 더 보기 */
+	$("#newGroupViewMore").click(function() {
+		location.href = "/zaksim/community/newCommunity";
+	});
+
+	/* 카테고리 더 보기 */
+	$("#categoryViewMore").click(function() {
+		location.href = "/zaksim/community/categoryCommunity";
+	});
+
+});
+
+
+function moveURL(url, secret) {
+	
+	if(secret == 1){
+		swal({
+				type: 'error',
+				title: 'Oops...',
+				text: '비밀커뮤니티입니다'
 		});
+		return;
+	}
+	else{
+	document.location.href = "/zaksim/community/enrollCommunity?idx="+url;
+	}
+}
 
-		$('.top-button').click(function() {
-			$('html,body').animate({
-				scrollTop : 0
-			}, 400);
+function categoryClick(categoryIdx){
+//		document.location.href = "/zaksim/community/clickCategoryCommunity";
+	document.location.href = "/zaksim/community/clickCategoryCommunity?category_idx="+categoryIdx;
+	
+}
+
+
+function create() {
+	var commName = document.getElementById("commName").value;
+	var commMax = document.getElementById("commMax").value;
+	var pw1 = document.getElementById("password1").value;
+	var pw2 = document.getElementById('password2').value;
+	var keyword= document.getElementById('keyword').value;
+	var contentText= document.getElementById('contentText').value;
+	
+	var radioVal = $('input[name="secret"]:checked').val();
+	
+	if(radioVal ==0 ){
+
+		
+		if(commName == null || commName==''){
+			swal({
+					type: 'error',
+					title: 'Oops...',
+					text: '커뮤니티명을 입력하세요.'
+			});
 			return false;
-		});
+			
+		}
+		if(commMax == null || commMax==''){
+			swal({
+					type: 'error',
+					title: 'Oops...',
+					text: '최대인원을 입력하세요.'
+			});
+			return false;
+			
+		}
+		if(keyword == null || keyword==''){
+			swal({
+					type: 'error',
+					title: 'Oops...',
+					text: '키워드를 입력하세요.'
+			});
+			return false;
+			
+		}
+		else if(contentText== null || contentText==''){
+			swal({
+					type: 'error',
+					title: 'Oops...',
+					text: '소개글을 입력하세요.'
+			});
+			return false;
+		}
+		else{
+			swal({
+				type: 'success',
+				title: 'success ! ',
+				text: '생성되었습니다.'
+		}).then((result) => {
+			  if (result.value) {
+					console.log("안쪽!!!");
+					location.href = "/zaksim/community/communityMain";
+				  }
+				})
+			return true;
+		}
 		
-		// 공개 클릭 시 숨기기 / 비공개 클릭 시 보이기
-		$(".screctRadio").hide();
-
-		$("#screctRadio1").click(function() {
-			$(".screctRadio").hide();
-		});
-
-		$("#screctRadio2").click(function() {
-			$(".screctRadio").fadeIn();
-		});
-
-		$("#join").click(function() {
-			$("#createModal").modal();
-		});
+	}
+	
+	else{			
+		if(commName == null || commName==''){
+		swal({
+			type: 'error',
+			title: 'Oops...',
+			text: '커뮤니티명을 입력하세요.'
+	});
+	return false;
+	
+}
+if(commMax == null || commMax==''){
+	swal({
+			type: 'error',
+			title: 'Oops...',
+			text: '최대인원을 입력하세요.'
+	});
+	return false;
+	
+}
+		if(pw1 == null || pw1==''){
+			swal({
+					type: 'error',
+					title: 'Oops...',
+					text: '비밀번호를 입력하세요.'
+			});
+			return false;
+		}
+	
+		else if(pw2 == null || pw2==''){
+			swal({
+					type: 'error',
+					title: 'Oops...',
+					text: '비밀번호 확인을 입력하세요.'
+			});
+			return false;
+		}
+	
+		else if(pw1 != pw2){
+			swal({
+					type: 'error',
+					title: 'Oops...',
+					text: '비밀번호가 일치하지 않습니다.'
+			});
+			return false;
+		}
 		
+		else if(keyword == null || keyword==''){
+			swal({
+					type: 'error',
+					title: 'Oops...',
+					text: '키워드를 입력하세요.'
+			});
+			return false;
+			
+		}
+		else if(contentText== null || contentText==''){
+			swal({
+					type: 'error',
+					title: 'Oops...',
+					text: '소개글을 입력하세요.'
+			});
+			return false;
+		}
+	
+		else{
+			return true;
+		}
+	
+	}
+}
+
+$(".joinedComm").click(function() {
+
+	var idxx = $(".idxxx").val();
+	var commPass = $("#commPass").val();
+	
+
+	
+	$.ajax({
+		type: "post"
+		, url: "/zaksim/community/secretCommunityJoin"
+		, dataType: "json"
+		, data: {
+			idx: idxx,
+			password: commPass
+		}
+		, success: function(data) {
+			
+			if(commPass == null || commPass==''){
+				swal({
+					type: 'error',
+					title: 'Oops...',
+					text: '비밀번호를 입력하세요.'
+				});
+				
+				return false;
+			}
+			
+			if(data.result =='1'){
+				swal({
+					type: 'success',
+					title: 'success !',
+					text: data.success
+				}).then((result) => {
+					  if (result.value) {
+							console.log("안쪽!!!");
+//								location.href = "/zaksim/community/enrollCommunity?idx="+idxx;
+							window.location.reload();
+						  }
+						})
+			}
+			else{
+				swal({
+					type: 'error',
+					title: 'Oops...',
+					text: '비밀번호가 틀립니다.'
+				});
+			return false;
+			}
+			
+		}
+		, error: function(e) {
+			console.log("fail");
+			console.log(e.responseText);
+		}
+	});
+
+	
+});
+
+
+// 비밀커뮤니티 가입하기 눌렀을 때 인덱스 넘기기
+$(".secretJoin").click(function() {
+	var idxx = $(this).parent().parent().parent().parent().children("input").eq(0).val();
+	
+	console.log(idxx);
+	
+	$("#join").modal('show');
+	// value 추가
+	$(".idxxx").attr({
+			value : idxx
 	});
 	
-	function moveURL(url) {
-		document.location.href = "/zaksim/community/enrollCommunity?idx="+url;
-	}
-</script>
+});
 
+$(".join").click(function() {
+	
+	var idxx = $(this).parent().parent().parent().parent().children("input").eq(0).val();
+	
+	$.ajax({
+		type: "post"
+		, url: "/zaksim/community/join"
+		, dataType: "json"
+		, data: {
+			idx: idxx
+		}
+		, success: function(data) {
+			
+			console.log(idxx);
+			console.log(data.success);
+			swal({
+				type: 'success',
+				title: 'success !',
+				text: data.success
+			}).then((result) => {
+				  if (result.value) {
+						console.log("안쪽!!!");
+//							location.href = "/zaksim/community/enrollCommunity?idx="+idxx;
+						window.location.reload();
+					  }
+					})
+			
+		}
+		, error: function(e) {
+			console.log("fail");
+			console.log(e.responseText);
+		}
+	});
+	
+	
+	
+});	
+</script>

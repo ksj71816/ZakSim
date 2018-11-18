@@ -15,16 +15,21 @@
 <link rel="stylesheet" type="text/css" href="/css/challenge/image_hov.css">
   
 
+
+<div class="py-3">
+	<div class="container">
+		<div class="row mt-5">
+	    	<h2 class="ml-3 pl-2 pt-1 zaksim-title dohyeon">나의 도전</h2>
+	    </div>
+	</div>
+</div>
+
   <!--바디-->
    
-   <div class=" pt-5" style="background-image: url(/resources/image/main/back.webp); 
-   background-color: rgba(240, 200, 240, 0.7);">
-    <div class="container">
+   <div class=" pt-5">
+    <div class="container dohyeon">
       <div class="row  py-4">
-        <div class="col-md-4" >
-          <img class="img-fluid d-block my-2 rounded-circle float-right" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" style="	height: 140px; width: 140px;	border-right-width: 3px;	border-top-width: 3px;	border-bottom-width: 3px;    border-left-width: 3px;	border-style: solid;	border-color: white;">
-        </div>
-        <div class="col-md-6 row" >
+      
           <div class="col-md-12 mt-2 mx-3 text-center">
      
      	<c:if test="${byDayResult eq 'go'}">     
@@ -36,57 +41,46 @@
         </c:if> 
           
           </div>
-       <div class=" mx-3 col-md-12" style=" height:70px;"> 
-		
-		<div class="m-0">
-		<h6 class="mt-1"><b>도전 인증률</b></h6>
-		<div class="progress mb-2" style="height: 25px; border-right-width: 1px;	border-top-width: 1px;	border-bottom-width: 1px;    border-left-width: 1px;	border-style:solid;	border-color: white;"> 
-		    <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:${100*rate.boardNum/rate.dateNum}%">
-		       <fmt:formatNumber value="${100*rate.boardNum/rate.dateNum}" pattern=".00"/>%
-		    </div>
-		</div>
-		</div>
-		
-	</div>
-        </div>
-        <div class="col-md-2" >
-        </div>     
        </div>
-    </div>
-  </div>
-  
-  
-  
-  <div class="py-1" style="background-image: url(/resources/image/main/back.webp); 
-   background-color: rgba(240, 200, 240, 0.7);">
-    <div class="container " >
-      <hr class="my-5">
-      <div class="row  py-3">
+          
+          
+          
+    <c:if test="${byDayResult eq 'go'}">
+          
+          <div class="row  py-3">
         <div class="col-md-2">
         </div>
-        <div class="col-md-8 col-lg-8 rounded  text-center" style="background-color: blanchedalmond;    border-right-width: 5px;	border-top-width: 5px;	border-bottom-width: 5px;    border-left-width: 5px;	border-style: solid;	border-color: white;">
+        <div class="col-md-8 col-lg-8 rounded  text-center" style="border-right-width: 5px;	border-top-width: 5px;	border-bottom-width: 5px;    border-left-width: 5px;	border-style: solid;	border-color: white; background-color: #f2f2f2;">
          
          
-          <h4 class="text-center my-2 mb-4">도전 정보</h4>
+          <h4 class="text-center mt-4 mb-4">도전 정보</h4>
           <hr style="border:2px white solid;"> 
         
-             <a class="my-2 d-flex justify-content-center align-items-end">  <h5 class="mb-0 text-danger"> <fmt:formatDate value="${info.startDate}" pattern="yyyy-MM-dd"/></h5>&nbsp;부터&nbsp; 
+             <a class="mt-4 d-flex justify-content-center align-items-end">  <h5 class="mb-0 text-danger"> <fmt:formatDate value="${info.startDate}" pattern="yyyy-MM-dd"/></h5>&nbsp;부터&nbsp; 
          		<h5 class="mb-0 text-danger"><fmt:formatDate value="${info.endDate}" pattern="yyyy-MM-dd"/></h5>&nbsp;까지 </a>
          
          	 <a class="my-2 d-flex justify-content-center align-items-end"> 도전금&nbsp;<h4 class="mb-0 text-info"> ${info.money}원</h4>을 걸고</a>
           
         	 <a class="my-2 d-flex justify-content-center align-items-end"><h5 class="mb-0 text-danger"><b>${info.title}</b></h5>&nbsp;도전중 </a>  
            
+	            <div class="row justify-content-center">
+					<div class="progress mt-3 mb-2" style=" width: 400px; height: 25px; border-right-width: 1px;	border-top-width: 1px;	border-bottom-width: 1px;    border-left-width: 1px;	border-style:solid;	border-color: white;"> 
+					    <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:${100*rate.boardNum/rate.dateNum}%">
+					       <fmt:formatNumber value="${100*rate.boardNum/rate.dateNum}" pattern="0.00"/>%
+					    </div>
+					</div>
+			     </div>
+           
            <c:if test="${setcit eq 'do'}">
-          	 <a class="btn btn-sm w-25 my-4 text-white" onclick="doSwal()" style="background-color: #962424"> 도전 인증 </a>
+          	 <a class="btn btn-sm w-25 mt-4 mb-5 text-white" onclick="doSwal()" style="background-color: #962424"> 도전 인증 </a>
         	</c:if>
         
         	<c:if test="${setcit eq 'wait'}">
-          	 <a class="btn btn-sm w-25 my-4 text-white" onclick="waitSwal()" style="background-color: #962424"> 도전 대기중 </a>
+          	 <a class="btn btn-sm w-25 mt-4 mb-5 text-white" onclick="waitSwal()" style="background-color: #962424"> 도전 대기중 </a>
         	</c:if>
         
         	<c:if test="${setcit eq 'stop'}">
-          	 <a class="btn btn-sm w-25 my-4 text-white" onclick="stopSwal()" style="background-color: #962424"> 도전 인증 </a>
+          	 <a class="btn btn-sm w-25 mt-4 mb-5 text-white" onclick="stopSwal()" style="background-color: #962424"> 도전 인증 </a>
         	</c:if>
         
         
@@ -97,13 +91,16 @@
   
         </div>
       </div>
-      <hr class="my-5">
+     </c:if> 
+     
+
     </div>
   </div>
+
   
-  
-  <div class="py-3 pb-5" style="background-image: url(/resources/image/main/back.webp); 
-   background-color: rgba(240, 200, 240, 0.7);">
+
+  <div class="mt-5 py-3 pb-5">
+	<hr>
     <div class="container mb-5 ">
       <div class="row mb-5">
       
@@ -133,7 +130,7 @@
           			 <h2 id="title">No Image</h2>
           			 <input id="content" style="display: none;">
           			 
-          			 <a id="btns" class="info text-white" style="display:none; cursor: pointer;">상세보기</a>
+          			 <a id="btns" class="info" style="display:none; cursor: pointer;">상세보기</a>
        		 		</div>
     			</div>
 			</div>
@@ -445,8 +442,6 @@ function haltAlert(){
 
 					    	 	if(data.result=='success'){
 					    	 	
-					    	 
-					    	 		
 					    	 	$('#title').text(data.title);
 					    	 	$('#img').attr("src",data.image);
 					    	 	$('#btns').show();

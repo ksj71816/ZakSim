@@ -7,17 +7,15 @@
 <%@include file="/WEB-INF/views/zaksim/main/header.jsp"%>
 
 
-
-<div class="container" id="zz">
-	<div class="row" style="margin-bottom: 30px;">
-		<div class="col"></div>
-		<div class="col-9">
-			<strong>
-				<h1 style="vertical-align: 100%">커뮤니티</h1>
-			</strong>
-		</div>
-		<div class="col"></div>
+<div class="py-3">
+	<div class="container">
+		<div class="row mt-5">
+	    	<h2 class="ml-3 pl-2 pt-1 zaksim-title dohyeon">커뮤니티</h2>
+	    </div>
 	</div>
+</div>
+<div class="container">
+ 
 	<div class="row">
 		<div class="col"></div>
 		<div class="col-9">

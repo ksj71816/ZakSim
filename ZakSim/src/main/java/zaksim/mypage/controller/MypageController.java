@@ -1,5 +1,6 @@
 package zaksim.mypage.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import zaksim.challenge.service.ChallengeInfoService;
 import zaksim.community.service.CommunityListService;
 import zaksim.dto.Board;
 import zaksim.dto.Challenge;
@@ -34,6 +36,7 @@ public class MypageController {
 	
 	@Autowired MypageService mypageService;
 	@Autowired CommunityListService communityListService;
+	@Autowired ChallengeInfoService chalinfosv;
 	
 	
 	@RequestMapping(value="/main", method=RequestMethod.GET)
@@ -46,6 +49,46 @@ public class MypageController {
 	    	if(ingChalNum > 0) {
 	    		Challenge ingChal = mypageService.viewChallenge(idx);
 	    		Challenge rate = mypageService.viewRate(ingChal.getIdx());	
+	    		
+	    		// 당일 인증 판별
+	    		//최근 인증 날짜
+	     		Board citnew=chalinfosv.getNewCitation(ingChal.getIdx());
+	     		
+	     		Date writeDate= new Date();// 날짜 비교 서비스 매개변수
+	     		
+	     		int citDate=0;	// 인증값 (0=당일인증,  0> 미인증)	// 비교값= 최근 인증날짜
+	     		int chalDate=0; // 도전시작값 (0<= 도전자, 0> 대기자) // 비교값= 도전 시작날짜
+	     		
+	     		// 도전자 or 대기자 판별
+	     		//인증 정보가 있을때 =board가 null이 아닐때		//null이면 에러
+	     		if (citnew!=null){
+	     			//board 테이블에서 최근 인증 날짜 가져오기
+	     			writeDate=citnew.getWritten_date();
+	     		
+	     			// 날짜 비교 서비스 - 현재날짜와 최근 인증 날짜 비교
+	     			citDate=chalinfosv.dateColculation(writeDate);
+
+	     			//당일 인증자 or 미인증자 판별
+	     			if(citDate==0) {		//당일 인증자
+	     				// 도전자- 당일인증자 (인증 페이지 접근x)
+	     				model.addAttribute("setcit", "stop");
+	     			} else if(citDate>0) {	//당일 미인증자
+	     				// 도전자-미인증자,최초인증자 (인증 페이지 접근ok)
+	     				model.addAttribute("setcit", "do");
+	     			}
+	     		} else {		// 도전대기자 or 최초 인증자
+	     			// 날짜 비교 - 현재 날짜와 도전 시작일 비교 ( 0> : 대기자, 0=< 최초인증자)
+	     			chalDate=chalinfosv.dateColculation(ingChal.getStartDate());
+	     			
+	     			if(chalDate>=0) {
+	     				// 도전 대기자 (인증 페이지 접근x)
+	     				model.addAttribute("setcit", "do");
+	     				
+	     			}else{
+	     				// 도전자-미인증자,최초인증자 (인증 페이지 접근ok)
+	     				model.addAttribute("setcit", "do");
+	     			}
+	     		}
 	    		
 	    		model.addAttribute("ingChal", ingChal);
 		        model.addAttribute("rate", rate);
@@ -67,6 +110,7 @@ public class MypageController {
 	        model.addAttribute("groupList", groupList);
 	        model.addAttribute("keywordList", keywordList);
 	        model.addAttribute("endChalList", endChalList);
+
 	}
 
 	

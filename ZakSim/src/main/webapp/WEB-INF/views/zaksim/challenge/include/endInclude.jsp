@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 
-       <div class="row text-dark pb-5 py-2 " style="background-color: #dcdcdc70;">
+       <div class="row text-dark pb-5 py-2 dohyeon" style="background-color: #dcdcdc70;">
         <div class="col-md-1"></div>
         <div class="col-md-10 rounded" style="height: 660px; background-color: rgba(33, 33, 33, 0.67);">
           <div class="col-md-12 text-center my-4 text-white">
@@ -10,7 +10,7 @@
           </div>
           <div class="row text-center text-muted" style="height: 10px; background-color: rgba(154, 28, 15, 0.8);">
           </div>
-          <div class="col-md-12 text-center my-4 text-white">
+          <div class="col-md-12 text-center mt-5 text-white">
             <a class="my-2 d-flex justify-content-center align-items-end"> 도전 &nbsp; <h4 class="mb-1"> 중도 포기 </h4>&nbsp; 또는&nbsp; <h4 class="mb-1"> 실패 </h4>&nbsp;시 </a>
             <a class="my-2 d-flex justify-content-center align-items-end"> 결제 금액의 &nbsp; <h4 class="mb-0"> 90% </h4>&nbsp;환불되며, </a>
             <a class="my-2 d-flex justify-content-center align-items-end">

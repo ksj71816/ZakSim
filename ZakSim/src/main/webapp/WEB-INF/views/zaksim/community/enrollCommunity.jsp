@@ -10,8 +10,8 @@
 <link rel="stylesheet" type="text/css" href="/css/community/enrollCommunity.css">
 
 
-<div class="container" id="zz">
-	<div class="row">
+<div class="container mt-5">
+	<div class="row mt-5">
 		<div class="col"></div>
 		<c:forEach var="groupInfo" items="${groupInfo }">
 		
@@ -75,7 +75,7 @@
 							<span style="font-size: 150%;">${cntMember}명 </span> 
 							<span style="font-size: 150%;">/ ${groupInfo.max}명</span>
 							<br>
-							<c:forEach items="${groupMember }" var="member">
+							<c:forEach items="${groupMember}" var="member">
 								<span style="margin-right:3px;">${member.nick }</span>
 							</c:forEach>
 						</div>

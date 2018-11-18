@@ -30,9 +30,15 @@ public class MainController {
 	@Autowired ChallengersService challssv;
 	@Autowired ChallengeInfoService chalinfosv;
 	@Autowired CommunityListService comssv;
+	@Autowired CommunityListService communityListService;
 	
 	@RequestMapping(value="/home", method=RequestMethod.GET)
 	public void main(Model model, HttpSession session) {
+		
+		int idx=0;
+		if(session.getAttribute("login_idx") != null ) {
+			idx =(Integer)session.getAttribute("login_idx");
+		}
 		
 		// 도전 인증글 리스트 가져오기
 		List<Board> citationList = new ArrayList<>();
@@ -49,15 +55,15 @@ public class MainController {
 		keywordList = comssv.keywordList();
 		model.addAttribute("keywordList",keywordList);
 		
+		// 그룹 멤버 여부 확인용 리스트
+		model.addAttribute("groupMemberExist", communityListService.existMember(idx));
 		
-		//로그인이 아닐때
+		
+		//로그인 했을때
 		 if(session.getAttribute("login")!=null) {
 			 
 			 Challenge chal = new Challenge();
 
-				// memberidx 세션에서 가져오기 
-				int idx = (int) session.getAttribute("login_idx");
-				
 				
 				logger.info("memberIdx:"+idx);
 						
@@ -75,14 +81,14 @@ public class MainController {
 
 					
 					// 도전 세션이 있고 도전 상태가 ing이 아닐때
-				}else if(session.getAttribute("status")!=null && chal.getStatus()!="ing") {
+				}else if(chal != null && session.getAttribute("status") != null && chal.getStatus()!="ing") {
 					
 					//도전 상태 세션
 					session.setAttribute("status", chal.getStatus());
 					logger.info("도전 세션 발생 2번재 조건");
 					
 					
-				};
+				}
 				
 			
 				model.addAttribute("info",chal);

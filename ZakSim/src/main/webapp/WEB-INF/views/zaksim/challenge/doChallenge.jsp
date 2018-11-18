@@ -262,7 +262,7 @@ $('#chageDiv').on("click","#payBtn",function() {
 	} else if(radio == '휴대폰 결제') {
 		pay("danal", "phone", "phone");
 	} else if(radio == '실시간 계좌이체') {
-		pay("danal_tpay", "trans", "bank");
+		pay("html5_inicis", "trans", "bank");
 	}
 	
 });
