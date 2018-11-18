@@ -49,6 +49,7 @@ public class CommnuityEditController {
 		
 		if(file.getOriginalFilename()== null || file.getOriginalFilename().equals("")) {
 			communityGroup.setImage("/resources/image/community/sample.png");
+			communityGroup.setStoredName("/resources/image/community/sample.png");
 		} else {
 			String path = "/resources/upload/community/";
 			String realpath = context.getRealPath(path);
@@ -62,7 +63,8 @@ public class CommnuityEditController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}			
-			communityGroup.setImage("/resources/upload/community/"+stored);
+			communityGroup.setImage(file.getOriginalFilename());
+			communityGroup.setStoredName("/resources/upload/community/"+stored);
 		}
 
 		// 회원 인덱스 가져오기

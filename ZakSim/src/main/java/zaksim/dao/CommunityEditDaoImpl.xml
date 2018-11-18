@@ -17,7 +17,7 @@
 		parameterType="zaksim.dto.CommunityGroup">
 		INSERT INTO CommunityGroup (idx, member_idx, category_idx, title, content,
 		image, storedName, max, open_date, secret, password)
-		VALUES (#{idx}, #{member_idx}, #{category_idx}, #{title}, #{content}, #{image}, #{storedName}
+		VALUES (#{idx}, #{member_idx}, #{category_idx}, #{title}, #{content}, #{image}, #{storedName},
 		#{max}, default, #{secret}, #{password})
 	</insert>
 	
