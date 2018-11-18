@@ -59,15 +59,15 @@ private static final Logger logger = LoggerFactory.getLogger(DoChallenge.class);
 
 		// long type으로 비교
 		long diff = nowDate.getTime() - startDate.getTime();
-		System.out.println("날짜 비교 long타입 : "+diff);
+//		System.out.println("날짜 비교 long타입 : "+diff);
 		
 		// 비교후 날짜 차이 환산
 		long diffDays = diff / (24 * 60 * 60 * 1000);
-		System.out.println("날짜 차이 : " + diffDays);
+//		System.out.println("날짜 차이 : " + diffDays);
 		
 		// 날짜 차이 결과
 		int resultDate = (int)diffDays;
-		System.out.println("최종결과 : "+resultDate);
+//		System.out.println("최종결과 : "+resultDate);
 
 
 		
@@ -98,7 +98,7 @@ private static final Logger logger = LoggerFactory.getLogger(DoChallenge.class);
 // 인증률 구하기
 		Challenge rate =mysv.viewRate(chal.getIdx());
 		
-		logger.info(rate.toString());
+//		logger.info(rate.toString());
 		
 		model.addAttribute("rate", rate);
 
@@ -113,7 +113,7 @@ private static final Logger logger = LoggerFactory.getLogger(DoChallenge.class);
 		//최근 인증 날짜
 		Board citnew=chalinfosv.getNewCitation(chalIdx);
 
-		System.out.println(citnew);
+//		System.out.println(citnew);
 
 		
 		Date writeDate= new Date();// 날짜 비교 서비스 매개변수
@@ -125,7 +125,7 @@ private static final Logger logger = LoggerFactory.getLogger(DoChallenge.class);
 		//인증 정보가 있을때 =board가 null이 아닐때		//null이면 에러
 		if (citnew!=null){
 			
-			System.out.println("인증 정보 있음");
+//			System.out.println("인증 정보 있음");
 			
 			//board 테이블에서 최근 인증 날짜 가져오기
 			writeDate=citnew.getWritten_date();
@@ -136,48 +136,48 @@ private static final Logger logger = LoggerFactory.getLogger(DoChallenge.class);
 			//당일 인증자 or 미인증자 판별
 			if(citDate==0) {		//당일 인증자
 			
-				System.out.println("당일 인증자");
+//				System.out.println("당일 인증자");
 			
 				// 도전자- 당일인증자 (인증 페이지 접근x)
 				model.addAttribute("setcit", "stop");
-				System.out.println("인증 비교 0 : "+citDate);
+//				System.out.println("인증 비교 0 : "+citDate);
 				
 			}else if(citDate>0) {	//당일 미인증자
 			
-				System.out.println("당일 미인증자");
+//				System.out.println("당일 미인증자");
 			
 				// 도전자-미인증자,최초인증자 (인증 페이지 접근ok)
 				model.addAttribute("setcit", "do");
-				System.out.println("인증 비교 + : "+citDate);
+//				System.out.println("인증 비교 + : "+citDate);
 			}
 				
 				
 				
 		}else {		// 도전대기자 or 최초 인증자
-			
-			System.out.println("인증 정보 없음");
-			
-			
-			System.out.println("도전 시작일 : "+startDate);
+//			
+//			System.out.println("인증 정보 없음");
+//			
+//			
+//			System.out.println("도전 시작일 : "+startDate);
 			
 			
 			// 날짜 비교 - 현재 날짜와 도전 시작일 비교 ( 0> : 대기자, 0=< 최초인증자)
 			chalDate=chalinfosv.dateColculation(startDate);
 			
-			if(chalDate==0) {
+			if(chalDate>=0) {
 			
-				System.out.println("도전 대기자");
+//				System.out.println("도전 대기자");
 			
 				// 도전 대기자 (인증 페이지 접근x)
-				model.addAttribute("setcit", "wait");
+				model.addAttribute("setcit", "do");
 				
 			}else{
 				
-				System.out.println("최초 인증 대상자");
+//				System.out.println("최초 인증 대상자");
 				
 				// 도전자-미인증자,최초인증자 (인증 페이지 접근ok)
 				model.addAttribute("setcit", "do");
-				System.out.println("인증 비교 + : "+citDate);
+//				System.out.println("인증 비교 + : "+citDate);
 			}
 			
 			
@@ -216,7 +216,7 @@ private static final Logger logger = LoggerFactory.getLogger(DoChallenge.class);
 			// 맵에 값 넣기
 		infomap.put("title", citation.getTitle());		// 도전명
 		infomap.put("content", citation.getContent()); // 내용
-		infomap.put("image", citation.getImage());		// 이미지 경로
+		infomap.put("image", citation.getStoredName());		// 이미지 경로
 		infomap.put("open", String.valueOf(citation.getOpen()));	// 공개, 비공개
 		
 		infomap.put("result","success");

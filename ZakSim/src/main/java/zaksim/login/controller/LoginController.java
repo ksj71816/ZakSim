@@ -53,8 +53,13 @@ public class LoginController {
 			
 			} else if(memberDto.getSuspensionDate() != null 
 					&& !memberDto.getSuspensionDate().before(before15)) {	// 계정 정지 기간 - 로그인 안됨
+				
+				Date suspendEndDate = new Date();
+				suspendEndDate.setTime(memberDto.getSuspensionDate().getTime()+(long)1000*60*60*24*15);
 			
 				session.setAttribute("login", false);
+				session.setAttribute("suspend", true);
+				session.setAttribute("suspendEndDate", suspendEndDate);
 				return "redirect:/zaksim/login/login"; // 로그인 실패시 로그인 화면으로 리다이렉트
 			
 			}

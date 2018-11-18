@@ -66,86 +66,29 @@ public class CommunityMainController {
 	public String searchCommunityProcess(Model model, String selectSearch, String searchContent, HttpSession session,
 			@RequestParam(defaultValue="1", required=false)int curPage) {
 		
-		
-//		int idx=0;
-//		if(session.getAttribute("login_idx") != null ) {
-//			idx =(Integer)session.getAttribute("login_idx");
-//		}
-//	   
-//	   String temp = request.getParameter("category_idx");
-//	   int idx2 = Integer.parseInt(temp);
-//	   
-//	   int totalCount = communityListService.categoryTotalCount(idx2);
-//	   
-//	   Paging paging = new Paging(totalCount, curPage, 3);
-//	   
-//	   Map<String, Object> map = new HashMap<>();
-//	   
-//
-//	   
-//	   
-//	   map.put("paging",paging);
-//	   map.put("idx",idx2);
-//	   
-//	   List<CommunityGroup> cList = communityListService.categoryPage(map);
-//	   
-//
-//		// 키워드 리스트
-//	   model.addAttribute("category", cList);
-//		//
-//		model.addAttribute("groupMemberExist", communityListService.existMember(idx));
-//	   
-//		model.addAttribute("keywordList", communityListService.keywordList());
-//	   
-//		
-//		model.addAttribute("map", map);
-		
 		int idx=0;
 		if(session.getAttribute("login_idx") != null ) {
 			idx =(Integer)session.getAttribute("login_idx");
 		}
-
-
-		if(selectSearch.equals("communutyName")) {
-			
-			int totalCount = communitySearchService.titleTotalCount(searchContent);
-			
-			
-			logger.info("총 갯수  !!!!!!!!!!!!! : " +totalCount);
-			
-			Paging paging = new Paging(totalCount, curPage, 6);
-			
-			Map<String, Object> map = new HashMap<>();
-			
+	
+	
+		
+//		System.out.println("DNSAJDNAKJDAJKDAJSKDN : "+ selectSearch);
+//		if(selectSearch.equals("communutyName")) {		
+			int totalCount = communitySearchService.titleTotalCount(searchContent);		
+			Paging paging = new Paging(totalCount, curPage, 15);	
+			Map<String, Object> map = new HashMap<>();	
 			map.put("paging", paging);
-			map.put("searchContent", searchContent);
+			map.put("searchContent", searchContent);	
 			map.put("selectSearch", selectSearch);
-			
-			List<CommunityGroup> cList = communitySearchService.titlePage(map);
-			
-			System.out.println("목록 리스트 !! : "+ cList);
-			
+			List<CommunityGroup> cList = communitySearchService.titlePage(map);	
 			model.addAttribute("searchGroup", cList);
-//			model.addAttribute("searchGroup", communitySearchService.searchGroup(searchContent));
 			model.addAttribute("keywordList", communityListService.keywordList());
 			model.addAttribute("selectSearch", selectSearch);
 			model.addAttribute("searchContent", searchContent);
 			//
 			model.addAttribute("groupMemberExist", communityListService.existMember(idx));
 			model.addAttribute("map", map);
-
-		} else if(selectSearch.equals("communutyCategory")) {
-			model.addAttribute("searchCategoryGroup", communitySearchService.searchCategoryGroup(searchContent));
-			model.addAttribute("keywordList", communityListService.keywordList());
-			model.addAttribute("selectSearch", selectSearch);
-			model.addAttribute("searchContent", searchContent);
-
-		} else {
-			model.addAttribute("searchKeywordGroup", communitySearchService.searchKeywordGroup(searchContent));
-			model.addAttribute("keywordList", communityListService.keywordList());
-			model.addAttribute("selectSearch", selectSearch);
-			model.addAttribute("searchContent", searchContent);
-		}
 		
 		return "/zaksim/community/searchCommunity";
 

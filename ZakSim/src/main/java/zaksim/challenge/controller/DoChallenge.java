@@ -159,6 +159,8 @@ public class DoChallenge {
 		// 결제 insert
 		dochalsv.setPayment(payment);
 		
+		session.setAttribute("status", "ing");
+		
 		
 		return dc.endChallengeGet();
 	}

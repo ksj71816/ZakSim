@@ -62,12 +62,12 @@
    <c:if test="${empty login }">
        
        <!-- 비로그인 상태 -->
-        <div class=" text-center  col-md-2 col-lg-2 m-3">
+        <div class=" text-center col-md-2 col-lg-2 m-3 dohyeon">
           <div class="row my-1 mb-4">
           </div>
           <div class="border border-light rounded py-4 my-1">
-            <a class="btn btn-danger btn-lg w-75 my-2 mx-auto" href="/zaksim/login/login"> 로그인 </a>
-            <a class="btn btn-sm w-75 btn-success my-2" href="/zaksim/login/join"> 회원가입 </a>
+            <a class="btn btn-outline-danger btn-lg w-75 my-2 mx-auto" href="/zaksim/login/login"> 로그인 </a>
+            <a class="btn btn-sm w-75 btn-outline-success my-2" href="/zaksim/login/join"> 회원가입 </a>
             <div class="mt-3">
               <a href="/zaksim/login/findId" class="mx-1 mr-2">ID찾기</a>
               <a href="/zaksim/login/findPw" class="text-left mx-1 ml-2">PW찾기</a>
@@ -76,7 +76,7 @@
         </div>
        
        
-		<div class="col-md-6 col-lg-6 rounded m-2 mx-5 text-center">
+		<div class="col-md-6 col-lg-6 rounded m-2 mx-5 text-center dohyeon">
           <h3 class="text-center my-4 mb-4"><b>도전 정보</b></h3>
           <hr  style="border:2px white solid;">
           <h4 class="mt-5" style="margin-top: 80px!important;"> 로그인 후 이용해 주세요! </h4>
@@ -87,20 +87,19 @@
        
    <c:if test="${login }">
        <!-- 로그인 상태 -->
-        <div class=" text-center rounded col-md-2 col-lg-2 m-2">
-          <img class="img-fluid d-block my-2 mx-auto rounded-circle" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg">
+        <div class="mt-5 pt-4 text-center rounded col-md-2 col-lg-2 m-2 dohyeon">
           <h5 class="text-center">${sessionScope.login_nick }</h5>
           <hr class="border border-light my-2">
           <a href="#" class="mx-2">내 그룹</a>
           <a href="#" class="text-left mx-2">내 정보</a>
-          <a class="btn btn-sm w-50 my-2 btn-danger" href="/zaksim/login/logout"> 로그아웃 </a>
+          <a class="btn btn-sm w-50 my-2 btn-outline-danger" href="/zaksim/login/logout"> 로그아웃 </a>
         </div>
         
         
       <c:if test="${ sessionScope.status ne 'ing'}">
       
         <!-- 비도전 중일때 -->
-		<div class="col-md-6 col-lg-6 rounded m-2 mx-5 text-center">
+		<div class="col-md-6 col-lg-6 rounded m-2 mx-5 text-center dohyeon">
           <h3 class="text-center my-4">도전 정보</h3>
           <hr  style="border:2px white solid;">
           <h5 class="my-2 mt-5"> 아직 도전을 시작하지 않으셨군요.</h5>
@@ -115,7 +114,7 @@
         
        <c:if test="${ sessionScope.status eq 'ing' }">
         <!-- 도전중일때 -->
-        <div class="col-md-6 col-lg-6 rounded m-2 mx-5 text-center">
+        <div class="col-md-6 col-lg-6 rounded m-2 mx-5 text-center dohyeon">
           <h4 class="text-center mt-4 mb-3">도전 정보</h4>
            <hr  style="border:2px white solid;">
           
@@ -158,7 +157,7 @@
     <div class="container">
       <div class="row">
         <div class="mx-3" >
-          <h4 class="mx-2" contenteditable="true"><b>인기 그룹</b></h4>
+          <h4 class="mx-2 dohyeon zaksim-title"><b>인기 그룹</b></h4>
         </div>
         <div class="col-md-9 px-0 ">
           
@@ -170,187 +169,97 @@
     </div>
     <div class="container">
      
+     
+     
 <!--           인기모임 -->
-<!--          <div class="text-center"> -->
-            
-<!--             <hr -->
-<!--                style="margin-top: 40px; border-color: gray; margin-bottom: 40px;"> -->
-<!--             <div class="form-inline" style="margin-bottom: 50px;"> -->
-<%--                <c:forEach var="popularGroupList" items="${popularGroupList }"> --%>
-<!--                   <div class="card" style="width: 20rem; margin-right: 15px;"> -->
-<%--                   <input type="hidden" class="idxx" value="${popularGroupList.idx }"> --%>
-<%--                   <input type="hidden" class= "memberIdxx" value="${popularGroupList.member_idx }"> --%>
-<!--                      <div class="hovereffect"> -->
-<!--                         <img class="card-img-top" -->
-<%--                            src="${popularGroupList.storedName }" --%>
-<!--                            alt="Card image cap"> -->
-<!--                         <div class="card-body"> -->
-<!--                            <span> -->
-<%--                               <h3 class="card-title">${popularGroupList.title } --%>
-                           
-<!--                               </h3> -->
-<!--                            </span> <span class="form-inline"> <span style="color: red;"> -->
-<%--                                  <h4 class="text-center">♥ &nbsp;${popularGroupList.likeNum }</h4> --%>
-<!--                            </span> -->
-<!--                            </span> -->
-<!--                            <p class="card-text"> -->
-<%--                               <c:if test="${empty keywordList }">키워드 :  --%>
-<%--                               </c:if> --%>
-<%--                               <c:forEach items="${keywordList }" var="keyword"> --%>
-<%--                                  <c:if --%>
-<%--                                     test="${popularGroupList.idx eq keyword.group_idx}"> --%>
-<!--                                     #${keyword.keyword } -->
-<%--                                  </c:if> --%>
-<%--                               </c:forEach> --%>
-<!--                            </p> -->
-<!--                         </div> -->
-<!--                <div class="overlay"> -->
-<!--                            <br> <br>  -->
-<!--                            <a class="info"> -->
-<%--                               <% boolean groupFlag =  false; %> --%>
-<%--                               <c:forEach var="groupMemberExist" items="${groupMemberExist }"> --%>
-
-<%--                                     <c:if test="${groupMemberExist.group_idx eq popularGroupList.idx }"> --%>
-<%--                                        <% groupFlag = true; %> --%>
-<%--                                     </c:if> --%>
-<%--                               </c:forEach>    --%>
-                              
-<!--                               로그인 했을 때 -->
-<%--                               <c:if test="${sessionScope.login }"> --%>
-                                 
-<!--                               가입했을 때 -->
-<%--                                  <c:if test="<%=groupFlag  %>"> --%>
-<!--                                     <button type="button" class="btn btn-danger"  -->
-<%--                                  onclick="moveURL(${popularGroupList.idx }, 0)">상세보기</button> --%>
-<%--                                  </c:if> --%>
-                                 
-<!--                                  가입 안 했을 때 -->
-<%--                                  <c:if test="<%=!groupFlag  %>"> --%>
-                                 
-<!--                                  비공개일 떄 -->
-<%--                                     <c:if test="${popularGroupList.secret == 1 }"> --%>
-<!--                                     <button type="button"  class="btn btn-primary secretJoin">가입하기</button> -->
-<!--                                     <br> -->
-<!--                                     <br> -->
-<%--                                  </c:if> --%>
-                                 
-<!--                                  공개일 때 -->
-<%--                                    <c:if test="${popularGroupList.secret == 0 }">  --%>
-<!--                                     <button type="button" class="btn btn-primary join" id ="noPassJoin">가입하기</button>  -->
-<!--                                     <br>  -->
-<!--                                     <br>  -->
-<%--                                   </c:if>     --%>
-                                    
-<!--                                     <button type="button" class="btn btn-danger"  -->
-<%--                                  onclick="moveURL(${popularGroupList.idx }, ${popularGroupList.secret })">상세보기</button> --%>
-                                 
-                              
-<%--                                  </c:if> --%>
-                              
-<%--                               </c:if> --%>
-                              
-<!--                               로그인 안했을 때 -->
-<%--                               <c:if test="${!sessionScope.login }"> --%>
-<!--                                      <button type="button" class="btn btn-danger"  -->
-<%--                                  onclick="moveURL(${popularGroupList.idx }, ${popularGroupList.secret })">상세보기</button> --%>
-<%--                               </c:if> --%>
-                              
-<!--                            </a> -->
-<!--                         </div> -->
-<!--                      </div> -->
-<!--                   </div> -->
-<%--                </c:forEach> --%>
-<!--             </div> -->
-<!--             <hr style="border-color: gray; margin-bottom: 100px;"> -->
-<!--          </div> -->
      <!--이미지 반복문 1행-->
-      <div class="row mt-4">
-       
-       
-   <c:forEach var="popularGroupList" items="${popularGroupList }" begin="0" step="1" end="5">
-                  <div class="card" style="width: 20rem; margin-right: 10px;">
-                  <input type="hidden" class="idxx" value="${popularGroupList.idx }">
-                  <input type="hidden" class= "memberIdxx" value="${popularGroupList.member_idx }">
-                     <div class="hovereffect">
-                        <img class="card-img-top"
-                           src="${popularGroupList.image }"
-                           alt="Card image cap">
-                        <div class="card-body">
-                           <span>
-                              <h3 class="card-title">${popularGroupList.title }
-                           
-                              </h3>
-                           </span> <span class="form-inline"> <span style="color: red;">
-                                 <h4>♥ &nbsp;${popularGroupList.likeNum }</h4>
-                           </span>
-                           </span>
-                           <p class="card-text">
-                              <c:if test="${empty keywordList }">키워드 : 
-                              </c:if>
-                              <c:forEach items="${keywordList }" var="keyword">
-                                 <c:if
-                                    test="${popularGroupList.idx eq keyword.group_idx}">
-                                    #${keyword.keyword }
-                                 </c:if>
-                              </c:forEach>
-                           </p>
-                        </div>
-               <div class="overlay">
-                           <br> <br> 
-                           <a class="info">
-                              <% boolean groupFlag =  false; %>
-                              <c:forEach var="groupMemberExist" items="${groupMemberExist }">
+	<div class="row mt-4">
+	   <c:forEach var="popularGroupList" items="${popularGroupList }" begin="0" step="1" end="2">
+	   		<div class="col-md-4">
+             <div class="card" style="">
+             <input type="hidden" class="idxx" value="${popularGroupList.idx }">
+             <input type="hidden" class= "memberIdxx" value="${popularGroupList.member_idx }">
+                <div class="hovereffect">
+                   <img class="card-img-top"
+                      src="${popularGroupList.image }"
+                      alt="Card image">
+                   <div class="card-body">
+                      <span>
+                         <h3 class="card-title">${popularGroupList.title }
+                      
+                         </h3>
+                      </span> <span class="form-inline justify-content-center"> <span style="color: red;">
+                            <h4>♥ &nbsp;${popularGroupList.likeNum }</h4>
+                      </span>
+                      </span>
+                      <p class="card-text">
+                         <c:if test="${empty keywordList }">키워드 : 
+                         </c:if>
+                         <c:forEach items="${keywordList }" var="keyword">
+                            <c:if
+                               test="${popularGroupList.idx eq keyword.group_idx}">
+                               #${keyword.keyword }
+                            </c:if>
+                         </c:forEach>
+                      </p>
+                   </div>
+          <div class="overlay">
+                      <br> <br> 
+                      <a class="info">
+                         <% boolean groupFlag =  false; %>
+                         <c:forEach var="groupMemberExist" items="${groupMemberExist }">
 
-                                    <c:if test="${groupMemberExist.group_idx eq popularGroupList.idx }">
-                                       <% groupFlag = true; %>
-                                    </c:if>
-                              </c:forEach>   
-                              
-                              <!-- 로그인 했을 때 -->
-                              <c:if test="${sessionScope.login }">
-                                 
-                              <!-- 가입했을 때 -->
-                                 <c:if test="<%=groupFlag  %>">
-                                    <button type="button" class="btn btn-danger" 
-                                 onclick="moveURL(${popularGroupList.idx }, 0)">상세보기</button>
-                                 </c:if>
-                                 
-                                 <!-- 가입 안 했을 때 -->
-                                 <c:if test="<%=!groupFlag  %>">
-                                 
-                                 <!-- 비공개일 떄 -->
-                                    <c:if test="${popularGroupList.secret == 1 }">
-                                    <button type="button"  class="btn btn-primary secretJoin">가입하기</button>
-                                    <br>
-                                    <br>
-                                 </c:if>
-                                 
-                                 <!-- 공개일 때 -->
-                                   <c:if test="${popularGroupList.secret == 0 }"> 
-                                    <button type="button" class="btn btn-primary join" id ="noPassJoin">가입하기</button> 
-                                    <br> 
-                                    <br>  
-                                  </c:if>    
-                                    
-                                    <button type="button" class="btn btn-danger" 
-                                 onclick="moveURL(${popularGroupList.idx }, ${popularGroupList.secret })">상세보기</button>
-                                 
-                              
-                                 </c:if>
-                              
-                              </c:if>
-                              
-                              <!-- 로그인 안했을 때 -->
-                              <c:if test="${!sessionScope.login }">
-                                     <button type="button" class="btn btn-danger" 
-                                 onclick="moveURL(${popularGroupList.idx }, ${popularGroupList.secret })">상세보기</button>
-                              </c:if>
-                              
-                           </a>
-                        </div>
-                     </div>
-                  </div>
-               </c:forEach>
+                               <c:if test="${groupMemberExist.group_idx eq popularGroupList.idx }">
+                                  <% groupFlag = true; %>
+                               </c:if>
+                         </c:forEach>   
+                         
+                         <!-- 로그인 했을 때 -->
+                         <c:if test="${sessionScope.login }">
+                            
+                         <!-- 가입했을 때 -->
+                            <c:if test="<%=groupFlag  %>">
+                               <button type="button" class="btn btn-danger" 
+                            onclick="moveURL(${popularGroupList.idx }, 0)">상세보기</button>
+                            </c:if>
+                            
+                            <!-- 가입 안 했을 때 -->
+                            <c:if test="<%=!groupFlag  %>">
+                            
+                            <!-- 비공개일 떄 -->
+                               <c:if test="${popularGroupList.secret == 1 }">
+                               <button type="button"  class="btn btn-primary secretJoin">가입하기</button>
+                               <br>
+                               <br>
+                            </c:if>
+                            
+                            <!-- 공개일 때 -->
+                              <c:if test="${popularGroupList.secret == 0 }"> 
+                               <button type="button" class="btn btn-primary join" id ="noPassJoin">가입하기</button> 
+                               <br> 
+                               <br>  
+                             </c:if>    
+                               
+                               <button type="button" class="btn btn-danger" 
+                            onclick="moveURL(${popularGroupList.idx }, ${popularGroupList.secret })">상세보기</button>
+                            
+                         
+                            </c:if>
+                         
+                         </c:if>
+                         
+                         <!-- 로그인 안했을 때 -->
+                         <c:if test="${!sessionScope.login }">
+                                <button type="button" class="btn btn-danger" 
+                            onclick="moveURL(${popularGroupList.idx }, ${popularGroupList.secret })">상세보기</button>
+                         </c:if>
+                         
+                      </a>
+                   </div>
+                </div>
+             </div>
+            </div>
+          </c:forEach>
    
       </div><!--1행 끝-->
       
@@ -368,7 +277,7 @@
     
       <div class="row">
         <div class="mx-3" >
-          <h4 class="mx-2" contenteditable="true"><b>최신 인증</b></h4>
+          <h4 class="mx-2 dohyeon zaksim-title"><b>최신 인증</b></h4>
         </div>
         <div class="col-md-9 px-0 ">
           
@@ -392,9 +301,9 @@
             <div class="hovereffect text-center my-1" >
               <img class="img-responsive" src="${citation.storedName}" id="citation${i.count}">
               <div class="overlay">
-                <h2>${citation.title}</h2>
+<%--                 <h2>${citation.title}</h2> --%>
                
-                	<a class="text-white info" onclick="viewCitation(${citation.idx},'${citation.title}','${i.count}','${citation.content}')" style="cursor:pointer;">게시물 확인</a>
+                	<a class="text-white info" style="margin-top: 70px;" onclick="viewCitation(${citation.idx},'${citation.title}','${i.count}','${citation.content}')" style="cursor:pointer;">게시물 확인</a>
               
               </div>
             </div>

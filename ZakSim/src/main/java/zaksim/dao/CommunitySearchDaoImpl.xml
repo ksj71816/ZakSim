@@ -21,6 +21,7 @@
 		<result column="open_date" property="open_date" />
 		<result column="secret" property="secret" />
 		<result column="password" property="password" />
+		<result column="g_like_num" property="likeNum" />
 	</resultMap>
 
 	<resultMap type="zaksim.dto.GroupKeyword" id="GroupKeyword">
@@ -194,7 +195,7 @@
 		c.idx
 		order by g.idx desc) gk
 		left join (
-            select count(*) as like_num,
+            select count(*) as g_like_num,
             group_idx as l_group_idx from
             grouplike
             GROUP BY group_idx ) l 
@@ -211,6 +212,7 @@
 			where
       		group_keyword LIKE '%' || #{searchContent} || '%'
 		</if>
+		ORDER BY gk.g_idx DESC
         ) gl
 	    ) rgl
 	    where rgl.rnum between #{paging.startNo } and #{paging.endNo }

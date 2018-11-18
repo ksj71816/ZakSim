@@ -10,12 +10,12 @@
 
 
 <div class="py-3">
-		<div class="container">
-			<div class="row mt-5">
-		    	<h2 class="ml-3 pl-2 pt-1 zaksim-title dohyeon">커뮤니티</h2>
-		    </div>
-		</div>
+	<div class="container">
+		<div class="row mt-5">
+	    	<h2 class="ml-3 pl-2 pt-1 zaksim-title dohyeon">커뮤니티</h2>
+	    </div>
 	</div>
+</div>
 
 <div class="container">
 	<div class="row mt-5">
@@ -44,13 +44,12 @@
 	<div class="row">
 		<div class="col-sm-1"></div>
 		<div class="col-sm-10" style="margin-top: 60px; margin-right: 50px;">
-
 			<!-- 참여하고 있는 모임-->
 			<strong style="font-size: 150%">참여하고 있는 그룹</strong>
+			
 
 
-
-
+			<!--  -->
 			<c:if test="${!empty joinedGroupList}">
 	
 				<c:if test="${fn:length(joinedGroupList) > 3}">	 
@@ -64,7 +63,7 @@
 					data-toggle="modal" data-target=".bd-example-modal-lg">모임
 					만들기</button>
 			</c:if>
-
+			<!--  -->
 
 
 			<hr style="margin-top: 40px; border-color: gray; margin-bottom: 40px;">
@@ -106,6 +105,8 @@
 					<!-- 참여하고 있는 모임이 있을 시 -->
 					<c:if test="${joinedGroupList ne null }">
 						<c:forEach var="joinedGroupList" items="${joinedGroupList }"	begin="0" end="2" step="1">
+
+							<div class="col-md-4">
 							<div class="card" style="width: 20rem; margin-right: 15px;">
 								<div class="hovereffect">
 									<img class="card-img-top"
@@ -143,7 +144,7 @@
 
 								</div>
 							</div>
-
+							</div>
 						</c:forEach>
 					</c:if>
 
@@ -160,10 +161,10 @@
             <button type="button" class="btn btn-outline-primary"
                style="float: right; margin-top: 30px;" id="popularGroupViewMore">+
                더보기</button>
-            <hr
-               style="margin-top: 40px; border-color: gray; margin-bottom: 40px;">
+            <hr style="margin-top: 40px; border-color: gray; margin-bottom: 40px;">
             <div class="form-inline" style="margin-bottom: 50px;">
                <c:forEach var="popularGroupList" items="${popularGroupList }">
+               <div class="col-md-4">
                   <div class="card" style="width: 20rem; margin-right: 15px;">
                   <input type="hidden" class="idxx" value="${popularGroupList.idx }">
                   <input type="hidden" class= "memberIdxx" value="${popularGroupList.member_idx }">
@@ -246,6 +247,7 @@
                         </div>
                      </div>
                   </div>
+                  </div>
                </c:forEach>
             </div>
             <hr style="border-color: gray; margin-bottom: 100px;">
@@ -273,7 +275,7 @@
 
 					
 					<c:forEach var="newGroupList" items="${newGroupList }">
-						
+						<div class="col-md-4">
 						<div class="card" style="width: 20rem; margin-right: 15px;">
 						<input type="hidden" class="idxx" value="${newGroupList.idx }">
 						<input type="hidden" class="memberIdxx" value="${newGroupList.member_idx }">
@@ -358,6 +360,7 @@
 								</div>
 							</div>
 						</div>
+						</div>
 					</c:forEach>
 
 
@@ -398,6 +401,7 @@
 			</div>
 		</div>
 		<div class="col-sm-1"></div>
+		</div>
 	</div>
 </div>
 
