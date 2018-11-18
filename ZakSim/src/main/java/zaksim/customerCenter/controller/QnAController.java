@@ -191,9 +191,9 @@ public class QnAController {
 	@RequestMapping(value="/zaksim/customerCenter/QnA/update", method=RequestMethod.POST)
 	public String qnaUpdate(QnA qnaDto, MultipartFile file) {
 		
-//		logger.info("[QnAController] 수정한 문의글(혹은 답변) : " + qnaDto.toString());
-//		
-//		qnaService.qnaUpdate(qnaDto);
+		logger.info("[QnAController] 수정한 문의글(혹은 답변) : " + qnaDto.toString());
+		
+		qnaService.qnaUpdate(qnaDto);
 		
 		
 		// ----- 파일 첨부 -----

@@ -467,7 +467,7 @@ function viewReportBoard(i, boardIdx) {
 		, success: function( data ) {
 			
 			$("#boardTitle"+i).html("<strong>" + data.board.title + "</strong>");
-			$("#boardImg"+i).html("<img src='" + data.board.storedName + "' />");
+			$("#boardImg"+i).html("<img src='" + data.board.storedName + "' style='width: auto; height: auto;'/>");
 			$("#boardContent"+i).html("<p>" + data.board.content + "</p>");
 			
 		}

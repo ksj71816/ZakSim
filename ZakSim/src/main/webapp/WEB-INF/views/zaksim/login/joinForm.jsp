@@ -83,7 +83,7 @@
 						</div>
 						<br>
 						<div class="form-group">
-							<label for="joinPhone">전화번호 <small class="successColor">(-) 입력 제외</small></label>
+							<label for="joinPhone">전화번호 <small class="successColor">(-) 필수 입력</small></label>
 							<div class="row mx-auto">
 								<div class="joinBorder col-md-8 px-0">
 									<input type="tel" class="form-control" id="joinPhone" name="phone">
@@ -141,7 +141,10 @@
 	</div>
 
 <!-- (2018.11.18) jquery 추가 -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>	
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
 <%@ include file="../main/footer.jsp" %>
 
 <script type="text/javascript">
@@ -359,19 +362,19 @@
 		
 		console.log("입력한 전화번호 : " + joinPhone);
 		
-		var formPhone = /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g; // 유효성 검사 설정
+		var formPhone = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-[0-9]{3,4}-[0-9]{4}$/; // 유효성 검사 설정
 		// 전화번호 정규식
 		
 		if ( joinPhone == "" || !formPhone.test(joinPhone) ) {
 			// 유효하지 않을 시
-			$('#phoneMessage').text('전화번호 형식에 맞지 않습니다.(숫자만 입력)');
+			$('#phoneMessage').text("전화번호 형식에 맞지 않습니다.('-' 입력 필수)");
 			
 			flagPhone = false;
 			
 		} else {
 			$('#phoneMessage').text('');
-			$('#joinPhone').val(
-					joinPhone.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, "$1-$2-$3"));
+// 			$('#joinPhone').val(
+// 					joinPhone.replace(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-[0-9]{3,4}-[0-9]{4}/, "$1-$2-$3"));
 			
 			joinPhone = $('#joinPhone').val();
 			flagPhone = true;

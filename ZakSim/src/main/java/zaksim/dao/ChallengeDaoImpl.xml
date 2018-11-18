@@ -160,6 +160,7 @@
 		    FROM challenge
 		    GROUP BY apply_date) C
 		ON C.apply_date = D.today
+		ORDER BY D.today ASC
   	</select>
   	
   	<select id="selectSuccessNum" parameterType="map" resultMap="PStatistics">
@@ -209,6 +210,7 @@
 				ORDER BY end_date
 			) c2
 			ON c2.end_date = d.today
+			ORDER BY d.today ASC
 		)
   	</select>
   
