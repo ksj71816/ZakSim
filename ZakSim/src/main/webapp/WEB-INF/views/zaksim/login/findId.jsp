@@ -16,7 +16,7 @@
 	<!-- 로고 이미지 - 메인 페이지로 이동 -->
 	<div class="text-center pt-4">
 		<a href="/zaksim/main/home"> 
-			<img src="/resources/image/main/logo.jpg" width="400">
+			<img src="/resources/image/main/logo.png" width="400">
 		</a>
 	</div>
 	
@@ -103,6 +103,8 @@
 		</div>
 	</div>
 
+<!-- (2018.11.18) jquery 추가 -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <%@ include file="../main/footer.jsp" %>
 <script type="text/javascript">
 	/* ID 찾기 */
