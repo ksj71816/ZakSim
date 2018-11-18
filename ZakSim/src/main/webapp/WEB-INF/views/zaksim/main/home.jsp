@@ -407,6 +407,18 @@
       
     </div>
   </div> <!-- 최신 인증글 end-->
+
+<!-- Banner feat. Lips -->
+<div class="container-fluid my-3">
+	<div class="row">
+		<div class="col-12">
+			<span class="badge badge-info">AD</span><small>Sponsored by Team Flecha - Linked to github</small>
+			<a href="https://github.com/jihoonys82/LipsProject" target="_blank">
+				<img src="/resources/image/lips_banner.png" class="img-fluid" alt="Lips Banner" />
+			</a>
+		</div>
+	</div>
+</div>
   
 
     <!-- 바디끝 -->
