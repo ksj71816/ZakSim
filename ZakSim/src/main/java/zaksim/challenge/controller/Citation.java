@@ -73,8 +73,7 @@ public class Citation {
 	
 	// 개인도전 인증 하기
 	@RequestMapping(value="/citation", method=RequestMethod.POST)
-	public String citationPost(Model model, Board board, HttpSession session,
-		 MultipartFile fileselect) {
+	public String citationPost(Model model, Board board, HttpSession session, MultipartFile fileselect) {
 		
 		logger.info("citationPOST 활성화");
 		logger.info(board.toString());
@@ -82,7 +81,8 @@ public class Citation {
 		
 		Board citation = new Board();
 		
-
+		System.out.println("==============================");
+		System.out.println(board);
 		
 		// 멀티파트 이미지 파일 경로 처리
 		citationsv.getImagePath(fileselect);

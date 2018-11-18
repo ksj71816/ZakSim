@@ -422,7 +422,7 @@ function fileMultiUpload(files, obj){
 	var data = new FormData();
 	data.append('fileselect', files[0]);
 	data.append('content',$('#content').val());
-	data.append('open',$('input[name="open"]').val());
+	data.append('open',$('input[name="open"]:checked').val());
 	
 	
 	$.ajax({
