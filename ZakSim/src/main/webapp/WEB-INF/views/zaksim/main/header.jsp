@@ -37,22 +37,22 @@
 }
 
 .menu {
-	height: 4em;
-	width: 20%;
-	margin-top: 25px;
+	height: 4em !important;
+	width: 20% !important;
+	margin-top: 25px !important;
 }  
-	.menu .subItems {
-	}
-	.menu .subItem{
-		display: inline-block;
-		margin-right: 2px;
-	}
-	.menu .subItem:hover {
-		font-weight: bold;
-	}
+.menu .subItems {
+}
+.menu .subItem{
+	display: inline-block !important;
+	margin-right: 2px !important;
+}
+.menu .subItem:hover {
+	font-weight: bold !important;
+}
 
 .point{
-	cursor:pointer;
+	cursor:pointer !important;
 }
 
 .dohyeon {
@@ -60,7 +60,7 @@
 }
 
 .zaksim-title {
-	border-left: 5px solid indianred;
+	border-left: 5px solid indianred !important;
 }
 </style>
 </head>
@@ -73,7 +73,7 @@
     <div class="col-sm-2">
 		<span>
         	<a href="/zaksim/main/home">
-        		<img src="/resources/image/main/logo.png" class="" alt="logo image" style="width: 220px;"/>
+        		<img src="/resources/image/main/logo.png" class="" alt="logo image" style="width: 220px !important; height: auto !important;"/>
 			</a>
     	</span>
         

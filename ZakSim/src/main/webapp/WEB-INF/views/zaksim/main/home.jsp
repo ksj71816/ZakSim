@@ -87,13 +87,24 @@
        
    <c:if test="${login }">
        <!-- 로그인 상태 -->
-        <div class="mt-5 pt-4 text-center rounded col-md-2 col-lg-2 m-2 dohyeon">
-          <h5 class="text-center">${sessionScope.login_nick }</h5>
-          <hr class="border border-light my-2">
-          <a href="#" class="mx-2">내 그룹</a>
-          <a href="#" class="text-left mx-2">내 정보</a>
-          <a class="btn btn-sm w-50 my-2 btn-outline-danger" href="/zaksim/login/logout"> 로그아웃 </a>
-        </div>
+       <c:if test="${login_nick ne 'Master'}">
+	        <div class="mt-5 pt-4 text-center rounded col-md-2 col-lg-2 m-2 dohyeon">
+	          <h5 class="text-center">${sessionScope.login_nick }</h5>
+	          <hr class="border border-light my-2">
+	          <a href="/zaksim/community/joinCommunity" class="mx-2">내 그룹</a>
+	          <a href="" class="text-left mx-2">내 정보</a>
+	          <a class="btn btn-sm w-50 my-2 btn-outline-danger" href="/zaksim/login/logout"> 로그아웃 </a>
+	        </div>
+        </c:if>
+        <c:if test="${login_nick eq 'Master'}">
+	        <div class="mt-5 pt-4 text-center rounded col-md-2 col-lg-2 m-2 dohyeon">
+	          <h5 class="text-center">${sessionScope.login_nick }</h5>
+	          <hr class="border border-light my-2">
+<!-- 	          <a href="/zaksim/community/joinCommunity" class="mx-2">내 그룹</a> -->
+<!-- 	          <a href="" class="text-left mx-2">내 정보</a> -->
+	          <a class="btn btn-sm w-50 my-2 btn-outline-danger" href="/zaksim/login/logout"> 로그아웃 </a>
+	        </div>
+        </c:if>
         
         
       <c:if test="${ sessionScope.status ne 'ing'}">

@@ -77,7 +77,7 @@
 						<c:if test="${sessionScope.login_idx eq null}">
 						
 						<div class="d-flex justify-content-center" style="color: gray; font-size: 20px; font-style: italic;">
-							<div>
+							<div style="margin-left: 350px;">
 								<p>로그인 후 이용 하세요.</p>
 								<button type="button" class="btn btn-danger"
 									style="width: 200px;" data-toggle="modal" disabled="disabled"
@@ -89,7 +89,7 @@
 						
 						<c:if test="${sessionScope.login_idx ne null}">
 							<div class="d-flex justify-content-center" style="color: gray; font-size: 20px; font-style: italic;">
-								<div>
+								<div style="margin-left: 350px;">
 									<p>참여하고 있는 모임이 없습니다.</p>
 									<p>- 모임을 만드세요. -</p>
 									<button type="button" class="btn btn-danger"

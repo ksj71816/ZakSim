@@ -15,29 +15,29 @@
 	</div>
 </div>
 
-<div class="container">
-	<div class="row">
-		<div class="col"></div>
-		<div class="col-10">
-			<form action="/zaksim/community/searchCommunity" method="post">
-				<div class="form-inline">
-					<select name="selectSearch" class="custom-select d-block my-3"
-						required>
-						<option value="communutyName" selected="selected">모임 명</option>
-						<option value="communutyCategory">카테고리</option>
-						<option value="communutyKeyword">키워드</option>
-					</select> <input type="text" class="form-control mx-3" style="width: 600px;"
-						name="searchContent" placeholder="검색할 내용" required="required">
-					<input type="submit" class="btn btn-outline-info" value="Search" />
+<div class="container mt-5">
+<!-- 	<div class="row"> -->
+<!-- 		<div class="col"></div> -->
+<!-- 		<div class="col-10"> -->
+<!-- 			<form action="/zaksim/community/searchCommunity" method="post"> -->
+<!-- 				<div class="form-inline"> -->
+<!-- 					<select name="selectSearch" class="custom-select d-block my-3" -->
+<!-- 						required> -->
+<!-- 						<option value="communutyName" selected="selected">모임 명</option> -->
+<!-- 						<option value="communutyCategory">카테고리</option> -->
+<!-- 						<option value="communutyKeyword">키워드</option> -->
+<!-- 					</select> <input type="text" class="form-control mx-3" style="width: 600px;" -->
+<!-- 						name="searchContent" placeholder="검색할 내용" required="required"> -->
+<!-- 					<input type="submit" class="btn btn-outline-info" value="Search" /> -->
 
-				</div>
-			</form>
+<!-- 				</div> -->
+<!-- 			</form> -->
 
-		</div>
+<!-- 		</div> -->
 
 
-		<div class="col"></div>
-	</div>
+<!-- 		<div class="col"></div> -->
+<!-- 	</div> -->
 
 	<div class="row">
 		<div class="col-sm-1"></div>
@@ -85,11 +85,11 @@
 									</c:forEach>
 
 									<p class="card-text">♡ ${joinedGroupList.likeNum }</p>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar"
-											style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
-											aria-valuemax="100">50%</div>
-									</div>
+<!-- 									<div class="progress"> -->
+<!-- 										<div class="progress-bar" role="progressbar" -->
+<!-- 											style="width: 25%;" aria-valuenow="25" aria-valuemin="0" -->
+<!-- 											aria-valuemax="100">50%</div> -->
+<!-- 									</div> -->
 									<div class="overlay">
 									<br><br>
 										<a class="info" href="#">

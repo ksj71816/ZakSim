@@ -247,15 +247,27 @@ function changePeriod() {
 			var detailTable = "";
 			
 			for(var i=0; i<result.detailList.length; i++) {
-				detailTable += "<tr>"
-								+ "<td>" + getFormatDate(new Date(result.detailList[i].today)) + "</td>"
-								+ "<td>" + result.detailList[i].todayCount + "</td>"
-								+ "<td>" + result.detailList[i].joinCount + "</td>"
-								+ "<td>"
-								+ (result.detailList[i].joinCount-(result.detailList[i].todayCount-result.detailList[i].yesterdayCount))
-								+ "</td>"
-								+ "<td>" + result.detailList[i].visits + "</td>"
-								+ "</tr>";
+				if((result.detailList[i].joinCount-(result.detailList[i].todayCount-result.detailList[i].yesterdayCount))<0) {
+					detailTable += "<tr>"
+						+ "<td>" + getFormatDate(new Date(result.detailList[i].today)) + "</td>"
+						+ "<td>" + result.detailList[i].todayCount + "</td>"
+						+ "<td>" + ((result.detailList[i].joinCount-(result.detailList[i].todayCount-result.detailList[i].yesterdayCount))*-1) + "</td>"
+						+ "<td>"
+						+ ((result.detailList[i].joinCount)*-1)
+						+ "</td>"
+						+ "<td>" + result.detailList[i].visits + "</td>"
+						+ "</tr>";
+				} else {
+					detailTable += "<tr>"
+						+ "<td>" + getFormatDate(new Date(result.detailList[i].today)) + "</td>"
+						+ "<td>" + result.detailList[i].todayCount + "</td>"
+						+ "<td>" + result.detailList[i].joinCount + "</td>"
+						+ "<td>"
+						+ (result.detailList[i].joinCount-(result.detailList[i].todayCount-result.detailList[i].yesterdayCount))
+						+ "</td>"
+						+ "<td>" + result.detailList[i].visits + "</td>"
+						+ "</tr>";
+				}
 			}
 			console.log("detailTable : " + detailTable);
 			

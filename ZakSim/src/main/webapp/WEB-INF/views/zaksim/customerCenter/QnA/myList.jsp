@@ -10,11 +10,9 @@
 	<!-- body -->
 	<div class="py-3">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<h1>Q&amp;A</h1>
-				</div>
-			</div>
+			<div class="row mt-5">
+		    	<h2 class="ml-3 pl-2 pt-1 title dohyeon">Q&amp;A</h2>
+		    </div>
 		</div>
 	</div>
 	<div class="container">
@@ -57,7 +55,7 @@
 										<c:set var="idx" value="${listDepth.idx }" />
 										<c:set var="secret" value="${listDepth.secret }" />
 										<c:set var="title" value="${listDepth.title }" />
-										<c:set var="writer" value="${listDepth.writerIdx }" />
+										<c:set var="writer" value="${listDepth.nick }" />
 										<c:set var="date" value="${listDepth.writtenDate }" />
 										<c:set var="hit" value="${listDepth.hit }" />
 									</c:if>
@@ -95,7 +93,7 @@
 									</c:if>
 	
 									<!-- 작성자 -->
-									<td>${list.writerIdx }</td>
+									<td>${list.nick }</td>
 	
 									<!-- 작성일 -->
 									<c:if test="${writtenDate eq toDay }">

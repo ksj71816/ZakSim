@@ -10,12 +10,9 @@
 	<!-- body -->
 	<div class="py-3">
 		<div class="container">
-			<div class="row">
-				<label class="col-md-1"> </label>
-				<div class="col-md-11">
-					<h1>Q&amp;A</h1>
-				</div>
-			</div>
+			<div class="row mt-5">
+		    	<h2 class="ml-3 pl-2 pt-1 title dohyeon">Q&amp;A</h2>
+		    </div>
 		</div>
 	</div>
 	<div class="py-2">
@@ -103,7 +100,7 @@
 								</tr>
 								<tr>
 									<th class="qnaColor">작성자</th>
-									<td>${view.writerIdx }</td>
+									<td>${view.nick }</td>
 									<th class="qnaColor">작성일</th>
 									<td><fmt:formatDate value="${view.writtenDate }" pattern="yyyy-MM-dd HH:mm"/></td>
 								</tr>
