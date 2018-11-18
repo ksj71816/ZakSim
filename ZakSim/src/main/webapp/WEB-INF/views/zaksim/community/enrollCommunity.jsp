@@ -1123,12 +1123,9 @@ $("#btnDiv").on("click", ".noBtnRecommend", function() {
 			}
 			, dataType: "text"
 			, success: function( data ) {
-				
-				if(data.result == true) {
-					var reason = $("#reason").val("");
-					$("#reportModal").modal('hide');
-// 					alert("신고됨");
-				}
+			
+				var reason = $("#reason").val("");
+				$("#reportModal").modal('hide');
 				
 			}
 			, error: function( e ) {
