@@ -458,10 +458,10 @@ $('#emailBtn').click(function(){
 			checkNum = data.checkNum;
 			
 			if (checkNum == "" || checkNum == null) {
-				alert('오류가 발생하였습니다.<br>다시 시도해주세요.');
+				alert('오류가 발생하였습니다.\n다시 시도해주세요.');
 				
 			} else {
-				alert('입력한 이메일로 인증번호를 발송했습니다.<br>이메일을 확인해주세요.');
+				alert('입력한 이메일로 인증번호를 발송했습니다.\n이메일을 확인해주세요.');
 				console.log('인증번호 : ' + checkNum);
 				
 				$("#mailnum").prop("disabled", false);
