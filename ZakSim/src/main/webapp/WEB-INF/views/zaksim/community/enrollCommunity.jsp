@@ -330,7 +330,7 @@
 												<div class="card-body">
 													<div class="form-inline">
 														<span><strong>새로운 비밀번호</strong></span> 
-														<input type="password" class="form-control" style="margin-left: 22px;" id="password1" name="password1">
+														<input type="password" class="form-control" style="margin-left: 22px;" id="password1" name="password">
 													</div>
 													<span style="margin-left: 140px; display: none;" id="pass1Comment"></span>
 												</div>
