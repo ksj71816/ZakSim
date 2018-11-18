@@ -51,7 +51,7 @@
 	</select>
 
 	<select id="cntMember" parameterType="int" resultType="int">
-		SELECT COUNT(*) FROM groupMember WHERE idx =${value}
+		SELECT COUNT(*) FROM groupMember WHERE group_idx =${value}
 	</select>
 
 	<delete id="withdrawMember" parameterType="zaksim.dto.GroupMember">
