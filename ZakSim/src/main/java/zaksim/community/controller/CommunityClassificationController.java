@@ -120,7 +120,7 @@ public class CommunityClassificationController {
 	   
 	   int totalCount = communityListService.categoryTotalCount(idx2);
 	   
-	   Paging paging = new Paging(totalCount, curPage, 3);
+	   Paging paging = new Paging(totalCount, curPage, 15);
 	   
 	   Map<String, Object> map = new HashMap<>();
 	   

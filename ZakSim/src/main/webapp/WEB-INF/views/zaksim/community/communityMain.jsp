@@ -368,7 +368,7 @@
 				<hr style="border-color: gray; margin-bottom: 100px;">
 			</div>
 
-
+<!-- /resources/image/community/금연.png -->
 			<!-- 카테고리 -->
 			<div>
 				<strong style="font-size: 150%">카테고리</strong>
@@ -380,7 +380,7 @@
 				<div class="form-inline" style="margin-bottom: 50px;">
 					<c:forEach var="categoryList" items="${categoryList }" begin="0"
 						end="2" step="1">
-						<div class="card" style="width: 20rem; margin-right: 15px;">
+						<div class="card" style="width: 18rem; margin-right: 15px;">
 
 							<div class="hovereffect" style="cursor: pointer;"
 								onclick="categoryClick(${categoryList.idx})">
