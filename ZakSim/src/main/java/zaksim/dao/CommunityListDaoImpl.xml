@@ -135,8 +135,9 @@
 					from
 					grouplike
 					GROUP BY group_idx
-					order by g_like_num desc nulls last
+<!-- 					order by g_like_num desc nulls last -->
 				) l on l.l_group_idx=gk.g_idx
+				order by l.g_like_num desc nulls last
 			) gl
 	    ) rgl
 	    WHERE rgl.rnum <![CDATA[ < ]]>=3
@@ -299,7 +300,8 @@
 				like_num, group_idx as l_group_idx from
 				grouplike
 				GROUP BY group_idx
-				order by like_num desc nulls last) l on l.l_group_idx=gk.g_idx
+				) l on l.l_group_idx=gk.g_idx
+				order by l.like_num desc nulls last
 			) gl
 	    ) rgl
 	    where rgl.rnum between #{startNo} and #{endNo}
