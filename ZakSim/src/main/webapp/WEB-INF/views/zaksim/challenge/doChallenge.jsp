@@ -10,9 +10,9 @@
  
 <!-- 바디 -->
 
-   <div class="py-5" style="background-image: url(/resources/image/challenge/back.jpg);">
+   <div class="py-5">
     <div class="container">
-      <div class="row text-white py-3" style="background-color: rgba(94, 94, 94, 0.64);">
+      <div class="row text-white py-3" style="background-color: #dcdcdc70;">
         <div class="col-md-1"> </div>
         <div class="col-md-10">
           <div class="row text-center rounded" style="background-color: rgba(33, 33, 33, 0.67);">
@@ -24,15 +24,15 @@
               
             </div>
             
-            <div class="col-md-2 mt-3 data-cmenu" id="cmenu1" style="background-color:rgb(154, 28, 15); padding-top:7px; ">
+            <div class="col-md-2 mt-3 data-cmenu dohyeon" id="cmenu1" style="background-color:rgb(154, 28, 15); padding-top:7px; ">
               <h5 class="mt-1 "> 도전 정보입력 </h5>
             </div>
             
-            <div class="col-md-2 mt-3 data-cmenu" id="cmenu2">
+            <div class="col-md-2 mt-3 data-cmenu dohyeon" id="cmenu2">
               <h5 class="mt-1 "> 도전금 결제 </h5>
             </div>
             
-            <div class="col-md-2 mt-3 data-cmenu" id="cmenu3">
+            <div class="col-md-2 mt-3 data-cmenu dohyeon" id="cmenu3">
               <h5 class="mt-1"> 도전 안내사항 </h5>
             </div>
             

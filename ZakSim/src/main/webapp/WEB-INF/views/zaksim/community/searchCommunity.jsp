@@ -15,16 +15,17 @@
 
 	<div class="row" style="margin-bottom: 30px;">
 		<div class="col"></div>
-		<div class="col-9">
+		<div class="col-10">
 			<strong>
 				<h1 style="vertical-align: 100%">커뮤니티</h1>
 			</strong>
 		</div>
 		<div class="col"></div>
 	</div>
+	
 	<div class="row">
 		<div class="col"></div>
-		<div class="col-9">
+		<div class="col-10">
 			<div class="form-inline">
 
 <!-- 							<form action="/zaksim/community/searchCommunity" method="post"> -->
@@ -64,15 +65,12 @@
 
 
 		<div class="col"></div>
+
 	</div>
 
 	<div class="row">
-		<div class="col"></div>
-
-
-
-
-		<div class="col-sm-11" style="margin-top: 50px; margin-right: 50px;">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-10" style="margin-top: 50px; margin-right: 50px;">
 			<strong style="font-size: 150%">검색 결과</strong>
 			<c:if
 				test="${!empty searchGroup || !empty searchCategoryGroup || !empty searchKeywordGroup  }">
@@ -120,7 +118,7 @@
 				<div class="form-inline">
 					<c:forEach var="searchGroup" items="${searchGroup }">
 
-						<div class="card bg-dark text-white">
+						<div class="card bg-dark text-white mb-4">
 							<div class="hovereffect">
 <%-- 								<img class="card-img" src="${searchGroup.communityGroup.storedName }" --%>
 								<img class="card-img" src="${searchGroup.image }"
@@ -136,11 +134,11 @@
 									</c:forEach>
 
 									<p class="card-text">♡ ${searchGroup.likeNum }</p>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar"
-											style="width: 100%;" aria-valuenow="100" aria-valuemin="0"
-											aria-valuemax="100">100%</div>
-									</div>
+<!-- 									<div class="progress"> -->
+<!-- 										<div class="progress-bar" role="progressbar" -->
+<!-- 											style="width: 100%;" aria-valuenow="100" aria-valuemin="0" -->
+<!-- 											aria-valuemax="100">100%</div> -->
+<!-- 									</div> -->
 									<div class="overlay">
 										<a class="info" href="#">
 											<button type="button" class="btn btn-primary">가입하기</button> <br>
@@ -166,7 +164,7 @@
 					<c:forEach var="searchCategoryGroup"
 						items="${searchCategoryGroup }">
 
-						<div class="card bg-dark text-white">
+						<div class="card bg-dark text-white mb-4">
 							<div class="hovereffect">
 								<img class="card-img"
 									src="${searchCategoryGroup.communityGroup.storedName }"
@@ -182,11 +180,11 @@
 									</c:forEach>
 
 									<p class="card-text">♡ ${searchCategoryGroup.likeNum }</p>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar"
-											style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
-											aria-valuemax="100">50%</div>
-									</div>
+<!-- 									<div class="progress"> -->
+<!-- 										<div class="progress-bar" role="progressbar" -->
+<!-- 											style="width: 25%;" aria-valuenow="25" aria-valuemin="0" -->
+<!-- 											aria-valuemax="100">50%</div> -->
+<!-- 									</div> -->
 									<div class="overlay">
 										<a class="info" href="#">
 											<button type="button" class="btn btn-primary">가입하기</button> <br>
@@ -211,7 +209,7 @@
 				<div class="form-inline">
 					<c:forEach var="searchKeywordGroup" items="${searchKeywordGroup }">
 
-						<div class="card bg-dark text-white">
+						<div class="card bg-dark text-white mb-4">
 							<div class="hovereffect">
 								<img class="card-img"
 									src="${searchKeywordGroup.communityGroup.storedName }"
@@ -227,11 +225,11 @@
 									</c:forEach>
 
 									<p class="card-text">♡ ${searchKeywordGroup.likeNum }</p>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar"
-											style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
-											aria-valuemax="100">50%</div>
-									</div>
+<!-- 									<div class="progress"> -->
+<!-- 										<div class="progress-bar" role="progressbar" -->
+<!-- 											style="width: 25%;" aria-valuenow="25" aria-valuemin="0" -->
+<!-- 											aria-valuemax="100">50%</div> -->
+<!-- 									</div> -->
 									<div class="overlay">
 										<a class="info" href="#">
 											<button type="button" class="btn btn-primary">가입하기</button> <br>
@@ -249,7 +247,7 @@
 			</c:if>
 
 		</div>
-
+		<div class="col-sm-1"></div>
 	</div>
 </div>
 
@@ -260,7 +258,7 @@
 			</c:if>
 
 
-<div class="col" style="margin-bottom: 300px;"></div>
+<div class="row" style="margin-bottom: 300px;"></div>
 
 
 

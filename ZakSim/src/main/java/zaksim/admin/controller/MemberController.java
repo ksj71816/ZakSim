@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import zaksim.admin.service.MemberService;
+import zaksim.dto.Board;
 import zaksim.dto.Report;
 import zaksim.dto.ZakSimMember;
 import zaksim.util.Paging;
@@ -98,6 +99,21 @@ public class MemberController {
 		
 		// status->'block'
 		// 도전, 그룹참여, 보드, 문의, 댓글 삭제
+		
+		return map;
+	}
+	
+	// 신고 게시글 보기
+	@RequestMapping(value="/viewReportBoard", method = RequestMethod.POST, produces="application/json; charset=utf-8")
+	@ResponseBody
+	public Map<String, Board> viewReportBoard(int boardIdx) {
+		HashMap<String, Board> map = new HashMap<>();
+		
+		System.out.println("boardIdx : " + boardIdx);
+		
+		Board board = memberService.getReportBoard(boardIdx);
+
+		map.put("board", board);
 		
 		return map;
 	}

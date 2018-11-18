@@ -21,6 +21,22 @@
   	<collection property="reporterMember" resultMap="ZakSimMember"/>
   </resultMap>
   
+  	<resultMap type="zaksim.dto.Board" id="Board">
+		<result column="idx" property="idx" />
+		<result column="challenge_idx" property="challenge_idx" />
+		<result column="group_idx" property="group_idx" />
+		<result column="writer_idx" property="writer_idx" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="image" property="image" />
+		<result column="storedName" property="storedName" />
+		<result column="open" property="open" />
+		<result column="certification" property="certification" />
+		<result column="written_date" property="written_date" />
+		<result column="hit" property="hit" />
+	</resultMap>
+	
+  
   
   
   
@@ -37,5 +53,16 @@
   <delete id="deleteReport" parameterType="int">
   	DELETE FROM report WHERE member_idx=#{index}
   </delete>
+  
+  <insert id="insertReport" parameterType="zaksim.dto.Report">
+  	INSERT INTO REPORT (idx, board_idx, comment_idx, reporter_idx, category, reason, member_idx, report_date)
+  	VALUES (Report_SEQ.NEXTVAL, #{boardIdx}, null, #{reporterIdx}, #{category}, #{reason}, #{memberIdx}, sysdate)
+  </insert>
+  
+  <select id="selectReportBoard" parameterType="int" resultMap="Board">
+  	SELECT *
+  	FROM BOARD
+  	WHERE idx=#{boardIdx}
+  </select>
   
   </mapper>

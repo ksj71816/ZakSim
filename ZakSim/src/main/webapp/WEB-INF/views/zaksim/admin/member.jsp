@@ -16,7 +16,7 @@
  			<div class="row justify-content-center">
 				<p class="data-title mb-5 mt-3">회원 관리</p>
  			</div>
-		
+
 			<div class="row mt-3">
 				<div class="col-1"></div>
 				<div class="col-10 pr-0 d-flex justify-content-end">
@@ -283,14 +283,22 @@ $("#pagingDiv").on("click", ".data-span-modal", function() {
         				+ "<div class='row' id='reportCategory' style='font-family: Dohyeon;'>"
         				+ data.rList[i].category
         				+ "</div>"
-        				+ "<div class='row' id='reportId'> 신고자 : "
+        				+ "<div class='row text-right'>"
+        				+ "신고자 : "
         				+ data.rList[i].reporterMember.id
         				+ "</div>"
         				+ "<div class='row' id='reportReason'>"
         				+ data.rList[i].reason
         				+ "</div>"
         				+ "<div class='row justify-content-end'>"
-        				+ "<button class='btn data-modal-iconBtn'><i class='fas fa-arrow-circle-right'></i></button>"
+        				+ "<button class='btn data-modal-iconBtn' data-toggle='collapse' href='#showBoard"+i+"' onclick='viewReportBoard("+ i +", "+ data.rList[i].boardIdx +");'>"
+        				+ "<i class='fas fa-arrow-circle-right'></i>"
+        				+ "</button>"
+        				+ "</div>"
+        				+ "<div class='collapse' id='showBoard"+i+"'>"
+        				+ "<div class='row' id='boardTitle"+i+"' style='font-family: Dohyeon;'></div>"
+        				+ "<div class='row' id='boardImg"+i+"'></div>"
+        				+ "<div class='row' id='boardContent"+i+"'></div>"
         				+ "</div>"
         				+ "</div>"
     					+ "</div>";
@@ -436,6 +444,31 @@ function block() {
 			$("[name=checkOne]").prop("checked", false );
 			
 			$(location).attr('href', '/zaksim/admin/member');
+			
+		}
+		, error: function( e ) {
+			console.log("--- error ---");
+			console.log( e.responseText );
+		}
+		, complete: function() {
+			//입력 창 초기화
+		}
+	});	
+}
+
+function viewReportBoard(i, boardIdx) {
+	$.ajax({
+		type: "post"
+		, url : "/zaksim/admin/viewReportBoard"
+		, data : {
+			boardIdx : boardIdx
+		}
+		, dataType: "json"
+		, success: function( data ) {
+			
+			$("#boardTitle"+i).html("<strong>" + data.board.title + "</strong>");
+			$("#boardImg"+i).html("<img src='" + data.board.storedName + "' />");
+			$("#boardContent"+i).html("<p>" + data.board.content + "</p>");
 			
 		}
 		, error: function( e ) {

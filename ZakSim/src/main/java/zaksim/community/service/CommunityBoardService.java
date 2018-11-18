@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import zaksim.dto.Board;
 import zaksim.dto.Comment;
+import zaksim.dto.Report;
 
 public interface CommunityBoardService {
 
@@ -23,4 +24,7 @@ public interface CommunityBoardService {
 
 	// 댓글 리스트
 	public List<Comment> viewBoardComment(int parseInt);
+
+	// 게시글 신고
+	public void report(Report report);
 }

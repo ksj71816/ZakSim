@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 
-       <div class="row text-dark pb-5 py-2 " style="background-color: rgba(94, 94, 94, 0.64);">
+       <div class="row text-dark pb-5 py-2 " style="background-color: #dcdcdc70;">
         <div class="col-md-1"></div>
         <div class="col-md-10 rounded" style="height: 660px; background-color: rgba(33, 33, 33, 0.67);">
           <div class="col-md-12 text-center my-4 text-white">

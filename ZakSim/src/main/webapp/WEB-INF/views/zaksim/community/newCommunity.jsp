@@ -11,16 +11,17 @@
 <div class="container" id="zz">
 	<div class="row" style="margin-bottom: 30px;">
 		<div class="col"></div>
-		<div class="col-9">
+		<div class="col-10">
 			<strong>
 				<h1 style="vertical-align: 100%">커뮤니티</h1>
 			</strong>
 		</div>
 		<div class="col"></div>
 	</div>
+	
 	<div class="row">
 		<div class="col"></div>
-		<div class="col-9">
+		<div class="col-10">
 			<form action="/zaksim/community/searchCommunity" method="post">
 				<div class="form-inline">
 					<select name="selectSearch" class="custom-select d-block my-3"
@@ -42,8 +43,7 @@
 	</div>
 
 	<div class="row">
-		<div class="col"></div>
-
+		<div class="col-sm-1"></div>
 
 		<div class="col-sm-11" style="margin-top: 50px; margin-right: 50px;">
 			<strong style="font-size: 150%">새로 시작한 모임</strong>
@@ -51,17 +51,12 @@
 					style="float: right; margin-top: 30px; margin-left: 30px; margin-right: 30px;"
 					data-toggle="modal" data-target=".bd-example-modal-lg">모임
 					만들기</button>
-			<hr
-				style="margin-top: 40px; border-color: gray; margin-top: 40px; margin-bottom: 40px;">
-
-
-
-
+			<hr style="margin-top: 40px; border-color: gray; margin-top: 40px; margin-bottom: 40px;">
 
 			<div style="margin-left: 22px;">
 				<div class="form-inline">
              <c:forEach var="newGroupList" items="${newGroupList }">
-                  <div class="card" style="width: 20rem; margin-right: 10px;">
+                  <div class="card mb-4" style="width: 20rem; margin-right: 10px;">
                   <input type="hidden" class="idxx" value="${newGroupList.idx }">
                   <input type="hidden" class= "memberIdxx" value="${newGroupList.member_idx }">
                      <div class="hovereffect">
@@ -152,10 +147,7 @@
 			<jsp:include page="/WEB-INF/views/zaksim/community/paging/newPaging.jsp" />
 	</div>
 
-
-
-
-		<div class="col" style="margin-bottom: 300px;"></div>
+		<div class="col-sm-1" style="margin-bottom: 300px;"></div>
 	</div>
 
 </div>
