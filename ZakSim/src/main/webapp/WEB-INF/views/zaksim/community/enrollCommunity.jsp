@@ -14,7 +14,7 @@
 	<div class="row mt-5">
 		<div class="col"></div>
 		<c:forEach var="groupInfo" items="${groupInfo }">
-		
+			
 			<input type="hidden" id ="idxx"value="${groupInfo.idx }">
 
 			<div class="col-sm-11 clearfix" style="margin-right: 50px;" id="btnDiv">
@@ -27,7 +27,9 @@
 					<c:forEach items="${groupMember }" var="member">
 						<c:if test="${member.idx eq sessionScope.login_idx }">
 							<% memberFlag = true; %>
-							<button type="button" class="btn btn-link" id="withdraw"><small style="vertical-align: -webkit-baseline-middle; color:gray;">&gt;탈퇴하기</small></button>
+							<c:if test="${groupInfo.member_idx ne sessionScope.login_idx }">
+								<button type="button" class="btn btn-link" id="withdraw"><small style="vertical-align: -webkit-baseline-middle; color:gray;">&gt;탈퇴하기</small></button>
+						    </c:if>
 						</c:if>
 					</c:forEach>
 				
@@ -168,7 +170,9 @@
 								<a style="color: red !important;" href="/zaksim/community/deleteBoard?group_idx=${groupInfo[0].idx}&idx=${board.idx}">삭제</a>
 							</small>
 						</c:if>
+						<c:if test="${board.writer_idx ne sessionScope.login_idx }">
 						<small style="color: blue; cursor:pointer; text-decoration: underline;" onclick="report(${board.idx}, ${board.writer_idx});">신고</small>
+						</c:if>
 					</div>
 				</div>
 				<hr class="m-0">
@@ -263,7 +267,7 @@
 				<c:forEach var="groupInfo" items="${groupInfo }">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel" style="font-size: 30px;">
-							<strong>모임 만들기</strong>
+							<strong>모임 수정하기</strong>
 						</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -421,12 +425,57 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$("button#withdraw").on('click', function(){
-		if(confirm("정말로 그룹을 탈퇴 하시겠습니까?")){
-			var $withdraw = $("<form>").attr("id","withdrawForm").attr("action","/zaksim/community/outCommunity").attr("method", "post");
-			$withdraw.append("<input type='text' name='group_idx' value='"+${param.idx}+"'/>");
-			$("body").append($withdraw);
-			$('#withdrawForm').submit();
-		}
+		
+	       swal({
+	           type: 'success',
+	           title: 'success ! ',
+	           text: '삭제 되었습니다.'
+	        }).then((result) => {
+				  if (result.value) {
+					  document.location.href = "/zaksim/community/deleteCommunity?idx="+obj;
+					  }
+					});
+	       
+	       swal({
+	    	   title: 'Are you sure?',
+	    	   text: "탈퇴 하시겠어요 ??",
+	    	   type: 'warning',
+	    	   showCancelButton: true,
+	    	   confirmButtonColor: '#3085d6',
+	    	   cancelButtonColor: '#d33',
+	    	   confirmButtonText: 'Yes, delete it!'
+	    	 }).then((result) => {
+	    	   if (result.value) {
+	    		   
+	    		
+	    		   
+	    		   swal({
+	    			   position: 'top-end',
+	    			   type: 'success',
+	    			   title: '다음에 또 만나요 ~',
+	    			   showConfirmButton: false,
+	    			   timer: 2500
+	    			 });
+	    		   
+	    		   setTimeout(function(){ 
+	    			   var $withdraw = $("<form>").attr("id","withdrawForm").attr("action","/zaksim/community/outCommunity").attr("method", "post");
+			  			$withdraw.append("<input type='text' name='group_idx' value='"+${param.idx}+"'/>");
+			  			$("body").append($withdraw);
+			  			$('#withdrawForm').submit();	
+	    			   }, 1500);
+	    		  	
+	    		   
+
+	    	   }
+	    	 })
+		
+		
+//		if(confirm("정말로 그룹을 탈퇴 하시겠습니까?")){ 
+// 			var $withdraw = $("<form>").attr("id","withdrawForm").attr("action","/zaksim/community/outCommunity").attr("method", "post");
+// 			$withdraw.append("<input type='text' name='group_idx' value='"+${param.idx}+"'/>");
+// 			$("body").append($withdraw);
+// 			$('#withdrawForm').submit();
+// 		}
 	}); 
 //    $("#enrollBoardBtn").click(function() {
 //       var radioVal = $('input[name="certification"]:checked').val();
@@ -618,10 +667,10 @@ $(document).ready(function() {
       });
 
       
-      // 커뮤니티 삭제 ;;
-      $("#deleteCommnunity").click(function() {
-         document.location.href = "/zaksim/community/communityMain";
-      });
+//       // 커뮤니티 삭제 ;;
+//       $("#deleteCommnunity").click(function() {
+//          document.location.href = "/zaksim/community/communityMain";
+//       });
 
       // 공개 클릭 시 숨기기 / 비공개 클릭 시 보이기
       var radioVal = $('input[name="secret"]:checked').val();
@@ -799,7 +848,17 @@ $("#btnDiv").on("click", ".noBtnRecommend", function() {
    
    // 커뮤니티 삭제 ;;
    function deleteCommnunity(obj) {
-      document.location.href = "/zaksim/community/deleteCommunity?idx="+obj;
+       swal({
+           type: 'success',
+           title: 'success ! ',
+           text: '삭제 되었습니다.'
+        }).then((result) => {
+			  if (result.value) {
+				  document.location.href = "/zaksim/community/deleteCommunity?idx="+obj;
+				  }
+				});
+	   
+      
    }
    
    // 참여하고 있는 맴버 페이지로 이동
@@ -1124,8 +1183,18 @@ $("#btnDiv").on("click", ".noBtnRecommend", function() {
 			, dataType: "text"
 			, success: function( data ) {
 			
-				var reason = $("#reason").val("");
-				$("#reportModal").modal('hide');
+		         swal({
+		             type: 'success',
+		             title: 'success ! ',
+		             text: '신고 접수되었습니다.'
+		          }).then((result) => {
+					  if (result.value) {
+						  var reason = $("#reason").val("");
+							$("#reportModal").modal('hide');
+						  }
+						});
+				
+				
 				
 			}
 			, error: function( e ) {

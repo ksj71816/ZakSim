@@ -2,9 +2,7 @@ package zaksim.community.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -25,8 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import zaksim.community.service.CommunityEditService;
 import zaksim.community.service.CommunityListService;
-import zaksim.dao.CommunityEditDAO;
-import zaksim.dto.CommunityCategory;
 import zaksim.dto.CommunityGroup;
 import zaksim.dto.GroupKeyword;
 import zaksim.dto.GroupLike;
@@ -159,6 +155,7 @@ public class CommnuityEditController {
 		// 이미지 가져옴
 		if(file.getOriginalFilename()== null || file.getOriginalFilename().equals("")) {
 			communityGroup.setImage(communityGroup.getImage());
+			communityGroup.setStoredName(communityGroup.getImage());
 		} else {
 			String path = "/resources/upload/community/";
 			String realpath = context.getRealPath(path);
@@ -173,15 +170,11 @@ public class CommnuityEditController {
 				e.printStackTrace();
 			}			
 			communityGroup.setImage("/resources/upload/community/"+stored);
+			communityGroup.setStoredName("/resources/upload/community/"+stored);
 		}
 		
 		
-//		System.out.println("11111111111111111111111 : "+ communityGroup);
-
 		
-//		CommunityGroup [currval=0, idx=38, member_idx=0, category_idx=3, title=111, content=123, 
-//		image=/resources/upload/community/088df4f6ef11_자물쇠.png, max=12, open_date=null, secret=1, 4
-//		password=33, communityCategory=null]
 		
 		communityEditService.updateGroup(communityGroup);
 		
