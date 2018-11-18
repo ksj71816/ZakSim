@@ -368,7 +368,7 @@
 				<hr style="border-color: gray; margin-bottom: 100px;">
 			</div>
 
-
+<!-- /resources/image/community/금연.png -->
 			<!-- 카테고리 -->
 			<div>
 				<strong style="font-size: 150%">카테고리</strong>

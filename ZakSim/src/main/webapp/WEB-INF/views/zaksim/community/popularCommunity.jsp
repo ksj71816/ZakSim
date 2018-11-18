@@ -44,12 +44,14 @@
 		<div class="col-sm-1"></div>
 
 
-		<div class="col-sm-10" style="margin-top: 50px; margin-right: 50px;">
+		<div class="col-sm-11" style="margin-top: 50px; margin-right: 50px;">
 			<strong style="font-size: 150%">인기 모임</strong>
+				<c:if test="${sessionScope.login_idx ne null }">
 				<button type="button" class="btn btn-outline-danger"
 					style="float: right; margin-top: 30px; margin-left: 30px; margin-right: 30px;"
 					data-toggle="modal" data-target=".bd-example-modal-lg">모임
 					만들기</button>
+					</c:if>
 			<hr
 				style="margin-top: 40px; border-color: gray; margin-top: 40px; margin-bottom: 40px;">
 
@@ -62,7 +64,7 @@
 				<div class="form-inline">
 
              <c:forEach var="popularGroupList" items="${popularGroupList }">
-                  <div class="card mb-4" style="width: 20rem; margin-right: 10px;">
+                  <div class="card mb-4" style="width: 18rem; margin-right: 10px;">
                   <input type="hidden" class="idxx" value="${popularGroupList.communityGroup.idx }">
                   <input type="hidden" class= "memberIdxx" value="${popularGroupList.communityGroup.member_idx }">
                      <div class="hovereffect">
@@ -149,7 +151,7 @@
 			</div>
 		</div>
 
-	<div style="margin-left: 500px; margin-top: 50px;">
+	<div style="margin-left: 300px; margin-top: 50px;">
 			<jsp:include page="/WEB-INF/views/zaksim/community/paging/popularPaging.jsp" />
 	</div>
 

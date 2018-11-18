@@ -69,10 +69,12 @@
 		
 		<div class="col-sm-10" style="margin-top: 50px; margin-right: 50px;">
 			<strong style="font-size: 150%">검색 결과</strong>
+			<c:if test="${sessionScope.login_idx ne null }">
 				<button type="button" class="btn btn-outline-danger"
 					style="float: right; margin-top: 30px; margin-left: 30px; margin-right: 30px;"
 					data-toggle="modal" data-target=".bd-example-modal-lg">모임
 					만들기</button>
+			</c:if>
 			<hr
 				style="margin-top: 40px; border-color: gray; margin-top: 40px; margin-bottom: 40px;">
 
