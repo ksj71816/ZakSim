@@ -80,44 +80,90 @@
 
 
 				<div class="form-inline">
-					<c:forEach var="category" items="${category }">
+           <c:forEach var="category" items="${category }">
+                  <div class="card mb-4" style="width: 19rem;" margin-right: 10px;">
+                  <input type="hidden" class="idxx" value="${category.idx }">
+                  <input type="hidden" class= "memberIdxx" value="${category.member_idx }">
+                     <div class="hovereffect">
+                        <img class="card-img-top"
+                           src="${category.image }"
+                           alt="Card image cap">
+                        <div class="card-body">
+                           <span>
+                              <h3 class="card-title">${category.title }
+                           
+                              </h3>
+                           </span> <span class="form-inline"> <span style="color: red;">
+                                 <h4>♥ &nbsp;${category.likeNum }</h4>
+                           </span>
+                           </span>
+                           <p class="card-text">
+                              <c:if test="${empty keywordList }">키워드 : 
+                              </c:if>
+                              <c:forEach items="${keywordList }" var="keyword">
+                                 <c:if
+                                    test="${category.idx eq keyword.group_idx}">
+                                    #${keyword.keyword }
+                                 </c:if>
+                              </c:forEach>
+                           </p>
+                        </div>
+               <div class="overlay">
+                           <br> <br> 
+                           <a class="info">
+                              <% boolean groupFlag =  false; %>
+                              <c:forEach var="groupMemberExist" items="${groupMemberExist }">
 
-						<div class="card bg-dark text-white mb-4">
-							<div class="hovereffect">
-<%-- 								<img class="card-img" src="${category.communityGroup.storedName }" --%>
-								<img class="card-img" src="${category.image }"
-									alt="Card image">
-								<div class="card-img-overlay">
-									<h4 class="card-title">${category.title }</h4>
-									
-									<c:forEach items="${keywordList }" var="keyword">
-
-									
-										<c:if
-											test="${category.idx eq keyword.group_idx}">
-											<p class="card-text">#${keyword.keyword }</p>
-										</c:if>
-									</c:forEach>
-
-									<p class="card-text">♡ ${category.likeNum }</p>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar"
-											style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
-											aria-valuemax="100">50%</div>
-									</div>
-									<div class="overlay">
-										<a class="info" href="#">
-											<button type="button" class="btn btn-primary">가입하기</button> <br>
-											<br>
-											<button type="button" class="btn btn-danger"
-												onclick="moveURL(${category.idx })">상세보기</button>
-										</a> <br> <br> <br>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</c:forEach>
+                                    <c:if test="${groupMemberExist.group_idx eq category.idx }">
+                                       <% groupFlag = true; %>
+                                    </c:if>
+                              </c:forEach>   
+                              
+                              <!-- 로그인 했을 때 -->
+                              <c:if test="${sessionScope.login }">
+                                 
+                              <!-- 가입했을 때 -->
+                                 <c:if test="<%=groupFlag  %>">
+                                    <button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${category.idx }, 0)">상세보기</button>
+                                 </c:if>
+                                 
+                                 <!-- 가입 안 했을 때 -->
+                                 <c:if test="<%=!groupFlag  %>">
+                                 
+                                 <!-- 비공개일 떄 -->
+                                    <c:if test="${category.secret == 1 }">
+                                    <button type="button"  class="btn btn-primary secretJoin">가입하기</button>
+                                    <br>
+                                    <br>
+                                 </c:if>
+                                 
+                                 <!-- 공개일 때 -->
+                                   <c:if test="${category.secret == 0 }"> 
+                                    <button type="button" class="btn btn-primary join" id ="noPassJoin">가입하기</button> 
+                                    <br> 
+                                    <br> 
+                                  </c:if>    
+                                    
+                                    <button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${category.idx }, ${category.secret })">상세보기</button>
+                                 
+                              
+                                 </c:if>
+                              
+                              </c:if>
+                              
+                              <!-- 로그인 안했을 때 -->
+                              <c:if test="${!sessionScope.login }">
+                                     <button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${category.idx }, ${category.secret })">상세보기</button>
+                              </c:if>
+                              
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+               </c:forEach>
 				</div>
 
 
@@ -149,13 +195,46 @@
 <!-- footer include -->
 <%@include file="/WEB-INF/views/zaksim/main/footer.jsp"%>
 
-<!-- 모달 -->
+
+<!-- 가입하기 -->
+<div class="modal" id="join" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalVerticalLabel" aria-hidden="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalVerticalLabel">가입하기</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group">
+						<input type="hidden" class ="idxxx"> 
+						<label for="recipient-name" class="form-control-label">비밀번호</label>
+						<input type="password" class="form-control"
+							id="commPass" />
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+				<button type="button" class="btn btn-primary joinedComm" >가입하기</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- 모임 만들기 모달 -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
-	id="createModal" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	id="createModal" aria-labelledby="myLargeModalLabel" aria-hidden="false">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<form id="form1" action="/zaksim/community/createCommunity"
-				method="post" runat="server" enctype="multipart/form-data">
+				method="post" runat="server" enctype="multipart/form-data"
+				onsubmit="return create();">
 
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel"
@@ -197,12 +276,12 @@
 									<div style="padding-bottom: 0px; margin-left: 50px;">
 										<span style="font-size: 20px;"><strong>모임명 : </strong></span>
 										<input class="form-control" type="text" style="height: 30px;"
-											name="title" maxlength="20" required="required" id="commName"
+											name="title" maxlength="20" id="commName"
 											placeholder="20자 이내로 작성하세요"> <br> <br> <span
 											style="font-size: 20px;"><strong>최대 모임 인원 : </strong></span>
 										<input class="form-control" type="number"
 											style="width: 80px; height: 30px;" placeholder="100" min="1"
-											id="commMax" max="100" name="max" required="required"><strong>명</strong>
+											id="commMax" max="100" name="max"><strong>명</strong>
 										<br> <span
 											style="margin-left: 50px; font-size: 15px; color: gray;">※
 											최대 100명까지 가능</span>
@@ -227,7 +306,7 @@
 												<div class="form-inline">
 													<span><strong>비밀번호</strong></span> <input type="password"
 														class="form-control" style="margin-left: 73px;"
-														name="password">
+														id="password1" name="password">
 												</div>
 
 											</div>
@@ -241,7 +320,7 @@
 												<div class="form-inline">
 													<span><strong>비밀번호 확인</strong></span> <input
 														type="password" name="password2" class="form-control"
-														style="margin-left: 37px;">
+														id="password2" style="margin-left: 37px;">
 												</div>
 												<br>
 											</div>
@@ -252,7 +331,7 @@
 
 
 									<span style="margin-left: 50px; margin-right: 70px;"><strong>카테고리</strong></span>
-									<select name="category"
+									<select name="category_idx"
 										class="custom-select mb-2 mr-sm-2 mb-sm-0"
 										style="height: 40px; width: 150px;">
 										<option value=1>운동</option>
@@ -265,8 +344,7 @@
 										<span style="margin-left: 50px; margin-right: 90px;"><strong>키워드</strong></span>
 
 										<input type="text" class="form-control" style="width: 300px;"
-											name="keyword" name="keyword" placeholder="ex) #키워드1, #키워드2"
-											required="required"
+											name="keyword" id="keyword" placeholder="ex) #키워드1#키워드2"
 											onkeyup="this.value=this.value.replace(/[^#0-9가-힣a-zA-Z]/g,'')">
 									</div>
 									<br>
@@ -274,11 +352,10 @@
 										<span style="margin-left: 50px; margin-right: 90px;"><strong>소개글</strong></span>
 
 										<br>
-										<textarea class="form-control" name="content"
+										<textarea class="form-control" name="content" id="contentText"
 											onkeydown="content(this)"
 											style="width: 300px; margin-bottom: 20px;"
-											onkeyup="content(this)" placeholder="내용을 입력하세요"
-											required="required"></textarea>
+											onkeyup="content(this)" placeholder="내용을 입력하세요"></textarea>
 
 
 									</div>
@@ -291,8 +368,7 @@
 						</div>
 					</div>
 					<div class="modal-footer" style="">
-						<input type="submit" class="btn btn-danger" id="create"
-							value="만들기" />
+						<input type="submit" class="btn btn-danger" value="만들기" />
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">취소</button>
 					</div>
@@ -307,10 +383,10 @@
 <link rel="stylesheet" type="text/css" href="/css/community/hover.css">
 <link rel="stylesheet" type="text/css" href="/css/community/button.css">
 <link rel="stylesheet" type="text/css"
-	href="/css/community/popularCommunity.css">
+	href="/css/community/main.css">
 
 
-<script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.28.12/sweetalert2.all.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 
@@ -322,32 +398,376 @@
 			}
 		});
 
-		$('.top-button').click(function() {
-			$('html,body').animate({
-				scrollTop : 0
-			}, 400);
+		$(".top-button").click(function() {
+			$('html').animate({
+				"scrollTop" : "0px"
+			}, "slow");
 			return false;
 		});
-		
-		// 공개 클릭 시 숨기기 / 비공개 클릭 시 보이기
-		$(".screctRadio").hide();
+	});
+</script>
+
+
+<script type="text/javascript">
+ $(document).ready(function() {
+		// 공개 클릭 시 숨기기 / 비공개 클릭 시 보이기 
+		var radioVal = $('input[name="secret"]:checked').val();
+		if(radioVal==0){
+			$(".screctRadio").hide();
+			$("#password1").attr("disabled", false);
+			$("#password2").attr("disabled", false);
+		}
+		else {
+			$(".screctRadio").show();
+// 			$("#password1").attr("required", true);
+// 			$("#password2").attr("required", true);
+		}
 
 		$("#screctRadio1").click(function() {
+			$("#password1").val("");
+			$("#password2").val("");
+			$("#password1").attr("disabled", false);
+			$("#password2").attr("disabled", false);
 			$(".screctRadio").hide();
 		});
 
 		$("#screctRadio2").click(function() {
+// 			$("#password1").attr("required", true);
+// 			$("#password2").attr("required", true);
 			$(".screctRadio").fadeIn();
 		});
+ });
+</script>
 
-		$("#join").click(function() {
-			$("#createModal").modal();
+<script type="text/javascript">
+	$(function() {
+		$("#imgInp").on('change', function() {
+			readURL(this);
+		});
+	});
+
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#image').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+
+	function content(obj) {
+		obj.style.height = "1px";
+		obj.style.height = (12 + obj.scrollHeight) + "px";
+	}
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$(window).scroll(function() {
+			if ($(this).scrollTop() > 200) {
+				$('.top-button').fadeIn();
+			} else {
+				$('.top-button').fadeOut();
+			}
+		});
+
+
+
+
+
+		
+		/* 가입한 모임 더 보기 */
+		$("#joinedGroupViewMore").click(function() {
+			location.href = "/zaksim/community/joinCommunity";
+		});
+
+		/* 인기모임 더 보기 */
+		$("#popularGroupViewMore").click(function() {
+			location.href = "/zaksim/community/popularCommunity";
+		});
+
+		/* 새로운모임 더 보기 */
+		$("#newGroupViewMore").click(function() {
+			location.href = "/zaksim/community/newCommunity";
+		});
+
+		/* 카테고리 더 보기 */
+		$("#categoryViewMore").click(function() {
+			location.href = "/zaksim/community/categoryCommunity";
+		});
+
+	});
+	
+	
+	function moveURL(url, secret) {
+		
+		if(secret == 1){
+			swal({
+					type: 'error',
+					title: 'Oops...',
+					text: '비밀커뮤니티입니다'
+			});
+			return;
+		}
+		else{
+		document.location.href = "/zaksim/community/enrollCommunity?idx="+url;
+		}
+	}
+	
+	function categoryClick(categoryIdx){
+// 		document.location.href = "/zaksim/community/clickCategoryCommunity";
+		document.location.href = "/zaksim/community/clickCategoryCommunity?category_idx="+categoryIdx;
+		
+	}
+	
+	
+	function create() {
+		var commName = document.getElementById("commName").value;
+		var commMax = document.getElementById("commMax").value;
+		var pw1 = document.getElementById("password1").value;
+		var pw2 = document.getElementById('password2').value;
+		var keyword= document.getElementById('keyword').value;
+		var contentText= document.getElementById('contentText').value;
+		
+		var radioVal = $('input[name="secret"]:checked').val();
+		
+		if(radioVal ==0 ){
+
+			
+			if(commName == null || commName==''){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '커뮤니티명을 입력하세요.'
+				});
+				return false;
+				
+			}
+			if(commMax == null || commMax==''){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '최대인원을 입력하세요.'
+				});
+				return false;
+				
+			}
+			if(keyword == null || keyword==''){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '키워드를 입력하세요.'
+				});
+				return false;
+				
+			}
+			else if(contentText== null || contentText==''){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '소개글을 입력하세요.'
+				});
+				return false;
+			}
+			else{
+				swal({
+					type: 'success',
+					title: 'success ! ',
+					text: '생성되었습니다.'
+			}).then((result) => {
+				  if (result.value) {
+						console.log("안쪽!!!");
+						location.href = "/zaksim/community/communityMain";
+					  }
+					})
+				return true;
+			}
+			
+		}
+		
+		else{			
+			if(commName == null || commName==''){
+			swal({
+				type: 'error',
+				title: 'Oops...',
+				text: '커뮤니티명을 입력하세요.'
+		});
+		return false;
+		
+	}
+	if(commMax == null || commMax==''){
+		swal({
+				type: 'error',
+				title: 'Oops...',
+				text: '최대인원을 입력하세요.'
+		});
+		return false;
+		
+	}
+			if(pw1 == null || pw1==''){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '비밀번호를 입력하세요.'
+				});
+				return false;
+			}
+		
+			else if(pw2 == null || pw2==''){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '비밀번호 확인을 입력하세요.'
+				});
+				return false;
+			}
+		
+			else if(pw1 != pw2){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '비밀번호가 일치하지 않습니다.'
+				});
+				return false;
+			}
+			
+			else if(keyword == null || keyword==''){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '키워드를 입력하세요.'
+				});
+				return false;
+				
+			}
+			else if(contentText== null || contentText==''){
+				swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '소개글을 입력하세요.'
+				});
+				return false;
+			}
+		
+			else{
+				return true;
+			}
+		
+		}
+	}
+
+	$(".joinedComm").click(function() {
+
+		var idxx = $(".idxxx").val();
+		var commPass = $("#commPass").val();
+		
+
+		
+		$.ajax({
+			type: "post"
+			, url: "/zaksim/community/secretCommunityJoin"
+			, dataType: "json"
+			, data: {
+				idx: idxx,
+				password: commPass
+			}
+			, success: function(data) {
+				
+				if(commPass == null || commPass==''){
+					swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '비밀번호를 입력하세요.'
+					});
+					
+					return false;
+				}
+				
+				if(data.result =='1'){
+					swal({
+						type: 'success',
+						title: 'success !',
+						text: data.success
+					}).then((result) => {
+						  if (result.value) {
+								console.log("안쪽!!!");
+// 								location.href = "/zaksim/community/enrollCommunity?idx="+idxx;
+								window.location.reload();
+							  }
+							})
+				}
+				else{
+					swal({
+						type: 'error',
+						title: 'Oops...',
+						text: '비밀번호가 틀립니다.'
+					});
+				return false;
+				}
+				
+			}
+			, error: function(e) {
+				console.log("fail");
+				console.log(e.responseText);
+			}
+		});
+	
+		
+	});
+	
+
+	// 비밀커뮤니티 가입하기 눌렀을 때 인덱스 넘기기
+	$(".secretJoin").click(function() {
+		var idxx = $(this).parent().parent().parent().parent().children("input").eq(0).val();
+		
+		console.log(idxx);
+		
+		$("#join").modal('show');
+		// value 추가
+		$(".idxxx").attr({
+				value : idxx
 		});
 		
 	});
 	
-	function moveURL(url) {
-		document.location.href = "/zaksim/community/enrollCommunity?idx="+url;
-	}
+	$(".join").click(function() {
+		
+		var idxx = $(this).parent().parent().parent().parent().children("input").eq(0).val();
+		
+		$.ajax({
+			type: "post"
+			, url: "/zaksim/community/join"
+			, dataType: "json"
+			, data: {
+				idx: idxx
+			}
+			, success: function(data) {
+				
+				console.log(idxx);
+				console.log(data.success);
+				swal({
+					type: 'success',
+					title: 'success !',
+					text: data.success
+				}).then((result) => {
+					  if (result.value) {
+							console.log("안쪽!!!");
+// 							location.href = "/zaksim/community/enrollCommunity?idx="+idxx;
+							window.location.reload();
+						  }
+						})
+				
+			}
+			, error: function(e) {
+				console.log("fail");
+				console.log(e.responseText);
+			}
+		});
+		
+		
+		
+	});		
+	
 </script>
-
