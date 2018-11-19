@@ -92,7 +92,7 @@
 	          <h5 class="text-center">${sessionScope.login_nick }</h5>
 	          <hr class="border border-light my-2">
 	          <a href="/zaksim/community/joinCommunity" class="mx-2">내 그룹</a>
-	          <a href="" class="text-left mx-2">내 정보</a>
+	          <a href="/zaksim/mypage/main" class="text-left mx-2">내 정보</a>
 	          <a class="btn btn-sm w-50 my-2 btn-outline-danger" href="/zaksim/login/logout"> 로그아웃 </a>
 	        </div>
         </c:if>
