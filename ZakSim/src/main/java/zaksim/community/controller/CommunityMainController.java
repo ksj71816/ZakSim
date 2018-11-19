@@ -105,9 +105,10 @@ public class CommunityMainController {
 		}
 	
 	
-		
-		System.out.println("DNSAJDNAKJDAJKDAJSKDN : "+ selectSearch);
+
 //		if(selectSearch.equals("communutyName")) {		
+		
+		
 			int totalCount = communitySearchService.titleTotalCount(searchContent);		
 			Paging paging = new Paging(totalCount, curPage, 15);	
 			Map<String, Object> map = new HashMap<>();	

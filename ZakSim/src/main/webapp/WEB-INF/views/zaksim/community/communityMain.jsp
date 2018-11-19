@@ -25,7 +25,7 @@
 				<div class="form-inline">
 					<select name="selectSearch" class="custom-select d-block my-3"
 						required>
-						<option value="communutyName" selected="selected">그룹명</option>
+						<option value="communutyName" selected="selected">모임명</option>
 						<option value="communutyCategory">카테고리</option>
 						<option value="communutyKeyword">키워드</option>
 					</select> <input type="text" class="form-control mx-3" style="width: 600px;"
@@ -45,7 +45,7 @@
 		<div class="col-sm-1"></div>
 		<div class="col-sm-10" style="margin-top: 60px; margin-right: 50px;">
 			<!-- 참여하고 있는 모임-->
-			<strong style="font-size: 150%">참여하고 있는 그룹</strong>
+			<strong style="font-size: 150%">참여하고 있는 모임</strong>
 			
 
 
@@ -157,7 +157,7 @@
 
          <!-- 인기모임 -->
          <div>
-            <strong style="font-size: 150%">인기 그룹</strong>
+            <strong style="font-size: 150%">인기 모임</strong>
             <button type="button" class="btn btn-outline-primary"
                style="float: right; margin-top: 30px;" id="popularGroupViewMore">+
                더보기</button>
@@ -262,7 +262,7 @@
 
 			<!-- 새로 시작하는 모임 -->
 			<div>
-				<strong style="font-size: 150%">새로 시작한 그룹</strong>
+				<strong style="font-size: 150%">새로 시작한 모임</strong>
 				<button type="button" class="btn btn-outline-primary"
 					style="float: right; margin-top: 30px;" id="newGroupViewMore">+
 					더보기</button>
@@ -565,7 +565,7 @@
 										<option value=2>금연</option>
 										<option value=3>다이어트</option>
 										<option value=4>스터디</option>
-										<option value=5>도서</option>
+										<option value=5>기타</option>
 									</select> <br> <br>
 									<div class="form-inline">
 										<span style="margin-left: 50px; margin-right: 90px;"><strong>키워드</strong></span>

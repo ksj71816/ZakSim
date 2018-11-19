@@ -44,7 +44,7 @@
                             <p class="text-white"> Header : 권수정</p>
                         </h6>
                         <h6>
-                            <p class="text-white" style="padding-left: 30px;"> Member : 권미현, 김진섭, 김혁수, 배창환 </p>
+                            <p class="text-white" style="padding-left: 30px;"> Member : 권미현, 김진섭, 김혁수</p>
                         </h6>
                     </div>
                 </div>

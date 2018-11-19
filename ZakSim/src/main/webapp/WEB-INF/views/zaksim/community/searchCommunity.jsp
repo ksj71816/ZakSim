@@ -108,8 +108,100 @@
 
 
 			<!-- 검색한 그룹이 존재할 시 -->
+<%-- 			<c:if test="${empty searchCategoryGroup && !empty searchGroup && empty searchKeywordGroup  }"> --%>
+
+				<div class="form-inline">
+           <c:forEach var="searchGroup" items="${searchGroup }">
+                  <div class="card mb-4" style="width: 19rem; margin-right: 10px;">
+                  <input type="hidden" class="idxx" value="${searchGroup.idx }">
+                  <input type="hidden" class= "memberIdxx" value="${searchGroup.member_idx }">
+                     <div class="hovereffect">
+                        <img class="card-img-top"
+                           src="${searchGroup.image }"
+                           alt="Card image cap">
+                        <div class="card-body">
+                           <span>
+                              <h3 class="card-title">${searchGroup.title }
+                           
+                              </h3>
+                           </span> <span class="form-inline"> <span style="color: red;">
+                                 <h4>♥ &nbsp;${searchGroup.likeNum }</h4>
+                           </span>
+                           </span>
+                           <p class="card-text">
+                              <c:if test="${empty keywordList }">키워드 : 
+                              </c:if>
+                              <c:forEach items="${keywordList }" var="keyword">
+                                 <c:if
+                                    test="${searchGroup.idx eq keyword.group_idx}">
+                                    #${keyword.keyword }
+                                 </c:if>
+                              </c:forEach>
+                           </p>
+                        </div>
+               <div class="overlay">
+                           <br> <br> 
+                           <a class="info">
+                              <% boolean groupFlag =  false; %>
+                              <c:forEach var="groupMemberExist" items="${groupMemberExist }">
+
+                                    <c:if test="${groupMemberExist.group_idx eq searchGroup.idx }">
+                                       <% groupFlag = true; %>
+                                    </c:if>
+                              </c:forEach>   
+                              
+                              <!-- 로그인 했을 때 -->
+                              <c:if test="${sessionScope.login }">
+                                 
+                              <!-- 가입했을 때 -->
+                                 <c:if test="<%=groupFlag  %>">
+                                    <button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${searchGroup.idx }, 0)">상세보기</button>
+                                 </c:if>
+                                 
+                                 <!-- 가입 안 했을 때 -->
+                                 <c:if test="<%=!groupFlag  %>">
+                                 
+                                 <!-- 비공개일 떄 -->
+                                    <c:if test="${searchGroup.secret == 1 }">
+                                    <button type="button"  class="btn btn-primary secretJoin">가입하기</button>
+                                    <br>
+                                    <br>
+                                 </c:if>
+                                 
+                                 <!-- 공개일 때 -->
+                                   <c:if test="${searchGroup.secret == 0 }"> 
+                                    <button type="button" class="btn btn-primary join" id ="noPassJoin">가입하기</button> 
+                                    <br> 
+                                    <br> 
+                                  </c:if>    
+                                    
+                                    <button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${searchGroup.idx }, ${searchGroup.secret })">상세보기</button>
+                                 
+                              
+                                 </c:if>
+                              
+                              </c:if>
+                              
+                              <!-- 로그인 안했을 때 -->
+                              <c:if test="${!sessionScope.login }">
+                                     <button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${searchGroup.idx }, ${searchGroup.secret })">상세보기</button>
+                              </c:if>
+                              
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+               </c:forEach>
+				</div>
+<%-- 			</c:if> --%>
+
+
+			<!-- 카테고리 존재할 시 -->
 			<c:if
-				test="${empty searchCategoryGroup && !empty searchGroup && empty searchKeywordGroup  }">
+				test="${!empty searchCategoryGroup && empty searchGroup && empty searchKeywordGroup  }">
 
 				<div class="form-inline">
            <c:forEach var="searchGroup" items="${searchGroup }">
@@ -200,93 +292,95 @@
 			</c:if>
 
 
-			<!-- 카테고리 존재할 시 -->
-			<c:if
-				test="${!empty searchCategoryGroup && empty searchGroup && empty searchKeywordGroup  }">
-
-				<div class="form-inline">
-					<c:forEach var="searchCategoryGroup"
-						items="${searchCategoryGroup }">
-
-						<div class="card bg-dark text-white mb-4">
-							<div class="hovereffect">
-								<img class="card-img"
-									src="${searchCategoryGroup.communityGroup.storedName }"
-									alt="Card image">
-								<div class="card-img-overlay">
-									<h4 class="card-title">${searchCategoryGroup.communityGroup.title }</h4>
-
-									<c:forEach items="${keywordList }" var="keyword">
-										<c:if
-											test="${searchCategoryGroup.communityGroup.idx eq keyword.group_idx}">
-											<p class="card-text">#${keyword.keyword }</p>
-										</c:if>
-									</c:forEach>
-
-									<p class="card-text">♡ ${searchCategoryGroup.likeNum }</p>
-<!-- 									<div class="progress"> -->
-<!-- 										<div class="progress-bar" role="progressbar" -->
-<!-- 											style="width: 25%;" aria-valuenow="25" aria-valuemin="0" -->
-<!-- 											aria-valuemax="100">50%</div> -->
-<!-- 									</div> -->
-									<div class="overlay">
-										<a class="info" href="#">
-											<button type="button" class="btn btn-primary">가입하기</button> <br>
-											<br>
-											<button type="button" class="btn btn-danger"
-												onclick="moveURL(${searchCategoryGroup.communityGroup.idx })">상세보기</button>
-										</a> <br> <br> <br>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</c:forEach>
-				</div>
-			</c:if>
-
-
 			<!-- 키워드  존재할 시 -->
 			<c:if
 				test="${empty searchCategoryGroup && empty searchGroup && !empty searchKeywordGroup  }">
 
 				<div class="form-inline">
-					<c:forEach var="searchKeywordGroup" items="${searchKeywordGroup }">
+           <c:forEach var="searchGroup" items="${searchGroup }">
+                  <div class="card mb-4" style="width: 19rem; margin-right: 10px;">
+                  <input type="hidden" class="idxx" value="${searchGroup.idx }">
+                  <input type="hidden" class= "memberIdxx" value="${searchGroup.member_idx }">
+                     <div class="hovereffect">
+                        <img class="card-img-top"
+                           src="${searchGroup.image }"
+                           alt="Card image cap">
+                        <div class="card-body">
+                           <span>
+                              <h3 class="card-title">${searchGroup.title }
+                           
+                              </h3>
+                           </span> <span class="form-inline"> <span style="color: red;">
+                                 <h4>♥ &nbsp;${searchGroup.likeNum }</h4>
+                           </span>
+                           </span>
+                           <p class="card-text">
+                              <c:if test="${empty keywordList }">키워드 : 
+                              </c:if>
+                              <c:forEach items="${keywordList }" var="keyword">
+                                 <c:if
+                                    test="${searchGroup.idx eq keyword.group_idx}">
+                                    #${keyword.keyword }
+                                 </c:if>
+                              </c:forEach>
+                           </p>
+                        </div>
+               <div class="overlay">
+                           <br> <br> 
+                           <a class="info">
+                              <% boolean groupFlag =  false; %>
+                              <c:forEach var="groupMemberExist" items="${groupMemberExist }">
 
-						<div class="card bg-dark text-white mb-4">
-							<div class="hovereffect">
-								<img class="card-img"
-									src="${searchKeywordGroup.communityGroup.storedName }"
-									alt="Card image">
-								<div class="card-img-overlay">
-									<h4 class="card-title">${searchKeywordGroup.communityGroup.title }</h4>
-
-									<c:forEach items="${keywordList }" var="keyword">
-										<c:if
-											test="${searchKeywordGroup.communityGroup.idx eq keyword.group_idx}">
-											<p class="card-text">#${keyword.keyword }</p>
-										</c:if>
-									</c:forEach>
-
-									<p class="card-text">♡ ${searchKeywordGroup.likeNum }</p>
-<!-- 									<div class="progress"> -->
-<!-- 										<div class="progress-bar" role="progressbar" -->
-<!-- 											style="width: 25%;" aria-valuenow="25" aria-valuemin="0" -->
-<!-- 											aria-valuemax="100">50%</div> -->
-<!-- 									</div> -->
-									<div class="overlay">
-										<a class="info" href="#">
-											<button type="button" class="btn btn-primary">가입하기</button> <br>
-											<br>
-											<button type="button" class="btn btn-danger"
-												onclick="moveURL(${searchKeywordGroup.communityGroup.idx })">상세보기</button>
-										</a> <br> <br> <br>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</c:forEach>
+                                    <c:if test="${groupMemberExist.group_idx eq searchGroup.idx }">
+                                       <% groupFlag = true; %>
+                                    </c:if>
+                              </c:forEach>   
+                              
+                              <!-- 로그인 했을 때 -->
+                              <c:if test="${sessionScope.login }">
+                                 
+                              <!-- 가입했을 때 -->
+                                 <c:if test="<%=groupFlag  %>">
+                                    <button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${searchGroup.idx }, 0)">상세보기</button>
+                                 </c:if>
+                                 
+                                 <!-- 가입 안 했을 때 -->
+                                 <c:if test="<%=!groupFlag  %>">
+                                 
+                                 <!-- 비공개일 떄 -->
+                                    <c:if test="${searchGroup.secret == 1 }">
+                                    <button type="button"  class="btn btn-primary secretJoin">가입하기</button>
+                                    <br>
+                                    <br>
+                                 </c:if>
+                                 
+                                 <!-- 공개일 때 -->
+                                   <c:if test="${searchGroup.secret == 0 }"> 
+                                    <button type="button" class="btn btn-primary join" id ="noPassJoin">가입하기</button> 
+                                    <br> 
+                                    <br> 
+                                  </c:if>    
+                                    
+                                    <button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${searchGroup.idx }, ${searchGroup.secret })">상세보기</button>
+                                 
+                              
+                                 </c:if>
+                              
+                              </c:if>
+                              
+                              <!-- 로그인 안했을 때 -->
+                              <c:if test="${!sessionScope.login }">
+                                     <button type="button" class="btn btn-danger" 
+                                 onclick="moveURL(${searchGroup.idx }, ${searchGroup.secret })">상세보기</button>
+                              </c:if>
+                              
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+               </c:forEach>
 				</div>
 			</c:if>
 
@@ -295,7 +389,7 @@
 	</div>
 </div>
 
-			<c:if test="${empty searchCategoryGroup && !empty searchGroup && empty searchKeywordGroup  }">
+			<c:if test="${!empty searchCategoryGroup || !empty searchGroup || !empty searchKeywordGroup  }">
    				<div style="margin-left: 0px; margin-top: 50px;">
 				<jsp:include page="/WEB-INF/views/zaksim/community/paging/titlePaging.jsp" />
 			</div>
@@ -459,7 +553,7 @@
 										<option value=2>금연</option>
 										<option value=3>다이어트</option>
 										<option value=4>스터디</option>
-										<option value=5>도서</option>
+										<option value=5>기타</option>
 									</select> <br> <br>
 									<div class="form-inline">
 										<span style="margin-left: 50px; margin-right: 90px;"><strong>키워드</strong></span>

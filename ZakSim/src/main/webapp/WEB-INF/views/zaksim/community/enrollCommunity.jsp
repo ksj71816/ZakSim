@@ -16,6 +16,8 @@
 		<c:forEach var="groupInfo" items="${groupInfo }">
 			
 			<input type="hidden" id ="idxx"value="${groupInfo.idx }">
+			<input type="hidden" id ="passs" value="${groupInfo.password }"> 
+			<input type="hidden" id ="secrett" value="${groupInfo.secret }"> 
 
 			<div class="col-sm-11 clearfix" style="margin-right: 50px;" id="btnDiv">
 				<strong class="zaksim-title pl-2" style="font-size: 2em;">${groupInfo.title }</strong>
@@ -123,7 +125,7 @@
 			<form id="boardForm" action="/zaksim/community/enrollBoard" method="post" enctype="multipart/form-data">
 				<div>
 					<div class="form-group">
-						<input type="hidden" class="idxxx" name ="group_idx">
+						<input type="hidden" class="idxxx"  name ="group_idx">
 						<label for="recipient-name" class="form-control-label"><strong>게시글을 작성하세요</strong></label>
 						<br>
 						<div class="form-inline" style="margin-left: auto; margin-right: auto;">
@@ -319,11 +321,13 @@
 															<span><strong>기존 비밀번호</strong></span> 
 															<input type="password" class="form-control" style="margin-left: 37px;" id="pass">
 														</div>
-														<span style="margin-left: 140px; display: none;" id="passComment" onkeypress="isSame(${groupInfo.idx})"></span>
+														<span style="margin-left: 140px; display: none;" id="passComment"></span>
 													</div>
 												</div>
 											</div>
 										</c:if>
+										
+		
 
 										<div style="margin-left: 30px; margin-right: 30px;">
 											<div class="screctRadio" style="vertical-align: top;">
@@ -357,7 +361,7 @@
 											<option value=2 <c:if test="${catego eq 2}">selected</c:if>>금연</option>
 											<option value=3 <c:if test="${catego eq 3}">selected</c:if>>다이어트</option>
 											<option value=4 <c:if test="${catego eq 4}">selected</c:if>>스터디</option>
-											<option value=5 <c:if test="${catego eq 5}">selected</c:if>>도서</option>
+											<option value=5 <c:if test="${catego eq 5}">selected</c:if>>기타</option>
 										</select> 
 										<br> <br>
 										<div class="form-inline">
@@ -382,7 +386,7 @@
 					</div><!-- modal body -->
 
 					<div class="modal-footer">
-						<input type="submit" class="btn btn-danger" id="update" value="수정" />
+						<input type="submit" class="btn btn-danger"  value="수정" />
 						<button type="reset" class="btn btn-secondary" onclick="updateCancel()">취소</button>
 						<button type="button" class="btn btn-success" onclick="deleteCommnunity(${groupInfo.idx})">삭제</button>
 					</div><!-- end of modal-footer -->
@@ -875,9 +879,11 @@ $("#btnDiv").on("click", ".noBtnRecommend", function() {
    
 
    function update() {
+	   
+	   var idx = $("#idxx").val();
       var commName = document.getElementById("commName").value;
       var commMax = document.getElementById("commMax").value;
-      var pass = document.getElementById("pass").value;
+      var pass = $("#pass").val();
       var pw1 = document.getElementById("password1").value;
       var pw2 = document.getElementById('password2').value;
       var keyword= document.getElementById('keyword').value;
@@ -885,9 +891,133 @@ $("#btnDiv").on("click", ".noBtnRecommend", function() {
       
       var radioVal = $('input[name="secret"]:checked').val();
       
-      if(radioVal ==0 ){
+      var passs = $("#passs").val();
+      
+      var secrett = $("#secrett").val();
+      
+      if(secrett == 0){
+          if(radioVal ==0 ){
+              if(commName == null || commName==''){
+                 swal({
+                       type: 'error',
+                       title: 'Oops...',
+                       text: '커뮤니티명을 입력하세요.'
+                 });
+                 return false;
+                 
+              }
+              if(commMax == null || commMax==''){
+                 swal({
+                       type: 'error',
+                       title: 'Oops...',
+                       text: '최대인원을 입력하세요.'
+                 });
+                 return false;
+                 
+              }
+              if(keyword == null || keyword==''){
+                 swal({
+                       type: 'error',
+                       title: 'Oops...',
+                       text: '키워드를 입력하세요.'
+                 });
+                 return false;
+                 
+              }
+              else if(contentText== null || contentText==''){
+                 swal({
+                       type: 'error',
+                       title: 'Oops...',
+                       text: '소개글을 입력하세요.'
+                 });
+                 return false;
+              }
+              else{
+                 swal({
+                    type: 'success',
+                    title: 'success ! ',
+                    text: '수정되었습니다.'
+              });
+                 return true;
+              }
+              
+           }
+           
+           else{         
+              if(commName == null || commName==''){
+              swal({
+                 type: 'error',
+                 title: 'Oops...',
+                 text: '커뮤니티명을 입력하세요.'
+              });
+              return false;
+           
+      		  }
+      		  if(commMax == null || commMax==''){
+         		  swal({
+           		      type: 'error',
+           		      title: 'Oops...',
+          		       text: '최대인원을 입력하세요.'
+        		      });
+          		    return false;
+           
+      		  }
 
-         
+        
+        			else if(pw1 == null || pw1==''){
+                 swal({
+                       type: 'error',
+                       title: 'Oops...',
+                       text: '새로운 비밀번호를 입력하세요.'
+                 });
+                 return false;
+              }
+           
+              else if(pw2 == null || pw2==''){
+                 swal({
+                       type: 'error',
+                       title: 'Oops...',
+                       text: '비밀번호 확인을 입력하세요.'
+                 });
+                 return false;
+              }
+           
+              else if(pw1 != pw2){
+                 swal({
+                       type: 'error',
+                       title: 'Oops...',
+                       text: '비밀번호가 일치하지 않습니다.'
+                 });
+                 return false;
+              }
+              
+              else if(keyword == null || keyword==''){
+                 swal({
+                       type: 'error',
+                       title: 'Oops...',
+                       text: '키워드를 입력하세요.'
+                 });
+                 return false;
+                 
+              }
+              else if(contentText== null || contentText==''){
+                 swal({
+                       type: 'error',
+                       title: 'Oops...',
+                       text: '소개글을 입력하세요.'
+                 });
+                 return false;
+              }
+           
+              else{
+                 return true;
+              }
+           
+           }
+      }
+
+      else{
+      if(radioVal ==0 ){
          if(commName == null || commName==''){
             swal({
                   type: 'error',
@@ -943,21 +1073,39 @@ $("#btnDiv").on("click", ".noBtnRecommend", function() {
          });
          return false;
       
-   }
-   if(commMax == null || commMax==''){
-      swal({
-            type: 'error',
-            title: 'Oops...',
-            text: '최대인원을 입력하세요.'
-         });
-         return false;
+ 		  }
+ 		  if(commMax == null || commMax==''){
+    		  swal({
+      		      type: 'error',
+      		      title: 'Oops...',
+     		       text: '최대인원을 입력하세요.'
+   		      });
+     		    return false;
       
-   }
-         if(pw1 == null || pw1==''){
+ 		  }
+		   if(pass == null || pass==''){
+  		     swal({
+        		   type: 'error',
+          		 title: 'Oops...',
+        		   text: '기존 비밀번호를 입력하세요.'
+    	 });
+   	 	 return false;
+ 		 }
+		   else if(pass !=passs){
+	            swal({
+	                  type: 'error',
+	                  title: 'Oops...',
+	                  text: '기존 비밀번호와 일치하지 않습니다.'
+	            });
+	            $("#pass").val("");
+	            return false;
+	         }
+   
+   			else if(pw1 == null || pw1==''){
             swal({
                   type: 'error',
                   title: 'Oops...',
-                  text: '비밀번호를 입력하세요.'
+                  text: '새로운 비밀번호를 입력하세요.'
             });
             return false;
          }
@@ -1002,6 +1150,7 @@ $("#btnDiv").on("click", ".noBtnRecommend", function() {
             return true;
          }
       
+      }
       }
    }
    
