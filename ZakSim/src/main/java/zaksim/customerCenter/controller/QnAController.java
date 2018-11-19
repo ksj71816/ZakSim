@@ -121,6 +121,11 @@ public class QnAController {
 		List<QnAFile> fileList = qnafileService.qnaFileList(qnaIdx);
 		List<QnAComment> commentList = qnaService.viewComment(qnaIdx);
 		
+		if (qna.getUpperIdx() != 0) {
+			// 답변글일 경우
+			QnA upperWriter = qnaService.qnaView(qna.getUpperIdx());
+			model.addAttribute("upperWriter", upperWriter.getWriterIdx()); // 문의글 작성자 넘기기
+		}
 		model.addAttribute("view", qna);
 		model.addAttribute("fileList", fileList);
 		model.addAttribute("commentList", commentList);

@@ -186,7 +186,7 @@
 
    if ( "${view.secret }" == "private"  ){
       // 비밀글일 경우, 작성자와 관리자만 읽을 수 있게끔
-      if ( user != 1 && user != '${view.writerIdx}' && user !='${view.upperIdx}' ) { 
+      if ( user != 1 && user != '${view.writerIdx}' && user !='${upperWriter}' ) { 
             $('#qnaViewModal').modal({backdrop: 'static'}); // 모달 밖 영역 클릭할 수 없게 만듦.
             $('#btnRedirectList').click(function(){
                location.href = "/zaksim/customerCenter/QnA/list";

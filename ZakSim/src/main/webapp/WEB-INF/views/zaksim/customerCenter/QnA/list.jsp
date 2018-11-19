@@ -71,10 +71,10 @@
 									<!-- 제목 -->
 									<c:if test="${list.secret eq 'private' }">
 										<td class="text-left">
-										<c:if test="${login && list.writerIdx eq sessionScope.login_idx }">
+										<c:if test="${login && (list.writerIdx eq sessionScope.login_idx || sessionScope.login_idx eq 1)}">
 											<a href="/zaksim/customerCenter/QnA/view?qnaIdx=${list.idx }" id="aSecret" class="privateQnA">${list.title } <i class="fas fa-lock"></i></a>										
 										</c:if>
-										<c:if test="${!login || list.writerIdx ne sessionScope.login_idx }">
+										<c:if test="${!login || (list.writerIdx ne sessionScope.login_idx && sessionScope.login_idx ne 1)}">
 											${list.title } <i class="fas fa-lock"></i>									
 										</c:if>
 										</td>
@@ -120,11 +120,10 @@
 										<!-- 제목 -->
 										<c:if test="${secret eq 'private' }">
 											<td class="text-left">
-												<c:if test="${login && list.writerIdx eq sessionScope.login_idx }">
-													<a href="/zaksim/customerCenter/QnA/view?qnaIdx=${list.idx }" id="aSecret" class="privateQnA"style="margin-left: 10px">→ ${title } <i class="fas fa-lock"></i></a>										
+												<c:if test="${login && (list.writerIdx eq sessionScope.login_idx || sessionScope.login_idx eq 1)}">
+													<a href="/zaksim/customerCenter/QnA/view?qnaIdx=${idx }" id="aSecret" class="privateQnA"style="margin-left: 10px">→ ${title } <i class="fas fa-lock"></i></a>										
 												</c:if>
-												<c:if test="${!login || list.writerIdx ne sessionScope.login_idx }">
-													${title } <i class="fas fa-lock"></i>									
+												<c:if test="${!login || (list.writerIdx ne sessionScope.login_idx && sessionScope.login_idx ne 1)}">→ ${title } <i class="fas fa-lock"></i>									
 												</c:if>
 											</td>
 										</c:if>

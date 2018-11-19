@@ -21,6 +21,7 @@
   <resultMap type="zaksim.dto.ZakSimMember" id="ZakSimMember">
   	<result property="idx" column="z_idx"/>
   	<result property="id" column="z_id"/>
+  	<result property="nick" column="z_nick"/>
   	<result property="memberType" column="member_type"/>
   	<result property="joinDate" column="join_date"/>
   	<result property="suspensionDate" column="suspension_date"/>
